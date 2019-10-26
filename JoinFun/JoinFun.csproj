@@ -45,8 +45,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -123,6 +131,41 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Acc_Pass.cs" />
+    <Compile Include="Models\Activity_Class.cs" />
+    <Compile Include="Models\Activity_Details.cs" />
+    <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\Age_Restriction.cs" />
+    <Compile Include="Models\Blacklist.cs" />
+    <Compile Include="Models\Bookmark_Details.cs" />
+    <Compile Include="Models\Budget_Restriction.cs" />
+    <Compile Include="Models\Chat_Records.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\County.cs" />
+    <Compile Include="Models\dbJoinFun.cs" />
+    <Compile Include="Models\Dietary_Preference.cs" />
+    <Compile Include="Models\District.cs" />
+    <Compile Include="Models\Fans.cs" />
+    <Compile Include="Models\FollowUp.cs" />
+    <Compile Include="Models\Friendship.cs" />
+    <Compile Include="Models\Gender_Restriction.cs" />
+    <Compile Include="Models\Habit.cs" />
+    <Compile Include="Models\Hash_Tag.cs" />
+    <Compile Include="Models\Join_Fun_Activities.cs" />
+    <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\Member_Remarks.cs" />
+    <Compile Include="Models\Message_Board.cs" />
+    <Compile Include="Models\metadata.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Payment_Restriction.cs" />
+    <Compile Include="Models\People_Restriction.cs" />
+    <Compile Include="Models\Photos_of_Activities.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Punishment.cs" />
+    <Compile Include="Models\Social_Net_ID.cs" />
+    <Compile Include="Models\Type_of_Violate.cs" />
+    <Compile Include="Models\Violation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
