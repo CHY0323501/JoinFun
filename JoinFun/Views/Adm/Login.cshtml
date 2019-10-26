@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
+<link href="~/CSS/ADM_login.css" rel="stylesheet" />
+
+<html >
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div id="login-button">
+        <img src="https://dqcgrsy5v35b9.cloudfront.net/cruiseplanner/assets/img/icons/login-w-icon.png">
+
+    </div>
+    <div id="container">
+        <h1>Log In</h1>
+        <span class="close-btn">
+            <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png">
+        </span>
+
+        <form>
+            <input type="email" name="email" placeholder="ADM's Account">
+            <input type="password" name="pass" placeholder="ADM's Password">
+            <a href="#">Log in</a>
+            <div id="remember-container">
+                <input type="checkbox" id="checkbox-2-1" class="checkbox" checked="checked" />
+                <span id="remember">Remember me</span>
+                @*<span id="forgotten">Forgotten password</span>*@
+            </div>
+        </form>
+    </div>
+
+    <!-- Forgotten Password Container -->
+    @*<div id="forgotten-container">
+            <h1>Forgotten</h1>
+            <span class="close-btn">
+                <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png">
+            </span>
+
+            <form>
+                <input type="email" name="email" placeholder="E-mail">
+                <a href="#" class="orange-btn">Get new password</a>
+            </form>
+        </div>*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="~/JS/ADM_Login.js"></script>
+
+</body>
+</html>
