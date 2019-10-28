@@ -12,7 +12,7 @@ namespace JoinFun.Controllers
     public class AdmController : Controller
     {
         SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["dbJoinFun"].ConnectionString);
-        dbJoinFun db = new dbJoinFun();
+        JoinFunEntities db = new JoinFunEntities();
         
         public ActionResult Login() {
             return View();

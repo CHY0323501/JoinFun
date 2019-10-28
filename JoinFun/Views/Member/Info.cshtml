@@ -1,0 +1,46 @@
+﻿@model JoinFun.ViewModel.MemberViewModel
+
+@{
+    ViewBag.Title = "個人資訊";
+}
+
+    <h2>個人資訊</h2>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Member)
+        {
+        <div>
+            @Html.DisplayFor(modelItem => item.memNick)
+        </div>
+        }
+        123
+        @*@Html.DisplayNameFor(model => model.memId)
+        @Html.DisplayNameFor(model => model.Email)
+        @Html.DisplayNameFor(model => model.cellPhone)
+        @Html.DisplayNameFor(model => model.timeReg)
+        @Html.DisplayNameFor(model => model.Birthday)
+        @Html.DisplayNameFor(model => model.numViolate)
+        @Html.DisplayNameFor(model => model.Suspend)
+        @Html.DisplayNameFor(model => model.Sex)
+        @Html.DisplayNameFor(model => model.Approved)
+        @Html.DisplayNameFor(model => model.Introduction)
+        @Html.DisplayNameFor(model => model.County.CountyName)
+        @Html.DisplayNameFor(model => model.District.DistrictName)*@
+    </div>
+</div>
+
+            
+
+@*@foreach (var item in Model) {
+            @Html.DisplayFor(modelItem => item.Habit)
+            @Html.DisplayFor(modelItem => item.Email)
+            @Html.DisplayFor(modelItem => item.Birthday)
+            @Html.DisplayFor(modelItem => item.Sex)
+            @Html.DisplayFor(modelItem => item.Introduction)
+            @Html.DisplayFor(modelItem => item.County.CountyName)
+            @Html.DisplayFor(modelItem => item.District.DistrictName)
+            @Html.ActionLink("Edit", "Edit", new { id=item.memId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.memId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.memId })
+}*@
+
