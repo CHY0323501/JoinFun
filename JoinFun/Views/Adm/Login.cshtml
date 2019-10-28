@@ -23,10 +23,11 @@
             <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png">
         </span>
 
-        <form>
-            <input type="email" name="email" placeholder="ADM's Account">
-            <input type="password" name="pass" placeholder="ADM's Password">
-            <a href="#">Log in</a>
+        <form method="post">
+            <input type="text" name="account" placeholder="ADM's Account" required>
+            <input type="password" name="pass" placeholder="ADM's Password" required>
+            <input id="Submit1" type="submit" value="Log in" />
+            @*<a href="#">Log in</a>*@
             <div id="remember-container">
                 <input type="checkbox" id="checkbox-2-1" class="checkbox" checked="checked" />
                 <span id="remember">Remember me</span>

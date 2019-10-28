@@ -1,0 +1,2358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acc_Pass">
+          <Key>
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Account" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Salt" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Activity_Class">
+          <Key>
+            <PropertyRef Name="actClassId" />
+          </Key>
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="actClassName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="actClassDescrip" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Photos" Type="image" />
+        </EntityType>
+        <EntityType Name="Activity_Details">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+          </Key>
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="appvStatus" Type="bit" Nullable="false" />
+          <Property Name="appvDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="admId" />
+          </Key>
+          <Property Name="admId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="admAcc" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="admPass" Type="varchar(max)" Nullable="false" />
+          <Property Name="admNick" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="admSalt" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Age_Restriction">
+          <Key>
+            <PropertyRef Name="serial" />
+          </Key>
+          <Property Name="serial" Type="smallint" Nullable="false" />
+          <Property Name="age" Type="nvarchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Blacklist">
+          <Key>
+            <PropertyRef Name="blockedMemId" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="blockedMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bookmark_Details">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+          </Key>
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="BookMarkTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Budget_Restriction">
+          <Key>
+            <PropertyRef Name="BudgetNo" />
+          </Key>
+          <Property Name="BudgetNo" Type="smallint" Nullable="false" />
+          <Property Name="Budget" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Chat_Records">
+          <Key>
+            <PropertyRef Name="chatSerial" />
+          </Key>
+          <Property Name="chatSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FromMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ToMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="chatContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="ReadYet" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="commentTitle" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="receivedTime" Type="datetime" Nullable="false" />
+          <Property Name="reportTime" Type="datetime" />
+          <Property Name="reportContent" Type="nvarchar(max)" />
+          <Property Name="admId" Type="char" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="County">
+          <Key>
+            <PropertyRef Name="CountyNo" />
+          </Key>
+          <Property Name="CountyNo" Type="smallint" Nullable="false" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dietary_Preference">
+          <Key>
+            <PropertyRef Name="dSerial" />
+          </Key>
+          <Property Name="dSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="dPreference" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictSerial" />
+          </Key>
+          <Property Name="DistrictSerial" Type="smallint" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="CountyNo" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fans">
+          <Key>
+            <PropertyRef Name="fanMemId" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="fanMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FollowUp">
+          <Key>
+            <PropertyRef Name="FoMemId" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="FoMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="friendMemId" />
+          </Key>
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="friendMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="friendNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gender_Restriction">
+          <Key>
+            <PropertyRef Name="genderSerial" />
+          </Key>
+          <Property Name="genderSerial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Habit">
+          <Key>
+            <PropertyRef Name="HabitSerial" />
+          </Key>
+          <Property Name="HabitSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Habit" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hash_Tag">
+          <Key>
+            <PropertyRef Name="hashSerial" />
+          </Key>
+          <Property Name="hashSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="hashContent" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Join_Fun_Activities">
+          <Key>
+            <PropertyRef Name="actId" />
+          </Key>
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="actTime" Type="datetime" Nullable="false" />
+          <Property Name="actDeadline" Type="datetime" Nullable="false" />
+          <Property Name="actDescription" Type="nvarchar(max)" />
+          <Property Name="ageRestrict" Type="smallint" Nullable="false" />
+          <Property Name="gender" Type="smallint" Nullable="false" />
+          <Property Name="maxNumPeople" Type="smallint" Nullable="false" />
+          <Property Name="maxBudget" Type="smallint" Nullable="false" />
+          <Property Name="actCounty" Type="smallint" Nullable="false" />
+          <Property Name="actDistrict" Type="smallint" Nullable="false" />
+          <Property Name="actRoad" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="paymentTerm" Type="smallint" Nullable="false" />
+          <Property Name="acceptDrop" Type="bit" Nullable="false" />
+          <Property Name="clickTimes" Type="int" Nullable="false" />
+          <Property Name="keepAct" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cellPhone" Type="varchar" MaxLength="24" />
+          <Property Name="memCounty" Type="smallint" Nullable="false" />
+          <Property Name="memDistrict" Type="smallint" Nullable="false" />
+          <Property Name="timeReg" Type="datetime" Nullable="false" />
+          <Property Name="Birthday" Type="datetime" Nullable="false" />
+          <Property Name="numViolate" Type="smallint" Nullable="false" />
+          <Property Name="Suspend" Type="bit" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="Introduction" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Member_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+          </Key>
+          <Property Name="remarkSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FromMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ToMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="keepRemark" Type="bit" Nullable="false" />
+          <Property Name="remarkStar" Type="smallint" Nullable="false" />
+          <Property Name="remarkContent" Type="nvarchar(max)" />
+          <Property Name="remarkTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message_Board">
+          <Key>
+            <PropertyRef Name="mboardSerial" />
+          </Key>
+          <Property Name="mboardSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="boardMessage" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="messageTime" Type="datetime" Nullable="false" />
+          <Property Name="keepMboard" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotiSerial" />
+          </Key>
+          <Property Name="NotiSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ToMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="NotifContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="readYet" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment_Restriction">
+          <Key>
+            <PropertyRef Name="paymentSerial" />
+          </Key>
+          <Property Name="paymentSerial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="payment" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="People_Restriction">
+          <Key>
+            <PropertyRef Name="peoSerial" />
+          </Key>
+          <Property Name="peoSerial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PeoRestriction" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photos_of_Activities">
+          <Key>
+            <PropertyRef Name="PhotoSerial" />
+          </Key>
+          <Property Name="PhotoSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actPics" Type="image" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="postSerial" />
+          </Key>
+          <Property Name="postSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="admId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="postTitle" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="postContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="postTime" Type="datetime" Nullable="false" />
+          <Property Name="postPics" Type="image" />
+        </EntityType>
+        <EntityType Name="Punishment">
+          <Key>
+            <PropertyRef Name="punishId" />
+          </Key>
+          <Property Name="punishId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="punishName" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Social_Net_ID">
+          <Key>
+            <PropertyRef Name="socialSerial" />
+          </Key>
+          <Property Name="socialSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="socialId" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Type_of_Violate">
+          <Key>
+            <PropertyRef Name="typeId" />
+          </Key>
+          <Property Name="typeId" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="vioClass" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Violation">
+          <Key>
+            <PropertyRef Name="vioId" />
+          </Key>
+          <Property Name="vioId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FromMemId" Type="char" MaxLength="10" />
+          <Property Name="FromAdmID" Type="char" MaxLength="6" />
+          <Property Name="typeId" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="CorrespondingEventID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="vioTitle" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="vioContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="vioReportTime" Type="datetime" Nullable="false" />
+          <Property Name="implement_admId" Type="char" MaxLength="6" />
+          <Property Name="punishId" Type="char" MaxLength="10" />
+          <Property Name="vioProcessTime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Acc_Pass__memId__6EF57B66">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Acc_Pass" Type="Self.Acc_Pass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Acc_Pass">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Activity___actId__76969D2E">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Activity_Details" Type="Self.Activity_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Activity_Details">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Activity___memId__68487DD7">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Activity_Details" Type="Self.Activity_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Activity_Details">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Blacklist__memId__6D0D32F4">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Blacklist" Type="Self.Blacklist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Blacklist">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookmark___actId__7B5B524B">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Bookmark_Details" Type="Self.Bookmark_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Bookmark_Details">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookmark___memId__73BA3083">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Bookmark_Details" Type="Self.Bookmark_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Bookmark_Details">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Chat_Reco__FromM__6E01572D">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Chat_Records" Type="Self.Chat_Records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Chat_Records">
+              <PropertyRef Name="FromMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__admId__7D439ABD">
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="admId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="admId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__memId__6B24EA82">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dietary_P__memId__70DDC3D8">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Dietary_Preference" Type="Self.Dietary_Preference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Dietary_Preference">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__District__County__3BFFE745">
+          <End Role="County" Type="Self.County" Multiplicity="1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyNo" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="CountyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fans__memId__6C190EBB">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Fans" Type="Self.Fans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Fans">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FollowUp__memId__71D1E811">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="FollowUp" Type="Self.FollowUp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="FollowUp">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friendshi__memId__75A278F5">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Habit__memId__6FE99F9F">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Habit" Type="Self.Habit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Habit">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hash_Tag__actId__797309D9">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Hash_Tag" Type="Self.Hash_Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Hash_Tag">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___actCl__7C4F7684">
+          <End Role="Activity_Class" Type="Self.Activity_Class" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity_Class">
+              <PropertyRef Name="actClassId" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="actClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___actCo__32767D0B">
+          <End Role="County" Type="Self.County" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyNo" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="actCounty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___actDi__336AA144">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="actDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___ageRe__3F6663D5">
+          <End Role="Age_Restriction" Type="Self.Age_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Age_Restriction">
+              <PropertyRef Name="serial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="ageRestrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___gende__5DEAEAF5">
+          <End Role="Gender_Restriction" Type="Self.Gender_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender_Restriction">
+              <PropertyRef Name="genderSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___maxBu__405A880E">
+          <End Role="Budget_Restriction" Type="Self.Budget_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budget_Restriction">
+              <PropertyRef Name="BudgetNo" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="maxBudget" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___maxNu__37C5420D">
+          <End Role="People_Restriction" Type="Self.People_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People_Restriction">
+              <PropertyRef Name="peoSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="maxNumPeople" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___payme__7E57BA87">
+          <End Role="Payment_Restriction" Type="Self.Payment_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment_Restriction">
+              <PropertyRef Name="paymentSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="paymentTerm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member__memCount__3CF40B7E">
+          <End Role="County" Type="Self.County" Multiplicity="1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyNo" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="memCounty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member__memDistr__3DE82FB7">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictSerial" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="memDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member_Re__actId__778AC167">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Member_Remarks" Type="Self.Member_Remarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Member_Remarks">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member_Re__FromM__693CA210">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Member_Remarks" Type="Self.Member_Remarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Member_Remarks">
+              <PropertyRef Name="FromMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_B__actId__787EE5A0">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Message_Board" Type="Self.Message_Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Message_Board">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_B__memId__74AE54BC">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Message_Board" Type="Self.Message_Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Message_Board">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__ToMem__72C60C4A">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="ToMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Photos_of__actId__7A672E12">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Photos_of_Activities" Type="Self.Photos_of_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Photos_of_Activities">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__admId__7F2BE32F">
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="admId" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="admId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Social_Ne__memId__6754599E">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Social_Net_ID" Type="Self.Social_Net_ID" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Social_Net_ID">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__FromM__6A30C649">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="FromMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__imple__7E37BEF6">
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="admId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="implement_admId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__punis__01142BA1">
+          <End Role="Punishment" Type="Self.Punishment" Multiplicity="0..1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Punishment">
+              <PropertyRef Name="punishId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="punishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__typeI__00200768">
+          <End Role="Type_of_Violate" Type="Self.Type_of_Violate" Multiplicity="1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_of_Violate">
+              <PropertyRef Name="typeId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JoinFunModelStoreContainer">
+          <EntitySet Name="Acc_Pass" EntityType="Self.Acc_Pass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Activity_Class" EntityType="Self.Activity_Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Activity_Details" EntityType="Self.Activity_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Age_Restriction" EntityType="Self.Age_Restriction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Blacklist" EntityType="Self.Blacklist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bookmark_Details" EntityType="Self.Bookmark_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Budget_Restriction" EntityType="Self.Budget_Restriction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chat_Records" EntityType="Self.Chat_Records" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="County" EntityType="Self.County" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dietary_Preference" EntityType="Self.Dietary_Preference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fans" EntityType="Self.Fans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FollowUp" EntityType="Self.FollowUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender_Restriction" EntityType="Self.Gender_Restriction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Habit" EntityType="Self.Habit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hash_Tag" EntityType="Self.Hash_Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Join_Fun_Activities" EntityType="Self.Join_Fun_Activities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member_Remarks" EntityType="Self.Member_Remarks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message_Board" EntityType="Self.Message_Board" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment_Restriction" EntityType="Self.Payment_Restriction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People_Restriction" EntityType="Self.People_Restriction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photos_of_Activities" EntityType="Self.Photos_of_Activities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Punishment" EntityType="Self.Punishment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Social_Net_ID" EntityType="Self.Social_Net_ID" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_of_Violate" EntityType="Self.Type_of_Violate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Violation" EntityType="Self.Violation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Acc_Pass__memId__6EF57B66" Association="Self.FK__Acc_Pass__memId__6EF57B66">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Acc_Pass" EntitySet="Acc_Pass" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Activity___actId__76969D2E" Association="Self.FK__Activity___actId__76969D2E">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Activity_Details" EntitySet="Activity_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Activity___memId__68487DD7" Association="Self.FK__Activity___memId__68487DD7">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Activity_Details" EntitySet="Activity_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Blacklist__memId__6D0D32F4" Association="Self.FK__Blacklist__memId__6D0D32F4">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Blacklist" EntitySet="Blacklist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookmark___actId__7B5B524B" Association="Self.FK__Bookmark___actId__7B5B524B">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Bookmark_Details" EntitySet="Bookmark_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookmark___memId__73BA3083" Association="Self.FK__Bookmark___memId__73BA3083">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Bookmark_Details" EntitySet="Bookmark_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Chat_Reco__FromM__6E01572D" Association="Self.FK__Chat_Reco__FromM__6E01572D">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Chat_Records" EntitySet="Chat_Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__admId__7D439ABD" Association="Self.FK__Comment__admId__7D439ABD">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__memId__6B24EA82" Association="Self.FK__Comment__memId__6B24EA82">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dietary_P__memId__70DDC3D8" Association="Self.FK__Dietary_P__memId__70DDC3D8">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Dietary_Preference" EntitySet="Dietary_Preference" />
+          </AssociationSet>
+          <AssociationSet Name="FK__District__County__3BFFE745" Association="Self.FK__District__County__3BFFE745">
+            <End Role="County" EntitySet="County" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fans__memId__6C190EBB" Association="Self.FK__Fans__memId__6C190EBB">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Fans" EntitySet="Fans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FollowUp__memId__71D1E811" Association="Self.FK__FollowUp__memId__71D1E811">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="FollowUp" EntitySet="FollowUp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friendshi__memId__75A278F5" Association="Self.FK__Friendshi__memId__75A278F5">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Habit__memId__6FE99F9F" Association="Self.FK__Habit__memId__6FE99F9F">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Habit" EntitySet="Habit" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hash_Tag__actId__797309D9" Association="Self.FK__Hash_Tag__actId__797309D9">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Hash_Tag" EntitySet="Hash_Tag" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___actCl__7C4F7684" Association="Self.FK__Join_Fun___actCl__7C4F7684">
+            <End Role="Activity_Class" EntitySet="Activity_Class" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___actCo__32767D0B" Association="Self.FK__Join_Fun___actCo__32767D0B">
+            <End Role="County" EntitySet="County" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___actDi__336AA144" Association="Self.FK__Join_Fun___actDi__336AA144">
+            <End Role="District" EntitySet="District" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___ageRe__3F6663D5" Association="Self.FK__Join_Fun___ageRe__3F6663D5">
+            <End Role="Age_Restriction" EntitySet="Age_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___gende__5DEAEAF5" Association="Self.FK__Join_Fun___gende__5DEAEAF5">
+            <End Role="Gender_Restriction" EntitySet="Gender_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___maxBu__405A880E" Association="Self.FK__Join_Fun___maxBu__405A880E">
+            <End Role="Budget_Restriction" EntitySet="Budget_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___maxNu__37C5420D" Association="Self.FK__Join_Fun___maxNu__37C5420D">
+            <End Role="People_Restriction" EntitySet="People_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___payme__7E57BA87" Association="Self.FK__Join_Fun___payme__7E57BA87">
+            <End Role="Payment_Restriction" EntitySet="Payment_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member__memCount__3CF40B7E" Association="Self.FK__Member__memCount__3CF40B7E">
+            <End Role="County" EntitySet="County" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member__memDistr__3DE82FB7" Association="Self.FK__Member__memDistr__3DE82FB7">
+            <End Role="District" EntitySet="District" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member_Re__actId__778AC167" Association="Self.FK__Member_Re__actId__778AC167">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Member_Remarks" EntitySet="Member_Remarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member_Re__FromM__693CA210" Association="Self.FK__Member_Re__FromM__693CA210">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Remarks" EntitySet="Member_Remarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_B__actId__787EE5A0" Association="Self.FK__Message_B__actId__787EE5A0">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Message_Board" EntitySet="Message_Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_B__memId__74AE54BC" Association="Self.FK__Message_B__memId__74AE54BC">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Message_Board" EntitySet="Message_Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__ToMem__72C60C4A" Association="Self.FK__Notificat__ToMem__72C60C4A">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Photos_of__actId__7A672E12" Association="Self.FK__Photos_of__actId__7A672E12">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Photos_of_Activities" EntitySet="Photos_of_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__admId__7F2BE32F" Association="Self.FK__Post__admId__7F2BE32F">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Social_Ne__memId__6754599E" Association="Self.FK__Social_Ne__memId__6754599E">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Social_Net_ID" EntitySet="Social_Net_ID" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__FromM__6A30C649" Association="Self.FK__Violation__FromM__6A30C649">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__imple__7E37BEF6" Association="Self.FK__Violation__imple__7E37BEF6">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__punis__01142BA1" Association="Self.FK__Violation__punis__01142BA1">
+            <End Role="Punishment" EntitySet="Punishment" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__typeI__00200768" Association="Self.FK__Violation__typeI__00200768">
+            <End Role="Type_of_Violate" EntitySet="Type_of_Violate" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JoinFunModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Acc_Pass">
+          <Key>
+            <PropertyRef Name="Account" />
+          </Key>
+          <Property Name="Account" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Acc_Pass__memId__6EF57B66" FromRole="Acc_Pass" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Activity_Class">
+          <Key>
+            <PropertyRef Name="actClassId" />
+          </Key>
+          <Property Name="actClassId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actClassName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="actClassDescrip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photos" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___actCl__7C4F7684" FromRole="Activity_Class" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="Activity_Details">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+          </Key>
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="appvStatus" Type="Boolean" Nullable="false" />
+          <Property Name="appvDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Activity___actId__76969D2E" FromRole="Activity_Details" ToRole="Join_Fun_Activities" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Activity___memId__68487DD7" FromRole="Activity_Details" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Administrator">
+          <Key>
+            <PropertyRef Name="admId" />
+          </Key>
+          <Property Name="admId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="admAcc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admPass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="admNick" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="admSalt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK__Comment__admId__7D439ABD" FromRole="Administrator" ToRole="Comment" />
+          <NavigationProperty Name="Post" Relationship="Self.FK__Post__admId__7F2BE32F" FromRole="Administrator" ToRole="Post" />
+          <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__imple__7E37BEF6" FromRole="Administrator" ToRole="Violation" />
+        </EntityType>
+        <EntityType Name="Age_Restriction">
+          <Key>
+            <PropertyRef Name="serial" />
+          </Key>
+          <Property Name="serial" Type="Int16" Nullable="false" />
+          <Property Name="age" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___ageRe__3F6663D5" FromRole="Age_Restriction" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="Blacklist">
+          <Key>
+            <PropertyRef Name="blockedMemId" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="blockedMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Blacklist__memId__6D0D32F4" FromRole="Blacklist" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Bookmark_Details">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+          </Key>
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="BookMarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Bookmark___actId__7B5B524B" FromRole="Bookmark_Details" ToRole="Join_Fun_Activities" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Bookmark___memId__73BA3083" FromRole="Bookmark_Details" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Budget_Restriction">
+          <Key>
+            <PropertyRef Name="BudgetNo" />
+          </Key>
+          <Property Name="BudgetNo" Type="Int16" Nullable="false" />
+          <Property Name="Budget" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___maxBu__405A880E" FromRole="Budget_Restriction" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="Chat_Records">
+          <Key>
+            <PropertyRef Name="chatSerial" />
+          </Key>
+          <Property Name="chatSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FromMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ToMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="chatContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReadYet" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Chat_Reco__FromM__6E01572D" FromRole="Chat_Records" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="commentTitle" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comment1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="receivedTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="reportTime" Type="DateTime" Precision="3" />
+          <Property Name="reportContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="admId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Administrator" Relationship="Self.FK__Comment__admId__7D439ABD" FromRole="Comment" ToRole="Administrator" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Comment__memId__6B24EA82" FromRole="Comment" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="County">
+          <Key>
+            <PropertyRef Name="CountyNo" />
+          </Key>
+          <Property Name="CountyNo" Type="Int16" Nullable="false" />
+          <Property Name="CountyName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="District" Relationship="Self.FK__District__County__3BFFE745" FromRole="County" ToRole="District" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___actCo__32767D0B" FromRole="County" ToRole="Join_Fun_Activities" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Member__memCount__3CF40B7E" FromRole="County" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Dietary_Preference">
+          <Key>
+            <PropertyRef Name="dSerial" />
+          </Key>
+          <Property Name="dSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="dPreference" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Dietary_P__memId__70DDC3D8" FromRole="Dietary_Preference" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictSerial" />
+          </Key>
+          <Property Name="DistrictSerial" Type="Int16" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CountyNo" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="County" Relationship="Self.FK__District__County__3BFFE745" FromRole="District" ToRole="County" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___actDi__336AA144" FromRole="District" ToRole="Join_Fun_Activities" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Member__memDistr__3DE82FB7" FromRole="District" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Fans">
+          <Key>
+            <PropertyRef Name="fanMemId" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="fanMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Fans__memId__6C190EBB" FromRole="Fans" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="FollowUp">
+          <Key>
+            <PropertyRef Name="FoMemId" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="FoMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__FollowUp__memId__71D1E811" FromRole="FollowUp" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="friendMemId" />
+          </Key>
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="friendMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="friendNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Friendshi__memId__75A278F5" FromRole="Friendship" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Gender_Restriction">
+          <Key>
+            <PropertyRef Name="genderSerial" />
+          </Key>
+          <Property Name="genderSerial" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___gende__5DEAEAF5" FromRole="Gender_Restriction" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="Habit">
+          <Key>
+            <PropertyRef Name="HabitSerial" />
+          </Key>
+          <Property Name="HabitSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Habit1" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Habit__memId__6FE99F9F" FromRole="Habit" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Hash_Tag">
+          <Key>
+            <PropertyRef Name="hashSerial" />
+          </Key>
+          <Property Name="hashSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="hashContent" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Hash_Tag__actId__797309D9" FromRole="Hash_Tag" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="Join_Fun_Activities">
+          <Key>
+            <PropertyRef Name="actId" />
+          </Key>
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actClassId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="hostId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actTopic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="gender" Type="Int16" Nullable="false" />
+          <Property Name="maxNumPeople" Type="Int16" Nullable="false" />
+          <Property Name="maxBudget" Type="Int16" Nullable="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actRoad" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="paymentTerm" Type="Int16" Nullable="false" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Activity_Class" Relationship="Self.FK__Join_Fun___actCl__7C4F7684" FromRole="Join_Fun_Activities" ToRole="Activity_Class" />
+          <NavigationProperty Name="Activity_Details" Relationship="Self.FK__Activity___actId__76969D2E" FromRole="Join_Fun_Activities" ToRole="Activity_Details" />
+          <NavigationProperty Name="Age_Restriction" Relationship="Self.FK__Join_Fun___ageRe__3F6663D5" FromRole="Join_Fun_Activities" ToRole="Age_Restriction" />
+          <NavigationProperty Name="Bookmark_Details" Relationship="Self.FK__Bookmark___actId__7B5B524B" FromRole="Join_Fun_Activities" ToRole="Bookmark_Details" />
+          <NavigationProperty Name="Budget_Restriction" Relationship="Self.FK__Join_Fun___maxBu__405A880E" FromRole="Join_Fun_Activities" ToRole="Budget_Restriction" />
+          <NavigationProperty Name="County" Relationship="Self.FK__Join_Fun___actCo__32767D0B" FromRole="Join_Fun_Activities" ToRole="County" />
+          <NavigationProperty Name="District" Relationship="Self.FK__Join_Fun___actDi__336AA144" FromRole="Join_Fun_Activities" ToRole="District" />
+          <NavigationProperty Name="Gender_Restriction" Relationship="Self.FK__Join_Fun___gende__5DEAEAF5" FromRole="Join_Fun_Activities" ToRole="Gender_Restriction" />
+          <NavigationProperty Name="Hash_Tag" Relationship="Self.FK__Hash_Tag__actId__797309D9" FromRole="Join_Fun_Activities" ToRole="Hash_Tag" />
+          <NavigationProperty Name="People_Restriction" Relationship="Self.FK__Join_Fun___maxNu__37C5420D" FromRole="Join_Fun_Activities" ToRole="People_Restriction" />
+          <NavigationProperty Name="Payment_Restriction" Relationship="Self.FK__Join_Fun___payme__7E57BA87" FromRole="Join_Fun_Activities" ToRole="Payment_Restriction" />
+          <NavigationProperty Name="Member_Remarks" Relationship="Self.FK__Member_Re__actId__778AC167" FromRole="Join_Fun_Activities" ToRole="Member_Remarks" />
+          <NavigationProperty Name="Message_Board" Relationship="Self.FK__Message_B__actId__787EE5A0" FromRole="Join_Fun_Activities" ToRole="Message_Board" />
+          <NavigationProperty Name="Photos_of_Activities" Relationship="Self.FK__Photos_of__actId__7A672E12" FromRole="Join_Fun_Activities" ToRole="Photos_of_Activities" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cellPhone" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="memCounty" Type="Int16" Nullable="false" />
+          <Property Name="memDistrict" Type="Int16" Nullable="false" />
+          <Property Name="timeReg" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="numViolate" Type="Int16" Nullable="false" />
+          <Property Name="Suspend" Type="Boolean" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="Introduction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Acc_Pass" Relationship="Self.FK__Acc_Pass__memId__6EF57B66" FromRole="Member" ToRole="Acc_Pass" />
+          <NavigationProperty Name="Activity_Details" Relationship="Self.FK__Activity___memId__68487DD7" FromRole="Member" ToRole="Activity_Details" />
+          <NavigationProperty Name="Blacklist" Relationship="Self.FK__Blacklist__memId__6D0D32F4" FromRole="Member" ToRole="Blacklist" />
+          <NavigationProperty Name="Bookmark_Details" Relationship="Self.FK__Bookmark___memId__73BA3083" FromRole="Member" ToRole="Bookmark_Details" />
+          <NavigationProperty Name="Chat_Records" Relationship="Self.FK__Chat_Reco__FromM__6E01572D" FromRole="Member" ToRole="Chat_Records" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK__Comment__memId__6B24EA82" FromRole="Member" ToRole="Comment" />
+          <NavigationProperty Name="County" Relationship="Self.FK__Member__memCount__3CF40B7E" FromRole="Member" ToRole="County" />
+          <NavigationProperty Name="Dietary_Preference" Relationship="Self.FK__Dietary_P__memId__70DDC3D8" FromRole="Member" ToRole="Dietary_Preference" />
+          <NavigationProperty Name="District" Relationship="Self.FK__Member__memDistr__3DE82FB7" FromRole="Member" ToRole="District" />
+          <NavigationProperty Name="Fans" Relationship="Self.FK__Fans__memId__6C190EBB" FromRole="Member" ToRole="Fans" />
+          <NavigationProperty Name="FollowUp" Relationship="Self.FK__FollowUp__memId__71D1E811" FromRole="Member" ToRole="FollowUp" />
+          <NavigationProperty Name="Friendship" Relationship="Self.FK__Friendshi__memId__75A278F5" FromRole="Member" ToRole="Friendship" />
+          <NavigationProperty Name="Habit" Relationship="Self.FK__Habit__memId__6FE99F9F" FromRole="Member" ToRole="Habit" />
+          <NavigationProperty Name="Member_Remarks" Relationship="Self.FK__Member_Re__FromM__693CA210" FromRole="Member" ToRole="Member_Remarks" />
+          <NavigationProperty Name="Message_Board" Relationship="Self.FK__Message_B__memId__74AE54BC" FromRole="Member" ToRole="Message_Board" />
+          <NavigationProperty Name="Notification" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Member" ToRole="Notification" />
+          <NavigationProperty Name="Social_Net_ID" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Member" ToRole="Social_Net_ID" />
+          <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Member" ToRole="Violation" />
+        </EntityType>
+        <EntityType Name="Member_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FromMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ToMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Member_Re__actId__778AC167" FromRole="Member_Remarks" ToRole="Join_Fun_Activities" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Member_Re__FromM__693CA210" FromRole="Member_Remarks" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Message_Board">
+          <Key>
+            <PropertyRef Name="mboardSerial" />
+          </Key>
+          <Property Name="mboardSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="boardMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="messageTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="keepMboard" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Message_B__actId__787EE5A0" FromRole="Message_Board" ToRole="Join_Fun_Activities" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Message_B__memId__74AE54BC" FromRole="Message_Board" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotiSerial" />
+          </Key>
+          <Property Name="NotiSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ToMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NotifContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="readYet" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Notification" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Payment_Restriction">
+          <Key>
+            <PropertyRef Name="paymentSerial" />
+          </Key>
+          <Property Name="paymentSerial" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="payment" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___payme__7E57BA87" FromRole="Payment_Restriction" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="People_Restriction">
+          <Key>
+            <PropertyRef Name="peoSerial" />
+          </Key>
+          <Property Name="peoSerial" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___maxNu__37C5420D" FromRole="People_Restriction" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="Photos_of_Activities">
+          <Key>
+            <PropertyRef Name="PhotoSerial" />
+          </Key>
+          <Property Name="PhotoSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actPics" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Photos_of__actId__7A672E12" FromRole="Photos_of_Activities" ToRole="Join_Fun_Activities" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="postSerial" />
+          </Key>
+          <Property Name="postSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="admId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="postTitle" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="postContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="postTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="postPics" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Administrator" Relationship="Self.FK__Post__admId__7F2BE32F" FromRole="Post" ToRole="Administrator" />
+        </EntityType>
+        <EntityType Name="Punishment">
+          <Key>
+            <PropertyRef Name="punishId" />
+          </Key>
+          <Property Name="punishId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="punishName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__punis__01142BA1" FromRole="Punishment" ToRole="Violation" />
+        </EntityType>
+        <EntityType Name="Social_Net_ID">
+          <Key>
+            <PropertyRef Name="socialSerial" />
+          </Key>
+          <Property Name="socialSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="socialId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Social_Net_ID" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Type_of_Violate">
+          <Key>
+            <PropertyRef Name="typeId" />
+          </Key>
+          <Property Name="typeId" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="vioClass" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__typeI__00200768" FromRole="Type_of_Violate" ToRole="Violation" />
+        </EntityType>
+        <EntityType Name="Violation">
+          <Key>
+            <PropertyRef Name="vioId" />
+          </Key>
+          <Property Name="vioId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FromMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromAdmID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="typeId" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CorrespondingEventID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="vioTitle" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vioContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vioReportTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="implement_admId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="punishId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="vioProcessTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Administrator" Relationship="Self.FK__Violation__imple__7E37BEF6" FromRole="Violation" ToRole="Administrator" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Violation" ToRole="Member" />
+          <NavigationProperty Name="Punishment" Relationship="Self.FK__Violation__punis__01142BA1" FromRole="Violation" ToRole="Punishment" />
+          <NavigationProperty Name="Type_of_Violate" Relationship="Self.FK__Violation__typeI__00200768" FromRole="Violation" ToRole="Type_of_Violate" />
+        </EntityType>
+        <Association Name="FK__Acc_Pass__memId__6EF57B66">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Acc_Pass" Type="Self.Acc_Pass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Acc_Pass">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___actCl__7C4F7684">
+          <End Role="Activity_Class" Type="Self.Activity_Class" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activity_Class">
+              <PropertyRef Name="actClassId" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="actClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Activity___actId__76969D2E">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Activity_Details" Type="Self.Activity_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Activity_Details">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Activity___memId__68487DD7">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Activity_Details" Type="Self.Activity_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Activity_Details">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__admId__7D439ABD">
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="admId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="admId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Post__admId__7F2BE32F">
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="admId" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="admId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__imple__7E37BEF6">
+          <End Role="Administrator" Type="Self.Administrator" Multiplicity="0..1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administrator">
+              <PropertyRef Name="admId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="implement_admId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___ageRe__3F6663D5">
+          <End Role="Age_Restriction" Type="Self.Age_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Age_Restriction">
+              <PropertyRef Name="serial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="ageRestrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Blacklist__memId__6D0D32F4">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Blacklist" Type="Self.Blacklist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Blacklist">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookmark___actId__7B5B524B">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Bookmark_Details" Type="Self.Bookmark_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Bookmark_Details">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bookmark___memId__73BA3083">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Bookmark_Details" Type="Self.Bookmark_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Bookmark_Details">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___maxBu__405A880E">
+          <End Role="Budget_Restriction" Type="Self.Budget_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budget_Restriction">
+              <PropertyRef Name="BudgetNo" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="maxBudget" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Chat_Reco__FromM__6E01572D">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Chat_Records" Type="Self.Chat_Records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Chat_Records">
+              <PropertyRef Name="FromMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__memId__6B24EA82">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__District__County__3BFFE745">
+          <End Role="County" Type="Self.County" Multiplicity="1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyNo" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="CountyNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___actCo__32767D0B">
+          <End Role="County" Type="Self.County" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyNo" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="actCounty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member__memCount__3CF40B7E">
+          <End Role="County" Type="Self.County" Multiplicity="1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyNo" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="memCounty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Dietary_P__memId__70DDC3D8">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Dietary_Preference" Type="Self.Dietary_Preference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Dietary_Preference">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___actDi__336AA144">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="actDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member__memDistr__3DE82FB7">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="DistrictSerial" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="memDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Fans__memId__6C190EBB">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Fans" Type="Self.Fans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Fans">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FollowUp__memId__71D1E811">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="FollowUp" Type="Self.FollowUp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="FollowUp">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friendshi__memId__75A278F5">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___gende__5DEAEAF5">
+          <End Role="Gender_Restriction" Type="Self.Gender_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender_Restriction">
+              <PropertyRef Name="genderSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Habit__memId__6FE99F9F">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Habit" Type="Self.Habit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Habit">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hash_Tag__actId__797309D9">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Hash_Tag" Type="Self.Hash_Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Hash_Tag">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___maxNu__37C5420D">
+          <End Role="People_Restriction" Type="Self.People_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People_Restriction">
+              <PropertyRef Name="peoSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="maxNumPeople" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Join_Fun___payme__7E57BA87">
+          <End Role="Payment_Restriction" Type="Self.Payment_Restriction" Multiplicity="1" />
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment_Restriction">
+              <PropertyRef Name="paymentSerial" />
+            </Principal>
+            <Dependent Role="Join_Fun_Activities">
+              <PropertyRef Name="paymentTerm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member_Re__actId__778AC167">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Member_Remarks" Type="Self.Member_Remarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Member_Remarks">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_B__actId__787EE5A0">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Message_Board" Type="Self.Message_Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Message_Board">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Photos_of__actId__7A672E12">
+          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
+          <End Role="Photos_of_Activities" Type="Self.Photos_of_Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Join_Fun_Activities">
+              <PropertyRef Name="actId" />
+            </Principal>
+            <Dependent Role="Photos_of_Activities">
+              <PropertyRef Name="actId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Member_Re__FromM__693CA210">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Member_Remarks" Type="Self.Member_Remarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Member_Remarks">
+              <PropertyRef Name="FromMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Message_B__memId__74AE54BC">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Message_Board" Type="Self.Message_Board" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Message_Board">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Notificat__ToMem__72C60C4A">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="ToMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Social_Ne__memId__6754599E">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Social_Net_ID" Type="Self.Social_Net_ID" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Social_Net_ID">
+              <PropertyRef Name="memId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__FromM__6A30C649">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="FromMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__punis__01142BA1">
+          <End Role="Punishment" Type="Self.Punishment" Multiplicity="0..1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Punishment">
+              <PropertyRef Name="punishId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="punishId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Violation__typeI__00200768">
+          <End Role="Type_of_Violate" Type="Self.Type_of_Violate" Multiplicity="1" />
+          <End Role="Violation" Type="Self.Violation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_of_Violate">
+              <PropertyRef Name="typeId" />
+            </Principal>
+            <Dependent Role="Violation">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JoinFunEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Acc_Pass" EntityType="Self.Acc_Pass" />
+          <EntitySet Name="Activity_Class" EntityType="Self.Activity_Class" />
+          <EntitySet Name="Activity_Details" EntityType="Self.Activity_Details" />
+          <EntitySet Name="Administrator" EntityType="Self.Administrator" />
+          <EntitySet Name="Age_Restriction" EntityType="Self.Age_Restriction" />
+          <EntitySet Name="Blacklist" EntityType="Self.Blacklist" />
+          <EntitySet Name="Bookmark_Details" EntityType="Self.Bookmark_Details" />
+          <EntitySet Name="Budget_Restriction" EntityType="Self.Budget_Restriction" />
+          <EntitySet Name="Chat_Records" EntityType="Self.Chat_Records" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="County" EntityType="Self.County" />
+          <EntitySet Name="Dietary_Preference" EntityType="Self.Dietary_Preference" />
+          <EntitySet Name="District" EntityType="Self.District" />
+          <EntitySet Name="Fans" EntityType="Self.Fans" />
+          <EntitySet Name="FollowUp" EntityType="Self.FollowUp" />
+          <EntitySet Name="Friendship" EntityType="Self.Friendship" />
+          <EntitySet Name="Gender_Restriction" EntityType="Self.Gender_Restriction" />
+          <EntitySet Name="Habit" EntityType="Self.Habit" />
+          <EntitySet Name="Hash_Tag" EntityType="Self.Hash_Tag" />
+          <EntitySet Name="Join_Fun_Activities" EntityType="Self.Join_Fun_Activities" />
+          <EntitySet Name="Member" EntityType="Self.Member" />
+          <EntitySet Name="Member_Remarks" EntityType="Self.Member_Remarks" />
+          <EntitySet Name="Message_Board" EntityType="Self.Message_Board" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" />
+          <EntitySet Name="Payment_Restriction" EntityType="Self.Payment_Restriction" />
+          <EntitySet Name="People_Restriction" EntityType="Self.People_Restriction" />
+          <EntitySet Name="Photos_of_Activities" EntityType="Self.Photos_of_Activities" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="Punishment" EntityType="Self.Punishment" />
+          <EntitySet Name="Social_Net_ID" EntityType="Self.Social_Net_ID" />
+          <EntitySet Name="Type_of_Violate" EntityType="Self.Type_of_Violate" />
+          <EntitySet Name="Violation" EntityType="Self.Violation" />
+          <AssociationSet Name="FK__Acc_Pass__memId__6EF57B66" Association="Self.FK__Acc_Pass__memId__6EF57B66">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Acc_Pass" EntitySet="Acc_Pass" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___actCl__7C4F7684" Association="Self.FK__Join_Fun___actCl__7C4F7684">
+            <End Role="Activity_Class" EntitySet="Activity_Class" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Activity___actId__76969D2E" Association="Self.FK__Activity___actId__76969D2E">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Activity_Details" EntitySet="Activity_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Activity___memId__68487DD7" Association="Self.FK__Activity___memId__68487DD7">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Activity_Details" EntitySet="Activity_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__admId__7D439ABD" Association="Self.FK__Comment__admId__7D439ABD">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Post__admId__7F2BE32F" Association="Self.FK__Post__admId__7F2BE32F">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__imple__7E37BEF6" Association="Self.FK__Violation__imple__7E37BEF6">
+            <End Role="Administrator" EntitySet="Administrator" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___ageRe__3F6663D5" Association="Self.FK__Join_Fun___ageRe__3F6663D5">
+            <End Role="Age_Restriction" EntitySet="Age_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Blacklist__memId__6D0D32F4" Association="Self.FK__Blacklist__memId__6D0D32F4">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Blacklist" EntitySet="Blacklist" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookmark___actId__7B5B524B" Association="Self.FK__Bookmark___actId__7B5B524B">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Bookmark_Details" EntitySet="Bookmark_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bookmark___memId__73BA3083" Association="Self.FK__Bookmark___memId__73BA3083">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Bookmark_Details" EntitySet="Bookmark_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___maxBu__405A880E" Association="Self.FK__Join_Fun___maxBu__405A880E">
+            <End Role="Budget_Restriction" EntitySet="Budget_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Chat_Reco__FromM__6E01572D" Association="Self.FK__Chat_Reco__FromM__6E01572D">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Chat_Records" EntitySet="Chat_Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__memId__6B24EA82" Association="Self.FK__Comment__memId__6B24EA82">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__District__County__3BFFE745" Association="Self.FK__District__County__3BFFE745">
+            <End Role="County" EntitySet="County" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___actCo__32767D0B" Association="Self.FK__Join_Fun___actCo__32767D0B">
+            <End Role="County" EntitySet="County" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member__memCount__3CF40B7E" Association="Self.FK__Member__memCount__3CF40B7E">
+            <End Role="County" EntitySet="County" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Dietary_P__memId__70DDC3D8" Association="Self.FK__Dietary_P__memId__70DDC3D8">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Dietary_Preference" EntitySet="Dietary_Preference" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___actDi__336AA144" Association="Self.FK__Join_Fun___actDi__336AA144">
+            <End Role="District" EntitySet="District" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member__memDistr__3DE82FB7" Association="Self.FK__Member__memDistr__3DE82FB7">
+            <End Role="District" EntitySet="District" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Fans__memId__6C190EBB" Association="Self.FK__Fans__memId__6C190EBB">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Fans" EntitySet="Fans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FollowUp__memId__71D1E811" Association="Self.FK__FollowUp__memId__71D1E811">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="FollowUp" EntitySet="FollowUp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friendshi__memId__75A278F5" Association="Self.FK__Friendshi__memId__75A278F5">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___gende__5DEAEAF5" Association="Self.FK__Join_Fun___gende__5DEAEAF5">
+            <End Role="Gender_Restriction" EntitySet="Gender_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Habit__memId__6FE99F9F" Association="Self.FK__Habit__memId__6FE99F9F">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Habit" EntitySet="Habit" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hash_Tag__actId__797309D9" Association="Self.FK__Hash_Tag__actId__797309D9">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Hash_Tag" EntitySet="Hash_Tag" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___maxNu__37C5420D" Association="Self.FK__Join_Fun___maxNu__37C5420D">
+            <End Role="People_Restriction" EntitySet="People_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Join_Fun___payme__7E57BA87" Association="Self.FK__Join_Fun___payme__7E57BA87">
+            <End Role="Payment_Restriction" EntitySet="Payment_Restriction" />
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member_Re__actId__778AC167" Association="Self.FK__Member_Re__actId__778AC167">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Member_Remarks" EntitySet="Member_Remarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_B__actId__787EE5A0" Association="Self.FK__Message_B__actId__787EE5A0">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Message_Board" EntitySet="Message_Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Photos_of__actId__7A672E12" Association="Self.FK__Photos_of__actId__7A672E12">
+            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
+            <End Role="Photos_of_Activities" EntitySet="Photos_of_Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Member_Re__FromM__693CA210" Association="Self.FK__Member_Re__FromM__693CA210">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Remarks" EntitySet="Member_Remarks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Message_B__memId__74AE54BC" Association="Self.FK__Message_B__memId__74AE54BC">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Message_Board" EntitySet="Message_Board" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Notificat__ToMem__72C60C4A" Association="Self.FK__Notificat__ToMem__72C60C4A">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Social_Ne__memId__6754599E" Association="Self.FK__Social_Ne__memId__6754599E">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Social_Net_ID" EntitySet="Social_Net_ID" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__FromM__6A30C649" Association="Self.FK__Violation__FromM__6A30C649">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__punis__01142BA1" Association="Self.FK__Violation__punis__01142BA1">
+            <End Role="Punishment" EntitySet="Punishment" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Violation__typeI__00200768" Association="Self.FK__Violation__typeI__00200768">
+            <End Role="Type_of_Violate" EntitySet="Type_of_Violate" />
+            <End Role="Violation" EntitySet="Violation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JoinFunModelStoreContainer" CdmEntityContainer="JoinFunEntities">
+          <EntitySetMapping Name="Acc_Pass">
+            <EntityTypeMapping TypeName="JoinFunModel.Acc_Pass">
+              <MappingFragment StoreEntitySet="Acc_Pass">
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activity_Class">
+            <EntityTypeMapping TypeName="JoinFunModel.Activity_Class">
+              <MappingFragment StoreEntitySet="Activity_Class">
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="actClassName" ColumnName="actClassName" />
+                <ScalarProperty Name="actClassDescrip" ColumnName="actClassDescrip" />
+                <ScalarProperty Name="Photos" ColumnName="Photos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activity_Details">
+            <EntityTypeMapping TypeName="JoinFunModel.Activity_Details">
+              <MappingFragment StoreEntitySet="Activity_Details">
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="appvStatus" ColumnName="appvStatus" />
+                <ScalarProperty Name="appvDate" ColumnName="appvDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Administrator">
+            <EntityTypeMapping TypeName="JoinFunModel.Administrator">
+              <MappingFragment StoreEntitySet="Administrator">
+                <ScalarProperty Name="admId" ColumnName="admId" />
+                <ScalarProperty Name="admAcc" ColumnName="admAcc" />
+                <ScalarProperty Name="admPass" ColumnName="admPass" />
+                <ScalarProperty Name="admNick" ColumnName="admNick" />
+                <ScalarProperty Name="admSalt" ColumnName="admSalt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Age_Restriction">
+            <EntityTypeMapping TypeName="JoinFunModel.Age_Restriction">
+              <MappingFragment StoreEntitySet="Age_Restriction">
+                <ScalarProperty Name="serial" ColumnName="serial" />
+                <ScalarProperty Name="age" ColumnName="age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blacklist">
+            <EntityTypeMapping TypeName="JoinFunModel.Blacklist">
+              <MappingFragment StoreEntitySet="Blacklist">
+                <ScalarProperty Name="blockedMemId" ColumnName="blockedMemId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookmark_Details">
+            <EntityTypeMapping TypeName="JoinFunModel.Bookmark_Details">
+              <MappingFragment StoreEntitySet="Bookmark_Details">
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="BookMarkTime" ColumnName="BookMarkTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Budget_Restriction">
+            <EntityTypeMapping TypeName="JoinFunModel.Budget_Restriction">
+              <MappingFragment StoreEntitySet="Budget_Restriction">
+                <ScalarProperty Name="BudgetNo" ColumnName="BudgetNo" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chat_Records">
+            <EntityTypeMapping TypeName="JoinFunModel.Chat_Records">
+              <MappingFragment StoreEntitySet="Chat_Records">
+                <ScalarProperty Name="chatSerial" ColumnName="chatSerial" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="chatContent" ColumnName="chatContent" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="ReadYet" ColumnName="ReadYet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="JoinFunModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="commentId" ColumnName="commentId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="commentTitle" ColumnName="commentTitle" />
+                <ScalarProperty Name="Comment1" ColumnName="Comment" />
+                <ScalarProperty Name="receivedTime" ColumnName="receivedTime" />
+                <ScalarProperty Name="reportTime" ColumnName="reportTime" />
+                <ScalarProperty Name="reportContent" ColumnName="reportContent" />
+                <ScalarProperty Name="admId" ColumnName="admId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="County">
+            <EntityTypeMapping TypeName="JoinFunModel.County">
+              <MappingFragment StoreEntitySet="County">
+                <ScalarProperty Name="CountyNo" ColumnName="CountyNo" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dietary_Preference">
+            <EntityTypeMapping TypeName="JoinFunModel.Dietary_Preference">
+              <MappingFragment StoreEntitySet="Dietary_Preference">
+                <ScalarProperty Name="dSerial" ColumnName="dSerial" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="dPreference" ColumnName="dPreference" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="District">
+            <EntityTypeMapping TypeName="JoinFunModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="DistrictSerial" ColumnName="DistrictSerial" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyNo" ColumnName="CountyNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fans">
+            <EntityTypeMapping TypeName="JoinFunModel.Fans">
+              <MappingFragment StoreEntitySet="Fans">
+                <ScalarProperty Name="fanMemId" ColumnName="fanMemId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FollowUp">
+            <EntityTypeMapping TypeName="JoinFunModel.FollowUp">
+              <MappingFragment StoreEntitySet="FollowUp">
+                <ScalarProperty Name="FoMemId" ColumnName="FoMemId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friendship">
+            <EntityTypeMapping TypeName="JoinFunModel.Friendship">
+              <MappingFragment StoreEntitySet="Friendship">
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="friendMemId" ColumnName="friendMemId" />
+                <ScalarProperty Name="friendNick" ColumnName="friendNick" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gender_Restriction">
+            <EntityTypeMapping TypeName="JoinFunModel.Gender_Restriction">
+              <MappingFragment StoreEntitySet="Gender_Restriction">
+                <ScalarProperty Name="genderSerial" ColumnName="genderSerial" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Habit">
+            <EntityTypeMapping TypeName="JoinFunModel.Habit">
+              <MappingFragment StoreEntitySet="Habit">
+                <ScalarProperty Name="HabitSerial" ColumnName="HabitSerial" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="Habit1" ColumnName="Habit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hash_Tag">
+            <EntityTypeMapping TypeName="JoinFunModel.Hash_Tag">
+              <MappingFragment StoreEntitySet="Hash_Tag">
+                <ScalarProperty Name="hashSerial" ColumnName="hashSerial" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="hashContent" ColumnName="hashContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Join_Fun_Activities">
+            <EntityTypeMapping TypeName="JoinFunModel.Join_Fun_Activities">
+              <MappingFragment StoreEntitySet="Join_Fun_Activities">
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="maxNumPeople" ColumnName="maxNumPeople" />
+                <ScalarProperty Name="maxBudget" ColumnName="maxBudget" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="paymentTerm" ColumnName="paymentTerm" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="JoinFunModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
+                <ScalarProperty Name="memCounty" ColumnName="memCounty" />
+                <ScalarProperty Name="memDistrict" ColumnName="memDistrict" />
+                <ScalarProperty Name="timeReg" ColumnName="timeReg" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="numViolate" ColumnName="numViolate" />
+                <ScalarProperty Name="Suspend" ColumnName="Suspend" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Introduction" ColumnName="Introduction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member_Remarks">
+            <EntityTypeMapping TypeName="JoinFunModel.Member_Remarks">
+              <MappingFragment StoreEntitySet="Member_Remarks">
+                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
+                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
+                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
+                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message_Board">
+            <EntityTypeMapping TypeName="JoinFunModel.Message_Board">
+              <MappingFragment StoreEntitySet="Message_Board">
+                <ScalarProperty Name="mboardSerial" ColumnName="mboardSerial" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="boardMessage" ColumnName="boardMessage" />
+                <ScalarProperty Name="messageTime" ColumnName="messageTime" />
+                <ScalarProperty Name="keepMboard" ColumnName="keepMboard" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notification">
+            <EntityTypeMapping TypeName="JoinFunModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="NotiSerial" ColumnName="NotiSerial" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="NotifContent" ColumnName="NotifContent" />
+                <ScalarProperty Name="readYet" ColumnName="readYet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment_Restriction">
+            <EntityTypeMapping TypeName="JoinFunModel.Payment_Restriction">
+              <MappingFragment StoreEntitySet="Payment_Restriction">
+                <ScalarProperty Name="paymentSerial" ColumnName="paymentSerial" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People_Restriction">
+            <EntityTypeMapping TypeName="JoinFunModel.People_Restriction">
+              <MappingFragment StoreEntitySet="People_Restriction">
+                <ScalarProperty Name="peoSerial" ColumnName="peoSerial" />
+                <ScalarProperty Name="PeoRestriction" ColumnName="PeoRestriction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photos_of_Activities">
+            <EntityTypeMapping TypeName="JoinFunModel.Photos_of_Activities">
+              <MappingFragment StoreEntitySet="Photos_of_Activities">
+                <ScalarProperty Name="PhotoSerial" ColumnName="PhotoSerial" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="actPics" ColumnName="actPics" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="JoinFunModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="postSerial" ColumnName="postSerial" />
+                <ScalarProperty Name="admId" ColumnName="admId" />
+                <ScalarProperty Name="postTitle" ColumnName="postTitle" />
+                <ScalarProperty Name="postContent" ColumnName="postContent" />
+                <ScalarProperty Name="postTime" ColumnName="postTime" />
+                <ScalarProperty Name="postPics" ColumnName="postPics" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Punishment">
+            <EntityTypeMapping TypeName="JoinFunModel.Punishment">
+              <MappingFragment StoreEntitySet="Punishment">
+                <ScalarProperty Name="punishId" ColumnName="punishId" />
+                <ScalarProperty Name="punishName" ColumnName="punishName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Social_Net_ID">
+            <EntityTypeMapping TypeName="JoinFunModel.Social_Net_ID">
+              <MappingFragment StoreEntitySet="Social_Net_ID">
+                <ScalarProperty Name="socialSerial" ColumnName="socialSerial" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="socialId" ColumnName="socialId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_of_Violate">
+            <EntityTypeMapping TypeName="JoinFunModel.Type_of_Violate">
+              <MappingFragment StoreEntitySet="Type_of_Violate">
+                <ScalarProperty Name="typeId" ColumnName="typeId" />
+                <ScalarProperty Name="vioClass" ColumnName="vioClass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Violation">
+            <EntityTypeMapping TypeName="JoinFunModel.Violation">
+              <MappingFragment StoreEntitySet="Violation">
+                <ScalarProperty Name="vioId" ColumnName="vioId" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="FromAdmID" ColumnName="FromAdmID" />
+                <ScalarProperty Name="typeId" ColumnName="typeId" />
+                <ScalarProperty Name="CorrespondingEventID" ColumnName="CorrespondingEventID" />
+                <ScalarProperty Name="vioTitle" ColumnName="vioTitle" />
+                <ScalarProperty Name="vioContent" ColumnName="vioContent" />
+                <ScalarProperty Name="vioReportTime" ColumnName="vioReportTime" />
+                <ScalarProperty Name="implement_admId" ColumnName="implement_admId" />
+                <ScalarProperty Name="punishId" ColumnName="punishId" />
+                <ScalarProperty Name="vioProcessTime" ColumnName="vioProcessTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

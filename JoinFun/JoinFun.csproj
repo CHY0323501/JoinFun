@@ -111,17 +111,51 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="CSS\ADM_login.css" />
+    <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\dbJoinFun.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dbJoinFun.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\dbJoinFun.edmx.diagram">
+      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Models\dbJoinFun.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+      <LastGenOutput>dbJoinFun.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\dbJoinFun.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+      <LastGenOutput>dbJoinFun.cs</LastGenOutput>
+    </Content>
     <Content Include="Photos\ADM_Login.jpg" />
     <Content Include="Photos\ADM_login_minions.jpg" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -131,41 +165,118 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Acc_Pass.cs" />
-    <Compile Include="Models\Activity_Class.cs" />
-    <Compile Include="Models\Activity_Details.cs" />
-    <Compile Include="Models\Administrator.cs" />
-    <Compile Include="Models\Age_Restriction.cs" />
-    <Compile Include="Models\Blacklist.cs" />
-    <Compile Include="Models\Bookmark_Details.cs" />
-    <Compile Include="Models\Budget_Restriction.cs" />
-    <Compile Include="Models\Chat_Records.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\County.cs" />
-    <Compile Include="Models\dbJoinFun.cs" />
-    <Compile Include="Models\Dietary_Preference.cs" />
-    <Compile Include="Models\District.cs" />
-    <Compile Include="Models\Fans.cs" />
-    <Compile Include="Models\FollowUp.cs" />
-    <Compile Include="Models\Friendship.cs" />
-    <Compile Include="Models\Gender_Restriction.cs" />
-    <Compile Include="Models\Habit.cs" />
-    <Compile Include="Models\Hash_Tag.cs" />
-    <Compile Include="Models\Join_Fun_Activities.cs" />
-    <Compile Include="Models\Member.cs" />
-    <Compile Include="Models\Member_Remarks.cs" />
-    <Compile Include="Models\Message_Board.cs" />
-    <Compile Include="Models\metadata.cs" />
-    <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\Payment_Restriction.cs" />
-    <Compile Include="Models\People_Restriction.cs" />
-    <Compile Include="Models\Photos_of_Activities.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\Punishment.cs" />
-    <Compile Include="Models\Social_Net_ID.cs" />
-    <Compile Include="Models\Type_of_Violate.cs" />
-    <Compile Include="Models\Violation.cs" />
+    <Compile Include="Models\Acc_Pass.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Activity_Class.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Activity_Details.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Administrator.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Age_Restriction.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Blacklist.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bookmark_Details.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Budget_Restriction.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Chat_Records.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\County.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbJoinFun.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbJoinFun.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbJoinFun.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbJoinFun.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Dietary_Preference.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\District.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Fans.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FollowUp.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Friendship.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Gender_Restriction.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Habit.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Hash_Tag.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Join_Fun_Activities.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Member.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Member_Remarks.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Message_Board.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Metadata.cs" />
+    <Compile Include="Models\Notification.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Payment_Restriction.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\People_Restriction.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Photos_of_Activities.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Post.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Punishment.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Social_Net_ID.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Type_of_Violate.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Violation.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +285,9 @@
     <Content Include="Views\Adm\Login.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Adm\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -186,6 +300,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
