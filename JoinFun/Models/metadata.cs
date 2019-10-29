@@ -356,4 +356,125 @@ namespace JoinFun.Models
 
 >>>>>>> Stashed changes
     }
+
+
+    public class MetaFriendship
+    {
+        [DisplayName("會員ID")]
+        public string memId { get; set; }
+        [DisplayName("好友會員ID")]
+        public string friendMemId { get; set; }
+
+        [DisplayName("好友暱稱")]
+        [Required(ErrorMessage = "必填")]
+        [StringLength(15, ErrorMessage = "最多輸入15個字")]
+
+        public string friendNick { get; set; }
+        [DisplayName("是否通過審核")]
+        public bool Approved { get; set; }
+
+    }
+
+    public class MetaHash_Tag
+    {
+
+        [DisplayName("hash_tag編碼")]
+        public string hashSerial { get; set; }
+
+        [DisplayName("活動ID")]
+        public string actId { get; set; }
+
+        [DisplayName("hash_tag內容")]
+        [StringLength(30, ErrorMessage = "最多輸入30個字")]
+        [Required(ErrorMessage = "必填")]
+        public string hashContent { get; set; }
+
+
+    }
+
+    public class MetaHabit
+    {
+        [DisplayName("興趣編號")]
+        public string HabitSerial { get; set; }
+        [DisplayName("會員ID")]
+        public string memId { get; set; }
+        [Required(ErrorMessage = "必填")]
+        [DisplayName("個人興趣")]
+        [StringLength(25, ErrorMessage = "最多輸入25個字")]
+        public string Habit1 { get; set; }
+
+    }
+
+
+    public class MetaMember_Remarks
+    {
+        [DisplayName("評價編號")]
+        public string remarkSerial { get; set; }
+        [DisplayName("活動ID")]
+        public string actId { get; set; }
+        [DisplayName("評價會員ID")]
+        public string FromMemId { get; set; }
+        [DisplayName("被評價者會員ID")]
+        public string ToMemId { get; set; }
+        [DisplayName("是否保留評價")]
+        public bool keepRemark { get; set; }
+        [DisplayName("評價星等")]
+        [Required(ErrorMessage = "必填")]
+        [Range(1, 5, ErrorMessage = "請填1~5分數字")]
+        public short remarkStar { get; set; }
+        [DisplayName("評價內容")]
+        public string remarkContent { get; set; }
+        [DisplayName("評價時間")]
+        public System.DateTime remarkTime { get; set; }
+
+
+    }
+
+    public class MetaMessage_Board
+    {
+        [DisplayName("留言版編號")]
+        public string mboardSerial { get; set; }
+        [DisplayName("活動ID")]
+        public string actId { get; set; }
+        [DisplayName("會員ID")]
+        public string memId { get; set; }
+
+        [DisplayName("留言內容")]
+        [Required(ErrorMessage = "必填")]
+        public string boardMessage { get; set; }
+        [DisplayName("留言時間")]
+
+        public System.DateTime messageTime { get; set; }
+        [DisplayName("是否保留留言")]
+
+        public bool keepMboard { get; set; }
+
+
+    }
+
+    public class MetaNotification
+    {
+        [DisplayName("通知編號")]
+        public string NotiSerial { get; set; }
+        [DisplayName("接收通知者會員ID")]
+        public string ToMemId { get; set; }
+        [DisplayName("通知內容")]
+        [Required(ErrorMessage = "必填")]
+        public string NotifContent { get; set; }
+        [DisplayName("是否已讀")]
+        public bool readYet { get; set; }
+
+    }
+
+    public class MetaPeople_Restriction
+    {
+
+        [DisplayName("人數限制序號")]
+        public short peoSerial { get; set; }
+        [DisplayName("人數限制")]
+        public int PeoRestriction { get; set; }
+
+
+
+    }
 }
