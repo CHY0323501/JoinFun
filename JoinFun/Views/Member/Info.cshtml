@@ -1,4 +1,5 @@
-﻿@model JoinFun.ViewModel.MemberViewModel
+﻿@*@model JoinFun.ViewModel.MemberViewModel*@
+@model IEnumerable<JoinFun.Models.Member>
 
 @{
     ViewBag.Title = "個人資訊";
@@ -7,10 +8,10 @@
     <h2>個人資訊</h2>
 <div class="container">
     <div class="row">
-        @foreach (var item in Model.Member)
+        @foreach (var item in Model)
         {
         <div>
-            @Html.DisplayFor(modelItem => item.memNick)
+            @Html.DisplayFor(modelItem => item.Friendship.Count)
         </div>
         }
         123
