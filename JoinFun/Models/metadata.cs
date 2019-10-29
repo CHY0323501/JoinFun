@@ -9,6 +9,7 @@ namespace JoinFun.Models
 {
     public class MetaAcc_Pass
     {
+        1111111
         [DisplayName("會員帳號")]
         [Required(ErrorMessage = "請輸入會員帳號")]
         [StringLength(10, ErrorMessage = "最多輸入10字")]
