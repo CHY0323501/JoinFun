@@ -371,6 +371,20 @@ namespace JoinFun.Models
 
     }
 
+    public  class MetaGender_Restriction
+    {
+
+
+        [DisplayName("性別序號")]
+        public short genderSerial { get; set; }
+
+        [DisplayName("性別")]
+        [Required(ErrorMessage = "請輸入性別")]
+        [StringLength(10, ErrorMessage = "性別最多10個字")]
+        public string gender { get; set; }
+
+       }
+
     public class MetaHash_Tag
     {
 
@@ -462,6 +476,9 @@ namespace JoinFun.Models
 
     }
 
+
+
+
     public class MetaPeople_Restriction
     {
 
@@ -470,7 +487,173 @@ namespace JoinFun.Models
         [DisplayName("人數限制")]
         public int PeoRestriction { get; set; }
 
+    }
 
+    public  class MetaPhotos_of_Activities
+    {
+
+        [DisplayName("照片編號")]
+        [Required(ErrorMessage = "請輸入照片編號")]
+        [StringLength(10, ErrorMessage = "照片編號最多10個字")]
+        public string PhotoSerial { get; set; }
+
+
+        [DisplayName("活動ID")]
+        [Required(ErrorMessage = "請輸入活動ID")]
+        [StringLength(10, ErrorMessage = "活動ID最多10個字")]
+        public string actId { get; set; }
+
+
+        [DisplayName("照片")]
+        [Required(ErrorMessage = "請上傳照片")]
+        public byte[] actPics { get; set; }
 
     }
+
+
+    public  class MetaPost
+    {
+        [DisplayName("公告編號")]
+        [Required(ErrorMessage = "請輸入公告編號")]
+        [StringLength(10, ErrorMessage = "公告編號最多10個字")]
+        public string postSerial { get; set; }
+
+        [DisplayName("發布管理員ID")]
+        [Required(ErrorMessage = "請輸入管理員ID")]
+        [StringLength(6, ErrorMessage = "管理員ID最多6個字")]
+        public string admId { get; set; }
+
+        [DisplayName("公告標題")]
+        [Required(ErrorMessage = "請輸入公告標題")]
+        [StringLength(30, ErrorMessage = "公告標題最多30個字")]
+        public string postTitle { get; set; }
+
+        [DisplayName("公告內容")]
+        [Required(ErrorMessage = "請輸入公告內容")]
+        public string postContent { get; set; }
+
+
+        [DisplayName("公告時間")]
+        [Required(ErrorMessage = "請輸入公告時間")]
+        [DataType(DataType.DateTime,ErrorMessage ="輸入時間有誤")]
+        [DisplayFormat(DataFormatString ="{0:yyyy/MM/dd}",ApplyFormatInEditMode =true)]
+        public System.DateTime postTime { get; set; }
+
+        [DisplayName("照片")]
+        [Required(ErrorMessage = "請上傳圖片")]
+        public byte[] postPics { get; set; }
+
+    }
+
+
+
+    public  class MetaPunishment
+    {
+
+        [DisplayName("處置編號")]
+        [Required(ErrorMessage = "請輸入處置帳號")]
+        [StringLength(10, ErrorMessage = "處置編號最多10個字")]
+        public string punishId { get; set; }
+
+        [DisplayName("處置名稱")]
+        [Required(ErrorMessage = "請輸入處置名稱")]
+        [StringLength(10, ErrorMessage = "處置名稱最多10個字")]
+        public string punishName { get; set; }
+
+    }
+
+
+
+    public  class MetaSocial_Net_ID
+    {
+        [DisplayName("社群帳號編號")]
+        [Required(ErrorMessage = "請輸入社群帳號編號")]
+        [StringLength(10, ErrorMessage = "社群帳號編號最多10個字")]
+        public string socialSerial { get; set; }
+
+        [DisplayName("會員ID")]
+        [Required(ErrorMessage = "請輸入會員ID")]
+        [StringLength(10, ErrorMessage = "會員ID最多10個字")]
+        public string memId { get; set; }
+
+        [DisplayName("社群帳號")]
+        [Required(ErrorMessage = "請輸入社群帳號")]
+        [StringLength(50, ErrorMessage = "社群帳號最多50個字")]
+        public string socialId { get; set; }
+
+    }
+
+
+    public  class MetaType_of_Violate
+    {
+        [DisplayName("類別編號")]
+        [Required(ErrorMessage = "請輸入類別編號")]
+        [StringLength(8, ErrorMessage = "編號最多8碼")]
+        public string typeId { get; set; }
+
+        [DisplayName("違規類別名稱")]
+        [Required(ErrorMessage = "請輸入違規類別名稱")]
+        [StringLength(10, ErrorMessage = "違規類別名稱最多10個字")]
+        public string vioClass { get; set; }
+ 
+    }
+
+    public class MetaViolation
+    {
+
+        [DisplayName("違規編號")]
+        public string vioId { get; set; }
+
+        [DisplayName("檢舉者會員編號")]
+        public string FromMemId { get; set; }
+
+        [DisplayName("管理員ID")]
+        public string FromAdmID { get; set; }
+
+        [DisplayName("違規類別編號")]
+        [Required(ErrorMessage = "請輸入違規類別編號")]
+        [StringLength(8, ErrorMessage = "類別編號最多8碼")]
+        public string typeId { get; set; }
+
+        [DisplayName("對應事項編號")]
+        [Required(ErrorMessage = "請輸入對應事項編號")]
+        [StringLength(10, ErrorMessage = "編號最多10碼")]
+        public string CorrespondingEventID { get; set; }
+
+        [DisplayName("檢舉標題")]
+        [Required(ErrorMessage = "請輸入檢舉標題")]
+        [StringLength(20, ErrorMessage = "標題最多20個字")]
+        public string vioTitle { get; set; }
+
+        [DisplayName("檢舉內容")]
+        [Required(ErrorMessage = "請輸入檢舉內容")]
+        public string vioContent { get; set; }
+
+
+        [DisplayName("檢舉時間")]
+        [Required(ErrorMessage = "請輸入檢舉時間")]
+        [DataType(DataType.DateTime, ErrorMessage = "輸入時間有誤")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        public System.DateTime vioReportTime { get; set; }
+
+
+        [DisplayName("處置管理員ID")]
+        public string implement_admId { get; set; }
+
+
+        [DisplayName("處置編號")]
+        public string punishId { get; set; }
+
+
+        [DisplayName("違規處置時間")]
+        [Required(ErrorMessage = "請輸入處置時間")]
+        [DataType(DataType.DateTime, ErrorMessage = "輸入時間有誤")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> vioProcessTime { get; set; }
+
+    }
+
+
+
+
 }
