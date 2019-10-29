@@ -208,6 +208,7 @@ namespace JoinFun.Models
     {
         [DisplayName("付款方式")]
         public string payment { get; set; }
+    }
     public class MetaBookmark_Details
     {
 

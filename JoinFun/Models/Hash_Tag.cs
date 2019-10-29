@@ -11,7 +11,10 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(MetaHash_Tag))]
+
     public partial class Hash_Tag
     {
         public string hashSerial { get; set; }
