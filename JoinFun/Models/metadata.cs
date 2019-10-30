@@ -95,8 +95,12 @@ namespace JoinFun.Models
 
     public class MetaBudget_Restriction
     {
-        [DisplayName("預算")]
+
+        [DisplayName("預算限制")]
+        [Required(ErrorMessage = "預算限制為必填")]
+        [Range(double.Epsilon, double.MaxValue, ErrorMessage = "預算不可小於0")]
         public decimal Budget { get; set; }
+
     }
 
     public class MetaCounty
@@ -218,13 +222,31 @@ namespace JoinFun.Models
 
     public class MetaPeople_Restriction
     {
-        [DisplayName("人數上限")]
+
+        [DisplayName("人數限制編號")]
+        public short peoSerial { get; set; }
+        [DisplayName("人數限制")]
         public int PeoRestriction { get; set; }
+
     }
+
     public class MetaPhotos_of_Activities
     {
-        [DisplayName("活動照片")]
+
+        [DisplayName("照片編號")]
+        [Required(ErrorMessage = "請輸入照片編號")]
+        public string PhotoSerial { get; set; }
+
+
+        [DisplayName("活動編號")]
+        [Required(ErrorMessage = "請輸入活動編號")]
+        public string actId { get; set; }
+
+
+        [DisplayName("照片")]
+        [Required(ErrorMessage = "請上傳照片")]
         public byte[] actPics { get; set; }
+
     }
 
     public class Metavw_Activities
@@ -329,15 +351,7 @@ namespace JoinFun.Models
 
     }
 
-    public class MetaBudget_Restriction
-    {
 
-        [DisplayName("預算限制")]
-        [Required(ErrorMessage = "預算限制為必填")]
-        [Range(double.Epsilon, double.MaxValue, ErrorMessage = "預算不可小於0")]
-        public decimal Budget { get; set; }
-
-    }
 
     public class MetaComment
     {
@@ -543,35 +557,6 @@ namespace JoinFun.Models
         public string NotifContent { get; set; }
         [DisplayName("是否已讀")]
         public bool readYet { get; set; }
-
-    }
-
-    public class MetaPeople_Restriction
-    {
-
-        [DisplayName("人數限制編號")]
-        public short peoSerial { get; set; }
-        [DisplayName("人數限制")]
-        public int PeoRestriction { get; set; }
-
-    }
-
-    public  class MetaPhotos_of_Activities
-    {
-
-        [DisplayName("照片編號")]
-        [Required(ErrorMessage = "請輸入照片編號")]
-        public string PhotoSerial { get; set; }
-
-
-        [DisplayName("活動編號")]
-        [Required(ErrorMessage = "請輸入活動編號")]
-        public string actId { get; set; }
-
-
-        [DisplayName("照片")]
-        [Required(ErrorMessage = "請上傳照片")]
-        public byte[] actPics { get; set; }
 
     }
 

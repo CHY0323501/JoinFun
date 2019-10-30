@@ -1,0 +1,87 @@
+﻿@model IEnumerable<JoinFun.Models.vw_Activities>
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>揪團活動明細</h2>
+
+<div class="container">
+    <div class="form">
+
+        @foreach (var item in Model)
+        {
+            var address = item.CountyName + item.DistrictName + item.actRoad;
+
+            <div class="form-group">
+                @if(item.actPics != null)
+                {
+                    <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})"/>
+                }
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actTopic)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actTopic)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actTime)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actTime)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actDeadline)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actDeadline)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.memNick)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.memNick)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actDescription)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actDescription)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actClassName)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actClassName)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.age)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.age)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.Budget)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.Budget)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">活動地點</label>
+                <p class="col-xs-10">@address</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.gender)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.gender)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.PeoRestriction)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.PeoRestriction)</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">@Html.DisplayNameFor(m => m.payment)</label>
+                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.payment)</p>
+            </div>
+        }
+
+        @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-warning" })
+    </div>
+</div>

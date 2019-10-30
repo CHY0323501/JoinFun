@@ -1,0 +1,78 @@
+﻿@*@model IEnumerable<Test.Models.vw_Activities>*@
+@model JoinFun.ViewModel.ActClass
+
+@{
+    //var host = (IEnumerable < Test.Models.Member >)ViewBag.host;
+    ViewBag.Title = "揪團活動列表";
+}
+
+<div class="container">
+    <h5 class="display-4">揪團活動列表</h5>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-light">
+        <ul class="navbar-nav">
+
+            @foreach (var item in Model.ClassList)
+            {
+                <li class="nav-item">
+                    <a class="nav-link">@Html.ActionLink(item.actClassName, "Index", new { actClassId = item.actClassId }, new { @class = "btn btn-default" })</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+    <div class="col col-xs-10">
+        <div class="row jumbotron alert alert-success">
+            <h3>@ViewBag.actClassName</h3>
+            @*@if (Session["memid"] != null)
+                {*@
+            <a class="text-right">
+                @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-primary" })
+            </a>
+            @*}*@
+        </div>
+        <div class="row">
+
+
+            @foreach (var item in Model.ActivityList)
+            {
+                var address = item.CountyName + item.DistrictName + item.actRoad;
+                <div class="card-deck">
+                    <div class="card mt-4">
+                        <div class="card-header bg-info">
+                            @*<h4 class="text-center">活動主題</h4>*@
+                            <h3 class="text-center text-danger">@Html.DisplayFor(modelItem => item.actTopic)</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <h4 class="text-center text-primary"><mark>活動時間</mark></h4>
+                            <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actTime)</p>
+                            <h4 class="text-center text-primary"><mark>活動截止時間</mark></h4>
+                            <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actDeadline)</p>
+                            <h4 class="text-center text-primary"><mark>活動地點</mark></h4>
+                            <p class="text-center text-muted">@address</p>
+                            <h4 class="text-center"><mark class="text-danger">主辦人</mark></h4>
+                            <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.memNick)</p>
+                        </div>
+
+
+                        @*@if (Session["Account"] != null && (Session["memId"]).ToString() == item.hostId)
+                        {*@
+                            <div class="card-footer bg-warning text-center">
+                                @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = ViewBag.actClassId }, new { @class = "btn btn-success" }) |
+                                @Html.ActionLink("編輯", "Edit", new { id = item.actId }, new { @class = "btn btn-primary" }) |
+                                @Html.ActionLink("刪除", "Delete", new { id = item.actId }, new { @class = "btn btn-danger", onclick = "return confirm('確認刪除嗎??')" })
+                            </div>
+                        @*}*@
+                        @*else
+                        {
+                            <div class="card-footer bg-warning text-center">
+                                @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = ViewBag.actClassId }, new { @class = "btn btn-success" })
+                            </div>
+                        }*@
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
