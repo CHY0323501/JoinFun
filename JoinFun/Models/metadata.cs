@@ -476,9 +476,6 @@ namespace JoinFun.Models
 
     }
 
-
-
-
     public class MetaPeople_Restriction
     {
 
@@ -494,13 +491,11 @@ namespace JoinFun.Models
 
         [DisplayName("照片編號")]
         [Required(ErrorMessage = "請輸入照片編號")]
-        [StringLength(10, ErrorMessage = "照片編號最多10個字")]
         public string PhotoSerial { get; set; }
 
 
-        [DisplayName("活動ID")]
-        [Required(ErrorMessage = "請輸入活動ID")]
-        [StringLength(10, ErrorMessage = "活動ID最多10個字")]
+        [DisplayName("活動編號")]
+        [Required(ErrorMessage = "請輸入活動編號")]
         public string actId { get; set; }
 
 
@@ -515,12 +510,10 @@ namespace JoinFun.Models
     {
         [DisplayName("公告編號")]
         [Required(ErrorMessage = "請輸入公告編號")]
-        [StringLength(10, ErrorMessage = "公告編號最多10個字")]
         public string postSerial { get; set; }
 
-        [DisplayName("發布管理員ID")]
-        [Required(ErrorMessage = "請輸入管理員ID")]
-        [StringLength(6, ErrorMessage = "管理員ID最多6個字")]
+        [DisplayName("發佈管理員編號")]
+        [Required(ErrorMessage = "請輸入管理員編號")]
         public string admId { get; set; }
 
         [DisplayName("公告標題")]
@@ -551,8 +544,7 @@ namespace JoinFun.Models
     {
 
         [DisplayName("處置編號")]
-        [Required(ErrorMessage = "請輸入處置帳號")]
-        [StringLength(10, ErrorMessage = "處置編號最多10個字")]
+        [Required(ErrorMessage = "請輸入處置編號")]
         public string punishId { get; set; }
 
         [DisplayName("處置名稱")]
@@ -568,17 +560,16 @@ namespace JoinFun.Models
     {
         [DisplayName("社群帳號編號")]
         [Required(ErrorMessage = "請輸入社群帳號編號")]
-        [StringLength(10, ErrorMessage = "社群帳號編號最多10個字")]
         public string socialSerial { get; set; }
 
-        [DisplayName("會員ID")]
-        [Required(ErrorMessage = "請輸入會員ID")]
-        [StringLength(10, ErrorMessage = "會員ID最多10個字")]
+        [DisplayName("會員編號")]
+        [Required(ErrorMessage = "請輸入會員編號")]
+        [StringLength(10, ErrorMessage = "會員編號最多10個字")]
         public string memId { get; set; }
 
-        [DisplayName("社群帳號")]
-        [Required(ErrorMessage = "請輸入社群帳號")]
-        [StringLength(50, ErrorMessage = "社群帳號最多50個字")]
+        [DisplayName("社群ID")]
+        [Required(ErrorMessage = "請輸入社群ID")]
+        [StringLength(50, ErrorMessage = "社群ID最多50個字")]
         public string socialId { get; set; }
 
     }
@@ -588,7 +579,6 @@ namespace JoinFun.Models
     {
         [DisplayName("類別編號")]
         [Required(ErrorMessage = "請輸入類別編號")]
-        [StringLength(8, ErrorMessage = "編號最多8碼")]
         public string typeId { get; set; }
 
         [DisplayName("違規類別名稱")]
@@ -607,7 +597,7 @@ namespace JoinFun.Models
         [DisplayName("檢舉者會員編號")]
         public string FromMemId { get; set; }
 
-        [DisplayName("管理員ID")]
+        [DisplayName("檢舉者管理員編號")]
         public string FromAdmID { get; set; }
 
         [DisplayName("違規類別編號")]
@@ -637,7 +627,7 @@ namespace JoinFun.Models
         public System.DateTime vioReportTime { get; set; }
 
 
-        [DisplayName("處置管理員ID")]
+        [DisplayName("處置管理員編號")]
         public string implement_admId { get; set; }
 
 
