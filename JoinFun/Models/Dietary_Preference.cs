@@ -11,7 +11,10 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(MetaDietary_Preference))]
+
     public partial class Dietary_Preference
     {
         public string dSerial { get; set; }

@@ -11,7 +11,9 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(MetaBookmark_Details))]
     public partial class Bookmark_Details
     {
         public string memId { get; set; }
