@@ -28,6 +28,9 @@ namespace JoinFun.Controllers
             //    Habit=db.Habit.Where(m => m.memId == memID).ToList(),
             //    Member_Remarks=db.Member_Remarks.Where(m => m.FromMemId == memID).ToList()
             //};
+
+            //讀取特定會員相關資訊
+            Session["memid"] = memID;
             var mem = db.Member.Where(m => m.memId == memID).ToList();
             return View(mem);
         }

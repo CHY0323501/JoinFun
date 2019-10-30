@@ -1,47 +1,113 @@
 ﻿@*@model JoinFun.ViewModel.MemberViewModel*@
 @model IEnumerable<JoinFun.Models.Member>
 
-@{
+
+
+@if (Session["memid"].ToString() == Model.ToList()[0].memId)
+{
+        <h2 class="mt-5 mb-5">個人資訊</h2>
     ViewBag.Title = "個人資訊";
 }
+else
+{
+        <h2 class="mt-5 mb-5">會員資訊</h2>
+    ViewBag.Title = "會員資訊";
+}
 
-    <h2>個人資訊</h2>
+
+
 <div class="container">
     <div class="row">
-        @foreach (var item in Model)
-        {
-        <div>
-            @Html.DisplayFor(modelItem => item.Friendship.Count)
+        <div class="col col-md-4 text-center border">
+            @if (Model.ToList()[0].Sex == "M")
+            {
+                <img src="~/Photos/male.png" class="img-fluid w-50 " />
+            }
+            else
+            {
+                <img src="~/Photos/female.png" class="img-fluid w-50 " />
+            }
+
         </div>
-        }
-        123
-        @*@Html.DisplayNameFor(model => model.memId)
-        @Html.DisplayNameFor(model => model.Email)
-        @Html.DisplayNameFor(model => model.cellPhone)
-        @Html.DisplayNameFor(model => model.timeReg)
-        @Html.DisplayNameFor(model => model.Birthday)
-        @Html.DisplayNameFor(model => model.numViolate)
-        @Html.DisplayNameFor(model => model.Suspend)
-        @Html.DisplayNameFor(model => model.Sex)
-        @Html.DisplayNameFor(model => model.Approved)
-        @Html.DisplayNameFor(model => model.Introduction)
-        @Html.DisplayNameFor(model => model.County.CountyName)
-        @Html.DisplayNameFor(model => model.District.DistrictName)*@
+        <div class="col col-md-8 align-self-center text-center">
+            <div class="row mb-2">
+                <div class="col-md-4 ">
+                    @Html.DisplayNameFor(model => model.memId)
+                </div>
+                <div class="col-md-8 ">
+                    @Html.DisplayFor(m => Model.ToList()[0].memId)
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 ">
+                    @Html.DisplayNameFor(model => model.memNick)
+                </div>
+                <div class="col-md-8 ">
+                    @Html.DisplayFor(m => Model.ToList()[0].memNick)
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 ">
+                    所在地
+                </div>
+                <div class="col-md-8 ">
+                    @Html.DisplayFor(m => Model.ToList()[0].County.CountyName)
+                    @Html.DisplayFor(m => Model.ToList()[0].District.DistrictName)
+                </div>
+            </div>
+            <div class="row  ">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-8 text-center ml-md-3">
+                    @if (Session["memid"].ToString() == Model.ToList()[0].memId)
+                    {
+                        <a href="#" class="btn btn-info" style="width:inherit">編輯個人資訊</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row w-100 h-50 text-center ml-auto mr-auto mt-4 ">
+            <div class="col col-md-12 border">
+                <div class="row">
+                    <div class="col-md">
+                        @Html.DisplayFor(m => Model.ToList()[0].FollowUp.Count)
+                    </div>
+                    <div class="col-md">
+                        @Html.DisplayFor(m => Model.ToList()[0].Fans.Count)
+                    </div>
+                    <div class="col-md">
+                        @Html.DisplayFor(m => Model.ToList()[0].Friendship.Count)
+                    </div>
+                    <div class="col-md">
+                        @Html.DisplayFor(m => Model.ToList()[0].Member_Remarks.Count)
+                    </div>
+                    <div class="col-md">
+                        0
+                        @*@Html.DisplayFor(m => Model.ToList()[0].Activity_Details)*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row w-100 h-50 text-center ml-auto mr-auto ">
+            <div class="col col-md-12 border">
+                <div class="row">
+                    <div class="col-md">
+                        <span>追蹤</span>
+                    </div>
+                    <div class="col-md">
+                        <span>粉絲</span>
+                    </div>
+                    <div class="col-md">
+                        <span>好友</span>
+                    </div>
+                    <div class="col-md">
+                        <span>評價</span>
+                    </div>
+                    <div class="col-md">
+                        揪團歷史
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-            
-
-@*@foreach (var item in Model) {
-            @Html.DisplayFor(modelItem => item.Habit)
-            @Html.DisplayFor(modelItem => item.Email)
-            @Html.DisplayFor(modelItem => item.Birthday)
-            @Html.DisplayFor(modelItem => item.Sex)
-            @Html.DisplayFor(modelItem => item.Introduction)
-            @Html.DisplayFor(modelItem => item.County.CountyName)
-            @Html.DisplayFor(modelItem => item.District.DistrictName)
-            @Html.ActionLink("Edit", "Edit", new { id=item.memId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.memId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.memId })
-}*@
-
