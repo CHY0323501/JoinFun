@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acc_Pass">
           <Key>
             <PropertyRef Name="Account" />
@@ -290,7 +290,7 @@
           </Key>
           <Property Name="socialSerial" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="socialId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="socialId" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Type_of_Violate">
           <Key>
@@ -314,6 +314,58 @@
           <Property Name="implement_admId" Type="char" MaxLength="6" />
           <Property Name="punishId" Type="char" MaxLength="10" />
           <Property Name="vioProcessTime" Type="datetime" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Activities' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_Activities">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="actClassName" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="payment" />
+            <PropertyRef Name="PeoRestriction" />
+          </Key>
+          <Property Name="age" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="actClassName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Budget" Type="money" Nullable="false" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="acceptDrop" Type="bit" Nullable="false" />
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="actCounty" Type="smallint" Nullable="false" />
+          <Property Name="actDeadline" Type="datetime" Nullable="false" />
+          <Property Name="actDescription" Type="nvarchar(max)" />
+          <Property Name="actDistrict" Type="smallint" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actRoad" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="actTime" Type="datetime" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ageRestrict" Type="smallint" Nullable="false" />
+          <Property Name="clickTimes" Type="int" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="keepAct" Type="bit" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="payment" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="PeoRestriction" Type="int" Nullable="false" />
+          <Property Name="actPics" Type="image" />
         </EntityType>
         <Association Name="FK__Acc_Pass__memId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
@@ -804,6 +856,34 @@
           <EntitySet Name="Social_Net_ID" EntityType="Self.Social_Net_ID" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Type_of_Violate" EntityType="Self.Type_of_Violate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Violation" EntityType="Self.Violation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_Activities" EntityType="Self.vw_Activities" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Activities].[age] AS [age], 
+    [vw_Activities].[actClassName] AS [actClassName], 
+    [vw_Activities].[Budget] AS [Budget], 
+    [vw_Activities].[CountyName] AS [CountyName], 
+    [vw_Activities].[DistrictName] AS [DistrictName], 
+    [vw_Activities].[gender] AS [gender], 
+    [vw_Activities].[acceptDrop] AS [acceptDrop], 
+    [vw_Activities].[actClassId] AS [actClassId], 
+    [vw_Activities].[actCounty] AS [actCounty], 
+    [vw_Activities].[actDeadline] AS [actDeadline], 
+    [vw_Activities].[actDescription] AS [actDescription], 
+    [vw_Activities].[actDistrict] AS [actDistrict], 
+    [vw_Activities].[actId] AS [actId], 
+    [vw_Activities].[actRoad] AS [actRoad], 
+    [vw_Activities].[actTime] AS [actTime], 
+    [vw_Activities].[actTopic] AS [actTopic], 
+    [vw_Activities].[ageRestrict] AS [ageRestrict], 
+    [vw_Activities].[clickTimes] AS [clickTimes], 
+    [vw_Activities].[hostId] AS [hostId], 
+    [vw_Activities].[keepAct] AS [keepAct], 
+    [vw_Activities].[memNick] AS [memNick], 
+    [vw_Activities].[payment] AS [payment], 
+    [vw_Activities].[PeoRestriction] AS [PeoRestriction], 
+    [vw_Activities].[actPics] AS [actPics]
+    FROM [dbo].[vw_Activities] AS [vw_Activities]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Acc_Pass__memId__6EF57B66" Association="Self.FK__Acc_Pass__memId__6EF57B66">
             <End Role="Member" EntitySet="Member" />
             <End Role="Acc_Pass" EntitySet="Acc_Pass" />
@@ -957,8 +1037,7 @@
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JoinFunModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1317,7 +1396,7 @@
           </Key>
           <Property Name="socialSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="socialId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="socialId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Member" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Social_Net_ID" ToRole="Member" />
         </EntityType>
         <EntityType Name="Type_of_Violate">
@@ -1989,7 +2068,58 @@
             <End Role="Type_of_Violate" EntitySet="Type_of_Violate" />
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
+          <EntitySet Name="vw_Activities" EntityType="JoinFunModel.vw_Activities" />
         </EntityContainer>
+        <EntityType Name="vw_Activities">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="actClassName" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="payment" />
+            <PropertyRef Name="PeoRestriction" />
+          </Key>
+          <Property Name="age" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="actClassName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="payment" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
+          <Property Name="actPics" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2329,6 +2459,36 @@
                 <ScalarProperty Name="implement_admId" ColumnName="implement_admId" />
                 <ScalarProperty Name="punishId" ColumnName="punishId" />
                 <ScalarProperty Name="vioProcessTime" ColumnName="vioProcessTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Activities">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_Activities">
+              <MappingFragment StoreEntitySet="vw_Activities">
+                <ScalarProperty Name="actPics" ColumnName="actPics" />
+                <ScalarProperty Name="PeoRestriction" ColumnName="PeoRestriction" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="actClassName" ColumnName="actClassName" />
+                <ScalarProperty Name="age" ColumnName="age" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

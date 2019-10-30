@@ -57,5 +57,6 @@ namespace JoinFun.Models
         public virtual DbSet<Social_Net_ID> Social_Net_ID { get; set; }
         public virtual DbSet<Type_of_Violate> Type_of_Violate { get; set; }
         public virtual DbSet<Violation> Violation { get; set; }
+        public virtual DbSet<vw_Activities> vw_Activities { get; set; }
     }
 }
