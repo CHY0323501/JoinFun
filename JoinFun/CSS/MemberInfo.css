@@ -1,0 +1,14 @@
+﻿.adj_fontsize {
+    font-size:150%;
+}
+
+.border-right {
+    border-right: none !important;
+}
+@media (min-width: 768px) {
+    .border-right {
+        border-right: 1px solid #dee2e6 !important;
+    }
+}
+
+

@@ -9,13 +9,18 @@
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    @RenderSection("memberinfo", required: false)
     <style>
-        .navbar-light a{
-           color:white!important;
+        body {
+            font-family: 微軟正黑體;
         }
 
-
+        .navbar-light a {
+            color: white !important;
+        }
     </style>
+
+
 </head>
 <body>
     <div class="navbar navbar-expand-lg fixed-top navbar-light bg-dark justify-content-end">

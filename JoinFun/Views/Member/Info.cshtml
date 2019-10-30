@@ -1,16 +1,26 @@
-﻿@*@model JoinFun.ViewModel.MemberViewModel*@
-@model IEnumerable<JoinFun.Models.Member>
+﻿@model IEnumerable<JoinFun.Models.Member>
+
+
+@section memberinfo{
+    <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
+}
+
+@*將興趣資料集轉為IEnumerable*@
+@{var hh = (IEnumerable<JoinFun.Models.Habit>)ViewBag.member_habit;}
+@{var ff = (IEnumerable<JoinFun.Models.Dietary_Preference>)ViewBag.member_food;}
+
+
 
 
 
 @if (Session["memid"].ToString() == Model.ToList()[0].memId)
 {
-        <h2 class="mt-5 mb-5">個人資訊</h2>
+    <h2 class="mt-5 mb-5">個人資訊</h2>
     ViewBag.Title = "個人資訊";
 }
 else
 {
-        <h2 class="mt-5 mb-5">會員資訊</h2>
+    <h2 class="mt-5 mb-5">會員資訊</h2>
     ViewBag.Title = "會員資訊";
 }
 
@@ -18,7 +28,7 @@ else
 
 <div class="container">
     <div class="row">
-        <div class="col col-md-4 text-center border">
+        <div class="col col-md-4 text-center  align-self-center">
             @if (Model.ToList()[0].Sex == "M")
             {
                 <img src="~/Photos/male.png" class="img-fluid w-50 " />
@@ -67,47 +77,96 @@ else
             </div>
         </div>
         <div class="row w-100 h-50 text-center ml-auto mr-auto mt-4 ">
-            <div class="col col-md-12 border">
+            <div class="col col-md-12 ">
                 <div class="row">
-                    <div class="col-md">
-                        @Html.DisplayFor(m => Model.ToList()[0].FollowUp.Count)
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
+                        <div class="adj_fontsize">@Model.ToList()[0].FollowUp.Count</div>
+                        <div>追蹤</div>
                     </div>
-                    <div class="col-md">
-                        @Html.DisplayFor(m => Model.ToList()[0].Fans.Count)
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
+                        <div class="adj_fontsize">@Model.ToList()[0].Fans.Count</div>
+                        <div>粉絲</div>
                     </div>
-                    <div class="col-md">
-                        @Html.DisplayFor(m => Model.ToList()[0].Friendship.Count)
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
+                        <div class="adj_fontsize">@Model.ToList()[0].Friendship.Count</div>
+                        <div>好友</div>
                     </div>
-                    <div class="col-md">
-                        @Html.DisplayFor(m => Model.ToList()[0].Member_Remarks.Count)
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
+                        <div class="adj_fontsize">@ViewBag.mem_remarks_count</div>
+                        <div>評價</div>
                     </div>
-                    <div class="col-md">
-                        0
-                        @*@Html.DisplayFor(m => Model.ToList()[0].Activity_Details)*@
+                    <div class="col-md col-sm-2 card rounded-pill  mb-md-2 ml-sm-2">
+                        <div class="adj_fontsize">@(ViewBag.activities_count + Model.ToList()[0].Activity_Details.Count)</div>
+                        <div>揪團</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row w-100 h-50 text-center ml-auto mr-auto ">
-            <div class="col col-md-12 border">
-                <div class="row">
-                    <div class="col-md">
-                        <span>追蹤</span>
-                    </div>
-                    <div class="col-md">
-                        <span>粉絲</span>
-                    </div>
-                    <div class="col-md">
-                        <span>好友</span>
-                    </div>
-                    <div class="col-md">
-                        <span>評價</span>
-                    </div>
-                    <div class="col-md">
-                        揪團歷史
-                    </div>
+        <div class="row w-100 mt-4 mb-4 text-center">
+            <div class="col-12 col-sm-12 col-md-4 border-right ">
+                <div class="adj_fontsize text-success font-weight-bold">個人簡介</div>
+                <div>
+                    @if (Model.ToList()[0].Introduction != null)
+                    {
+                        @Model.ToList()[0].Introduction
+                    }
+                    else {
+                        @:無
+                    }
+                            </div>
+            </div>
+            <div class="col-12  col-sm-12 col-md-4 border-right">
+                <div class="adj_fontsize text-success font-weight-bold">興趣</div>
+                <div>
+                    @if (hh!=null)
+                        {
+                            foreach (var i in hh)
+                            {
+                                if (i != hh.Last())
+                                {
+                                    @i.Habit1 @:、
+                                }
+                                else
+                                {
+                                    @i.Habit1
+                                }
+                            }
+                        }
+                        else
+                        {
+                                @:無資料
+                        }
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 ">
+                <div class="adj_fontsize text-success font-weight-bold">飲食偏好</div>
+                <div>
+                    @foreach (var i in ff)
+                    {
+                        if (i != ff.Last())
+                        {
+                            @i.dPreference @:、
+                        }
+                        else
+                        {
+                            @i.dPreference
+                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
+    <div class="row" style="height:300px">
+    </div>
+    @if (Session["memid"].ToString() == Model.ToList()[0].memId)
+    {
+        <div class="row">
+            <div class="col-3 offset-2">
+                @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-warning d-block" })
+            </div>
+            <div class="col-3 offset-2">
+                @Html.ActionLink("修改密碼", "actionname", "controllername", "", new { @class = "btn btn-warning d-block" })
+            </div>
+        </div>
+    }
 </div>

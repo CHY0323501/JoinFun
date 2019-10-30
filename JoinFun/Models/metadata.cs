@@ -329,7 +329,7 @@ namespace JoinFun.Models
 
     }
 
-    public class MetaBudget_Restriction
+    public class MetadataBudget_Restriction
     {
 
         [DisplayName("預算限制")]
@@ -546,7 +546,7 @@ namespace JoinFun.Models
 
     }
 
-    public class MetaPeople_Restriction
+    public class MetadataPeople_Restriction
     {
 
         [DisplayName("人數限制編號")]
@@ -556,7 +556,7 @@ namespace JoinFun.Models
 
     }
 
-    public  class MetaPhotos_of_Activities
+    public  class MetadataPhotos_of_Activities
     {
 
         [DisplayName("照片編號")]
