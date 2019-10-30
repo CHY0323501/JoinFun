@@ -93,6 +93,12 @@ namespace JoinFun.Models
         public string memId { get; set; }
     }
 
+    public class MetaBudget_Restriction
+    {
+        [DisplayName("預算")]
+        public decimal Budget { get; set; }
+    }
+
     public class MetaCounty
     {
         [DisplayName("縣/市")]
@@ -208,5 +214,68 @@ namespace JoinFun.Models
     {
         [DisplayName("付款方式")]
         public string payment { get; set; }
+    }
+
+    public class MetaPeople_Restriction
+    {
+        [DisplayName("人數上限")]
+        public int PeoRestriction { get; set; }
+    }
+    public class MetaPhotos_of_Activities
+    {
+        [DisplayName("活動照片")]
+        public byte[] actPics { get; set; }
+    }
+
+    public class Metavw_Activities
+    {
+        [DisplayName("活動ID")]
+        public string actId { get; set; }
+        [DisplayName("主辦人會員ID")]
+        public string hostId { get; set; }
+        [DisplayName("主辦人暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("活動主題")]
+        [Required(ErrorMessage = "請輸入活動主題")]
+        public string actTopic { get; set; }
+        [DisplayName("活動舉辦時間")]
+        [Required(ErrorMessage = "請輸入活動時間")]
+        [DataType(DataType.Date)]
+        public System.DateTime actTime { get; set; }
+        [DisplayName("活動說明")]
+        [Required(ErrorMessage = "請說明活動")]
+        public string actDescription { get; set; }
+        [DisplayName("年齡")]
+        public string age { get; set; }
+        [DisplayName("性別限制")]
+        public string gender { get; set; }
+        [DisplayName("人數上限")]
+        public int PeoRestriction { get; set; }
+        [DisplayName("預算")]
+        public decimal Budget { get; set; }
+        [DisplayName("縣/市")]
+        public string CountyName { get; set; }
+        [DisplayName("鄉/鎮/市/區")]
+        public string DistrictName { get; set; }
+        [DisplayName("路名")]
+        public string actRoad { get; set; }
+        [DisplayName("付款方式")]
+        public string payment { get; set; }
+        [DisplayName("是否保留此揪團活動")]
+        public bool keepAct { get; set; }
+        [DisplayName("是否可退出")]
+        public bool acceptDrop { get; set; }
+        [DisplayName("點擊次數")]
+        public int clickTimes { get; set; }
+        [DisplayName("報名截止時間")]
+        [DataType(DataType.Date)]
+        public System.DateTime actDeadline { get; set; }
+        [DisplayName("活動類別ID")]
+        public string actClassId { get; set; }
+        [DisplayName("活動類別")]
+        public string actClassName { get; set; }
+
+        [DisplayName("活動照片")]
+        public byte[] actPics { get; set; }
     }
 }

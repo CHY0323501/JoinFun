@@ -75,6 +75,7 @@
         <AssociationConnector Association="JoinFunModel.FK__Violation__FromM__6A30C649" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Violation__punis__01142BA1" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Violation__typeI__00200768" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Activities" Width="1.5" PointX="5.5" PointY="16.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
