@@ -1,8 +1,9 @@
 ﻿@model JoinFun.Models.Member
 
-@section memberedit{
+@section memberinfo{
     <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
 }
+
 
 
 @{
@@ -18,43 +19,43 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.memId)
+    @*@Html.HiddenFor(model => Model.memId)*@
+    <input type="hidden" name="memId" value="@Model.memId" />
     <div class="row ml-auto mr-auto">
         <div class="col-md-4 text-center   align-self-center">
             <div class="form-group ">
                 <div class="col-md">
-                    <img src="~/Photos/@(Model.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
+                    <img src="~/Photos/@(Model.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-75 " />
                 </div>
 
                 <div class="col-md">
                     <select id="Sex" name="Sex" class="form-control-sm">
-                        <option value="1" @(Model.Sex == "M" ? "selected" : "")>男</option>
-                        <option value="0" @(Model.Sex == "M" ? "" : "selected")>女</option>
+                        <option value="M" @(Model.Sex == "M" ? "selected" : "")>男</option>
+                        <option value="F" @(Model.Sex == "M" ? "" : "selected")>女</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="col col-md-8 ">
-            <div class="row form-inline ml-auto mr-auto  text-center text-md-left mb-3">
+            <div class="row form-inline mx-auto  text-center text-md-left mb-3">
                 <div class="col-12 col-md-4">
                     @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
                 <div class="col-12 col-md-8">
-                    @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center w-50" } })
+                    @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="row form-inline ml-auto mr-auto  text-center  text-md-left mb-3 form-group">
+            <div class="row form-inline mx-auto  text-center  text-md-left mb-3 form-group">
                 <div class="col-12 col-md-4">
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
                 <div class="col-12 col-md-8">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center w-50" } })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="row form-inline ml-auto mr-auto  text-center text-md-left mb-3">
+            <div class="row form-inline mx-auto  text-center text-md-left mb-3">
                 <div class="col-12 col-md-4">
                     @Html.LabelFor(model => model.memCounty, "所在地", htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
@@ -63,20 +64,20 @@
                     @Html.ValidationMessageFor(model => model.memCounty, "", new { @class = "text-danger" })
                     @*@Html.DropDownList("district_drop", null, htmlAttributes: new { @class = "form-control ml-auto mr-auto mb-1 text-center w-25" })*@
 
-                    <select id="county" name="county" class="form-control ml-auto mr-auto mb-1 text-center w-25">
+                    <select id="memCounty" name="memCounty" class="form-control mx-auto mb-1 text-center w-25">
                         @foreach (var i in cc)
                         {
                             if (Model.County.CountyNo == i.CountyNo)
-                                {
-                                    <option value="@i.CountyNo" selected>@i.CountyName</option>
-                                }
-                                else
-                                {
-                                    <option value="@i.CountyNo">@i.CountyName</option>
-                                }
+                            {
+                                <option value="@i.CountyNo" selected>@i.CountyName</option>
+                            }
+                            else
+                            {
+                                <option value="@i.CountyNo">@i.CountyName</option>
+                            }
                         }
                     </select>
-                    <select id="disctrict" name="disctrict" class="form-control ml-auto mr-auto mb-1 text-center w-25">
+                    <select id="memDistrict" name="memDistrict" class="form-control mx-auto mb-1 text-center w-25">
                         @foreach (var i in dd.Where(a => a.CountyNo == Model.County.CountyNo))
                         {
                             if (Model.District.DistrictSerial == i.DistrictSerial)
@@ -91,69 +92,47 @@
                     </select>
                 </div>
             </div>
-            <div class="row form-inline ml-auto mr-auto  text-center text-md-left mb-3">
+            <div class="row form-inline mx-auto  text-center text-md-left mb-3">
                 <div class="col-12 col-md-4 ">
                     @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
                 <div class="col-12 col-md-8 ">
-                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center w-50" } })
+                    <input id="Birthday" name="Birthday" class="form-control mx-auto text-center w-50" type="date" />
+                    @*@Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })*@
                     @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
     <hr />
-    <div class="row w-100 mt-4 mb-4 text-center ml-auto mr-auto">
+    <div class="row w-100 mt-4 mb-4 text-center mx-auto">
         <div class="col-12 col-md-4 border-right mb-3 ">
             @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
-            @Html.TextArea("Introduction", Model.Introduction, 8, 50, new { @class = "form-control ml-auto mr-auto text-center ",style="resize:none" })
+            @Html.TextArea("Introduction", Model.Introduction, 8, 50, new { @class = "form-control mx-auto text-center ", style = "resize:none" })
             @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
         </div>
         <div class="col-12 col-md-4 border-right mb-3 ">
             <div>
-                @Html.LabelFor(model => model.Habit1, "興趣", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
-
-                @if (Model.Habit1 != null)
-                {
-                    @Html.TextArea("Introduction", Model.Habit1, 8, 50, new { @class = "form-control ml-auto mr-auto text-center " ,style="resize:none"})
-                    @*@Html.EditorFor(m => m.Habit1, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center mb-1" } })*@
-                }
-                else
-                {
-                    <div>
-                        無資料
-                    </div>
-                }
+                @Html.LabelFor(model => model.Habit, "興趣", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
+                @Html.TextArea("Habit", Model.Habit, 8, 50, new { @class = "form-control mx-auto text-center ", style = "resize:none" })
+                @*@Html.EditorFor(m => m.Habit1, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center mb-1" } })*@
             </div>
-            @Html.ValidationMessageFor(model => model.Habit1, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
         </div>
         <div class="col-12 col-md-4  mb-3 ">
             <div>
-                @Html.LabelFor(model => model.Dietary_Preference1, "飲食偏好", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
-
-                @if (Model.Dietary_Preference1 != null)
-                {
-                    @Html.TextArea("Introduction", Model.Dietary_Preference1, 8, 50, new { @class = "form-control ml-auto mr-auto text-center " ,style="resize:none"})
-                    @*@Html.EditorFor(m => m.Dietary_Preference1, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center mb-1" } })*@
-                }
-                else
-                {
-                    <div>
-                        無資料
-                    </div>
-                }
+                @Html.LabelFor(model => model.Dietary_Preference, "飲食偏好", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
+                @Html.TextArea("Dietary_Preference", Model.Dietary_Preference, 8, 50, new { @class = "form-control mx-auto text-center ", style = "resize:none" })
+                @*@Html.EditorFor(m => m.Dietary_Preference1, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center mb-1" } })*@
             </div>
-            @Html.ValidationMessageFor(model => model.Dietary_Preference1, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @class = "text-danger" })
         </div>
     </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="確認送出" class="btn btn-success" />
+    <div class="row w-100 mx-auto">
+        <div class="col col-12 col-md-6 offset-md-3 text-center ">
+            <input type="submit" value="確認送出" class="btn  mx-auto btn-outline-success" />
         </div>
     </div>
-
 }
 
 <div>
@@ -161,12 +140,12 @@
 </div>
 
 @section scripts{
-    
+
     <script>
         //填入原始會員生日
         var day = ("0" + @Model.Birthday.Day).slice(-2);
         //格式化月，如果小於9，前面補0
-        var month = ("0" + (@Model.Birthday.Month + 1)).slice(-2);
+        var month = ("0" + (@Model.Birthday.Month )).slice(-2);
         //拼裝完整日期格式
         var today = @Model.Birthday.Year + "-" + (month) + "-" + (day);
         //完成賦值
@@ -175,21 +154,21 @@
         ////////////////
 
         //更換鄉鎮市區選單
-        $('#county').change(function () {
-            $('#disctrict').empty();
+        $('#memCounty').change(function () {
+            $('#memDistrict').empty();
             $.ajax({
                 type: "Get",
-                url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#county').val(),
+                url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#memCounty').val(),
                 success: function (d) {
                     console.log(d);
                     d.forEach(function (currentValue,index,array) {
                         if (index%2 != 0) {
-                            $('#disctrict').append("<option value='"+array[index-1]+"'>" + currentValue + "</option>");
+                            $('#memDistrict').append("<option value='"+array[index-1]+"'>" + currentValue + "</option>");
                         }
                     });
                 }
             });
         });
-        
+
     </script>
 }

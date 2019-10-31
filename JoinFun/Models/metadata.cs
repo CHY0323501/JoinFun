@@ -191,12 +191,14 @@ namespace JoinFun.Models
         public short memDistrict { get; set; }
 
         [DisplayName("註冊時間")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime timeReg { get; set; }
 
         [DisplayName("生日")]
         [Required(ErrorMessage = "請輸入生日")]
-        [DataType(DataType.Date,ErrorMessage ="請填入正確生日")]
-        public DateTime Birthday { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "請填入正確生日")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        public System.DateTime Birthday { get; set; }
 
         [DisplayName("違規次數")]
         public short numViolate { get; set; }
@@ -215,9 +217,9 @@ namespace JoinFun.Models
         [DisplayName("個人簡介")]
         public string Introduction { get; set; }
         [DisplayName("興趣")]
-        public string Habit1 { get; set; }
+        public string Habit { get; set; }
         [DisplayName("飲食偏好")]
-        public string Dietary_Preference1 { get; set; }
+        public string Dietary_Preference { get; set; }
     }
 
     public class MetaPayment_Restriction
