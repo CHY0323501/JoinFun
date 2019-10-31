@@ -5,51 +5,40 @@
     <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
 }
 
-@*將興趣資料集轉為IEnumerable*@
+@*將資料集轉為IEnumerable*@
 @{var hh = (IEnumerable<JoinFun.Models.Habit>)ViewBag.member_habit;}
 @{var ff = (IEnumerable<JoinFun.Models.Dietary_Preference>)ViewBag.member_food;}
 
-
-
-
-
-@if (Session["memid"].ToString() == Model.ToList()[0].memId)
-{
-    <h2 class="mt-5 mb-5">個人資訊</h2>
-    ViewBag.Title = "個人資訊";
-}
-else
-{
-    <h2 class="mt-5 mb-5">會員資訊</h2>
-    ViewBag.Title = "會員資訊";
-}
-
-
-
 <div class="container">
     <div class="row">
-        <div class="col col-md-4 text-center  align-self-center">
-            @if (Model.ToList()[0].Sex == "M")
+        <div class="col-12 text-center " >
+            @if (Session["memid"].ToString() == Model.ToList()[0].memId)
             {
-                <img src="~/Photos/male.png" class="img-fluid w-50 " />
+                <h2 class="mt-5 mb-5 bg-warning text-white rounded-pill">個人資訊</h2>
+                ViewBag.Title = "個人資訊";
             }
             else
             {
-                <img src="~/Photos/female.png" class="img-fluid w-50 " />
+                <h2 class="mt-5 mb-5 bg-warning text-white rounded-pill">會員資訊</h2>
+                ViewBag.Title = "會員資訊";
             }
-
         </div>
-        <div class="col col-md-8 align-self-center text-center">
+    </div>
+    <div class="row">
+        <div class="col col-md-4 text-center  align-self-center">
+            <img src="~/Photos/@(Model.ToList()[0].Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
+        </div>
+        <div class="col col-md-8 align-self-center text-center font-weight-bold">
             <div class="row mb-2">
-                <div class="col-md-4 ">
+                <div class="col-md-4 text-success">
                     @Html.DisplayNameFor(model => model.memId)
                 </div>
-                <div class="col-md-8 ">
+                <div class="col-md-8 text-secondary">
                     @Html.DisplayFor(m => Model.ToList()[0].memId)
                 </div>
             </div>
             <div class="row mb-2">
-                <div class="col-md-4 ">
+                <div class="col-md-4 text-success">
                     @Html.DisplayNameFor(model => model.memNick)
                 </div>
                 <div class="col-md-8 ">
@@ -57,7 +46,7 @@ else
                 </div>
             </div>
             <div class="row mb-2">
-                <div class="col-md-4 ">
+                <div class="col-md-4 text-success">
                     所在地
                 </div>
                 <div class="col-md-8 ">
@@ -65,13 +54,35 @@ else
                     @Html.DisplayFor(m => Model.ToList()[0].District.DistrictName)
                 </div>
             </div>
+            <div class="row mb-2">
+                <div class="col-md-4 text-success">
+                    年齡
+                </div>
+                <div class="col-md-8 ">
+                    @(DateTime.Now.Year-Model.ToList()[0].Birthday.Year) 歲
+                </div>
+            </div>
+            
             <div class="row  ">
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-8 text-center ml-md-3">
-                    @if (Session["memid"].ToString() == Model.ToList()[0].memId)
-                    {
-                        <a href="#" class="btn btn-info" style="width:inherit">編輯個人資訊</a>
+                    @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
+                    @{ if (Session["memid"].ToString() == Model.ToList()[0].memId)
+                        {
+                            @Html.ActionLink("編輯個人資訊", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info", style = "width:inherit" })
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-md">
+                                    @Html.ActionLink("加入好友", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info", style = "width:inherit" })
+                                </div>
+                                <div class="col-md">
+                                    @Html.ActionLink("加入黑名單", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info", style = "width:inherit" })
+                                </div>
+                            </div>
+                        }
                     }
                 </div>
             </div>
@@ -93,32 +104,40 @@ else
                     </div>
                     <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
                         <div class="adj_fontsize">@ViewBag.mem_remarks_count</div>
-                        <div>評價</div>
+                        <div>會員評價</div>
                     </div>
                     <div class="col-md col-sm-2 card rounded-pill  mb-md-2 ml-sm-2">
                         <div class="adj_fontsize">@(ViewBag.activities_count + Model.ToList()[0].Activity_Details.Count)</div>
-                        <div>揪團</div>
+                        <div>揪團歷史</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row w-100 mt-4 mb-4 text-center">
-            <div class="col-12 col-sm-12 col-md-4 border-right ">
-                <div class="adj_fontsize text-success font-weight-bold">個人簡介</div>
-                <div>
-                    @if (Model.ToList()[0].Introduction != null)
-                    {
-                        @Model.ToList()[0].Introduction
-                    }
-                    else {
-                        @:無
-                    }
-                            </div>
+        <div class="row w-100 mt-4 mb-4 text-center ml-auto mr-auto">
+            <div class="col-12  col-md-4 border-right mb-3 ">
+                <div class="row ">
+                    <div class="adj_fontsize text-success font-weight-bold col-12 ">個人簡介</div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        @if (Model.ToList()[0].Introduction != null)
+                        {
+                            @Model.ToList()[0].Introduction
+                        }
+                        else
+                        {
+                            @:無資料
+                        }
+                    </div>
+                </div>
             </div>
-            <div class="col-12  col-sm-12 col-md-4 border-right">
-                <div class="adj_fontsize text-success font-weight-bold">興趣</div>
-                <div>
-                    @if (hh!=null)
+            <div class="col-12  col-md-4 border-right mb-3">
+                <div class="row">
+                    <div class="adj_fontsize text-success font-weight-bold col-12">興趣</div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        @if (hh.FirstOrDefault() != null)
                         {
                             foreach (var i in hh)
                             {
@@ -134,39 +153,60 @@ else
                         }
                         else
                         {
-                                @:無資料
+                            @:無資料
                         }
+                    </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-4 ">
-                <div class="adj_fontsize text-success font-weight-bold">飲食偏好</div>
-                <div>
-                    @foreach (var i in ff)
-                    {
-                        if (i != ff.Last())
+            <div class="col-12 col-md-4">
+                <div class="row ">
+                    <div class="adj_fontsize text-success font-weight-bold col-12">飲食偏好</div>
+                </div>
+                <div class="row ">
+                    <div class="col-12">
+                        @if (ff.FirstOrDefault() != null)
                         {
-                            @i.dPreference @:、
+                            foreach (var i in ff)
+                            {
+                                if (i != ff.Last())
+                                {
+                                    @i.dPreference @:、
+                                }
+                                else
+                                {
+                                    @i.dPreference
+                                }
+                            }
                         }
                         else
                         {
-                            @i.dPreference
+                            @:無資料
                         }
-                    }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" style="height:300px">
-    </div>
-    @if (Session["memid"].ToString() == Model.ToList()[0].memId)
-    {
-        <div class="row">
-            <div class="col-3 offset-2">
-                @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-warning d-block" })
+    <div class="row" style="height:300px"></div>
+    @*確認是否登入、當使用揪團系統帳號登入才可修改密碼*@
+    @{ if (Session["memid"].ToString() == Model.ToList()[0].memId && Model.ToList()[0].Acc_Pass.FirstOrDefault() == null)
+        {
+            <div class="row">
+                <div class="col-3 offset-2">
+                    @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+                </div>
+                <div class="col-3 offset-2">
+                    @Html.ActionLink("修改密碼", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+                </div>
             </div>
-            <div class="col-3 offset-2">
-                @Html.ActionLink("修改密碼", "actionname", "controllername", "", new { @class = "btn btn-warning d-block" })
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12 col-md-6 offset-md-3">
+                    @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+                </div>
             </div>
-        </div>
+        }
     }
 </div>

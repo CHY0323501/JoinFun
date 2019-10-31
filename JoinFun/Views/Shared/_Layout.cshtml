@@ -9,7 +9,10 @@
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     @RenderSection("memberinfo", required: false)
+    @RenderSection("memberedit", required: false)
     <style>
         body {
             font-family: 微軟正黑體;
@@ -26,20 +29,20 @@
     <div class="navbar navbar-expand-lg fixed-top navbar-light bg-dark justify-content-end">
         <div class="container ">
             @Html.ActionLink("JoinFun", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navlist" aria-controls="navlist" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navlist" aria-controls="navlist" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse " id="navlist">
-                    <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">會員中心 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">設定</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="collapse navbar-collapse " id="navlist">
+                <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">會員中心 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">設定</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="container body-content">
@@ -49,8 +52,8 @@
             <p>&copy; @DateTime.Now.Year - JF Ltd.</p>
         </footer>
     </div>
-
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

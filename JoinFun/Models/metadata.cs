@@ -173,10 +173,11 @@ namespace JoinFun.Models
         [DisplayName("暱稱")]
         public string memNick { get; set; }
 
-        [Required(ErrorMessage = "請輸入您的電子信箱")]
-        [StringLength(50)]
         [DisplayName("電子信箱")]
-        [DataType(DataType.EmailAddress,ErrorMessage ="請輸入正確的電子信箱")]
+        [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "請輸入您的電子信箱")]
+        [EmailAddress(ErrorMessage = "請輸入正確的電子信箱")]
+        [StringLength(50)]
         public string Email { get; set; }
 
         [StringLength(24)]
@@ -194,6 +195,7 @@ namespace JoinFun.Models
 
         [DisplayName("生日")]
         [Required(ErrorMessage = "請輸入生日")]
+        [DataType(DataType.Date,ErrorMessage ="請填入正確生日")]
         public DateTime Birthday { get; set; }
 
         [DisplayName("違規次數")]
