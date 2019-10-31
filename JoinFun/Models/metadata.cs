@@ -555,12 +555,6 @@ namespace JoinFun.Models
 
     public  class MetadataPhotos_of_Activities
     {
-
-        [DisplayName("照片編號")]
-        [Required(ErrorMessage = "請輸入照片編號")]
-        public string PhotoSerial { get; set; }
-
-
         [DisplayName("活動編號")]
         [Required(ErrorMessage = "請輸入活動編號")]
         public string actId { get; set; }
@@ -569,7 +563,6 @@ namespace JoinFun.Models
         [DisplayName("照片")]
         [Required(ErrorMessage = "請上傳照片")]
         public byte[] actPics { get; set; }
-
     }
 
 
