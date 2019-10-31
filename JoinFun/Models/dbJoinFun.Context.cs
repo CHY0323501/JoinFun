@@ -36,13 +36,11 @@ namespace JoinFun.Models
         public virtual DbSet<Chat_Records> Chat_Records { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<County> County { get; set; }
-        public virtual DbSet<Dietary_Preference> Dietary_Preference { get; set; }
         public virtual DbSet<District> District { get; set; }
         public virtual DbSet<Fans> Fans { get; set; }
         public virtual DbSet<FollowUp> FollowUp { get; set; }
         public virtual DbSet<Friendship> Friendship { get; set; }
         public virtual DbSet<Gender_Restriction> Gender_Restriction { get; set; }
-        public virtual DbSet<Habit> Habit { get; set; }
         public virtual DbSet<Hash_Tag> Hash_Tag { get; set; }
         public virtual DbSet<Join_Fun_Activities> Join_Fun_Activities { get; set; }
         public virtual DbSet<Member> Member { get; set; }

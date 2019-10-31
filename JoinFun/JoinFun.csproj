@@ -557,6 +557,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
+    <Compile Include="Controllers\getDistrictController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -609,9 +610,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbJoinFun.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Dietary_Preference.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\District.cs">
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>
@@ -625,9 +623,6 @@
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Gender_Restriction.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Habit.cs">
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hash_Tag.cs">

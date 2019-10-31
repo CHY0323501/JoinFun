@@ -105,14 +105,6 @@
           <Property Name="CountyNo" Type="smallint" Nullable="false" />
           <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
         </EntityType>
-        <EntityType Name="Dietary_Preference">
-          <Key>
-            <PropertyRef Name="dSerial" />
-          </Key>
-          <Property Name="dSerial" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="dPreference" Type="nvarchar" MaxLength="25" Nullable="false" />
-        </EntityType>
         <EntityType Name="District">
           <Key>
             <PropertyRef Name="DistrictSerial" />
@@ -153,14 +145,6 @@
           </Key>
           <Property Name="genderSerial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Habit">
-          <Key>
-            <PropertyRef Name="HabitSerial" />
-          </Key>
-          <Property Name="HabitSerial" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="Habit" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="Hash_Tag">
           <Key>
@@ -210,6 +194,8 @@
           <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="Introduction" Type="nvarchar(max)" />
+          <Property Name="Habit" Type="nvarchar(max)" />
+          <Property Name="Dietary_Preference" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>
@@ -475,18 +461,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Dietary_P__memId__70DDC3D8">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="Dietary_Preference" Type="Self.Dietary_Preference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="memId" />
-            </Principal>
-            <Dependent Role="Dietary_Preference">
-              <PropertyRef Name="memId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__District__County__3BFFE745">
           <End Role="County" Type="Self.County" Multiplicity="1" />
           <End Role="District" Type="Self.District" Multiplicity="*" />
@@ -531,18 +505,6 @@
               <PropertyRef Name="memId" />
             </Principal>
             <Dependent Role="Friendship">
-              <PropertyRef Name="memId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Habit__memId__6FE99F9F">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="Habit" Type="Self.Habit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="memId" />
-            </Principal>
-            <Dependent Role="Habit">
               <PropertyRef Name="memId" />
             </Dependent>
           </ReferentialConstraint>
@@ -823,6 +785,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetActClassId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetActId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetActId1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetAdmId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetChatId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetCommentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetDietId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetHabitId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetHashId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetMBoardSerial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetMemId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetNoteId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetPhotoId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetPostId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetPunishId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetRemarkId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetSocialId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetVioId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetVioTypeId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
         <EntityContainer Name="JoinFunModelStoreContainer">
           <EntitySet Name="Acc_Pass" EntityType="Self.Acc_Pass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Activity_Class" EntityType="Self.Activity_Class" Schema="dbo" store:Type="Tables" />
@@ -835,13 +816,11 @@
           <EntitySet Name="Chat_Records" EntityType="Self.Chat_Records" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="County" EntityType="Self.County" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Dietary_Preference" EntityType="Self.Dietary_Preference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fans" EntityType="Self.Fans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FollowUp" EntityType="Self.FollowUp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender_Restriction" EntityType="Self.Gender_Restriction" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Habit" EntityType="Self.Habit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hash_Tag" EntityType="Self.Hash_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Join_Fun_Activities" EntityType="Self.Join_Fun_Activities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
@@ -920,10 +899,6 @@
             <End Role="Member" EntitySet="Member" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
-          <AssociationSet Name="FK__Dietary_P__memId__70DDC3D8" Association="Self.FK__Dietary_P__memId__70DDC3D8">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Dietary_Preference" EntitySet="Dietary_Preference" />
-          </AssociationSet>
           <AssociationSet Name="FK__District__County__3BFFE745" Association="Self.FK__District__County__3BFFE745">
             <End Role="County" EntitySet="County" />
             <End Role="District" EntitySet="District" />
@@ -939,10 +914,6 @@
           <AssociationSet Name="FK__Friendshi__memId__75A278F5" Association="Self.FK__Friendshi__memId__75A278F5">
             <End Role="Member" EntitySet="Member" />
             <End Role="Friendship" EntitySet="Friendship" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Habit__memId__6FE99F9F" Association="Self.FK__Habit__memId__6FE99F9F">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Habit" EntitySet="Habit" />
           </AssociationSet>
           <AssociationSet Name="FK__Hash_Tag__actId__797309D9" Association="Self.FK__Hash_Tag__actId__797309D9">
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
@@ -1159,15 +1130,6 @@
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___actCo__32767D0B" FromRole="County" ToRole="Join_Fun_Activities" />
           <NavigationProperty Name="Member" Relationship="Self.FK__Member__memCount__3CF40B7E" FromRole="County" ToRole="Member" />
         </EntityType>
-        <EntityType Name="Dietary_Preference">
-          <Key>
-            <PropertyRef Name="dSerial" />
-          </Key>
-          <Property Name="dSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="dPreference" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK__Dietary_P__memId__70DDC3D8" FromRole="Dietary_Preference" ToRole="Member" />
-        </EntityType>
         <EntityType Name="District">
           <Key>
             <PropertyRef Name="DistrictSerial" />
@@ -1215,15 +1177,6 @@
           <Property Name="genderSerial" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___gende__5DEAEAF5" FromRole="Gender_Restriction" ToRole="Join_Fun_Activities" />
-        </EntityType>
-        <EntityType Name="Habit">
-          <Key>
-            <PropertyRef Name="HabitSerial" />
-          </Key>
-          <Property Name="HabitSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Habit1" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK__Habit__memId__6FE99F9F" FromRole="Habit" ToRole="Member" />
         </EntityType>
         <EntityType Name="Hash_Tag">
           <Key>
@@ -1295,17 +1248,17 @@
           <NavigationProperty Name="Chat_Records" Relationship="Self.FK__Chat_Reco__FromM__6E01572D" FromRole="Member" ToRole="Chat_Records" />
           <NavigationProperty Name="Comment" Relationship="Self.FK__Comment__memId__6B24EA82" FromRole="Member" ToRole="Comment" />
           <NavigationProperty Name="County" Relationship="Self.FK__Member__memCount__3CF40B7E" FromRole="Member" ToRole="County" />
-          <NavigationProperty Name="Dietary_Preference" Relationship="Self.FK__Dietary_P__memId__70DDC3D8" FromRole="Member" ToRole="Dietary_Preference" />
           <NavigationProperty Name="District" Relationship="Self.FK__Member__memDistr__3DE82FB7" FromRole="Member" ToRole="District" />
           <NavigationProperty Name="Fans" Relationship="Self.FK__Fans__memId__6C190EBB" FromRole="Member" ToRole="Fans" />
           <NavigationProperty Name="FollowUp" Relationship="Self.FK__FollowUp__memId__71D1E811" FromRole="Member" ToRole="FollowUp" />
           <NavigationProperty Name="Friendship" Relationship="Self.FK__Friendshi__memId__75A278F5" FromRole="Member" ToRole="Friendship" />
-          <NavigationProperty Name="Habit" Relationship="Self.FK__Habit__memId__6FE99F9F" FromRole="Member" ToRole="Habit" />
           <NavigationProperty Name="Member_Remarks" Relationship="Self.FK__Member_Re__FromM__693CA210" FromRole="Member" ToRole="Member_Remarks" />
           <NavigationProperty Name="Message_Board" Relationship="Self.FK__Message_B__memId__74AE54BC" FromRole="Member" ToRole="Message_Board" />
           <NavigationProperty Name="Notification" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Member" ToRole="Notification" />
           <NavigationProperty Name="Social_Net_ID" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Member" ToRole="Social_Net_ID" />
           <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Member" ToRole="Violation" />
+          <Property Name="Habit1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dietary_Preference1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>
@@ -1631,18 +1584,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Dietary_P__memId__70DDC3D8">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="Dietary_Preference" Type="Self.Dietary_Preference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="memId" />
-            </Principal>
-            <Dependent Role="Dietary_Preference">
-              <PropertyRef Name="memId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Join_Fun___actDi__336AA144">
           <End Role="District" Type="Self.District" Multiplicity="1" />
           <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
@@ -1712,18 +1653,6 @@
             </Principal>
             <Dependent Role="Join_Fun_Activities">
               <PropertyRef Name="gender" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Habit__memId__6FE99F9F">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="Habit" Type="Self.Habit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="memId" />
-            </Principal>
-            <Dependent Role="Habit">
-              <PropertyRef Name="memId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1895,13 +1824,11 @@
           <EntitySet Name="Chat_Records" EntityType="Self.Chat_Records" />
           <EntitySet Name="Comment" EntityType="Self.Comment" />
           <EntitySet Name="County" EntityType="Self.County" />
-          <EntitySet Name="Dietary_Preference" EntityType="Self.Dietary_Preference" />
           <EntitySet Name="District" EntityType="Self.District" />
           <EntitySet Name="Fans" EntityType="Self.Fans" />
           <EntitySet Name="FollowUp" EntityType="Self.FollowUp" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" />
           <EntitySet Name="Gender_Restriction" EntityType="Self.Gender_Restriction" />
-          <EntitySet Name="Habit" EntityType="Self.Habit" />
           <EntitySet Name="Hash_Tag" EntityType="Self.Hash_Tag" />
           <EntitySet Name="Join_Fun_Activities" EntityType="Self.Join_Fun_Activities" />
           <EntitySet Name="Member" EntityType="Self.Member" />
@@ -1984,10 +1911,6 @@
             <End Role="County" EntitySet="County" />
             <End Role="Member" EntitySet="Member" />
           </AssociationSet>
-          <AssociationSet Name="FK__Dietary_P__memId__70DDC3D8" Association="Self.FK__Dietary_P__memId__70DDC3D8">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Dietary_Preference" EntitySet="Dietary_Preference" />
-          </AssociationSet>
           <AssociationSet Name="FK__Join_Fun___actDi__336AA144" Association="Self.FK__Join_Fun___actDi__336AA144">
             <End Role="District" EntitySet="District" />
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
@@ -2011,10 +1934,6 @@
           <AssociationSet Name="FK__Join_Fun___gende__5DEAEAF5" Association="Self.FK__Join_Fun___gende__5DEAEAF5">
             <End Role="Gender_Restriction" EntitySet="Gender_Restriction" />
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Habit__memId__6FE99F9F" Association="Self.FK__Habit__memId__6FE99F9F">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Habit" EntitySet="Habit" />
           </AssociationSet>
           <AssociationSet Name="FK__Hash_Tag__actId__797309D9" Association="Self.FK__Hash_Tag__actId__797309D9">
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
@@ -2234,15 +2153,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Dietary_Preference">
-            <EntityTypeMapping TypeName="JoinFunModel.Dietary_Preference">
-              <MappingFragment StoreEntitySet="Dietary_Preference">
-                <ScalarProperty Name="dSerial" ColumnName="dSerial" />
-                <ScalarProperty Name="memId" ColumnName="memId" />
-                <ScalarProperty Name="dPreference" ColumnName="dPreference" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="District">
             <EntityTypeMapping TypeName="JoinFunModel.District">
               <MappingFragment StoreEntitySet="District">
@@ -2286,15 +2196,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Habit">
-            <EntityTypeMapping TypeName="JoinFunModel.Habit">
-              <MappingFragment StoreEntitySet="Habit">
-                <ScalarProperty Name="HabitSerial" ColumnName="HabitSerial" />
-                <ScalarProperty Name="memId" ColumnName="memId" />
-                <ScalarProperty Name="Habit1" ColumnName="Habit" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Hash_Tag">
             <EntityTypeMapping TypeName="JoinFunModel.Hash_Tag">
               <MappingFragment StoreEntitySet="Hash_Tag">
@@ -2331,6 +2232,8 @@
           <EntitySetMapping Name="Member">
             <EntityTypeMapping TypeName="JoinFunModel.Member">
               <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="Dietary_Preference1" ColumnName="Dietary_Preference" />
+                <ScalarProperty Name="Habit1" ColumnName="Habit" />
                 <ScalarProperty Name="memId" ColumnName="memId" />
                 <ScalarProperty Name="memNick" ColumnName="memNick" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

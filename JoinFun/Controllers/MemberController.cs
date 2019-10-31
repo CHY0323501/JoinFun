@@ -21,8 +21,6 @@ namespace JoinFun.Controllers
             var mem = db.Member.Where(m => m.memId == memID).ToList();
             ViewBag.activities_count = db.Join_Fun_Activities.Where(m => m.hostId==memID).Count();
             ViewBag.mem_remarks_count = db.Member_Remarks.Where(m => m.ToMemId == memID).Count();
-            ViewBag.member_habit = db.Habit.Where(m => m.memId == memID).ToList();
-            ViewBag.member_food = db.Dietary_Preference.Where(m => m.memId == memID).ToList();
             return View(mem);
         }
         public ActionResult Edit(string memID = "M000000001") {
@@ -30,14 +28,14 @@ namespace JoinFun.Controllers
             //讀取個人資訊
             var mem =db.Member.Where(m => m.memId == memID).FirstOrDefault();
             //下拉式選單用
-            ViewBag.county_drop = new SelectList(db.County, "CountyNo", "CountyName");
-            ViewBag.district_drop = new SelectList(db.District, "DistrictSerial", "DistrictName");
-            ViewBag.member_habit = db.Habit.Where(m => m.memId == memID).ToList();
-            ViewBag.member_food = db.Dietary_Preference.Where(m => m.memId == memID).ToList();
+            //ViewBag.county_drop = new SelectList(db.County, "CountyNo", "CountyName");
+            //ViewBag.district_drop = new SelectList(db.District, "DistrictSerial", "DistrictName");
+            ViewBag.county_drop = db.County.ToList();
+            ViewBag.district_drop = db.District.ToList();
             return View(mem);
         }
         [HttpPost]
-        public ActionResult Edit(Member member)
+        public ActionResult Edit(string memId,Member member)
         {
             return View();
         }

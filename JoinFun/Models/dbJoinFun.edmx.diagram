@@ -16,13 +16,11 @@
         <EntityTypeShape EntityType="JoinFunModel.Chat_Records" Width="1.5" PointX="10.5" PointY="21" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Comment" Width="1.5" PointX="16.5" PointY="27" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.County" Width="1.5" PointX="0.75" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="JoinFunModel.Dietary_Preference" Width="1.5" PointX="10.5" PointY="27.625" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.District" Width="1.5" PointX="3" PointY="27.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Fans" Width="1.5" PointX="10.5" PointY="30.125" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.FollowUp" Width="1.5" PointX="10.5" PointY="32.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Friendship" Width="1.5" PointX="10.5" PointY="34.75" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Gender_Restriction" Width="1.5" PointX="3" PointY="32.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="JoinFunModel.Habit" Width="1.5" PointX="10.5" PointY="37.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Hash_Tag" Width="1.5" PointX="7.5" PointY="32.75" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Join_Fun_Activities" Width="1.5" PointX="5.25" PointY="24.875" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Member" Width="1.5" PointX="8.25" PointY="25" IsExpanded="true" />
@@ -54,14 +52,12 @@
         <AssociationConnector Association="JoinFunModel.FK__District__County__3BFFE745" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Join_Fun___actCo__32767D0B" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Member__memCount__3CF40B7E" ManuallyRouted="false" />
-        <AssociationConnector Association="JoinFunModel.FK__Dietary_P__memId__70DDC3D8" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Join_Fun___actDi__336AA144" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Member__memDistr__3DE82FB7" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Fans__memId__6C190EBB" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__FollowUp__memId__71D1E811" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Friendshi__memId__75A278F5" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Join_Fun___gende__5DEAEAF5" ManuallyRouted="false" />
-        <AssociationConnector Association="JoinFunModel.FK__Habit__memId__6FE99F9F" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Hash_Tag__actId__797309D9" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Join_Fun___maxNu__37C5420D" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Join_Fun___payme__7E57BA87" ManuallyRouted="false" />

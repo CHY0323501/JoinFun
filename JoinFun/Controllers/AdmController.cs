@@ -49,6 +49,7 @@ namespace JoinFun.Controllers
                 Session["admNick"] = reader["admNick"].ToString();
                 //中斷資料庫連線
                 Conn.Close();
+                ViewBag.admLoginERR = "";
                 return RedirectToAction("Index");
             }
             Conn.Close();

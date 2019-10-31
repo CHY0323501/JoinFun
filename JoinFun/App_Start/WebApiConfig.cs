@@ -11,6 +11,8 @@ namespace JoinFun
         {
             // Web API 設定和服務
 
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
             // Web API 路由
             config.MapHttpAttributeRoutes();
 

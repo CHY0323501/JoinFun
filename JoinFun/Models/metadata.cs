@@ -174,13 +174,13 @@ namespace JoinFun.Models
         public string memNick { get; set; }
 
         [DisplayName("電子信箱")]
-        [DataType(DataType.EmailAddress)]
+        //[DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "請輸入您的電子信箱")]
         [EmailAddress(ErrorMessage = "請輸入正確的電子信箱")]
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "信箱不可超過50字")]
         public string Email { get; set; }
 
-        [StringLength(24)]
+        [StringLength(24, ErrorMessage = "信箱不可超過24字")]
         [DisplayName("手機號碼")]
         public string cellPhone { get; set; }
 
@@ -214,6 +214,10 @@ namespace JoinFun.Models
 
         [DisplayName("個人簡介")]
         public string Introduction { get; set; }
+        [DisplayName("興趣")]
+        public string Habit1 { get; set; }
+        [DisplayName("飲食偏好")]
+        public string Dietary_Preference1 { get; set; }
     }
 
     public class MetaPayment_Restriction
@@ -400,25 +404,7 @@ namespace JoinFun.Models
 
 
     }
-
-    public class MetaDietary_Preference
-    {
-        [DisplayName("飲食偏好編號")]
-        [Required(ErrorMessage = "飲食偏好編號為必填")]
-        public string dSerial { get; set; }
-
-        [DisplayName("會員編號")]
-        [Required(ErrorMessage = "會員編號為必填")]
-        public string memId { get; set; }
-
-        [DisplayName("飲食偏好")]
-        [Required(ErrorMessage = "飲食偏好為必填")]
-        [StringLength(25, ErrorMessage = "飲食偏好最多25個字")]
-        public string dPreference { get; set; }
-
-
-    }
-
+       
     public class MetaFans
     {
         [DisplayName("粉絲會員編號")]
@@ -495,20 +481,7 @@ namespace JoinFun.Models
 
     }
 
-    public class MetaHabit
-    {
-        [DisplayName("興趣編號")]
-        public string HabitSerial { get; set; }
-        [DisplayName("會員編號")]
-        public string memId { get; set; }
-        [Required(ErrorMessage = "必填")]
-        [DisplayName("個人興趣")]
-        [StringLength(25, ErrorMessage = "最多輸入25個字")]
-        public string Habit1 { get; set; }
-
-    }
-
-
+   
     public class MetaMember_Remarks
     {
         [DisplayName("評價編號")]

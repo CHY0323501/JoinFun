@@ -5,9 +5,7 @@
     <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
 }
 
-@*將資料集轉為IEnumerable*@
-@{var hh = (IEnumerable<JoinFun.Models.Habit>)ViewBag.member_habit;}
-@{var ff = (IEnumerable<JoinFun.Models.Dietary_Preference>)ViewBag.member_food;}
+
 
 <div class="container">
     <div class="row">
@@ -74,14 +72,17 @@
                         }
                         else
                         {
-                            <div class="row">
-                                <div class="col-md">
-                                    @Html.ActionLink("加入好友", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info", style = "width:inherit" })
-                                </div>
-                                <div class="col-md">
-                                    @Html.ActionLink("加入黑名單", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info", style = "width:inherit" })
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-md">
+                            @Html.ActionLink("追蹤他", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info mb-1", style = "width:inherit" })
+                        </div>
+                        <div class="col-md">
+                            @Html.ActionLink("加好友", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info mb-1", style = "width:inherit" })
+                        </div>
+                        <div class="col-md">
+                            @Html.ActionLink("加入黑名單", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info mb-1", style = "width:inherit" })
+                        </div>
+                    </div>
                         }
                     }
                 </div>
@@ -137,19 +138,9 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        @if (hh.FirstOrDefault() != null)
+                        @if (Model.ToList()[0].Habit1 != null)
                         {
-                            foreach (var i in hh)
-                            {
-                                if (i != hh.Last())
-                                {
-                                    @i.Habit1 @:、
-                                }
-                                else
-                                {
-                                    @i.Habit1
-                                }
-                            }
+                            @Model.ToList()[0].Habit1
                         }
                         else
                         {
@@ -164,19 +155,9 @@
                 </div>
                 <div class="row ">
                     <div class="col-12">
-                        @if (ff.FirstOrDefault() != null)
+                        @if (Model.ToList()[0].Dietary_Preference1 != null)
                         {
-                            foreach (var i in ff)
-                            {
-                                if (i != ff.Last())
-                                {
-                                    @i.dPreference @:、
-                                }
-                                else
-                                {
-                                    @i.dPreference
-                                }
-                            }
+                            @Model.ToList()[0].Dietary_Preference1
                         }
                         else
                         {
