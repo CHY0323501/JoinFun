@@ -8,80 +8,104 @@
 <h2>揪團活動明細</h2>
 
 <div class="container">
-    <div class="form">
+    <h2 class="mt-4 text-primary">揪團活動</h2>
+    <hr />
+    @foreach (var item in Model)
+    {
 
-        @foreach (var item in Model)
-        {
-            var address = item.CountyName + item.DistrictName + item.actRoad;
+        //if (Session["memId"] != null && (Session["memId"]).ToString() == item.hostId)
+        //{
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        @*@Html.ActionLink("編輯", "Edit", new { id = item.actId }, new { @class = "btn btn-primary" })*@
+                        <a class="nav-link text-light btn btn-primary" href="@Url.Action("Edit", new { actId = item.actId })">編輯</a>
+                    </li>
+                    <li class="nav-item ml-1">
+                        @*@Html.ActionLink("刪除", "Delete", new { id = item.actId }, new { @class = "btn btn-danger", onclick = "return confirm('確認刪除嗎??')" })*@
+                        <a class="nav-link text-light btn btn-danger" href="@Url.Action("Delete", new { actId = item.actId })" onclick="return confirm('確認刪除嗎??')">刪除</a>
+                    </li>
+                </ul>
 
-            <div class="form-group">
-                @if(item.actPics != null)
-                {
-                    <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})"/>
-                }
-            </div>
+            </nav>
+            //}
 
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actTopic)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actTopic)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actTime)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actTime)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actDeadline)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actDeadline)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.memNick)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.memNick)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actDescription)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actDescription)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.actClassName)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.actClassName)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.age)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.age)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.Budget)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.Budget)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">活動地點</label>
-                <p class="col-xs-10">@address</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.gender)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.gender)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.PeoRestriction)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.PeoRestriction)</p>
-            </div>
-
-            <div class="form-group">
-                <label class="col-xs-2">@Html.DisplayNameFor(m => m.payment)</label>
-                <p class="col-xs-10">@Html.DisplayFor(modelItem => item.payment)</p>
-            </div>
+            if (item.actId != null)
+            {
+            <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" style="width:600px;height:auto" class="rounded" />
         }
+    }
+    <table class="table mt-2" style="width:600px;border:thin">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var address = item.CountyName + item.DistrictName + item.actRoad;
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.actTopic)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.actTopic)</td>
+                </tr>
 
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.actTime)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.actTime)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.actDeadline)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.actDeadline)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.memNick)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.memNick)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.actDescription)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.actDescription)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.actClassName)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.actClassName)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.age)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.age)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.Budget)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.Budget)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">活動地點</th>
+                    <td class="pl-4">@address</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.gender)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.gender)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.PeoRestriction)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.PeoRestriction)</td>
+                </tr>
+
+                <tr>
+                    <th class="bg-light text-center">@Html.DisplayNameFor(m => m.payment)</th>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.payment)</td>
+                </tr>
+
+            }
+        </tbody>
+
+    </table>
+    <div class="d-sm-flex justify-content-center" style="width:600px">
         @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-warning" })
     </div>
+
 </div>

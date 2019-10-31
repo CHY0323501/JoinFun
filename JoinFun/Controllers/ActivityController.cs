@@ -45,7 +45,7 @@ namespace JoinFun.Controllers
 
         public ActionResult Create()
         {
-            //if (Session["Account"] == null)
+            //if (Session["memid"] == null)
             //{
             //    return RedirectToAction("Index");
             //}
@@ -110,24 +110,27 @@ namespace JoinFun.Controllers
             //return RedirectToAction("Create");
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string actId)
         {
-            //if (Session["Account"] == null)
+            //if (Session["memId"] == null)
             //{
             //    return RedirectToAction("Index");
             //}
-            var act = db.Join_Fun_Activities.Where(m => m.actId == id).FirstOrDefault();
+            var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
+
             GetSelectList();
+            //Formmethod.Post需要傳actId參數,宣告ViewBag.actId存actId參數
+            ViewBag.actId = actId;
             ViewBag.Drop = new SelectList(GetDropList(), "Value", "Text", act.acceptDrop);
+            ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
             return View(act);
         }
 
         [HttpPost]
-        public ActionResult Edit(string id, FormCollection form)
+        public ActionResult Edit(string actId, FormCollection form, HttpPostedFileBase picture)
         {
-            var act = db.Join_Fun_Activities.Where(m => m.actId == id).FirstOrDefault();
-            //將Dropdown List的值取回 start
+            var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
             string clsValue = form["Activity_Class"].ToString();
             short age = Int16.Parse(form["Age_Restriction"].ToString());
             short people = Int16.Parse(form["People_Restriction"].ToString());
@@ -136,7 +139,6 @@ namespace JoinFun.Controllers
             short county = Int16.Parse(form["County"].ToString());
             short district = Int16.Parse(form["District"].ToString());
             bool drop = Convert.ToBoolean(form["Drop"].ToString());
-            //Dropdown List值 end
             act.actClassId = clsValue;
             act.ageRestrict = age;
             act.maxNumPeople = people;
@@ -145,14 +147,26 @@ namespace JoinFun.Controllers
             act.actCounty = county;
             act.actDistrict = district;
             act.acceptDrop = drop;
+            ViewBag.actId = actId;
+
+            var photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault();
+            //if (picture == null && photo.actPics != null)
+            //{
+            //    db.SaveChanges();
+            //}
+            if (picture != null)
+            {
+                photo.actPics = new byte[picture.ContentLength];
+                picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string actId)
         {
-            var act = db.Join_Fun_Activities.Where(m => m.actId == id).FirstOrDefault();
-            db.Join_Fun_Activities.Remove(act);
+            var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
+            act.keepAct = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -193,6 +207,27 @@ namespace JoinFun.Controllers
             {
                 return null;
             }
+        }
+
+        public ActionResult AddPhoto()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddPhoto(string actId, Photos_of_Activities photo, HttpPostedFileBase picture)
+        {
+            if (picture != null)
+            {
+                photo.actPics = new byte[picture.ContentLength];
+                picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
+            }
+
+            photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+            photo.actId = actId;
+            db.Photos_of_Activities.Add(photo);
+            db.SaveChanges();
+            return View();
         }
     }
 }

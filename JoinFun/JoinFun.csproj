@@ -702,6 +702,7 @@
     <Content Include="Scripts\jquery-validation-1.19.1\demo\captcha\fonts\Anorexia.ttf" />
     <Content Include="Scripts\jquery-validation-1.19.1\package.json" />
     <Content Include="Scripts\jquery-validation-1.19.1\README.md" />
+    <Content Include="Views\Activity\AddPhoto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
