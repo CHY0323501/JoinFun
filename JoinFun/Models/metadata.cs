@@ -168,17 +168,17 @@ namespace JoinFun.Models
         [DisplayName("會員編號")]
         public string memId { get; set; }
 
-        [Required(ErrorMessage = "請輸入暱稱")]
-        [StringLength(15, ErrorMessage = "暱稱不可超過15碼")]
+        [Required(ErrorMessage = " ")]
+        [StringLength(15,ErrorMessage = " ")]
         [DisplayName("暱稱")]
         public string memNick { get; set; }
 
         [DisplayName("電子信箱")]
-        [Required(ErrorMessage = "請輸入您的電子信箱")]
-        [StringLength(50, ErrorMessage = "信箱不可超過50字")]
+        [Required(ErrorMessage =" ")]
+        [StringLength(50, ErrorMessage = " ")]
         public string Email { get; set; }
 
-        [StringLength(24, ErrorMessage = "信箱不可超過24字")]
+        [StringLength(24, ErrorMessage = "手機不可超過24字")]
         [DisplayName("手機號碼")]
         public string cellPhone { get; set; }
 
