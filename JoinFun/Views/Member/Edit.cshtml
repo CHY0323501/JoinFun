@@ -44,6 +44,7 @@
                 <div class="col-12 col-md-8">
                     @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
+                    <div></div>
                 </div>
             </div>
             <div class="row form-inline mx-auto  text-center  text-md-left mb-3 form-group">
@@ -53,6 +54,7 @@
                 <div class="col-12 col-md-8">
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    <div></div>
                 </div>
             </div>
             <div class="row form-inline mx-auto  text-center text-md-left mb-3">
@@ -171,7 +173,61 @@
         });
 
         //暱稱及電子信箱驗證
-        
+        var emailRegex = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;         //寫正規表達式須/^開頭，$/結尾；\w表示至少一個大小寫英文、數字、底線
+        var flag = false,check=false;
 
+        $('#confirm').submit(function () {        //送出表單前觸發的事件
+            //表單為空時無法post
+
+            if ($('#Email').val() == "") {
+                $('#Email').addClass('is-invalid');
+                $('#Email~div').addClass('invalid-feedback').text('此為必填欄位');
+                return false;
+            }  
+            
+           if ($('#memNick').val() == "") {
+                $('#memNick').addClass('is-invalid');
+                $('#memNick~div').addClass('invalid-feedback').text('此為必填欄位');
+                return false;
+            }
+
+            if (!flag)
+                return false
+            return true;
+        });
+        //即時驗證
+        $('#Email').keyup(function () {
+            if (!emailRegex.test($('#Email').val())) {                //使用預設regular expression的test函數來驗證，通過回傳true
+                $('#Email').addClass('is-invalid');
+                $('#Email~div').addClass('invalid-feedback').text('Email格式錯誤');
+                flag = false;
+                console.log(1);
+            }else {
+                $('#Email').removeClass('is-invalid').addClass('is-valid');
+                $('#Email~div').removeClass('invalid-feedback').addClass('valid-feedback').text('');
+                flag = true;
+            }
+            if ($('#Email').val() == "") {
+                $('#Email').addClass('is-invalid');
+                $('#Email~div').addClass('invalid-feedback').text('此為必填欄位');
+            } 
+            
+        });
+        $('#memNick').keyup(function () {
+            if ($('#memNick').val().length >15) {
+                $('#memNick').addClass('is-invalid');
+                $('#memNick~div').addClass('invalid-feedback').text('暱稱不可超過15字');
+                flag = false;
+            }else {
+                $('#memNick').removeClass('is-invalid').addClass('is-valid');
+                $('#memNick~div').removeClass('invalid-feedback').addClass('valid-feedback').text('');
+                flag = true;
+            }
+            if ($('#memNick').val() == "") {
+                $('#memNick').addClass('is-invalid');
+                $('#memNick~div').addClass('invalid-feedback').text('此為必填欄位');
+            }
+        });
+        
     </script>
 }

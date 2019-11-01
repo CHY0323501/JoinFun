@@ -13,44 +13,39 @@
 </style>
 
     <div class="container">
-        <h5 class="display-4">揪團活動列表</h5>
+        <h5 class="bg-light display-4 font-weight-bolder mt-2" style="font-family:'Comic Sans MS'">揪團活動列表</h5>
         <hr />
         <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navtoggler" aria-controls="navtoggler" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navtoggler">
-                <ul class="navbar-nav mr-auto">
+            <ul class="nav navbar-nav">
 
-                    @foreach (var item in Model.ClassList)
+                @foreach (var item in Model.ClassList)
+                {
+                    if (item.actClassId == "cls001")
                     {
-                        if (item.actClassId == "cls001")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
-                            </li>
-                        }
-
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
+                        </li>
                     }
-                </ul>
+                    else
+                    {
+                        <li class="nav-item ml-5">
+                            <a class="nav-link text-light" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
+                        </li>
+                    }
 
+                }
+            </ul>
 
-
-            </div>
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav ml-auto">
                 @*@if (Session["memId"] != null)
-            {*@
-                @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-primary" })
+                {*@
+                    @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-primary" })
                 @*}*@
             </ul>
+
+
         </nav>
-        <div class="col col-xs-10">
+        <div class="col col-md-12">
             @*<h3>@ViewBag.actClassName</h3>*@
 
             <div class="row">
@@ -60,34 +55,42 @@
                 {
                     var address = item.CountyName + item.DistrictName + item.actRoad;
 
-                    <div class="card-group">
+                    <div class="card-deck mr-2">
 
 
                         <div class="card mt-2" style="width:200px">
 
-                            @if (item.actId != null)
+                            @*@if (item.actId != null)
                             {
                                 <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" style="width:200px;height:auto" class="img-thumbnail" />
-                            }
+                            }*@
 
-                            <div class="card-header bg-light">
-                                @*<h4 class="text-center">活動主題</h4>*@
-                                <h3 class="text-center text-danger">@Html.DisplayFor(modelItem => item.actTopic)</h3>
+                            <div class="card-header bg-light text-center" style="height:150px">
+
+                                @if (item.actId != null)
+                                {
+                                    <a href="@Url.Action("Details", new { actId = item.actId })"><img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" class="img-thumbnail" style="height:120px" /></a>
+                                }
                             </div>
-                            <div class="card-body">
+                            <div class="card-body text-center">
+                                @*@if (item.actId != null)
+                                {
+                                    <a href="@Url.Action("Details", new { actId = item.actId })"><img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" class="img-thumbnail" style="width:200px" /></a>
+                                }*@
 
-                                <h4 class="text-center text-primary"><mark>活動時間</mark></h4>
+                                <h3 class="text-center text-danger mb-5">@Html.DisplayFor(modelItem => item.actTopic)</h3>
+                                <h5 class="text-center text-primary "><mark>活動時間</mark></h5>
                                 <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actTime)</p>
-                                <h4 class="text-center text-primary"><mark>活動截止時間</mark></h4>
+                                <h5 class="text-center text-primary"><mark>活動截止時間</mark></h5>
                                 <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actDeadline)</p>
-                                <h4 class="text-center text-primary"><mark>活動地點</mark></h4>
+                                <h5 class="text-center text-primary"><mark>活動地點</mark></h5>
                                 <p class="text-center text-muted">@address</p>
-                                <h4 class="text-center"><mark class="text-danger">主辦人</mark></h4>
+                                <h5 class="text-center"><mark class="text-danger">主辦人</mark></h5>
                                 <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.memNick)</p>
                             </div>
-                            <div class="card-footer bg-warning text-center">
+                            @*<div class="card-footer bg-warning text-center">
                                 @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = ViewBag.actClassId })
-                            </div>
+                            </div>*@
 
                         </div>
                     </div>

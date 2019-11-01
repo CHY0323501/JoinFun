@@ -28,7 +28,8 @@
         .nav-bg {
              background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
         }
-        
+        .dropdown-menu li:hover .sub-menu {visibility: visible;}
+        .dropdown:hover .dropdown-menu {display: block;}
     </style>
    
 
@@ -46,12 +47,20 @@
                     <li class="nav-item">
                         <a class="nav-link " href="#">登入 <span class="sr-only"></span></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">會員中心 <span class="sr-only">(current)</span></a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            會員中心
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action("Info","Member")">個人資訊</a>
+                            <a class="dropdown-item" href="#">新增會員評價</a>
+                            <a class="dropdown-item" href="#">登出</a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">設定</a>
                     </li>
+                    
                 </ul>
             </div>
         </div>
