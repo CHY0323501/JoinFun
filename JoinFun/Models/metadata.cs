@@ -174,9 +174,7 @@ namespace JoinFun.Models
         public string memNick { get; set; }
 
         [DisplayName("電子信箱")]
-        //[DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "請輸入您的電子信箱")]
-        [EmailAddress(ErrorMessage = "請輸入正確的電子信箱")]
         [StringLength(50, ErrorMessage = "信箱不可超過50字")]
         public string Email { get; set; }
 
