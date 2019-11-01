@@ -49,8 +49,8 @@ namespace JoinFun.Models
         public string Sex { get; set; }
         public bool Approved { get; set; }
         public string Introduction { get; set; }
-        public string Habit1 { get; set; }
-        public string Dietary_Preference1 { get; set; }
+        public string Habit { get; set; }
+        public string Dietary_Preference { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acc_Pass> Acc_Pass { get; set; }

@@ -188,7 +188,7 @@
           <Property Name="memCounty" Type="smallint" Nullable="false" />
           <Property Name="memDistrict" Type="smallint" Nullable="false" />
           <Property Name="timeReg" Type="datetime" Nullable="false" />
-          <Property Name="Birthday" Type="datetime" Nullable="false" />
+          <Property Name="Birthday" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="numViolate" Type="smallint" Nullable="false" />
           <Property Name="Suspend" Type="bit" Nullable="false" />
           <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
@@ -1235,7 +1235,7 @@
           <Property Name="memCounty" Type="Int16" Nullable="false" />
           <Property Name="memDistrict" Type="Int16" Nullable="false" />
           <Property Name="timeReg" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="numViolate" Type="Int16" Nullable="false" />
           <Property Name="Suspend" Type="Boolean" Nullable="false" />
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
@@ -1257,8 +1257,8 @@
           <NavigationProperty Name="Notification" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Member" ToRole="Notification" />
           <NavigationProperty Name="Social_Net_ID" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Member" ToRole="Social_Net_ID" />
           <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Member" ToRole="Violation" />
-          <Property Name="Habit1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Dietary_Preference1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Habit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dietary_Preference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>
@@ -2232,8 +2232,8 @@
           <EntitySetMapping Name="Member">
             <EntityTypeMapping TypeName="JoinFunModel.Member">
               <MappingFragment StoreEntitySet="Member">
-                <ScalarProperty Name="Dietary_Preference1" ColumnName="Dietary_Preference" />
-                <ScalarProperty Name="Habit1" ColumnName="Habit" />
+                <ScalarProperty Name="Dietary_Preference" ColumnName="Dietary_Preference" />
+                <ScalarProperty Name="Habit" ColumnName="Habit" />
                 <ScalarProperty Name="memId" ColumnName="memId" />
                 <ScalarProperty Name="memNick" ColumnName="memNick" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

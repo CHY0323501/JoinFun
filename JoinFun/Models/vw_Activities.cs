@@ -15,7 +15,6 @@ namespace JoinFun.Models
 
     [MetadataType(typeof(Metavw_Activities))]
 
-    
     public partial class vw_Activities
     {
         public string age { get; set; }

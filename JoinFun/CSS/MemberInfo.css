@@ -1,6 +1,9 @@
 ﻿.adj_fontsize {
     font-size:150%;
 }
+.adj_fontsizemid {
+    font-size: 115%;
+}
 
 .border-right {
     border-right: none !important;
@@ -9,4 +12,21 @@
     .border-right {
         border-right: 1px solid #dee2e6 !important;
     }
+}
+.w-75 {
+    width: 65% !important;
+}
+.bg-color {
+    background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+    /*background-color:rgba(255, 216, 0, 0.27);*/
+}
+.bshadow {
+    box-shadow: 0 0 10px # !important;
+    border:1.5px dashed #ffd800;
+   
+}
+.btn-hov:hover {
+    color:white;
+    background-color:rgba(68, 159, 29, 0.45);
+    border-color:white;
 }

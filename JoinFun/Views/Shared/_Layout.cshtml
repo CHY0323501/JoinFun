@@ -11,22 +11,30 @@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/Content/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/hover-min.css" rel="stylesheet" />
     @RenderSection("memberinfo", required: false)
-    @RenderSection("memberedit", required: false)
     <style>
         body {
             font-family: 微軟正黑體;
         }
 
         .navbar-light a {
-            color: white !important;
+            color: orangered !important;
+            /*color: white !important;*/
+
         }
+        
+        .nav-bg {
+             background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        }
+        
     </style>
 
 
 </head>
 <body>
-    <div class="navbar navbar-expand-lg fixed-top navbar-light bg-dark justify-content-end">
+    <div id="a" class="navbar navbar-expand-lg fixed-top navbar-light bg-dark justify-content-end nav-bg">
         <div class="container ">
             @Html.ActionLink("JoinFun", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navlist" aria-controls="navlist" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +43,9 @@
 
             <div class="collapse navbar-collapse " id="navlist">
                 <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">登入 <span class="sr-only"></span></a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#">會員中心 <span class="sr-only">(current)</span></a>
                     </li>

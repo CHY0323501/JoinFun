@@ -8,9 +8,9 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-12 text-center " >
-            @if (Session["memid"].ToString() == Model.ToList()[0].memId)
+    <div class="row ">
+        <div class="col-12 text-center ">
+            @if (Session["memid"].ToString() != "")
             {
                 <h2 class="mt-5 mb-5 bg-warning text-white rounded-pill">個人資訊</h2>
                 ViewBag.Title = "個人資訊";
@@ -24,11 +24,11 @@
     </div>
     <div class="row">
         <div class="col col-md-4 text-center  align-self-center">
-            <img src="~/Photos/@(Model.ToList()[0].Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
+            <img src="~/Photos/@(Model.ToList()[0].Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-75 " />
         </div>
-        <div class="col col-md-8 align-self-center text-center font-weight-bold">
+        <div class="col col-md-8 align-self-center text-center animated fadeInDown">
             <div class="row mb-2">
-                <div class="col-md-4 text-success">
+                <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
                     @Html.DisplayNameFor(model => model.memId)
                 </div>
                 <div class="col-md-8 text-secondary">
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <div class="col-md-4 text-success">
+                <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
                     @Html.DisplayNameFor(model => model.memNick)
                 </div>
                 <div class="col-md-8 ">
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <div class="col-md-4 text-success">
+                <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
                     所在地
                 </div>
                 <div class="col-md-8 ">
@@ -53,75 +53,75 @@
                 </div>
             </div>
             <div class="row mb-2">
-                <div class="col-md-4 text-success">
+                <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
                     年齡
                 </div>
                 <div class="col-md-8 ">
-                    @(DateTime.Now.Year-Model.ToList()[0].Birthday.Year) 歲
+                    @(DateTime.Now.Year - Model.ToList()[0].Birthday.Year) 歲
                 </div>
             </div>
-            
-            <div class="row  ">
+
+            <div class="row  mt-md-4 ">
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-8 text-center ml-md-3">
                     @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
                     @{ if (Session["memid"].ToString() == Model.ToList()[0].memId)
                         {
-                            @Html.ActionLink("編輯個人資訊", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info", style = "width:inherit" })
+                            @Html.ActionLink("編輯個人資訊", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-outline-info", style = "width:inherit" })
                         }
                         else
                         {
-                    <div class="row">
-                        <div class="col-md">
-                            @Html.ActionLink("追蹤他", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info mb-1", style = "width:inherit" })
-                        </div>
-                        <div class="col-md">
-                            @Html.ActionLink("加好友", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info mb-1", style = "width:inherit" })
-                        </div>
-                        <div class="col-md">
-                            @Html.ActionLink("加入黑名單", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-info mb-1", style = "width:inherit" })
-                        </div>
-                    </div>
+                            <div class="row">
+                                <div class="col-md">
+                                    @Html.ActionLink("追蹤他", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                </div>
+                                <div class="col-md">
+                                    @Html.ActionLink("加好友", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                </div>
+                                <div class="col-md">
+                                    @Html.ActionLink("加入黑名單", "Edit", new { memID = Model.ToList()[0].memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                </div>
+                            </div>
                         }
                     }
                 </div>
             </div>
         </div>
-        <div class="row w-100 h-50 text-center ml-auto mr-auto mt-4 ">
+        <div class="row w-100 h-50 text-center mx-auto mt-4 ">
             <div class="col col-md-12 ">
                 <div class="row">
-                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
-                        <div class="adj_fontsize">@Model.ToList()[0].FollowUp.Count</div>
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3 bg-color  animated bounceIn bshadow btn btn-hov">
+                        <div class="adj_fontsize font-weight-bold">@Model.ToList()[0].FollowUp.Count</div>
                         <div>追蹤</div>
                     </div>
-                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
-                        <div class="adj_fontsize">@Model.ToList()[0].Fans.Count</div>
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3 bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div class="adj_fontsize font-weight-bold">@Model.ToList()[0].Fans.Count</div>
                         <div>粉絲</div>
                     </div>
-                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
-                        <div class="adj_fontsize">@Model.ToList()[0].Friendship.Count</div>
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3 bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div class="adj_fontsize font-weight-bold">@Model.ToList()[0].Friendship.Count</div>
                         <div>好友</div>
                     </div>
-                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3">
-                        <div class="adj_fontsize">@ViewBag.mem_remarks_count</div>
+                    <div class="col-md col-sm-2 card rounded-pill  mr-md-2 mb-2 ml-sm-3 bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div class="adj_fontsize font-weight-bold ">@ViewBag.mem_remarks_count</div>
                         <div>會員評價</div>
                     </div>
-                    <div class="col-md col-sm-2 card rounded-pill  mb-md-2 ml-sm-2">
-                        <div class="adj_fontsize">@(ViewBag.activities_count + Model.ToList()[0].Activity_Details.Count)</div>
+                    <div class="col-md col-sm-2 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div class="adj_fontsize font-weight-bold">@(ViewBag.activities_count + Model.ToList()[0].Activity_Details.Count)</div>
                         <div>揪團歷史</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row w-100 mt-4 mb-4 text-center ml-auto mr-auto">
+        <div class="row w-100 mt-4 mb-4 text-center mx-auto animated fadeInUp">
             <div class="col-12  col-md-4 border-right mb-3 ">
                 <div class="row ">
                     <div class="adj_fontsize text-success font-weight-bold col-12 ">個人簡介</div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        @if (Model.ToList()[0].Introduction != null)
+                    <div class="col-12 text-break">
+                        @if (Model.ToList()[0].Introduction != null&&!Model.ToList()[0].Introduction.IsEmpty())
                         {
                             @Model.ToList()[0].Introduction
                         }
@@ -137,14 +137,16 @@
                     <div class="adj_fontsize text-success font-weight-bold col-12">興趣</div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        @if (Model.ToList()[0].Habit1 != null)
+                    <div class="col-12 text-break">
+                        @if (Model.ToList()[0].Habit !=null&&!Model.ToList()[0].Habit.IsEmpty())
                         {
-                            @Model.ToList()[0].Habit1
+                            @Model.ToList()[0].Habit
                         }
                         else
                         {
-                            @:無資料
+                        <div>
+                            無資料
+                        </div>
                         }
                     </div>
                 </div>
@@ -154,10 +156,10 @@
                     <div class="adj_fontsize text-success font-weight-bold col-12">飲食偏好</div>
                 </div>
                 <div class="row ">
-                    <div class="col-12">
-                        @if (Model.ToList()[0].Dietary_Preference1 != null)
+                    <div class="col-12 text-break">
+                        @if (Model.ToList()[0].Dietary_Preference != null&&!Model.ToList()[0].Dietary_Preference.IsEmpty())
                         {
-                            @Model.ToList()[0].Dietary_Preference1
+                            @Model.ToList()[0].Dietary_Preference
                         }
                         else
                         {
@@ -170,7 +172,7 @@
     </div>
     <div class="row" style="height:300px"></div>
     @*確認是否登入、當使用揪團系統帳號登入才可修改密碼*@
-    @{ if (Session["memid"].ToString() == Model.ToList()[0].memId && Model.ToList()[0].Acc_Pass.FirstOrDefault() == null)
+    @{ if (Session["memid"].ToString() == Model.ToList()[0].memId && Model.ToList()[0].Acc_Pass.FirstOrDefault() != null)
         {
             <div class="row">
                 <div class="col-3 offset-2">
@@ -181,7 +183,7 @@
                 </div>
             </div>
         }
-        else
+        else if (Session["memid"].ToString() == Model.ToList()[0].memId && Model.ToList()[0].Social_Net_ID.FirstOrDefault()!=null)
         {
             <div class="row">
                 <div class="col-12 col-md-6 offset-md-3">
