@@ -35,13 +35,12 @@ namespace JoinFun.Controllers
             return View(mem);
         }
         [HttpPost]
-        public ActionResult Edit(string memId,DateTime Birthday, string Sex, string memNick, string Email, int memCounty, int memDistrict, string Introduction, string Habit, string Dietary_Preference)
+        public ActionResult Edit(string memId, DateTime Birthday, string Sex, string memNick, string Email, int memCounty, int memDistrict, string Introduction, string Habit, string Dietary_Preference)
         {
-            
             if (ModelState.IsValid)
             {
-                var mem = db.Member.Find(memId);
 
+                var mem = db.Member.Find(memId);
                 mem.Sex = Sex;
                 mem.memNick = memNick;
                 mem.Email = Email;

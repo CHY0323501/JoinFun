@@ -195,7 +195,7 @@ namespace JoinFun.Models
         [DisplayName("生日")]
         [Required(ErrorMessage = "請輸入生日")]
         [DataType(DataType.Date, ErrorMessage = "請填入正確生日")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime Birthday { get; set; }
 
         [DisplayName("違規次數")]

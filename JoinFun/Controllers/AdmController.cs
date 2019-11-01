@@ -26,11 +26,11 @@ namespace JoinFun.Controllers
             string sql = "select * from Administrator where admAcc=@acc and admPass=@pass";
             SqlCommand cmd = new SqlCommand(sql,Conn);
             SqlDataReader reader;
-            
+
             
 
             //取得salt字串
-            string salt = getAcc.admSalt;
+            string salt = getAcc.admSalt; 
             //產生雜湊
             byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(pass + salt);
             byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
