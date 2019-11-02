@@ -681,6 +681,18 @@
     <Compile Include="Models\vw_Activities.cs">
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_Fans.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_FollowUp.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_FriendShip.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_Member_Remarks.cs">
+      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
     <Compile Include="ViewModel\MemberViewModel.cs" />

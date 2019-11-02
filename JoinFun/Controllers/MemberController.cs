@@ -32,11 +32,11 @@ namespace JoinFun.Controllers
                     Acc_Pass= db.Acc_Pass.Where(m => m.memId == memID).ToList(),
                     Blacklist= db.Blacklist.Where(m => m.memId == memID).ToList(),
                     Bookmark_Details= db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
-                    Fans= db.Fans.Where(m => m.memId == memID).ToList(),
-                    FollowUp= db.FollowUp.Where(m => m.FoMemId == memID).ToList(),
-                    Friendship= db.Friendship.Where(m => m.memId == memID).ToList(),
-                    Member_Remarks= db.Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
-                    Join_Fun_Activities = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList()
+                    vw_Fans = db.vw_Fans.Where(m => m.memId == memID).ToList(),
+                    vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
+                    vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList(),
+                    vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
+                    vw_Activities = db.vw_Activities.Where(m => m.hostId == memID).ToList()
                 };
 
 
