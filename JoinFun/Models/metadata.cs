@@ -441,7 +441,6 @@ namespace JoinFun.Models
         public string friendMemId { get; set; }
 
         [DisplayName("好友暱稱")]
-        [Required(ErrorMessage = "必填")]
         [StringLength(15, ErrorMessage = "最多輸入15個字")]
 
         public string friendNick { get; set; }

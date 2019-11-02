@@ -6,16 +6,10 @@
     ViewBag.Title = "揪團活動列表";
 }
 
-<style>
-    .bg {
-             background-image: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-        }
-</style>
-
     <div class="container">
-        <h5 class="bg-light display-4 font-weight-bolder mt-2" style="font-family:'Comic Sans MS'">揪團活動列表</h5>
+        <h1 class="font-weight-bolder mt-4" >揪團活動列表</h1>
         <hr />
-        <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
+        <nav class="navbar navbar-expand-sm bg-warning  mb-2">
             <ul class="nav navbar-nav">
 
                 @foreach (var item in Model.ClassList)
@@ -39,7 +33,7 @@
             <ul class="navbar-nav ml-auto">
                 @*@if (Session["memId"] != null)
                 {*@
-                    @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-outline-success " })
                 @*}*@
             </ul>
 
@@ -50,50 +44,55 @@
 
             <div class="row">
 
-
                 @foreach (var item in Model.ActivityList)
                 {
-                    var address = item.CountyName + item.DistrictName + item.actRoad;
+                <div class="col col-12  col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    @{var address = item.CountyName + item.DistrictName ;}
+                    <a href="@Url.Action("Details", new { actId = item.actId })" class="text-decoration-none">
+                        <div class="card-deck   mx-auto ">
+                            <div class="card mt-2">
 
-                    <div class="card-deck mr-2">
+                                @*@if (item.actId != null)
+                    {
+                        <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" style="width:200px;height:auto" class="img-thumbnail" />
+                    }*@
 
-
-                        <div class="card mt-2" style="width:200px">
-
-                            @*@if (item.actId != null)
-                            {
-                                <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" style="width:200px;height:auto" class="img-thumbnail" />
-                            }*@
-
-                            <div class="card-header bg-light text-center" style="height:150px">
 
                                 @if (item.actId != null)
                                 {
-                                    <a href="@Url.Action("Details", new { actId = item.actId })"><img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" class="img-thumbnail" style="height:120px" /></a>
+
+                                    <div class="card-header bg-light text-center" style="height:150px">
+                                        <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" class="img-thumbnail" style="height:120px" />
+
+                                    </div>
+
                                 }
-                            </div>
-                            <div class="card-body text-center">
-                                @*@if (item.actId != null)
-                                {
-                                    <a href="@Url.Action("Details", new { actId = item.actId })"><img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" class="img-thumbnail" style="width:200px" /></a>
-                                }*@
 
-                                <h3 class="text-center text-danger mb-5">@Html.DisplayFor(modelItem => item.actTopic)</h3>
-                                <h5 class="text-center text-primary "><mark>活動時間</mark></h5>
-                                <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actTime)</p>
-                                <h5 class="text-center text-primary"><mark>活動截止時間</mark></h5>
-                                <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actDeadline)</p>
-                                <h5 class="text-center text-primary"><mark>活動地點</mark></h5>
-                                <p class="text-center text-muted">@address</p>
-                                <h5 class="text-center"><mark class="text-danger">主辦人</mark></h5>
-                                <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.memNick)</p>
-                            </div>
-                            @*<div class="card-footer bg-warning text-center">
-                                @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = ViewBag.actClassId })
-                            </div>*@
+                                <div class="card-body text-center">
+                                    @*@if (item.actId != null)
+                        {
+                            <a href="@Url.Action("Details", new { actId = item.actId })"><img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" class="img-thumbnail" style="width:200px" /></a>
+                        }*@
 
+                                    <h4 class="text-center text-danger mb-5 text-truncate font-weight-bold">@Html.DisplayFor(modelItem => item.actTopic)</h4>
+                                    <h5 class="text-center text-primary "><mark>活動時間</mark></h5>
+                                    <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actTime)</p>
+                                    @*<h5 class="text-center text-primary">報名截止時間</h5>
+                                    <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.actDeadline)</p>*@
+                                    <h5 class="text-center text-primary"><mark>活動地點</mark></h5>
+                                    <p class="text-center text-muted">@address</p>
+                                    <h5 class="text-center"><mark class="text-danger">主辦人</mark></h5>
+                                    <p class="text-center text-muted">@Html.DisplayFor(modelItem => item.memNick)</p>
+                                </div>
+                                @*<div class="card-footer bg-warning text-center">
+                        @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = ViewBag.actClassId })
+                    </div>*@
+
+                            </div>
                         </div>
-                    </div>
+
+                    </a>
+                </div>
                 }
             </div>
         </div>

@@ -16,5 +16,6 @@ namespace JoinFun.ViewModel
         public List<FollowUp> FollowUp { get; set; }
         public List<Friendship> Friendship { get; set; }
         public List<Member_Remarks> Member_Remarks { get; set; }
+        public List<Join_Fun_Activities> Join_Fun_Activities { get; set; }
     }
 }

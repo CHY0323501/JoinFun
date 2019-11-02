@@ -120,6 +120,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\hover-min.css" />
+    <Content Include="Content\hover.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CSS\ADM_login.css" />
     <Content Include="CSS\MemberInfo.css" />
@@ -130,11 +131,17 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>dbJoinFun.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="JS\MemberEdit.js" />
     <Content Include="Models\dbJoinFun.edmx.diagram">
       <DependentUpon>dbJoinFun.edmx</DependentUpon>
     </Content>
+    <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
     <Content Include="Photos\male.png" />
+    <Content Include="Photos\w-1.png" />
+    <Content Include="Photos\w-2.png" />
+    <Content Include="Photos\w1.png" />
+    <Content Include="Photos\w2.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
