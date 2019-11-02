@@ -56,5 +56,9 @@ namespace JoinFun.Models
         public virtual DbSet<Type_of_Violate> Type_of_Violate { get; set; }
         public virtual DbSet<Violation> Violation { get; set; }
         public virtual DbSet<vw_Activities> vw_Activities { get; set; }
+        public virtual DbSet<vw_Fans> vw_Fans { get; set; }
+        public virtual DbSet<vw_FollowUp> vw_FollowUp { get; set; }
+        public virtual DbSet<vw_FriendShip> vw_FriendShip { get; set; }
+        public virtual DbSet<vw_Member_Remarks> vw_Member_Remarks { get; set; }
     }
 }

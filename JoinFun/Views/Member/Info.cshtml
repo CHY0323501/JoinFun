@@ -96,24 +96,23 @@
             <div class="row w-100 h-50 text-center mx-auto mt-4 ">
                 <div class="col col-md-12 ">
                     <div class="row mx-auto justify-content-center">
-                        <div class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color  animated bounceIn bshadow btn btn-hov">
+                        <div id="follow" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color  animated bounceIn bshadow btn btn-hov">
                             <div class="adj_fontsize font-weight-bold">@Model.FollowUp.Count</div>
                             <div>追蹤</div>
                         </div>
-                        <div class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div id="fans" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
                             <div class="adj_fontsize font-weight-bold">@Model.Fans.Count</div>
                             <div>粉絲</div>
                         </div>
-                        <div class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div id="friend" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
                             <div class="adj_fontsize font-weight-bold">@Model.Friendship.Count</div>
                             <div>好友</div>
                         </div>
-                        <div class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div id="remark" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
                             <div class="adj_fontsize font-weight-bold ">@Model.Member_Remarks.Count</div>
                             <div>會員評價</div>
                         </div>
-                        <div class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow  btn btn-hov">
-
+                        <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow  btn btn-hov">
                             <div class="adj_fontsize font-weight-bold">@(Model.Join_Fun_Activities.Count + i.Activity_Details.Count)</div>
                             <div>揪團歷史</div>
                         </div>
@@ -199,31 +198,42 @@
             </div>
     }
 
-    //test
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            Open modal
-        </button>
-
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
+    //彈出視窗
+        <div class="modal" id="Modal1">
+            <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable ">
+                <div class="modal-content ">
 
                     <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">追蹤名單</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-header nav-bg text-white " >
+                        <h5 class="modal-title font-weight-bold">追蹤名單</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                     </div>
 
                     <!-- Modal body -->
-                    <div class="modal-body">
+                    <div class="modal-body text-center" style="height:400px">
                         @foreach (var fol in Model.FollowUp) {
-                        <div>@fol.memId</div>
+                            <div>@fol.memId</div>
                         }
                     </div>
-
                 </div>
             </div>
         </div>
     }
 </div>
+<script>
+    $('#follow').click(function () {
+        $('#Modal1').modal('toggle');
+    });
+    $('#fans').click(function () {
+        $('#Modal2').modal('toggle');
+    });
+    $('#friend').click(function () {
+        $('#Modal3').modal('toggle');
+    });
+    $('#remark').click(function () {
+        $('#Modal4').modal('toggle');
+    });
+    $('#history').click(function () {
+        $('#Modal5').modal('toggle');
+    });
+</script>

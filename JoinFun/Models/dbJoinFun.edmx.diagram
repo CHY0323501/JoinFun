@@ -72,6 +72,11 @@
         <AssociationConnector Association="JoinFunModel.FK__Violation__punis__01142BA1" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Violation__typeI__00200768" ManuallyRouted="false" />
         <EntityTypeShape EntityType="JoinFunModel.vw_Activities" Width="1.5" PointX="5.5" PointY="16.125" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Fans" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_FollowUp" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_FriendShip" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Member_Remarks" Width="1.5" PointX="2.75" PointY="3.75" />
+        <AssociationConnector Association="JoinFunModel.FK__Member_Re__ToMem__5614BF03" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

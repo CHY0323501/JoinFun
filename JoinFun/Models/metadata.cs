@@ -9,7 +9,6 @@ namespace JoinFun.Models
 {
     public class MetaAcc_Pass
     {
-    
         [DisplayName("會員帳號")]
         [Required(ErrorMessage = "請輸入會員帳號")]
         [StringLength(10, ErrorMessage = "最多輸入10字")]
@@ -540,28 +539,6 @@ namespace JoinFun.Models
         public bool readYet { get; set; }
 
     }
-    public class MetadataPeople_Restriction
-    {
-
-        [DisplayName("人數限制編號")]
-        public short peoSerial { get; set; }
-        [DisplayName("人數限制")]
-        public int PeoRestriction { get; set; }
-
-    }
-
-    public  class MetadataPhotos_of_Activities
-    {
-        [DisplayName("活動編號")]
-        [Required(ErrorMessage = "請輸入活動編號")]
-        public string actId { get; set; }
-
-
-        [DisplayName("照片")]
-        [Required(ErrorMessage = "請上傳照片")]
-        public byte[] actPics { get; set; }
-    }
-
 
     public  class MetaPost
     {
@@ -699,5 +676,60 @@ namespace JoinFun.Models
         public Nullable<System.DateTime> vioProcessTime { get; set; }
 
     }
-
+    public  class Metavw_Fans
+    {
+        [DisplayName("粉絲")]
+        public string fanMemId { get; set; }
+        [DisplayName("被追蹤者會員編號")]
+        public string memId { get; set; }
+        [DisplayName("粉絲暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("粉絲性別")]
+        public string Sex { get; set; }
+    }
+    public class Metavw_FollowUp
+    {
+        [DisplayName("追蹤者")]
+        public string FoMemId { get; set; }
+        [DisplayName("被追蹤者會員編號")]
+        public string memId { get; set; }
+        [DisplayName("追蹤者暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("追蹤者性別")]
+        public string Sex { get; set; }
+    }
+    public class Metavw_FriendShip
+    {
+        [DisplayName("會員編號")]
+        public string memId { get; set; }
+        [DisplayName("好友編號")]
+        public string friendMemId { get; set; }
+        [DisplayName("好友暱稱")]
+        public string friendnick { get; set; }
+        [DisplayName("好友性別")]
+        public string friendSex { get; set; }
+    }
+    public class Metavw_Member_Remarks
+    {
+        [DisplayName("評價編號")]
+        public string remarkSerial { get; set; }
+        [DisplayName("活動編號")]
+        public string actId { get; set; }
+        [DisplayName("給評者會員編號")]
+        public string FromMemId { get; set; }
+        [DisplayName("給評者暱稱")]
+        public string FromMemNick { get; set; }
+        [DisplayName("給評者性別")]
+        public string FromMemSex { get; set; }
+        [DisplayName("評價對象")]
+        public string ToMemId { get; set; }
+        [DisplayName("是否保留評價")]
+        public bool keepRemark { get; set; }
+        [DisplayName("評價星等")]
+        public short remarkStar { get; set; }
+        [DisplayName("評價內容")]
+        public string remarkContent { get; set; }
+        [DisplayName("評價時間")]
+        public System.DateTime remarkTime { get; set; }
+    }
 }

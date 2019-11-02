@@ -136,7 +136,7 @@
           </Key>
           <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="friendMemId" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="friendNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="friendNick" Type="nvarchar" MaxLength="15" />
           <Property Name="Approved" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Gender_Restriction">
@@ -352,6 +352,73 @@
           <Property Name="payment" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PeoRestriction" Type="int" Nullable="false" />
           <Property Name="actPics" Type="image" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Fans' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_Fans">
+          <Key>
+            <PropertyRef Name="fanMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="fanMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_FollowUp' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_FollowUp">
+          <Key>
+            <PropertyRef Name="FoMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="FoMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_FriendShip' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_FriendShip">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="friendMemId" />
+            <PropertyRef Name="friendnick" />
+            <PropertyRef Name="friendSex" />
+          </Key>
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="friendMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="friendnick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="friendSex" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Member_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_Member_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="FromMemNick" />
+            <PropertyRef Name="FromMemSex" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+          </Key>
+          <Property Name="remarkSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FromMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FromMemNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="FromMemSex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ToMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="keepRemark" Type="bit" Nullable="false" />
+          <Property Name="remarkStar" Type="smallint" Nullable="false" />
+          <Property Name="remarkContent" Type="nvarchar(max)" />
+          <Property Name="remarkTime" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__Acc_Pass__memId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
@@ -653,7 +720,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Member_Re__FromM__693CA210">
+        <Association Name="FK__Member_Re__ToMem__5614BF03">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
           <End Role="Member_Remarks" Type="Self.Member_Remarks" Multiplicity="*" />
           <ReferentialConstraint>
@@ -661,7 +728,7 @@
               <PropertyRef Name="memId" />
             </Principal>
             <Dependent Role="Member_Remarks">
-              <PropertyRef Name="FromMemId" />
+              <PropertyRef Name="ToMemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -863,6 +930,44 @@
     [vw_Activities].[actPics] AS [actPics]
     FROM [dbo].[vw_Activities] AS [vw_Activities]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_Fans" EntityType="Self.vw_Fans" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Fans].[fanMemId] AS [fanMemId], 
+    [vw_Fans].[memId] AS [memId], 
+    [vw_Fans].[memNick] AS [memNick], 
+    [vw_Fans].[Sex] AS [Sex]
+    FROM [dbo].[vw_Fans] AS [vw_Fans]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_FollowUp" EntityType="Self.vw_FollowUp" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_FollowUp].[FoMemId] AS [FoMemId], 
+    [vw_FollowUp].[memId] AS [memId], 
+    [vw_FollowUp].[memNick] AS [memNick], 
+    [vw_FollowUp].[Sex] AS [Sex]
+    FROM [dbo].[vw_FollowUp] AS [vw_FollowUp]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_FriendShip" EntityType="Self.vw_FriendShip" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_FriendShip].[memId] AS [memId], 
+    [vw_FriendShip].[friendMemId] AS [friendMemId], 
+    [vw_FriendShip].[friendnick] AS [friendnick], 
+    [vw_FriendShip].[friendSex] AS [friendSex]
+    FROM [dbo].[vw_FriendShip] AS [vw_FriendShip]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Member_Remarks" EntityType="Self.vw_Member_Remarks" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Member_Remarks].[remarkSerial] AS [remarkSerial], 
+    [vw_Member_Remarks].[actId] AS [actId], 
+    [vw_Member_Remarks].[FromMemId] AS [FromMemId], 
+    [vw_Member_Remarks].[FromMemNick] AS [FromMemNick], 
+    [vw_Member_Remarks].[FromMemSex] AS [FromMemSex], 
+    [vw_Member_Remarks].[ToMemId] AS [ToMemId], 
+    [vw_Member_Remarks].[keepRemark] AS [keepRemark], 
+    [vw_Member_Remarks].[remarkStar] AS [remarkStar], 
+    [vw_Member_Remarks].[remarkContent] AS [remarkContent], 
+    [vw_Member_Remarks].[remarkTime] AS [remarkTime]
+    FROM [dbo].[vw_Member_Remarks] AS [vw_Member_Remarks]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Acc_Pass__memId__6EF57B66" Association="Self.FK__Acc_Pass__memId__6EF57B66">
             <End Role="Member" EntitySet="Member" />
             <End Role="Acc_Pass" EntitySet="Acc_Pass" />
@@ -963,7 +1068,7 @@
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
             <End Role="Member_Remarks" EntitySet="Member_Remarks" />
           </AssociationSet>
-          <AssociationSet Name="FK__Member_Re__FromM__693CA210" Association="Self.FK__Member_Re__FromM__693CA210">
+          <AssociationSet Name="FK__Member_Re__ToMem__5614BF03" Association="Self.FK__Member_Re__ToMem__5614BF03">
             <End Role="Member" EntitySet="Member" />
             <End Role="Member_Remarks" EntitySet="Member_Remarks" />
           </AssociationSet>
@@ -1166,7 +1271,7 @@
           </Key>
           <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="friendMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="friendNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="friendNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Member" Relationship="Self.FK__Friendshi__memId__75A278F5" FromRole="Friendship" ToRole="Member" />
         </EntityType>
@@ -1259,6 +1364,7 @@
           <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Member" ToRole="Violation" />
           <Property Name="Habit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Dietary_Preference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member_Remarks1" Relationship="JoinFunModel.FK__Member_Re__ToMem__5614BF03" FromRole="Member" ToRole="Member_Remarks" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>
@@ -1274,6 +1380,7 @@
           <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Member_Re__actId__778AC167" FromRole="Member_Remarks" ToRole="Join_Fun_Activities" />
           <NavigationProperty Name="Member" Relationship="Self.FK__Member_Re__FromM__693CA210" FromRole="Member_Remarks" ToRole="Member" />
+          <NavigationProperty Name="Member1" Relationship="JoinFunModel.FK__Member_Re__ToMem__5614BF03" FromRole="Member_Remarks" ToRole="Member" />
         </EntityType>
         <EntityType Name="Message_Board">
           <Key>
@@ -1988,6 +2095,14 @@
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
           <EntitySet Name="vw_Activities" EntityType="JoinFunModel.vw_Activities" />
+          <EntitySet Name="vw_Fans" EntityType="JoinFunModel.vw_Fans" />
+          <EntitySet Name="vw_FollowUp" EntityType="JoinFunModel.vw_FollowUp" />
+          <EntitySet Name="vw_FriendShip" EntityType="JoinFunModel.vw_FriendShip" />
+          <EntitySet Name="vw_Member_Remarks" EntityType="JoinFunModel.vw_Member_Remarks" />
+          <AssociationSet Name="FK__Member_Re__ToMem__5614BF03" Association="JoinFunModel.FK__Member_Re__ToMem__5614BF03">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Remarks" EntitySet="Member_Remarks" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="vw_Activities">
           <Key>
@@ -2039,6 +2154,77 @@
           <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
           <Property Name="actPics" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="vw_Fans">
+          <Key>
+            <PropertyRef Name="fanMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="fanMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_FollowUp">
+          <Key>
+            <PropertyRef Name="FoMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="FoMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_FriendShip">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="friendMemId" />
+            <PropertyRef Name="friendnick" />
+            <PropertyRef Name="friendSex" />
+          </Key>
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="friendMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="friendnick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="friendSex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_Member_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="FromMemNick" />
+            <PropertyRef Name="FromMemSex" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromMemNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="FromMemSex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK__Member_Re__ToMem__5614BF03">
+          <End Type="JoinFunModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="JoinFunModel.Member_Remarks" Role="Member_Remarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Member_Remarks">
+              <PropertyRef Name="ToMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2392,6 +2578,52 @@
                 <ScalarProperty Name="Budget" ColumnName="Budget" />
                 <ScalarProperty Name="actClassName" ColumnName="actClassName" />
                 <ScalarProperty Name="age" ColumnName="age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Fans">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_Fans">
+              <MappingFragment StoreEntitySet="vw_Fans">
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="fanMemId" ColumnName="fanMemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_FollowUp">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_FollowUp">
+              <MappingFragment StoreEntitySet="vw_FollowUp">
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="FoMemId" ColumnName="FoMemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_FriendShip">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_FriendShip">
+              <MappingFragment StoreEntitySet="vw_FriendShip">
+                <ScalarProperty Name="friendSex" ColumnName="friendSex" />
+                <ScalarProperty Name="friendnick" ColumnName="friendnick" />
+                <ScalarProperty Name="friendMemId" ColumnName="friendMemId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Member_Remarks">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_Member_Remarks">
+              <MappingFragment StoreEntitySet="vw_Member_Remarks">
+                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
+                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
+                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
+                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="FromMemSex" ColumnName="FromMemSex" />
+                <ScalarProperty Name="FromMemNick" ColumnName="FromMemNick" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
