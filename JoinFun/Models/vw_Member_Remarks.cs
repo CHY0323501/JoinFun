@@ -20,12 +20,15 @@ namespace JoinFun.Models
         public string remarkSerial { get; set; }
         public string actId { get; set; }
         public string FromMemId { get; set; }
-        public string FromMemNick { get; set; }
-        public string FromMemSex { get; set; }
         public string ToMemId { get; set; }
         public bool keepRemark { get; set; }
         public short remarkStar { get; set; }
         public string remarkContent { get; set; }
         public System.DateTime remarkTime { get; set; }
+        public string memNick { get; set; }
+        public string Sex { get; set; }
+        public string actTopic { get; set; }
+        public string CountyName { get; set; }
+        public string DistrictName { get; set; }
     }
 }

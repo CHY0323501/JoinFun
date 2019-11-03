@@ -11,10 +11,7 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataType(typeof(Metavw_Fans))]
-
+    
     public partial class vw_Fans
     {
         public string fanMemId { get; set; }

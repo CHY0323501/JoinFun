@@ -355,16 +355,7 @@ namespace JoinFun.Models
 
 
     }
-
-    public class MetadataBudget_Restriction
-    {
-
-        [DisplayName("預算限制")]
-        [Required(ErrorMessage = "預算限制為必填")]
-        [Range(double.Epsilon, double.MaxValue, ErrorMessage = "預算不可小於0")]
-        public decimal Budget { get; set; }
-
-    }
+   
     public class MetaComment
     {
         [DisplayName("意見編號")]
@@ -676,7 +667,7 @@ namespace JoinFun.Models
         public Nullable<System.DateTime> vioProcessTime { get; set; }
 
     }
-    public  class Metavw_Fans
+    public  class Metavw_FansNew
     {
         [DisplayName("粉絲")]
         public string fanMemId { get; set; }
@@ -700,14 +691,16 @@ namespace JoinFun.Models
     }
     public class Metavw_FriendShip
     {
-        [DisplayName("會員編號")]
-        public string memId { get; set; }
-        [DisplayName("好友編號")]
+        [DisplayName("好友會員編號")]
         public string friendMemId { get; set; }
         [DisplayName("好友暱稱")]
-        public string friendnick { get; set; }
+        public string memNick { get; set; }
+        [DisplayName("好友新暱稱")]
+        public string newNick { get; set; }
+        [DisplayName("會員編號")]
+        public string memId { get; set; }
         [DisplayName("好友性別")]
-        public string friendSex { get; set; }
+        public string Sex { get; set; }
     }
     public class Metavw_Member_Remarks
     {
@@ -717,11 +710,7 @@ namespace JoinFun.Models
         public string actId { get; set; }
         [DisplayName("給評者會員編號")]
         public string FromMemId { get; set; }
-        [DisplayName("給評者暱稱")]
-        public string FromMemNick { get; set; }
-        [DisplayName("給評者性別")]
-        public string FromMemSex { get; set; }
-        [DisplayName("評價對象")]
+        [DisplayName("評價對象會員編號")]
         public string ToMemId { get; set; }
         [DisplayName("是否保留評價")]
         public bool keepRemark { get; set; }
@@ -731,5 +720,15 @@ namespace JoinFun.Models
         public string remarkContent { get; set; }
         [DisplayName("評價時間")]
         public System.DateTime remarkTime { get; set; }
+        [DisplayName("給評者暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("給評者性別")]
+        public string Sex { get; set; }
+        [DisplayName("活動主題")]
+        public string actTopic { get; set; }
+        [DisplayName("活動縣市")]
+        public string CountyName { get; set; }
+        [DisplayName("活動區域")]
+        public string DistrictName { get; set; }
     }
 }
