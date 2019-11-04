@@ -28,6 +28,5 @@ namespace JoinFun.Models
     
         public virtual Join_Fun_Activities Join_Fun_Activities { get; set; }
         public virtual Member Member { get; set; }
-        public virtual Member Member1 { get; set; }
     }
 }

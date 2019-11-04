@@ -18,7 +18,7 @@ namespace JoinFun.Controllers
     public class MemberController : Controller
     {
         JoinFunEntities db = new JoinFunEntities();
-        SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["dbJoinFun"].ConnectionString);
+        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
 
         public ActionResult Info(string memID="M000000003")
@@ -63,6 +63,7 @@ namespace JoinFun.Controllers
                             ViewBag.county_drop = db.County.ToList();
                             ViewBag.district_drop = db.District.ToList();
                             return View(member);
+
                     }
                     //未登入時無法編輯並轉至首頁
                     return RedirectToAction("Index", "Activity");
@@ -76,9 +77,9 @@ namespace JoinFun.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string memId, DateTime Birthday, string Sex, string memNick, string Email, int memCounty, int memDistrict, string Introduction, string Habit, string Dietary_Preference)
         {
+            
             if (ModelState.IsValid&&Session["memid"]!=null)
             {
-
 
                 var mem = db.Member.Find(memId);
                 mem.Sex = Sex;

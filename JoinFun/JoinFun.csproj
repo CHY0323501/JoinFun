@@ -127,13 +127,16 @@
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
-    <EntityDeploy Include="Models\dbJoinFun.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>dbJoinFun.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="JS\MemberEdit.js" />
-    <Content Include="Models\dbJoinFun.edmx.diagram">
-      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+    <Content Include="Models\JoinfunNEW.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JoinfunNEW.edmx</DependentUpon>
+      <LastGenOutput>JoinfunNEW.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\JoinfunNEW.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JoinfunNEW.edmx</DependentUpon>
+      <LastGenOutput>JoinfunNEW.cs</LastGenOutput>
     </Content>
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
@@ -164,17 +167,14 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\JoinfunNEW.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>JoinfunNEW.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\JoinfunNEW.edmx.diagram">
+      <DependentUpon>JoinfunNEW.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Models\dbJoinFun.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbJoinFun.edmx</DependentUpon>
-      <LastGenOutput>dbJoinFun.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\dbJoinFun.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbJoinFun.edmx</DependentUpon>
-      <LastGenOutput>dbJoinFun.cs</LastGenOutput>
-    </Content>
     <Content Include="Photos\ADM_Login.jpg" />
     <Content Include="Photos\ADM_login_minions.jpg" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -574,128 +574,122 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Acc_Pass.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity_Class.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity_Details.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Administrator.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Age_Restriction.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Blacklist.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Bookmark_Details.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Budget_Restriction.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Chat_Records.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Comment.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\County.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\dbJoinFun.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbJoinFun.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\dbJoinFun.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\dbJoinFun.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\District.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Fans.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FollowUp.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Friendship.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Gender_Restriction.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Hash_Tag.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+    <Compile Include="Models\JoinfunNEW.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JoinfunNEW.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JoinfunNEW.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\JoinfunNEW.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JoinfunNEW.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Join_Fun_Activities.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Member.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Member_Remarks.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Message_Board.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\Notification.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Payment_Restriction.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\People_Restriction.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Photos_of_Activities.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Punishment.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Social_Net_ID.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Type_of_Violate.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Violation.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Activities.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vw_Fans.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_FansNew.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_FollowUp.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_FriendShip.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Member_Remarks.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ActClass.cs" />

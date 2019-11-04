@@ -40,6 +40,5 @@ namespace JoinFun.Models
         public string memNick { get; set; }
         public string payment { get; set; }
         public int PeoRestriction { get; set; }
-        public byte[] actPics { get; set; }
     }
 }

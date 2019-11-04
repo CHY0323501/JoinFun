@@ -26,7 +26,7 @@ namespace JoinFun.Models
         public string actClassId { get; set; }
         public string actClassName { get; set; }
         public string actClassDescrip { get; set; }
-        public byte[] Photos { get; set; }
+        public string Photos { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Join_Fun_Activities> Join_Fun_Activities { get; set; }

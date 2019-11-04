@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b1e83ab3912747c6a2085d556015b58a" Name="Diagram1">
+        <EntityTypeShape EntityType="JoinFunModel.Acc_Pass" Width="1.5" PointX="10.5" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Activity_Class" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Activity_Details" Width="1.5" PointX="13.5" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Administrator" Width="1.5" PointX="14.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Age_Restriction" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Blacklist" Width="1.5" PointX="10.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Bookmark_Details" Width="1.5" PointX="10.5" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Budget_Restriction" Width="1.5" PointX="3" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Chat_Records" Width="1.5" PointX="10.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Comment" Width="1.5" PointX="16.5" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.County" Width="1.5" PointX="0.75" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.District" Width="1.5" PointX="3" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Fans" Width="1.5" PointX="10.5" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.FollowUp" Width="1.5" PointX="10.5" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Friendship" Width="1.5" PointX="10.5" PointY="30.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Gender_Restriction" Width="1.5" PointX="3" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Join_Fun_Activities" Width="1.5" PointX="5.25" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Member" Width="1.5" PointX="8.25" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Member_Remarks" Width="1.5" PointX="13.5" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Message_Board" Width="1.5" PointX="13.5" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Notification" Width="1.5" PointX="10.5" PointY="33.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Payment_Restriction" Width="1.5" PointX="3" PointY="31.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.People_Restriction" Width="1.5" PointX="3" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Photos_of_Activities" Width="1.5" PointX="7.5" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Post" Width="1.5" PointX="16.5" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Punishment" Width="1.5" PointX="14.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Social_Net_ID" Width="1.5" PointX="10.5" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Type_of_Violate" Width="1.5" PointX="14.25" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.Violation" Width="1.5" PointX="16.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Activities" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_FansNew" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_FollowUp" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_FriendShip" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Member_Remarks" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="JoinFunModel.FK__Acc_Pass__memId__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___actCl__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Activity___actId__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Activity___memId__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Comment__admId__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Post__admId__7F2BE32F" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Violation__imple__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___ageRe__3F6663D5" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Blacklist__memId__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Bookmark___actId__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Bookmark___memId__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___maxBu__405A880E" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Chat_Reco__FromM__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Comment__memId__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__District__County__3BFFE745" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___actCo__32767D0B" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Member__memCount__3CF40B7E" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___actDi__336AA144" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Member__memDistr__3DE82FB7" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Fans__memId__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__FollowUp__memId__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Friendshi__memId__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___gende__5DEAEAF5" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___maxNu__37C5420D" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Join_Fun___payme__7E57BA87" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Member_Re__actId__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Message_B__actId__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Photos_of__actId__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Member_Re__ToMem__5614BF03" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Message_B__memId__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Notificat__ToMem__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Social_Ne__memId__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Violation__FromM__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Violation__punis__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="JoinFunModel.FK__Violation__typeI__00200768" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
