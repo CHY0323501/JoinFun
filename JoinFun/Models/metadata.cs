@@ -37,7 +37,7 @@ namespace JoinFun.Models
         public string actClassDescrip { get; set; }
         [DisplayName("類別照片")]
         [Required(ErrorMessage = "請選擇活動類別照片")]
-        public byte[] Photos { get; set; }
+        public string Photos { get; set; }
     }
     public  class MetaActivity_Details
     {
@@ -250,7 +250,7 @@ namespace JoinFun.Models
 
         [DisplayName("照片")]
         [Required(ErrorMessage = "請上傳照片")]
-        public byte[] actPics { get; set; }
+        public string actPics { get; set; }
 
     }
 
@@ -450,22 +450,22 @@ namespace JoinFun.Models
 
        }
 
-    public class MetaHash_Tag
-    {
+    //public class MetaHash_Tag
+    //{
 
-        [DisplayName("HashTag編號")]
-        public string hashSerial { get; set; }
+    //    [DisplayName("HashTag編號")]
+    //    public string hashSerial { get; set; }
 
-        [DisplayName("活動編號")]
-        public string actId { get; set; }
+    //    [DisplayName("活動編號")]
+    //    public string actId { get; set; }
 
-        [DisplayName("HashTag內容")]
-        [StringLength(30, ErrorMessage = "最多輸入30個字")]
-        [Required(ErrorMessage = "必填")]
-        public string hashContent { get; set; }
+    //    [DisplayName("HashTag內容")]
+    //    [StringLength(30, ErrorMessage = "最多輸入30個字")]
+    //    [Required(ErrorMessage = "必填")]
+    //    public string hashContent { get; set; }
 
 
-    }
+    //}
 
    
     public class MetaMember_Remarks
@@ -556,7 +556,7 @@ namespace JoinFun.Models
 
         [DisplayName("照片")]
         [Required(ErrorMessage = "請上傳圖片")]
-        public byte[] postPics { get; set; }
+        public string postPics { get; set; }
 
     }
 

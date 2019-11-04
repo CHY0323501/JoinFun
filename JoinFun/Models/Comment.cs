@@ -14,6 +14,7 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaComment))]
+
     public partial class Comment
     {
         public string commentId { get; set; }

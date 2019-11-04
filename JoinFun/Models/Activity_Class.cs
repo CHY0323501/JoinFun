@@ -14,6 +14,7 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaActivity_Class))]
+
     public partial class Activity_Class
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
