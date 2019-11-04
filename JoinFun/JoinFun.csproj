@@ -681,9 +681,6 @@
     <Compile Include="Models\vw_Activities.cs">
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vw_Fans.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\vw_FansNew.cs">
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>

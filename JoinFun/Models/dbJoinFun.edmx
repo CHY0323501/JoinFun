@@ -2106,7 +2106,6 @@
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
           <EntitySet Name="vw_Activities" EntityType="JoinFunModel.vw_Activities" />
-          <EntitySet Name="vw_Fans" EntityType="JoinFunModel.vw_Fans" />
           <AssociationSet Name="FK__Member_Re__ToMem__5614BF03" Association="JoinFunModel.FK__Member_Re__ToMem__5614BF03">
             <End Role="Member" EntitySet="Member" />
             <End Role="Member_Remarks" EntitySet="Member_Remarks" />
@@ -2166,18 +2165,7 @@
           <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
           <Property Name="actPics" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="vw_Fans">
-          <Key>
-            <PropertyRef Name="fanMemId" />
-            <PropertyRef Name="memId" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="Sex" />
-          </Key>
-          <Property Name="fanMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
+       
         <Association Name="FK__Member_Re__ToMem__5614BF03">
           <End Type="JoinFunModel.Member" Role="Member" Multiplicity="1" />
           <End Type="JoinFunModel.Member_Remarks" Role="Member_Remarks" Multiplicity="*" />
