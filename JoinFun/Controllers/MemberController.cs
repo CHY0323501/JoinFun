@@ -18,7 +18,7 @@ namespace JoinFun.Controllers
     public class MemberController : Controller
     {
         JoinFunEntities db = new JoinFunEntities();
-        SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["dbJoinFun"].ConnectionString);
+        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
 
         public ActionResult Info(string memID="M000000003")
