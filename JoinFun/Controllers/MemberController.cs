@@ -80,7 +80,6 @@ namespace JoinFun.Controllers
             
             if (ModelState.IsValid&&Session["memid"]!=null)
             {
-
                 var mem = db.Member.Find(memId);
                 mem.Sex = Sex;
                 mem.memNick = memNick;
@@ -96,9 +95,14 @@ namespace JoinFun.Controllers
             //編輯完畢時回到個人資訊頁
             return RedirectToAction("Info", new { memID= Session["memid"] });
         }
-        public ActionResult Remarks() {
-
-            return View();
+        public ActionResult Remarks(string memID) {
+            var Mem_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList();
+            //查詢評價對象暱稱
+            ViewBag.ToMemNick = (from m in db.Member
+                                where m.memId == memID
+                                select m.memNick).FirstOrDefault();
+                
+            return View(Mem_Remarks);
         }
     }
 }

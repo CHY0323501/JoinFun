@@ -22,11 +22,11 @@
     /*background-color:rgba(255, 216, 0, 0.27);*/
 }
 .bshadow {
-    border:1.5px dashed #000000;
-}
-.btn-hov:hover {
-    color:white;
-    background-color:rgba(68, 159, 29, 0.45);
-    border-color:white;
+    border: 1.5px dashed white;
+    background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 80%, #fad0c4 100%);
 }
 
+.btn-hov:hover {
+    color: white;
+    cursor: pointer;
+}

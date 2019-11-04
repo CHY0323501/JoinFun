@@ -3,6 +3,7 @@
 
 
 @section memberinfo{
+
     <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
 }
 
@@ -95,26 +96,31 @@
 
             <div class="row w-100 h-50 text-center mx-auto mt-4 ">
                 <div class="col col-md-12 ">
-                    <div class="row mx-auto justify-content-center">
-                        <div id="follow" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color  animated bounceIn bshadow btn btn-hov">
+                    <div class="row mx-auto justify-content-center" id="btnrow">
+                        <div id="follow" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color  animated bounceIn bshadow  btn-hov">
                             <div class="adj_fontsize font-weight-bold">@Model.vw_FollowUp.Count</div>
                             <div>追蹤</div>
                         </div>
-                        <div id="fans" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div id="fans" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow   btn-hov">
                             <div class="adj_fontsize font-weight-bold">@Model.vw_FansNew.Count</div>
                             <div>粉絲</div>
                         </div>
-                        <div id="friend" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
+                        <div id="friend" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow   btn-hov">
                             <div class="adj_fontsize font-weight-bold">@Model.vw_FriendShip.Count</div>
                             <div>好友</div>
                         </div>
-                        <div id="remark" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow  btn btn-hov">
-                            <div class="adj_fontsize font-weight-bold ">@Model.vw_Member_Remarks.Count</div>
-                            <div>會員評價</div>
+
+                        <div id="remark" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow btn-hov">
+                            <a href="@Url.Action("Remarks","Member",new { memID=i.memId})" class="text-decoration-none ">
+                                <div class="adj_fontsize font-weight-bold text-dark">@Model.vw_Member_Remarks.Count</div>
+                                <div class="text-dark">會員評價</div>
+                            </a>
                         </div>
-                        <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow  btn btn-hov">
-                            <div class="adj_fontsize font-weight-bold">@(Model.vw_Activities.Count + i.Activity_Details.Count)</div>
-                            <div>揪團歷史</div>
+                        <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow   btn-hov">
+                            <a href="#" class="text-decoration-none ">
+                                <div class="adj_fontsize font-weight-bold text-dark">@(Model.vw_Activities.Count + i.Activity_Details.Count)</div>
+                                <div class="text-dark">揪團歷史</div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -176,7 +182,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="height:300px"></div>
+        @*<div class="row" style="height:300px"></div>*@
         @*確認是否登入、當使用揪團系統帳號登入才可修改密碼*@
         if (Session["memid"].ToString() == i.memId && i.Acc_Pass.FirstOrDefault() != null)
         {
@@ -309,5 +315,17 @@
     });
     $('#friend').click(function () {
         $('#Modal3').modal('toggle');
+    });
+    $('#remark').mouseover(function () {
+        $('#remark div').removeClass('text-dark').addClass('text-white');
+    });
+    $('#remark').mouseout(function () {
+        $('#remark div').removeClass('text-white').addClass('text-dark');
+    });
+    $('#history').mouseover(function () {
+        $('#history div').removeClass('text-dark').addClass('text-white');
+    });
+    $('#history').mouseout(function () {
+        $('#history div').removeClass('text-white').addClass('text-dark');
     });
 </script>

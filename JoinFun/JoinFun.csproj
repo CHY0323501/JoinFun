@@ -124,6 +124,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="CSS\ADM_login.css" />
     <Content Include="CSS\MemberInfo.css" />
+    <Content Include="CSS\MemberRemarks.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
@@ -724,6 +725,7 @@
     <Content Include="Scripts\jquery-validation-1.19.1\README.md" />
     <Content Include="Views\Activity\AddPhoto.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
+    <Content Include="Views\Member\Remarks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
