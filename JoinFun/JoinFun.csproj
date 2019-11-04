@@ -569,6 +569,7 @@
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\getDistrictController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -728,6 +729,7 @@
     <Content Include="Scripts\jquery-validation-1.19.1\package.json" />
     <Content Include="Scripts\jquery-validation-1.19.1\README.md" />
     <Content Include="Views\Activity\AddPhoto.cshtml" />
+    <Content Include="Views\Register\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
