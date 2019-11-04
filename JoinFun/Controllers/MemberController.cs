@@ -63,6 +63,7 @@ namespace JoinFun.Controllers
                             ViewBag.county_drop = db.County.ToList();
                             ViewBag.district_drop = db.District.ToList();
                             return View(member);
+
                     }
                     //未登入時無法編輯並轉至首頁
                     return RedirectToAction("Index", "Activity");
