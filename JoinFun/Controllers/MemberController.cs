@@ -30,7 +30,7 @@ namespace JoinFun.Controllers
                 return RedirectToAction("Index", "Activity");
             }
             else {
-                Session["memid"] = "M000000003";
+                Session["memid"] = "M000000002";
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
@@ -95,6 +95,10 @@ namespace JoinFun.Controllers
             }
             //編輯完畢時回到個人資訊頁
             return RedirectToAction("Info", new { memID= Session["memid"] });
+        }
+        public ActionResult Remarks() {
+
+            return View();
         }
     }
 }
