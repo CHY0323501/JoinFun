@@ -76,9 +76,9 @@ namespace JoinFun.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string memId, DateTime Birthday, string Sex, string memNick, string Email, int memCounty, int memDistrict, string Introduction, string Habit, string Dietary_Preference)
         {
+            
             if (ModelState.IsValid&&Session["memid"]!=null)
             {
-
 
                 var mem = db.Member.Find(memId);
                 mem.Sex = Sex;

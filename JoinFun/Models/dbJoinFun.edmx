@@ -2153,7 +2153,149 @@
             <End Role="Type_of_Violate" EntitySet="Type_of_Violate" />
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
+<<<<<<< HEAD
+          <EntitySet Name="vw_Activities" EntityType="JoinFunModel.vw_Activities" />
+          <AssociationSet Name="FK__Member_Re__ToMem__5614BF03" Association="JoinFunModel.FK__Member_Re__ToMem__5614BF03">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Remarks" EntitySet="Member_Remarks" />
+          </AssociationSet>
+          <EntitySet Name="vw_FansNew" EntityType="JoinFunModel.vw_FansNew" />
+          <EntitySet Name="vw_FollowUp" EntityType="JoinFunModel.vw_FollowUp" />
+          <EntitySet Name="vw_FriendShip" EntityType="JoinFunModel.vw_FriendShip" />
+          <EntitySet Name="vw_Member_Remarks" EntityType="JoinFunModel.vw_Member_Remarks" />
         </EntityContainer>
+        <EntityType Name="vw_Activities">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="actClassName" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="payment" />
+            <PropertyRef Name="PeoRestriction" />
+          </Key>
+          <Property Name="age" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="actClassName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="payment" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
+          <Property Name="actPics" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+       
+        <Association Name="FK__Member_Re__ToMem__5614BF03">
+          <End Type="JoinFunModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="JoinFunModel.Member_Remarks" Role="Member_Remarks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Member_Remarks">
+              <PropertyRef Name="ToMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vw_FansNew">
+          <Key>
+            <PropertyRef Name="fanMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="fanMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_FollowUp">
+          <Key>
+            <PropertyRef Name="FoMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="FoMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_FriendShip">
+          <Key>
+            <PropertyRef Name="friendMemId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="friendMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="newNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_Member_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+        </EntityType>
+=======
+        </EntityContainer>
+>>>>>>> 16b80e003f38d14e9d8776d1a9efb97bd35a6601
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

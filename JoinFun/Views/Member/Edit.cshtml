@@ -19,8 +19,8 @@
 {
     @Html.AntiForgeryToken()
 
-    @*@Html.HiddenFor(model => model.memId)*@
-    <input type="hidden" name="memId" value="@Model.memId" />
+    @Html.HiddenFor(model => model.memId)
+    @*<input type="hidden" name="memId" value="@Model.memId" />*@
     <div class="row ml-auto mr-auto">
         <div class="col-md-4 text-center   align-self-center">
             <div class="form-group ">
@@ -65,7 +65,9 @@
                     @*@Html.DropDownList("county_drop", null, htmlAttributes: new { @class = "form-control ml-auto mr-auto mb-1 text-center w-25" })*@
                     @Html.ValidationMessageFor(model => model.memCounty, "", new { @class = "text-danger" })
                     @*@Html.DropDownList("district_drop", null, htmlAttributes: new { @class = "form-control ml-auto mr-auto mb-1 text-center w-25" })*@
+                    @*<div class="form-group">
 
+                    </div>*@
                     <select id="memCounty" name="memCounty" class="form-control mx-auto mb-1 text-center w-25">
                         @foreach (var i in cc)
                         {
