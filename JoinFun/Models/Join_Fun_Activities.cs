@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaJoin_Fun_Activities))]
-
     public partial class Join_Fun_Activities
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +21,6 @@ namespace JoinFun.Models
         {
             this.Activity_Details = new HashSet<Activity_Details>();
             this.Bookmark_Details = new HashSet<Bookmark_Details>();
-            this.Hash_Tag = new HashSet<Hash_Tag>();
             this.Member_Remarks = new HashSet<Member_Remarks>();
             this.Message_Board = new HashSet<Message_Board>();
             this.Photos_of_Activities = new HashSet<Photos_of_Activities>();
@@ -46,6 +44,7 @@ namespace JoinFun.Models
         public bool acceptDrop { get; set; }
         public int clickTimes { get; set; }
         public bool keepAct { get; set; }
+        public string hashTag { get; set; }
     
         public virtual Activity_Class Activity_Class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -57,8 +56,6 @@ namespace JoinFun.Models
         public virtual County County { get; set; }
         public virtual District District { get; set; }
         public virtual Gender_Restriction Gender_Restriction { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Hash_Tag> Hash_Tag { get; set; }
         public virtual People_Restriction People_Restriction { get; set; }
         public virtual Payment_Restriction Payment_Restriction { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

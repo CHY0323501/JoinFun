@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaFriendship))]
-
     public partial class Friendship
     {
         public string memId { get; set; }

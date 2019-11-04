@@ -14,12 +14,11 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaPhotos_of_Activities))]
-
     public partial class Photos_of_Activities
     {
         public string PhotoSerial { get; set; }
         public string actId { get; set; }
-        public byte[] actPics { get; set; }
+        public string actPics { get; set; }
     
         public virtual Join_Fun_Activities Join_Fun_Activities { get; set; }
     }

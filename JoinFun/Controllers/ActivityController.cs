@@ -93,8 +93,8 @@ namespace JoinFun.Controllers
                 //BinaryReader br = new BinaryReader(fs);
                 //byte[] bytes = br.ReadBytes((Int32)fs.Length);
                 //photo.actPics = bytes;
-                photo.actPics = new byte[picture.ContentLength];
-                picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
+                //photo.actPics = new byte[picture.ContentLength];
+                //picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace JoinFun.Controllers
             photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
             photo.actId = actId;
             db.Join_Fun_Activities.Add(act);
-            db.Photos_of_Activities.Add(photo);
+            //db.Photos_of_Activities.Add(photo);
             db.SaveChanges();
             return RedirectToAction("Index");
 
@@ -188,38 +188,38 @@ namespace JoinFun.Controllers
         }
 
         //取得活動照片
-        public FileContentResult GetPhoto(string actId)
-        {
-            var photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
-            if (photo != null)
-            {
-                return File(photo, "image/jpeg");
-            }
-            else
-            {
-                return null;
-            }
-        }
+        //public FileContentResult GetPhoto(string actId)
+        //{
+        //    var photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
+        //    if (photo != null)
+        //    {
+        //        return File(photo, "image/jpeg");
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
 
-        public ActionResult AddPhoto()
-        {
-            return View();
-        }
+        //public ActionResult AddPhoto()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public ActionResult AddPhoto(string actId, Photos_of_Activities photo, HttpPostedFileBase picture)
-        {
-            if (picture != null)
-            {
-                photo.actPics = new byte[picture.ContentLength];
-                picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
-            }
+        //[HttpPost]
+        //public ActionResult AddPhoto(string actId, Photos_of_Activities photo, HttpPostedFileBase picture)
+        //{
+        //    if (picture != null)
+        //    {
+        //        //photo.actPics = new byte[picture.ContentLength];
+        //        //picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
+        //    }
 
-            photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-            photo.actId = actId;
-            db.Photos_of_Activities.Add(photo);
-            db.SaveChanges();
-            return View();
-        }
+        //    photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+        //    photo.actId = actId;
+        //    db.Photos_of_Activities.Add(photo);
+        //    db.SaveChanges();
+        //    return View();
+        //}
     }
 }

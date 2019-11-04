@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(Metavw_FriendShip))]
-
     public partial class vw_FriendShip
     {
         public string friendMemId { get; set; }

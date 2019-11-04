@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acc_Pass">
           <Key>
             <PropertyRef Name="Account" />
@@ -21,7 +21,7 @@
           <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="actClassName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="actClassDescrip" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Photos" Type="image" />
+          <Property Name="Photos" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Activity_Details">
           <Key>
@@ -146,14 +146,6 @@
           <Property Name="genderSerial" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="Hash_Tag">
-          <Key>
-            <PropertyRef Name="hashSerial" />
-          </Key>
-          <Property Name="hashSerial" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="hashContent" Type="nvarchar" MaxLength="30" Nullable="false" />
-        </EntityType>
         <EntityType Name="Join_Fun_Activities">
           <Key>
             <PropertyRef Name="actId" />
@@ -176,6 +168,7 @@
           <Property Name="acceptDrop" Type="bit" Nullable="false" />
           <Property Name="clickTimes" Type="int" Nullable="false" />
           <Property Name="keepAct" Type="bit" Nullable="false" />
+          <Property Name="hashTag" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Member">
           <Key>
@@ -250,7 +243,7 @@
           </Key>
           <Property Name="PhotoSerial" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
-          <Property Name="actPics" Type="image" Nullable="false" />
+          <Property Name="actPics" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -261,7 +254,7 @@
           <Property Name="postTitle" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="postContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="postTime" Type="datetime" Nullable="false" />
-          <Property Name="postPics" Type="image" />
+          <Property Name="postPics" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Punishment">
           <Key>
@@ -351,7 +344,6 @@
           <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="payment" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PeoRestriction" Type="int" Nullable="false" />
-          <Property Name="actPics" Type="image" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_FansNew' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -583,18 +575,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Hash_Tag__actId__797309D9">
-          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
-          <End Role="Hash_Tag" Type="Self.Hash_Tag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Join_Fun_Activities">
-              <PropertyRef Name="actId" />
-            </Principal>
-            <Dependent Role="Hash_Tag">
-              <PropertyRef Name="actId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Join_Fun___actCl__7C4F7684">
           <End Role="Activity_Class" Type="Self.Activity_Class" Multiplicity="1" />
           <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
@@ -859,25 +839,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetActClassId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetActId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetActId1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetAdmId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetChatId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetCommentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetDietId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetHabitId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetHashId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetMBoardSerial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetMemId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetNoteId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetPhotoId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetPostId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetPunishId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetRemarkId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetSocialId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetVioId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
-        <Function Name="GetVioTypeId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
         <EntityContainer Name="JoinFunModelStoreContainer">
           <EntitySet Name="Acc_Pass" EntityType="Self.Acc_Pass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Activity_Class" EntityType="Self.Activity_Class" Schema="dbo" store:Type="Tables" />
@@ -895,7 +856,6 @@
           <EntitySet Name="FollowUp" EntityType="Self.FollowUp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender_Restriction" EntityType="Self.Gender_Restriction" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Hash_Tag" EntityType="Self.Hash_Tag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Join_Fun_Activities" EntityType="Self.Join_Fun_Activities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Member_Remarks" EntityType="Self.Member_Remarks" Schema="dbo" store:Type="Tables" />
@@ -933,8 +893,7 @@
     [vw_Activities].[keepAct] AS [keepAct], 
     [vw_Activities].[memNick] AS [memNick], 
     [vw_Activities].[payment] AS [payment], 
-    [vw_Activities].[PeoRestriction] AS [PeoRestriction], 
-    [vw_Activities].[actPics] AS [actPics]
+    [vw_Activities].[PeoRestriction] AS [PeoRestriction]
     FROM [dbo].[vw_Activities] AS [vw_Activities]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_FansNew" EntityType="Self.vw_FansNew" store:Type="Views" store:Schema="dbo">
@@ -1031,10 +990,6 @@
             <End Role="Member" EntitySet="Member" />
             <End Role="Friendship" EntitySet="Friendship" />
           </AssociationSet>
-          <AssociationSet Name="FK__Hash_Tag__actId__797309D9" Association="Self.FK__Hash_Tag__actId__797309D9">
-            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
-            <End Role="Hash_Tag" EntitySet="Hash_Tag" />
-          </AssociationSet>
           <AssociationSet Name="FK__Join_Fun___actCl__7C4F7684" Association="Self.FK__Join_Fun___actCl__7C4F7684">
             <End Role="Activity_Class" EntitySet="Activity_Class" />
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
@@ -1124,7 +1079,8 @@
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JoinFunModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1145,7 +1101,7 @@
           <Property Name="actClassId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="actClassName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="actClassDescrip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Photos" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Photos" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___actCl__7C4F7684" FromRole="Activity_Class" ToRole="Join_Fun_Activities" />
         </EntityType>
         <EntityType Name="Activity_Details">
@@ -1294,15 +1250,6 @@
           <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Join_Fun___gende__5DEAEAF5" FromRole="Gender_Restriction" ToRole="Join_Fun_Activities" />
         </EntityType>
-        <EntityType Name="Hash_Tag">
-          <Key>
-            <PropertyRef Name="hashSerial" />
-          </Key>
-          <Property Name="hashSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="hashContent" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Hash_Tag__actId__797309D9" FromRole="Hash_Tag" ToRole="Join_Fun_Activities" />
-        </EntityType>
         <EntityType Name="Join_Fun_Activities">
           <Key>
             <PropertyRef Name="actId" />
@@ -1325,6 +1272,7 @@
           <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
           <Property Name="clickTimes" Type="Int32" Nullable="false" />
           <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Activity_Class" Relationship="Self.FK__Join_Fun___actCl__7C4F7684" FromRole="Join_Fun_Activities" ToRole="Activity_Class" />
           <NavigationProperty Name="Activity_Details" Relationship="Self.FK__Activity___actId__76969D2E" FromRole="Join_Fun_Activities" ToRole="Activity_Details" />
           <NavigationProperty Name="Age_Restriction" Relationship="Self.FK__Join_Fun___ageRe__3F6663D5" FromRole="Join_Fun_Activities" ToRole="Age_Restriction" />
@@ -1333,7 +1281,6 @@
           <NavigationProperty Name="County" Relationship="Self.FK__Join_Fun___actCo__32767D0B" FromRole="Join_Fun_Activities" ToRole="County" />
           <NavigationProperty Name="District" Relationship="Self.FK__Join_Fun___actDi__336AA144" FromRole="Join_Fun_Activities" ToRole="District" />
           <NavigationProperty Name="Gender_Restriction" Relationship="Self.FK__Join_Fun___gende__5DEAEAF5" FromRole="Join_Fun_Activities" ToRole="Gender_Restriction" />
-          <NavigationProperty Name="Hash_Tag" Relationship="Self.FK__Hash_Tag__actId__797309D9" FromRole="Join_Fun_Activities" ToRole="Hash_Tag" />
           <NavigationProperty Name="People_Restriction" Relationship="Self.FK__Join_Fun___maxNu__37C5420D" FromRole="Join_Fun_Activities" ToRole="People_Restriction" />
           <NavigationProperty Name="Payment_Restriction" Relationship="Self.FK__Join_Fun___payme__7E57BA87" FromRole="Join_Fun_Activities" ToRole="Payment_Restriction" />
           <NavigationProperty Name="Member_Remarks" Relationship="Self.FK__Member_Re__actId__778AC167" FromRole="Join_Fun_Activities" ToRole="Member_Remarks" />
@@ -1357,6 +1304,8 @@
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <Property Name="Introduction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Habit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dietary_Preference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Acc_Pass" Relationship="Self.FK__Acc_Pass__memId__6EF57B66" FromRole="Member" ToRole="Acc_Pass" />
           <NavigationProperty Name="Activity_Details" Relationship="Self.FK__Activity___memId__68487DD7" FromRole="Member" ToRole="Activity_Details" />
           <NavigationProperty Name="Blacklist" Relationship="Self.FK__Blacklist__memId__6D0D32F4" FromRole="Member" ToRole="Blacklist" />
@@ -1368,14 +1317,11 @@
           <NavigationProperty Name="Fans" Relationship="Self.FK__Fans__memId__6C190EBB" FromRole="Member" ToRole="Fans" />
           <NavigationProperty Name="FollowUp" Relationship="Self.FK__FollowUp__memId__71D1E811" FromRole="Member" ToRole="FollowUp" />
           <NavigationProperty Name="Friendship" Relationship="Self.FK__Friendshi__memId__75A278F5" FromRole="Member" ToRole="Friendship" />
-          <NavigationProperty Name="Member_Remarks" Relationship="Self.FK__Member_Re__FromM__693CA210" FromRole="Member" ToRole="Member_Remarks" />
+          <NavigationProperty Name="Member_Remarks" Relationship="Self.FK__Member_Re__ToMem__5614BF03" FromRole="Member" ToRole="Member_Remarks" />
           <NavigationProperty Name="Message_Board" Relationship="Self.FK__Message_B__memId__74AE54BC" FromRole="Member" ToRole="Message_Board" />
           <NavigationProperty Name="Notification" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Member" ToRole="Notification" />
           <NavigationProperty Name="Social_Net_ID" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Member" ToRole="Social_Net_ID" />
           <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Member" ToRole="Violation" />
-          <Property Name="Habit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Dietary_Preference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Member_Remarks1" Relationship="JoinFunModel.FK__Member_Re__ToMem__5614BF03" FromRole="Member" ToRole="Member_Remarks" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>
@@ -1390,8 +1336,7 @@
           <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Member_Re__actId__778AC167" FromRole="Member_Remarks" ToRole="Join_Fun_Activities" />
-          <NavigationProperty Name="Member" Relationship="Self.FK__Member_Re__FromM__693CA210" FromRole="Member_Remarks" ToRole="Member" />
-          <NavigationProperty Name="Member1" Relationship="JoinFunModel.FK__Member_Re__ToMem__5614BF03" FromRole="Member_Remarks" ToRole="Member" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Member_Re__ToMem__5614BF03" FromRole="Member_Remarks" ToRole="Member" />
         </EntityType>
         <EntityType Name="Message_Board">
           <Key>
@@ -1438,7 +1383,7 @@
           </Key>
           <Property Name="PhotoSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="actPics" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="actPics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Photos_of__actId__7A672E12" FromRole="Photos_of_Activities" ToRole="Join_Fun_Activities" />
         </EntityType>
         <EntityType Name="Post">
@@ -1450,7 +1395,7 @@
           <Property Name="postTitle" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="postContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="postTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="postPics" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="postPics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Administrator" Relationship="Self.FK__Post__admId__7F2BE32F" FromRole="Post" ToRole="Administrator" />
         </EntityType>
         <EntityType Name="Punishment">
@@ -1497,6 +1442,121 @@
           <NavigationProperty Name="Member" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Violation" ToRole="Member" />
           <NavigationProperty Name="Punishment" Relationship="Self.FK__Violation__punis__01142BA1" FromRole="Violation" ToRole="Punishment" />
           <NavigationProperty Name="Type_of_Violate" Relationship="Self.FK__Violation__typeI__00200768" FromRole="Violation" ToRole="Type_of_Violate" />
+        </EntityType>
+        <EntityType Name="vw_Activities">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="actClassName" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="payment" />
+            <PropertyRef Name="PeoRestriction" />
+          </Key>
+          <Property Name="age" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="actClassName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Budget" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CountyName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="actClassId" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actRoad" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actTopic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="hostId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="payment" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_FansNew">
+          <Key>
+            <PropertyRef Name="fanMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="fanMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_FollowUp">
+          <Key>
+            <PropertyRef Name="FoMemId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="FoMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_FriendShip">
+          <Key>
+            <PropertyRef Name="friendMemId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="friendMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="newNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_Member_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FromMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ToMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="actTopic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CountyName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="FK__Acc_Pass__memId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
@@ -1774,18 +1834,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Hash_Tag__actId__797309D9">
-          <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="1" />
-          <End Role="Hash_Tag" Type="Self.Hash_Tag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Join_Fun_Activities">
-              <PropertyRef Name="actId" />
-            </Principal>
-            <Dependent Role="Hash_Tag">
-              <PropertyRef Name="actId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Join_Fun___maxNu__37C5420D">
           <End Role="People_Restriction" Type="Self.People_Restriction" Multiplicity="1" />
           <End Role="Join_Fun_Activities" Type="Self.Join_Fun_Activities" Multiplicity="*" />
@@ -1846,7 +1894,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Member_Re__FromM__693CA210">
+        <Association Name="FK__Member_Re__ToMem__5614BF03">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
           <End Role="Member_Remarks" Type="Self.Member_Remarks" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1854,7 +1902,7 @@
               <PropertyRef Name="memId" />
             </Principal>
             <Dependent Role="Member_Remarks">
-              <PropertyRef Name="FromMemId" />
+              <PropertyRef Name="ToMemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1947,7 +1995,6 @@
           <EntitySet Name="FollowUp" EntityType="Self.FollowUp" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" />
           <EntitySet Name="Gender_Restriction" EntityType="Self.Gender_Restriction" />
-          <EntitySet Name="Hash_Tag" EntityType="Self.Hash_Tag" />
           <EntitySet Name="Join_Fun_Activities" EntityType="Self.Join_Fun_Activities" />
           <EntitySet Name="Member" EntityType="Self.Member" />
           <EntitySet Name="Member_Remarks" EntityType="Self.Member_Remarks" />
@@ -1961,6 +2008,11 @@
           <EntitySet Name="Social_Net_ID" EntityType="Self.Social_Net_ID" />
           <EntitySet Name="Type_of_Violate" EntityType="Self.Type_of_Violate" />
           <EntitySet Name="Violation" EntityType="Self.Violation" />
+          <EntitySet Name="vw_Activities" EntityType="Self.vw_Activities" />
+          <EntitySet Name="vw_FansNew" EntityType="Self.vw_FansNew" />
+          <EntitySet Name="vw_FollowUp" EntityType="Self.vw_FollowUp" />
+          <EntitySet Name="vw_FriendShip" EntityType="Self.vw_FriendShip" />
+          <EntitySet Name="vw_Member_Remarks" EntityType="Self.vw_Member_Remarks" />
           <AssociationSet Name="FK__Acc_Pass__memId__6EF57B66" Association="Self.FK__Acc_Pass__memId__6EF57B66">
             <End Role="Member" EntitySet="Member" />
             <End Role="Acc_Pass" EntitySet="Acc_Pass" />
@@ -2053,10 +2105,6 @@
             <End Role="Gender_Restriction" EntitySet="Gender_Restriction" />
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
           </AssociationSet>
-          <AssociationSet Name="FK__Hash_Tag__actId__797309D9" Association="Self.FK__Hash_Tag__actId__797309D9">
-            <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
-            <End Role="Hash_Tag" EntitySet="Hash_Tag" />
-          </AssociationSet>
           <AssociationSet Name="FK__Join_Fun___maxNu__37C5420D" Association="Self.FK__Join_Fun___maxNu__37C5420D">
             <End Role="People_Restriction" EntitySet="People_Restriction" />
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
@@ -2077,7 +2125,7 @@
             <End Role="Join_Fun_Activities" EntitySet="Join_Fun_Activities" />
             <End Role="Photos_of_Activities" EntitySet="Photos_of_Activities" />
           </AssociationSet>
-          <AssociationSet Name="FK__Member_Re__FromM__693CA210" Association="Self.FK__Member_Re__FromM__693CA210">
+          <AssociationSet Name="FK__Member_Re__ToMem__5614BF03" Association="Self.FK__Member_Re__ToMem__5614BF03">
             <End Role="Member" EntitySet="Member" />
             <End Role="Member_Remarks" EntitySet="Member_Remarks" />
           </AssociationSet>
@@ -2105,157 +2153,7 @@
             <End Role="Type_of_Violate" EntitySet="Type_of_Violate" />
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
-          <EntitySet Name="vw_Activities" EntityType="JoinFunModel.vw_Activities" />
-          <EntitySet Name="vw_Fans" EntityType="JoinFunModel.vw_Fans" />
-          <AssociationSet Name="FK__Member_Re__ToMem__5614BF03" Association="JoinFunModel.FK__Member_Re__ToMem__5614BF03">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Member_Remarks" EntitySet="Member_Remarks" />
-          </AssociationSet>
-          <EntitySet Name="vw_FansNew" EntityType="JoinFunModel.vw_FansNew" />
-          <EntitySet Name="vw_FollowUp" EntityType="JoinFunModel.vw_FollowUp" />
-          <EntitySet Name="vw_FriendShip" EntityType="JoinFunModel.vw_FriendShip" />
-          <EntitySet Name="vw_Member_Remarks" EntityType="JoinFunModel.vw_Member_Remarks" />
         </EntityContainer>
-        <EntityType Name="vw_Activities">
-          <Key>
-            <PropertyRef Name="age" />
-            <PropertyRef Name="actClassName" />
-            <PropertyRef Name="Budget" />
-            <PropertyRef Name="CountyName" />
-            <PropertyRef Name="DistrictName" />
-            <PropertyRef Name="gender" />
-            <PropertyRef Name="acceptDrop" />
-            <PropertyRef Name="actClassId" />
-            <PropertyRef Name="actCounty" />
-            <PropertyRef Name="actDeadline" />
-            <PropertyRef Name="actDistrict" />
-            <PropertyRef Name="actId" />
-            <PropertyRef Name="actRoad" />
-            <PropertyRef Name="actTime" />
-            <PropertyRef Name="actTopic" />
-            <PropertyRef Name="ageRestrict" />
-            <PropertyRef Name="clickTimes" />
-            <PropertyRef Name="hostId" />
-            <PropertyRef Name="keepAct" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="payment" />
-            <PropertyRef Name="PeoRestriction" />
-          </Key>
-          <Property Name="age" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
-          <Property Name="actClassName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
-          <Property Name="gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
-          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Name="actCounty" Type="Int16" Nullable="false" />
-          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="actDistrict" Type="Int16" Nullable="false" />
-          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
-          <Property Name="clickTimes" Type="Int32" Nullable="false" />
-          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="keepAct" Type="Boolean" Nullable="false" />
-          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="payment" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
-          <Property Name="actPics" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="vw_Fans">
-          <Key>
-            <PropertyRef Name="fanMemId" />
-            <PropertyRef Name="memId" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="Sex" />
-          </Key>
-          <Property Name="fanMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <Association Name="FK__Member_Re__ToMem__5614BF03">
-          <End Type="JoinFunModel.Member" Role="Member" Multiplicity="1" />
-          <End Type="JoinFunModel.Member_Remarks" Role="Member_Remarks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="memId" />
-            </Principal>
-            <Dependent Role="Member_Remarks">
-              <PropertyRef Name="ToMemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="vw_FansNew">
-          <Key>
-            <PropertyRef Name="fanMemId" />
-            <PropertyRef Name="memId" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="Sex" />
-          </Key>
-          <Property Name="fanMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vw_FollowUp">
-          <Key>
-            <PropertyRef Name="FoMemId" />
-            <PropertyRef Name="memId" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="Sex" />
-          </Key>
-          <Property Name="FoMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vw_FriendShip">
-          <Key>
-            <PropertyRef Name="friendMemId" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="memId" />
-            <PropertyRef Name="Sex" />
-          </Key>
-          <Property Name="friendMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="newNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vw_Member_Remarks">
-          <Key>
-            <PropertyRef Name="remarkSerial" />
-            <PropertyRef Name="actId" />
-            <PropertyRef Name="FromMemId" />
-            <PropertyRef Name="ToMemId" />
-            <PropertyRef Name="keepRemark" />
-            <PropertyRef Name="remarkStar" />
-            <PropertyRef Name="remarkTime" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="Sex" />
-            <PropertyRef Name="actTopic" />
-            <PropertyRef Name="CountyName" />
-            <PropertyRef Name="DistrictName" />
-          </Key>
-          <Property Name="remarkSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="FromMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
-          <Property Name="remarkStar" Type="Int16" Nullable="false" />
-          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
-          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2413,15 +2311,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Hash_Tag">
-            <EntityTypeMapping TypeName="JoinFunModel.Hash_Tag">
-              <MappingFragment StoreEntitySet="Hash_Tag">
-                <ScalarProperty Name="hashSerial" ColumnName="hashSerial" />
-                <ScalarProperty Name="actId" ColumnName="actId" />
-                <ScalarProperty Name="hashContent" ColumnName="hashContent" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Join_Fun_Activities">
             <EntityTypeMapping TypeName="JoinFunModel.Join_Fun_Activities">
               <MappingFragment StoreEntitySet="Join_Fun_Activities">
@@ -2443,14 +2332,13 @@
                 <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
                 <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
                 <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+                <ScalarProperty Name="hashTag" ColumnName="hashTag" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Member">
             <EntityTypeMapping TypeName="JoinFunModel.Member">
               <MappingFragment StoreEntitySet="Member">
-                <ScalarProperty Name="Dietary_Preference" ColumnName="Dietary_Preference" />
-                <ScalarProperty Name="Habit" ColumnName="Habit" />
                 <ScalarProperty Name="memId" ColumnName="memId" />
                 <ScalarProperty Name="memNick" ColumnName="memNick" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -2464,6 +2352,8 @@
                 <ScalarProperty Name="Sex" ColumnName="Sex" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Introduction" ColumnName="Introduction" />
+                <ScalarProperty Name="Habit" ColumnName="Habit" />
+                <ScalarProperty Name="Dietary_Preference" ColumnName="Dietary_Preference" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2585,80 +2475,79 @@
           <EntitySetMapping Name="vw_Activities">
             <EntityTypeMapping TypeName="JoinFunModel.vw_Activities">
               <MappingFragment StoreEntitySet="vw_Activities">
-                <ScalarProperty Name="actPics" ColumnName="actPics" />
-                <ScalarProperty Name="PeoRestriction" ColumnName="PeoRestriction" />
-                <ScalarProperty Name="payment" ColumnName="payment" />
-                <ScalarProperty Name="memNick" ColumnName="memNick" />
-                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
-                <ScalarProperty Name="hostId" ColumnName="hostId" />
-                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
-                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
-                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
-                <ScalarProperty Name="actTime" ColumnName="actTime" />
-                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
-                <ScalarProperty Name="actId" ColumnName="actId" />
-                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
-                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
-                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
-                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
-                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
-                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
-                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
-                <ScalarProperty Name="Budget" ColumnName="Budget" />
-                <ScalarProperty Name="actClassName" ColumnName="actClassName" />
                 <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="actClassName" ColumnName="actClassName" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="PeoRestriction" ColumnName="PeoRestriction" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_FansNew">
             <EntityTypeMapping TypeName="JoinFunModel.vw_FansNew">
               <MappingFragment StoreEntitySet="vw_FansNew">
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="memNick" ColumnName="memNick" />
-                <ScalarProperty Name="memId" ColumnName="memId" />
                 <ScalarProperty Name="fanMemId" ColumnName="fanMemId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_FollowUp">
             <EntityTypeMapping TypeName="JoinFunModel.vw_FollowUp">
               <MappingFragment StoreEntitySet="vw_FollowUp">
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="memNick" ColumnName="memNick" />
-                <ScalarProperty Name="memId" ColumnName="memId" />
                 <ScalarProperty Name="FoMemId" ColumnName="FoMemId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_FriendShip">
             <EntityTypeMapping TypeName="JoinFunModel.vw_FriendShip">
               <MappingFragment StoreEntitySet="vw_FriendShip">
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="memId" ColumnName="memId" />
-                <ScalarProperty Name="newNick" ColumnName="newNick" />
-                <ScalarProperty Name="memNick" ColumnName="memNick" />
                 <ScalarProperty Name="friendMemId" ColumnName="friendMemId" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="newNick" ColumnName="newNick" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vw_Member_Remarks">
             <EntityTypeMapping TypeName="JoinFunModel.vw_Member_Remarks">
               <MappingFragment StoreEntitySet="vw_Member_Remarks">
-                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
-                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
-                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="memNick" ColumnName="memNick" />
-                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
-                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
-                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
-                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
-                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
-                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
-                <ScalarProperty Name="actId" ColumnName="actId" />
                 <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
+                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
+                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
+                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
