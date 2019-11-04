@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaMember))]
-
     public partial class Member
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -34,7 +33,6 @@ namespace JoinFun.Models
             this.Notification = new HashSet<Notification>();
             this.Social_Net_ID = new HashSet<Social_Net_ID>();
             this.Violation = new HashSet<Violation>();
-            this.Member_Remarks1 = new HashSet<Member_Remarks>();
         }
     
         public string memId { get; set; }
@@ -83,7 +81,5 @@ namespace JoinFun.Models
         public virtual ICollection<Social_Net_ID> Social_Net_ID { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Violation> Violation { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Member_Remarks> Member_Remarks1 { get; set; }
     }
 }

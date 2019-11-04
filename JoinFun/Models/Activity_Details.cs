@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaActivity_Details))]
-
     public partial class Activity_Details
     {
         public string memId { get; set; }

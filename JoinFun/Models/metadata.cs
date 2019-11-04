@@ -301,9 +301,6 @@ namespace JoinFun.Models
         public string actClassId { get; set; }
         [DisplayName("活動類別")]
         public string actClassName { get; set; }
-
-        [DisplayName("活動照片")]
-        public byte[] actPics { get; set; }
     }
 
     public class MetaBookmark_Details

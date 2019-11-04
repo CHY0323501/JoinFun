@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaPost))]
-
     public partial class Post
     {
         public string postSerial { get; set; }
@@ -22,7 +21,7 @@ namespace JoinFun.Models
         public string postTitle { get; set; }
         public string postContent { get; set; }
         public System.DateTime postTime { get; set; }
-        public byte[] postPics { get; set; }
+        public string postPics { get; set; }
     
         public virtual Administrator Administrator { get; set; }
     }

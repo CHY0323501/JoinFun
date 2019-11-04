@@ -127,13 +127,16 @@
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
-    <EntityDeploy Include="Models\dbJoinFun.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>dbJoinFun.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="JS\MemberEdit.js" />
-    <Content Include="Models\dbJoinFun.edmx.diagram">
+    <Content Include="Models\dbJoinFun.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>dbJoinFun.edmx</DependentUpon>
+      <LastGenOutput>dbJoinFun.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\dbJoinFun.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+      <LastGenOutput>dbJoinFun.cs</LastGenOutput>
     </Content>
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
@@ -164,17 +167,14 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\dbJoinFun.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dbJoinFun.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\dbJoinFun.edmx.diagram">
+      <DependentUpon>dbJoinFun.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Models\dbJoinFun.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbJoinFun.edmx</DependentUpon>
-      <LastGenOutput>dbJoinFun.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\dbJoinFun.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbJoinFun.edmx</DependentUpon>
-      <LastGenOutput>dbJoinFun.cs</LastGenOutput>
-    </Content>
     <Content Include="Photos\ADM_Login.jpg" />
     <Content Include="Photos\ADM_login_minions.jpg" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -633,9 +633,6 @@
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Gender_Restriction.cs">
-      <DependentUpon>dbJoinFun.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Hash_Tag.cs">
       <DependentUpon>dbJoinFun.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Join_Fun_Activities.cs">

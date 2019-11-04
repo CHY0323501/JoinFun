@@ -41,7 +41,6 @@ namespace JoinFun.Models
         public virtual DbSet<FollowUp> FollowUp { get; set; }
         public virtual DbSet<Friendship> Friendship { get; set; }
         public virtual DbSet<Gender_Restriction> Gender_Restriction { get; set; }
-        public virtual DbSet<Hash_Tag> Hash_Tag { get; set; }
         public virtual DbSet<Join_Fun_Activities> Join_Fun_Activities { get; set; }
         public virtual DbSet<Member> Member { get; set; }
         public virtual DbSet<Member_Remarks> Member_Remarks { get; set; }
