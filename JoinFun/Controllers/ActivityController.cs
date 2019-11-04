@@ -24,9 +24,10 @@ namespace JoinFun.Controllers
             ViewBag.actId = actId;
             ActClass classList = new ActClass()
             {
-                ActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId).ToList(),
+                ActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId && m.keepAct == true).ToList(),
                 ClassList = db.Activity_Class.ToList()
             };
+
             return View(classList);
         }
 
@@ -73,7 +74,8 @@ namespace JoinFun.Controllers
             string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
 
             act.actId = actId;
-            act.hostId = Session["memId"].ToString();
+            //act.hostId = Session["memId"].ToString();
+            act.hostId = "M000000003";
             act.actClassId = clsValue;
             act.ageRestrict = age;
             act.gender = gender;
@@ -83,6 +85,7 @@ namespace JoinFun.Controllers
             act.actCounty = county;
             act.actDistrict = district;
             act.acceptDrop = drop;
+            act.keepAct = true;
 
             if (picture != null)
             {
@@ -96,6 +99,7 @@ namespace JoinFun.Controllers
             else
             {
                 GetSelectList();
+                ViewBag.Drop = GetDropList();
                 ViewBag.UploadError = "請選擇要上傳的圖片";
                 return View();
             }
@@ -116,12 +120,21 @@ namespace JoinFun.Controllers
             //{
             //    return RedirectToAction("Index");
             //}
-            var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
-
+            Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
+            if (act == null)
+            {
+                return HttpNotFound();
+            }
             GetSelectList();
-            //Formmethod.Post需要傳actId參數,宣告ViewBag.actId存actId參數
-            ViewBag.actId = actId;
-            ViewBag.Drop = new SelectList(GetDropList(), "Value", "Text", act.acceptDrop);
+
+            if (act.acceptDrop == true)
+            {
+                ViewBag.Drop = "是";
+            }
+            else
+            {
+                ViewBag.Drop = "否";
+            }
             ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
             return View(act);
@@ -131,34 +144,13 @@ namespace JoinFun.Controllers
         public ActionResult Edit(string actId, FormCollection form, HttpPostedFileBase picture)
         {
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
-            string clsValue = form["Activity_Class"].ToString();
-            short age = Int16.Parse(form["Age_Restriction"].ToString());
-            short people = Int16.Parse(form["People_Restriction"].ToString());
-            short budget = Int16.Parse(form["Budget_Restriction"].ToString());
+            string actTopic = form["actTopic"].ToString();
+            string actDescription = form["actDescription"].ToString();
             short payment = Int16.Parse(form["Payment_Restriction"].ToString());
-            short county = Int16.Parse(form["County"].ToString());
-            short district = Int16.Parse(form["District"].ToString());
-            bool drop = Convert.ToBoolean(form["Drop"].ToString());
-            act.actClassId = clsValue;
-            act.ageRestrict = age;
-            act.maxNumPeople = people;
-            act.maxBudget = budget;
+            act.actTopic = actTopic;
+            act.actDescription = actDescription;
             act.paymentTerm = payment;
-            act.actCounty = county;
-            act.actDistrict = district;
-            act.acceptDrop = drop;
-            ViewBag.actId = actId;
 
-            var photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault();
-            //if (picture == null && photo.actPics != null)
-            //{
-            //    db.SaveChanges();
-            //}
-            if (picture != null)
-            {
-                photo.actPics = new byte[picture.ContentLength];
-                picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
-            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }

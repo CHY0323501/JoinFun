@@ -9,7 +9,6 @@ namespace JoinFun.Models
 {
     public class MetaAcc_Pass
     {
-    
         [DisplayName("會員帳號")]
         [Required(ErrorMessage = "請輸入會員帳號")]
         [StringLength(10, ErrorMessage = "最多輸入10字")]
@@ -168,17 +167,17 @@ namespace JoinFun.Models
         [DisplayName("會員編號")]
         public string memId { get; set; }
 
-        [Required(ErrorMessage = "請輸入暱稱")]
-        [StringLength(15, ErrorMessage = "暱稱不可超過15碼")]
+        [Required(ErrorMessage = " ")]
+        [StringLength(15,ErrorMessage = " ")]
         [DisplayName("暱稱")]
         public string memNick { get; set; }
 
         [DisplayName("電子信箱")]
-        [Required(ErrorMessage = "請輸入您的電子信箱")]
-        [StringLength(50, ErrorMessage = "信箱不可超過50字")]
+        [Required(ErrorMessage =" ")]
+        [StringLength(50, ErrorMessage = " ")]
         public string Email { get; set; }
 
-        [StringLength(24, ErrorMessage = "信箱不可超過24字")]
+        [StringLength(24, ErrorMessage = "手機不可超過24字")]
         [DisplayName("手機號碼")]
         public string cellPhone { get; set; }
 
@@ -195,7 +194,7 @@ namespace JoinFun.Models
         [DisplayName("生日")]
         [Required(ErrorMessage = "請輸入生日")]
         [DataType(DataType.Date, ErrorMessage = "請填入正確生日")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime Birthday { get; set; }
 
         [DisplayName("違規次數")]
@@ -356,16 +355,7 @@ namespace JoinFun.Models
 
 
     }
-
-    public class MetadataBudget_Restriction
-    {
-
-        [DisplayName("預算限制")]
-        [Required(ErrorMessage = "預算限制為必填")]
-        [Range(double.Epsilon, double.MaxValue, ErrorMessage = "預算不可小於0")]
-        public decimal Budget { get; set; }
-
-    }
+   
     public class MetaComment
     {
         [DisplayName("意見編號")]
@@ -441,7 +431,6 @@ namespace JoinFun.Models
         public string friendMemId { get; set; }
 
         [DisplayName("好友暱稱")]
-        [Required(ErrorMessage = "必填")]
         [StringLength(15, ErrorMessage = "最多輸入15個字")]
 
         public string friendNick { get; set; }
@@ -541,28 +530,6 @@ namespace JoinFun.Models
         public bool readYet { get; set; }
 
     }
-    public class MetadataPeople_Restriction
-    {
-
-        [DisplayName("人數限制編號")]
-        public short peoSerial { get; set; }
-        [DisplayName("人數限制")]
-        public int PeoRestriction { get; set; }
-
-    }
-
-    public  class MetadataPhotos_of_Activities
-    {
-        [DisplayName("活動編號")]
-        [Required(ErrorMessage = "請輸入活動編號")]
-        public string actId { get; set; }
-
-
-        [DisplayName("照片")]
-        [Required(ErrorMessage = "請上傳照片")]
-        public byte[] actPics { get; set; }
-    }
-
 
     public  class MetaPost
     {
@@ -700,5 +667,68 @@ namespace JoinFun.Models
         public Nullable<System.DateTime> vioProcessTime { get; set; }
 
     }
-
+    public  class Metavw_FansNew
+    {
+        [DisplayName("粉絲")]
+        public string fanMemId { get; set; }
+        [DisplayName("被追蹤者會員編號")]
+        public string memId { get; set; }
+        [DisplayName("粉絲暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("粉絲性別")]
+        public string Sex { get; set; }
+    }
+    public class Metavw_FollowUp
+    {
+        [DisplayName("追蹤者")]
+        public string FoMemId { get; set; }
+        [DisplayName("被追蹤者會員編號")]
+        public string memId { get; set; }
+        [DisplayName("追蹤者暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("追蹤者性別")]
+        public string Sex { get; set; }
+    }
+    public class Metavw_FriendShip
+    {
+        [DisplayName("好友會員編號")]
+        public string friendMemId { get; set; }
+        [DisplayName("好友暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("好友新暱稱")]
+        public string newNick { get; set; }
+        [DisplayName("會員編號")]
+        public string memId { get; set; }
+        [DisplayName("好友性別")]
+        public string Sex { get; set; }
+    }
+    public class Metavw_Member_Remarks
+    {
+        [DisplayName("評價編號")]
+        public string remarkSerial { get; set; }
+        [DisplayName("活動編號")]
+        public string actId { get; set; }
+        [DisplayName("給評者會員編號")]
+        public string FromMemId { get; set; }
+        [DisplayName("評價對象會員編號")]
+        public string ToMemId { get; set; }
+        [DisplayName("是否保留評價")]
+        public bool keepRemark { get; set; }
+        [DisplayName("評價星等")]
+        public short remarkStar { get; set; }
+        [DisplayName("評價內容")]
+        public string remarkContent { get; set; }
+        [DisplayName("評價時間")]
+        public System.DateTime remarkTime { get; set; }
+        [DisplayName("給評者暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("給評者性別")]
+        public string Sex { get; set; }
+        [DisplayName("活動主題")]
+        public string actTopic { get; set; }
+        [DisplayName("活動縣市")]
+        public string CountyName { get; set; }
+        [DisplayName("活動區域")]
+        public string DistrictName { get; set; }
+    }
 }

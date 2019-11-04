@@ -13,19 +13,19 @@
 @{var cc = (IEnumerable<JoinFun.Models.County>)ViewBag.county_drop;}
 @{var dd = (IEnumerable<JoinFun.Models.District>)ViewBag.district_drop;}
 
-<h2 class="mt-5 mb-5 bg-warning text-white rounded-pill text-center">編輯個人資訊</h2>
+<h3 class="mt-5 mb-5 bg-warning text-white rounded-pill text-center p-1 w-50 mx-auto">編輯個人資訊</h3>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    @*@Html.HiddenFor(model => Model.memId)*@
+    @*@Html.HiddenFor(model => model.memId)*@
     <input type="hidden" name="memId" value="@Model.memId" />
     <div class="row ml-auto mr-auto">
         <div class="col-md-4 text-center   align-self-center">
             <div class="form-group ">
                 <div class="col-md">
-                    <img src="~/Photos/@(Model.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-75 " />
+                    <img src="~/Photos/@(Model.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
                 </div>
 
                 <div class="col-md">
@@ -44,6 +44,7 @@
                 <div class="col-12 col-md-8">
                     @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
+                    <div></div>
                 </div>
             </div>
             <div class="row form-inline mx-auto  text-center  text-md-left mb-3 form-group">
@@ -53,13 +54,14 @@
                 <div class="col-12 col-md-8">
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    <div></div>
                 </div>
             </div>
             <div class="row form-inline mx-auto  text-center text-md-left mb-3">
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-4 ">
                     @Html.LabelFor(model => model.memCounty, "所在地", htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-8 ">
                     @*@Html.DropDownList("county_drop", null, htmlAttributes: new { @class = "form-control ml-auto mr-auto mb-1 text-center w-25" })*@
                     @Html.ValidationMessageFor(model => model.memCounty, "", new { @class = "text-danger" })
                     @*@Html.DropDownList("district_drop", null, htmlAttributes: new { @class = "form-control ml-auto mr-auto mb-1 text-center w-25" })*@
@@ -69,7 +71,7 @@
                         {
                             if (Model.County.CountyNo == i.CountyNo)
                             {
-                                <option value="@i.CountyNo" selected>@i.CountyName</option>
+                                <option value="@i.CountyNo" selected >@i.CountyName</option>
                             }
                             else
                             {
@@ -97,8 +99,8 @@
                     @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
                 <div class="col-12 col-md-8 ">
-                    <input id="Birthday" name="Birthday" class="form-control mx-auto text-center w-50" type="date" />
-                    @*@Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })*@
+                    @*<input id="Birthday" name="Birthday" class="form-control mx-auto text-center w-50" type="date" />*@
+                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -130,7 +132,7 @@
     </div>
     <div class="row w-100 mx-auto">
         <div class="col col-12 col-md-6 offset-md-3 text-center ">
-            <input type="submit" value="確認送出" class="btn  mx-auto btn-outline-success" id="confirm"/>
+            <input type="submit" value="確認送出" class="btn  mx-auto btn-outline-success" id="confirm" />
         </div>
     </div>
 }
@@ -140,7 +142,7 @@
 </div>
 
 @section scripts{
-
+    <script src="~/JS/MemberEdit.js"></script>
     <script>
         //填入原始會員生日
         var day = ("0" + @Model.Birthday.Day).slice(-2);
@@ -150,28 +152,5 @@
         var today = @Model.Birthday.Year + "-" + (month) + "-" + (day);
         //完成賦值
         $('#Birthday').val(today);
-
-        ////////////////
-
-        //更換鄉鎮市區選單
-        $('#memCounty').change(function () {
-            $('#memDistrict').empty();
-            $.ajax({
-                type: "Get",
-                url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#memCounty').val(),
-                success: function (d) {
-                    console.log(d);
-                    d.forEach(function (currentValue,index,array) {
-                        if (index%2 != 0) {
-                            $('#memDistrict').append("<option value='"+array[index-1]+"'>" + currentValue + "</option>");
-                        }
-                    });
-                }
-            });
-        });
-
-        //暱稱及電子信箱驗證
-        
-
     </script>
 }

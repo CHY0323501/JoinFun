@@ -7,156 +7,157 @@
 <h2>揪團活動</h2>
 
 
-@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @id="form1", @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>新增活動</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.actId)
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.actId, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="form-horizontal">
+        <h4>新增活動</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.actId)
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.actId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.actId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.actId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.actClassId, "活動類別", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.actId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.actId, "", new { @class = "text-danger" })
+                @Html.DropDownList("Activity_Class", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.actClassId, "", new { @class = "text-danger" })
             </div>
-        </div>*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.actClassId, "活動類別", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Activity_Class", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.actClassId, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.hostId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.hostId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.hostId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.hostId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.actTopic, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.hostId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.hostId, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.actTopic, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.actTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.actTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.actDeadline, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.actDeadline, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.actDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.actDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ageRestrict, "年齡限制", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Age_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gender, "性別限制", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Gender_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.maxNumPeople, "可參加人數", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("People_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.maxBudget, "預算", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Budget_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.actCounty, "縣/市", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("County", null, htmlAttributes: new { @id="county", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.actDistrict, "鄉/鎮/市/區", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("District", null, htmlAttributes: new { @id="district", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.actRoad, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="picture" class="control-label col-md-2">活動照片</label>
+            <div class="col-md-10">
+                <input type="file" id="picture" name="picture" />
+                <h5 class="text-danger">@ViewBag.UploadError</h5>
+            </div>
+           
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.paymentTerm, "付款方式", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Payment_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.paymentTerm, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.acceptDrop, "是否可退出", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Drop", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.acceptDrop, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">新增</button>
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.actTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.actTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.actDeadline, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.actDeadline, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.actDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.actDescription, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ageRestrict, "年齡限制", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Age_Restriction", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.gender, "性別限制", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Gender_Restriction", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.maxNumPeople, "可參加人數", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("People_Restriction", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.maxBudget, "預算", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Budget_Restriction", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.actCounty, "縣/市", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("County", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.actDistrict, "鄉/鎮/市/區", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("District", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.actRoad, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="picture" class="control-label col-md-2">活動照片</label>
-        <div class="col-md-10">
-            <input type="file" id="picture" name="picture" />
-        </div>
-        <h4 class="text-danger">@ViewBag.UploadError</h4>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.paymentTerm, "付款方式", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Payment_Restriction", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.paymentTerm, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.acceptDrop, "是否可退出", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("Drop", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.acceptDrop, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-primary">新增</button>
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -166,3 +167,23 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section scripts{
+    <script>
+        //更換鄉鎮市區選單
+        $('#county').change(function () {
+            $('#district').empty();
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#county').val(),
+                success: function (d) {
+                    console.log(d);
+                    d.forEach(function (currentValue, index, array) {
+                        if (index % 2 != 0) {
+                            $('#district').append("<option value='" + array[index - 1] + "'>" + currentValue + "</option>");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

@@ -1,13 +1,14 @@
 ﻿@model JoinFun.Models.Join_Fun_Activities
 
 @{
+    var photo = (IEnumerable<JoinFun.Models.Photos_of_Activities>)ViewBag.photo;
     ViewBag.Title = "編輯活動";
 }
 
 <h2>揪團活動</h2>
 
 
-@using (Html.BeginForm("Edit", "Activity", new { actId = ViewBag.actId }, FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -20,7 +21,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.actClassId, "活動類別", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Activity_Class", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.Activity_Class.actClassName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.actClassId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,44 +35,33 @@
         </div>
 
         <div class="form-group">
-            <label for="picture" class="control-label col-md-2">活動照片</label>
-            <div class="col-md-10">
-                <input type="file" id="picture" name="picture" />
-            </div>
-            <h4 class="text-danger">@ViewBag.UploadError</h4>
-        </div>
+            <label class="control-label col-md-2">活動照片</label>
 
-        @*<div>
-                @foreach (var item in Model)
+
+            <div class="col-md-10">
+                @foreach (var item in photo)
                 {
-                    if (item != null)
+                    if (item.actPics != null)
                     {
-                        <label class="control-label col-md-2">圖片預覽</label>
-                        <img src="@Url.Action("GetPhoto", "Activity", new { actId = item})" style="width:200px;height:auto" class="img-thumbnail" />
-                    }
-                    else
-                    {
-                        <p>無圖片</p>
+                        <img src="@Url.Action("GetPhoto", "Activity", new { actId = item.actId})" style="width:200px;height:auto" class="img-thumbnail" />
                     }
                 }
 
-
-
-            </div>*@
-
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.actTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.actTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.actTime, new { htmlAttributes = new { @id = "actTime", @class = "form-control", @readonly = "readonly" } })
+                @*@Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.actDeadline, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.actDeadline, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.actDeadline, new { htmlAttributes = new { @id = "actDeadline", @class = "form-control", @readonly = "readonly" } })
+                @*@Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -86,7 +76,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ageRestrict, "年齡限制", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Age_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.Age_Restriction.age, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -94,7 +84,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.gender, "性別限制", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Gender_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.Gender_Restriction.gender, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -102,7 +92,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.maxNumPeople, "可參加人數", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("People_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.People_Restriction.PeoRestriction, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -110,7 +100,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.maxBudget, "預算", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Budget_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.Budget_Restriction.Budget, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -118,7 +108,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.actCounty, "縣/市", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("County", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.County.CountyName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -126,7 +116,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.actDistrict, "鄉/鎮/市/區", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("District", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.District.DistrictName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -134,7 +124,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.actRoad, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -152,7 +142,8 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @*@Html.EditorFor(model => model.acceptDrop)*@
-                    @Html.DropDownList("Drop", null, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.EditorFor(model => model.acceptDrop, new { htmlAttributes = new { @class = "form-control", @Value=ViewBag.Drop } })*@
+                    <input id="Drop" name="Drop" type="text" class="form-control" value=@ViewBag.Drop readonly="readonly" />
                     @Html.ValidationMessageFor(model => model.acceptDrop, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -173,3 +164,27 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section scripts{
+
+    <script>
+        //填入原始會員生日
+        var day = ("0" + @Model.actTime.Day).slice(-2);
+        //格式化月，如果小於9，前面補0
+        var month = ("0" + (@Model.actTime.Month)).slice(-2);
+        //拼裝完整日期格式
+        var today = @Model.actTime.Year + "-" + (month) + "-" + (day);
+        //完成賦值
+        $('#actTime').val(today);
+
+        //取得截止時間
+        var day1 = ("0" + @Model.actDeadline.Day).slice(-2);
+        //格式化月，如果小於9，前面補0
+        var month1 = ("0" + (@Model.actDeadline.Month)).slice(-2);
+        //拼裝完整日期格式
+        var today1 = @Model.actDeadline.Year + "-" + (month1) + "-" + (day1);
+        //完成賦值
+        $('#actDeadline').val(today1);
+
+        ////////////////
+    </script>
+}

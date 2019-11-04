@@ -13,9 +13,9 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(MetaMember_Remarks))]
+    [MetadataType(typeof(Metavw_Member_Remarks))]
 
-    public partial class Member_Remarks
+    public partial class vw_Member_Remarks
     {
         public string remarkSerial { get; set; }
         public string actId { get; set; }
@@ -25,9 +25,10 @@ namespace JoinFun.Models
         public short remarkStar { get; set; }
         public string remarkContent { get; set; }
         public System.DateTime remarkTime { get; set; }
-    
-        public virtual Join_Fun_Activities Join_Fun_Activities { get; set; }
-        public virtual Member Member { get; set; }
-        public virtual Member Member1 { get; set; }
+        public string memNick { get; set; }
+        public string Sex { get; set; }
+        public string actTopic { get; set; }
+        public string CountyName { get; set; }
+        public string DistrictName { get; set; }
     }
 }
