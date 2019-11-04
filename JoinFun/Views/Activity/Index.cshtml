@@ -9,7 +9,7 @@
     <div class="container">
         <h5 class="bg-light display-4 font-weight-bolder mt-2" style="font-family:'Comic Sans MS'">揪團活動列表</h5>
         <hr />
-        <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
+        <nav class="navbar navbar-expand-sm bg-light navbar-light mb-2">
             <ul class="nav navbar-nav">
 
                 @foreach (var item in Model.ClassList)
@@ -33,7 +33,7 @@
             <ul class="navbar-nav ml-auto">
                 @*@if (Session["memId"] != null)
                 {*@
-                    @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-secondary" })
                 @*}*@
             </ul>
 
@@ -52,7 +52,7 @@
                     <div class="card-deck mr-2">
 
 
-                        <div class="card mt-2" style="width:200px">
+                        <div class="card mt-2" style="width:230px">
 
                             @*@if (item.actId != null)
                             {
