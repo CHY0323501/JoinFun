@@ -5,7 +5,6 @@
     ViewBag.Title = "Details";
 }
 
-<h2>揪團活動明細</h2>
 
 <div class="container">
     <h2 class="mt-4 text-primary">揪團活動</h2>
@@ -15,7 +14,7 @@
 
         //if (Session["memId"] != null && (Session["memId"]).ToString() == item.hostId)
         //{
-            <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
+            <nav class="navbar navbar-expand-sm  mb-2">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         @*@Html.ActionLink("編輯", "Edit", new { id = item.actId }, new { @class = "btn btn-primary" })*@
@@ -57,7 +56,7 @@
 
                 <tr>
                     <th class="bg-light text-center">@Html.DisplayNameFor(m => m.memNick)</th>
-                    <td class="pl-4">@Html.DisplayFor(modelItem => item.memNick)</td>
+                    <td class="pl-4 "><a href="@Url.Action("Info","Member",new { memID=item.hostId})" class="text-decoration-none  center hvr-icon-pulse-grow hvr-icon-spin text-info">@Html.DisplayFor(modelItem => item.memNick)<i class="material-icons  hvr-icon-pulse-grow text-info hvr-icon">info</i></a></td>
                 </tr>
 
                 <tr>
