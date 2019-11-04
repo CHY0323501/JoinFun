@@ -22,6 +22,11 @@ namespace JoinFun.Controllers
         {
             //使用Linq查詢取得帳號(加密用)
             var getAcc = db.Administrator.Where(m => m.admAcc == account).FirstOrDefault();
+            if (getAcc == null)
+            {
+                ViewBag.admLoginERR = "您輸入的帳號或密碼錯誤";
+                return View();
+            }
             //查詢管理員帳號及密碼
             string sql = "select * from Administrator where admAcc=@acc and admPass=@pass";
             SqlCommand cmd = new SqlCommand(sql,Conn);

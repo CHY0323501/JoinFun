@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css?family=Dosis&display=swap" rel="stylesheet">
 <link href="~/CSS/ADM_login.css" rel="stylesheet" />
 
+
 <html >
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -22,12 +23,15 @@
         <span class="close-btn">
             <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png">
         </span>
-
+        
         <form method="post">
             <input type="text" name="account" placeholder="ADM's Account" required>
             <input type="password" name="pass" placeholder="ADM's Password" required>
             <input id="Submit1" type="submit" value="Log in" />
             @*<a href="#">Log in</a>*@
+           
+                <h4 style="text-align:center;color:white;font-family:微軟正黑體">@ViewBag.admLoginERR</h4>
+            
             <div id="remember-container">
                 <input type="checkbox" id="checkbox-2-1" class="checkbox" checked="checked" />
                 <span id="remember">Remember me</span>
@@ -52,5 +56,8 @@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
     <script src="~/JS/ADM_Login.js"></script>
+    <script>
+        
+    </script>
 </body>
 </html>
