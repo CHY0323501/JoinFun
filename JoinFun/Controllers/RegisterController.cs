@@ -19,15 +19,39 @@ namespace JoinFun.Controllers
         //註冊會員
         public ActionResult Register()
         {
+            //ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName");
+            //ViewBag.District = new SelectList(db.County, "DistrictSerial", "DistrictName");
+            ViewBag.County = db.County.ToList();
+            ViewBag.District = db.District.ToList();
 
 
-            //ViewBag.County = db.County.ToList();
-            //ViewBag.District = db.District.ToList();
-
+            //SelectList selectList = new SelectList(this.GetCounty(), "CountyNo", "CountyName");
+            //SelectList selectList2 = new SelectList(this.GetDistrict(), "DistrictSerial", "DistrictName");
+            //ViewBag.SelectList = selectList;
+            //ViewBag.SelectList2 = selectList2;
             return View();
 
         }
+
+        private IEnumerable<County> GetCounty()
+        {
+            using (JoinFunEntities db = new JoinFunEntities())
+            {
+                var query = db.County.OrderBy(c => c.CountyNo);
+                return query.ToList();
+            }
+        }
+
+        private IEnumerable<District> GetDistrict()
+        {
+            using (JoinFunEntities db = new JoinFunEntities())
+            {
+                var query = db.District.OrderBy(c => c.CountyNo);
+                return query.ToList();
+            }
+        }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(Member mem, string account, string password)
         {
                  
@@ -57,5 +81,14 @@ namespace JoinFun.Controllers
 
             return View(db.Member.ToList());
         }
+
+
+
+
+
+
+
+
+
     }
 }
