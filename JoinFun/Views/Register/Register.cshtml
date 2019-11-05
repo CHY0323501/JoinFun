@@ -10,10 +10,10 @@
 
 
 @using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+        <div class="form-horizontal">
         @*<h4>Member</h4>*@
 
         <hr />
@@ -64,6 +64,26 @@
 
 
 
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.County, "縣/市", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("County", null, htmlAttributes: new { @id = "county", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.County, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.District, "鄉/鎮/市/區", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("District", null, htmlAttributes: new { @id = "district", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.District, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
+
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -73,15 +93,8 @@
                 <select id="memCounty" name="memCounty" class="form-control">
                     @foreach (var i in co)
                     {
-                        <option value="@i.CountyNo" selected>@i.CountyName</option>
-                        @*if (Model.County.CountyNo == i.CountyNo)
-                            {
-                                <option value="@i.CountyNo" selected>@i.CountyName</option>
-                            }
-                            else
-                            {
-                                <option value="@i.CountyNo">@i.CountyName</option>
-                            }*@
+                        <option value="@i.CountyNo" >@i.CountyName</option>
+                       
                     }
                 </select>
             </div>
@@ -94,18 +107,11 @@
                 @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
                 @Html.ValidationMessageFor(model => model.memDistrict, "", new { @class = "text-danger" })
                 <select id="memDistrict" name="memDistrict" class="form-control ">
-                    @foreach (var i in dis@*.Where(a => a.CountyNo == Model.County.CountyNo)*@)
-{
-<option value="@i.DistrictSerial" selected>@i.DistrictName</option>
-@*if (Model.District.DistrictSerial == i.DistrictSerial)
-    {
-        <option value="@i.DistrictSerial" selected>@i.DistrictName</option>
-    }
-    else
-    {
-        <option value="@i.DistrictSerial">@i.DistrictName</option>
-    }*@
-}
+                    @foreach (var i in dis)
+                    {
+                        <option value="@i.DistrictSerial" >@i.DistrictName</option>
+                       
+                    }
                 </select>
             </div>
         </div>
@@ -186,6 +192,23 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 @section scripts{
-    <script src="~/JS/MemberEdit.js"></script>
+    <script>
+        
+        $('#memCounty').change(function () {
+            $('#memDistrict').empty();
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#memCounty').val(),
+                success: function (d) {
+                    console.log(d);
+                    d.forEach(function (currentValue, index, array) {
+                        if (index % 2 != 0) {
+                            $('#memDistrict').append("<option value='" + array[index - 1] + "'>" + currentValue + "</option>");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 
 }
