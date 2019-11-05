@@ -1,0 +1,43 @@
+﻿@model IEnumerable<JoinFun.Models.vw_Member_Remarks>
+@section memberRemarks{
+    <link href="~/CSS/MemberRemarks.css" rel="stylesheet" />
+}
+@{
+    ViewBag.Title = "會員評價";
+}
+
+
+
+<div class="container">
+    <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.ToMemNick)的所有評價</h2>
+    <div class="card text-center border-0 p-adjust">
+        <div class="card-header bg-transparent text-white ">
+            <div class="d-flex">
+                <ul class="nav nav-tabs card-header-tabs mx-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link active p-3 text-success" href="#tab1" data-toggle="tab"><strong>當主辦人的評價</strong></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>當參與者的評價</strong></a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="tab-content">
+            <div class="card-body tab-pane show active" id="tab1">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <div class="card-body tab-pane" id="tab2">
+                <h5 class="card-title">22222</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+
+}
