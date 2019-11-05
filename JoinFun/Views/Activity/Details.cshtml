@@ -2,6 +2,7 @@
 
 
 @{
+    var pic = (IEnumerable<JoinFun.Models.Photos_of_Activities>)ViewBag.Picture;
     ViewBag.Title = "Details";
 }
 
@@ -9,29 +10,31 @@
 <div class="container">
     <h2 class="mt-4 text-primary">揪團活動</h2>
     <hr />
-    @foreach (var item in Model)
+    @*if (Session["memId"] != null)
+        {
+        if (Session["memId"] != null && (Session["memId"]).ToString() == item.hostId)
+        {*@
+    <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                @*@Html.ActionLink("編輯", "Edit", new { id = item.actId }, new { @class = "btn btn-primary" })*@
+                <a class="nav-link text-light btn btn-primary" href="@Url.Action("Edit", new { actId = Model.FirstOrDefault().actId })">編輯</a>
+            </li>
+            <li class="nav-item ml-1">
+                @*@Html.ActionLink("刪除", "Delete", new { id = item.actId }, new { @class = "btn btn-danger", onclick = "return confirm('確認刪除嗎??')" })*@
+                <a class="nav-link text-light btn btn-danger" href="@Url.Action("Delete", new { actId = Model.FirstOrDefault().actId })" onclick="return confirm('確認刪除嗎??')">刪除</a>
+            </li>
+        </ul>
+
+    </nav>
+    @*}
+        }*@
+    @foreach (var item in pic)
     {
-
-        //if (Session["memId"] != null && (Session["memId"]).ToString() == item.hostId)
-        //{
-            <nav class="navbar navbar-expand-sm  mb-2">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        @*@Html.ActionLink("編輯", "Edit", new { id = item.actId }, new { @class = "btn btn-primary" })*@
-                        <a class="nav-link text-light btn btn-primary" href="@Url.Action("Edit", new { actId = item.actId })">編輯</a>
-                    </li>
-                    <li class="nav-item ml-1">
-                        @*@Html.ActionLink("刪除", "Delete", new { id = item.actId }, new { @class = "btn btn-danger", onclick = "return confirm('確認刪除嗎??')" })*@
-                        <a class="nav-link text-light btn btn-danger" href="@Url.Action("Delete", new { actId = item.actId })" onclick="return confirm('確認刪除嗎??')">刪除</a>
-                    </li>
-                </ul>
-
-            </nav>
-            //}
-
-            if (item.actId != null)
-            {
-            <img src="@Url.Action("GetPhoto", "Activity", new { item.actId})" style="width:600px;height:auto" class="rounded" />
+        if (item.actId != null)
+        {
+            @*<img src="@Url.Action("GetPhoto", "Activity", new {item.actPics })" style="width:600px;height:auto" class="rounded" />*@
+            <img src="@Url.Content(item.actPics)" style="width:600px;height:auto" class="rounded img-fluid" />
         }
     }
     <table class="table mt-2" style="width:600px;border:thin">
@@ -56,7 +59,7 @@
 
                 <tr>
                     <th class="bg-light text-center">@Html.DisplayNameFor(m => m.memNick)</th>
-                    <td class="pl-4 "><a href="@Url.Action("Info","Member",new { memID=item.hostId})" class="text-decoration-none  center hvr-icon-pulse-grow hvr-icon-spin text-info">@Html.DisplayFor(modelItem => item.memNick)<i class="material-icons  hvr-icon-pulse-grow text-info hvr-icon">info</i></a></td>
+                    <td class="pl-4">@Html.DisplayFor(modelItem => item.memNick)</td>
                 </tr>
 
                 <tr>

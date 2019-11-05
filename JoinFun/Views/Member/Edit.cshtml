@@ -118,7 +118,7 @@
         <div class="col-12 col-md-4 border-right mb-3 ">
             <div>
                 @Html.LabelFor(model => model.Habit, "興趣", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
-                @Html.TextArea("Habit", Model.Habit, 8, 50, new { @class = "form-control mx-auto text-center ", style = "resize:none" })
+                @Html.TextArea("Habit", Model.Habit, 8, 50, new { @class = "form-control mx-auto text-center " ,style = "resize:none"})
                 @*@Html.EditorFor(m => m.Habit1, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center mb-1" } })*@
             </div>
             @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
