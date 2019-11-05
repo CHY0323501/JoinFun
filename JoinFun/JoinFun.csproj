@@ -128,7 +128,6 @@
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
-    <Content Include="JS\Register_DropDownList.js" />
     <Content Include="JS\MemberEdit.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -143,6 +142,7 @@
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
     <Content Include="Photos\male.png" />
+    <Content Include="Photos\star.png" />
     <Content Include="Photos\w-1.png" />
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />

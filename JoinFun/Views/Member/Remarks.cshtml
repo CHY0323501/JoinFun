@@ -24,18 +24,27 @@
 
     @@media (min-width: 768px) {
         .border-right {
-            border-right: 1px solid #dee2e6 !important;
+            border-right: 0.1px solid #ffe96f !important;
         }
     }
-    
+
     .b-top {
-            border-top: 1px solid #dee2e6 !important;
-        }
+        border-top: 1px solid #ffe96f !important;
+    }
 
     @@media (min-width: 768px) {
         .b-top {
-        border-top: none !important;
+            border-top: none !important;
+        }
     }
+    .Remarkcard {
+        box-shadow:0 0 10px #ffe96f;
+    }
+    .b-bottomDash {
+        border-bottom-style:dashed!important;
+    }
+    .changeCursor {
+        cursor:pointer;
     }
 </style>
 
@@ -57,43 +66,43 @@
         </div>
         <div class="tab-content" >
             <div class="card-body tab-pane show active fade " id="tab1">
-                
                 @foreach (var i in Model.vw_Host_Remarks)
                 {
-                <div class="card p-3 ">
-                    <div class="row mb-1 align-items-center">
-                        <div class="col col-12 col-md-5 border-right ">
-                            <div class="border-bottom mb-3 pb-2 pl-3"><img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " /></div>
-                            <div class="row mx-auto ">
-                                <div class="col-12 col-md-6 text-center mb-3 mb-md-0">
-                                    <div class="text-success mb-1 ">會員編號</div><div class="text-warning ">@i.FromMemId</div>
+                <div class="card p-3 Remarkcard border-0 mb-4">
+                    <div class="row mb-1 align-items-center ">
+                        <div class="col col-12 col-md-4 border-right changeCursor ">
+                            <a href="@Url.Action("Info","Member",new { memID=i.FromMemId})" class="text-decoration-none" title="點擊連結至會員資訊">
+                                <div class="border-bottom mb-3 pb-2 pl-3"><img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " /></div>
+                                <div class="row mx-auto ">
+                                    <div class="col-12 col-md-6 text-center mb-3 mb-md-0 ">
+                                        <div class="text-success mb-1 font-weight-bold pb-2"><span class="border-bottom border-success b-bottomDash " >會員編號</span></div><div class="text-warning text-decoration-none">@i.FromMemId</div>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-center ">
+                                        <div class="text-success mb-1 font-weight-bold pb-2"><span class="border-bottom border-success b-bottomDash ">會員暱稱</span></div><div class="text-warning mb-2 text-decoration-none">@i.memNick</div>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-6 text-center ">
-                                    <div class="text-success mb-1">會員暱稱</div><div class="text-warning">@i.memNick</div>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                        
-                        <div class="col col-12 col-md-7 b-top p-2 pl-3 ">
+                        <div class="col col-12 col-md-8 b-top p-2 pl-3 ">
                             <div class="row text-left mt-3 ">
-                                <div class="col-12 col-md-6">評價編號　@i.remarkSerial</div><div class="col-12 col-md-6">活動編號　@i.actId</div>
+                                <div class="col-12 col-md-6 "><span class="bg-success text-white p-1 rounded-pill">評價編號</span>　<label class="text-warning">@i.remarkSerial</label></div><div class="col-12 col-md-6 "><span class="bg-success text-white p-1 rounded-pill">活動編號</span>　<a href="@Url.Action("Details","Activity",new { actId=i.actId})" class="text-decoration-none" title="點擊連結至活動資訊"><label class="text-warning changeCursor hvr-icon-spin hvr-icon-up">@i.actId<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></label></a></div>
                             </div>
                             <div class="row text-left mt-md-1">
-                                <div class="col-12 col-md-6 align-self-center">評價時間　@i.remarkTime</div><div class="col-12 col-md-6  ">
+                                <div class="col-12 col-md-6 align-self-center "><span class="bg-success text-white p-1 rounded-pill">評價時間</span>　<label class="text-warning">@i.remarkTime.ToString().Substring(0, 10).Replace("/", "-")</label></div><div class="col-12 col-md-6  ">
                                     <div class="row ">
-                                        <div class="col col-3 ">星等</div>
-                                        <div class="col col-9 ">
-                                            @for (int j = 1; j <= i.remarkStar; j++)
+                                        <div class="col col-12 text-success "  >
+                                            <span class="bg-success text-white p-1 rounded-pill">評價星等</span>　@for (int j = 1; j <= i.remarkStar; j++)
                                             {
-                                                <img src="~/Photos/star.png" class="img-fluid" style="width:20px" />
+                                            <img src="~/Photos/star.png" class="img-fluid" style="width:20px;" />
                                             }
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-md-1">
-                                <div class="col col-12 col-md-3 border text-left" >評價內容</div>
-                                <div class="col col-12 col-md-9" ></div>
+                            <div class="row mt-1">
+                                <div class="col col-12 text-left mt-1"><span class="bg-success text-white p-1 rounded-pill">評價內容</span></div><br>
+                                <div class="col col-12 col-md-12 text-left text-warning px-5 mt-2 overflow-auto">@i.remarkContent.Replace("\r\n", "<br />")</div>
                             </div>
                         </div>
                     </div>
@@ -101,7 +110,48 @@
                 }
             </div>
             <div class="card-body tab-pane fade " id="tab2">
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                @foreach (var i in Model.vw_Participant_Remarks)
+                {
+                    <div class="card p-3 Remarkcard border-0 mb-4">
+                        <div class="row mb-1 align-items-center ">
+                            <div class="col col-12 col-md-4 border-right changeCursor ">
+                                <a href="@Url.Action("Info","Member",new { memID=i.FromMemId})" class="text-decoration-none" title="點擊連結至會員資訊">
+                                    <div class="border-bottom mb-3 pb-2 pl-3"><img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " /></div>
+                                    <div class="row mx-auto ">
+                                        <div class="col-12 col-md-6 text-center mb-3 mb-md-0 ">
+                                            <div class="text-success mb-1 font-weight-bold pb-2"><span class="border-bottom border-success b-bottomDash ">會員編號</span></div><div class="text-warning text-decoration-none">@i.FromMemId</div>
+                                        </div>
+                                        <div class="col-12 col-md-6 text-center ">
+                                            <div class="text-success mb-1 font-weight-bold pb-2"><span class="border-bottom border-success b-bottomDash ">會員暱稱</span></div><div class="text-warning mb-2 text-decoration-none">@i.memNick</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col col-12 col-md-8 b-top p-2 pl-3 ">
+                                <div class="row text-left mt-3 ">
+                                    <div class="col-12 col-md-6 "><span class="bg-success text-white p-1 rounded-pill">評價編號</span>　<label class="text-warning">@i.remarkSerial</label></div><div class="col-12 col-md-6 "><span class="bg-success text-white p-1 rounded-pill">活動編號</span>　<a href="@Url.Action("Details","Activity",new { actId=i.actId})" class="text-decoration-none" title="點擊連結至活動資訊"><label class="text-warning changeCursor hvr-icon-spin hvr-icon-up">@i.actId<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></label></a></div>
+                                </div>
+                                <div class="row text-left mt-md-1">
+                                    <div class="col-12 col-md-6 align-self-center "><span class="bg-success text-white p-1 rounded-pill">評價時間</span>　<label class="text-warning">@i.remarkTime.ToString().Substring(0, 10).Replace("/", "-")</label></div><div class="col-12 col-md-6  ">
+                                        <div class="row ">
+                                            <div class="col col-12 text-success ">
+                                                <span class="bg-success text-white p-1 rounded-pill">評價星等</span>　@for (int j = 1; j <= i.remarkStar; j++)
+                                                {
+                                                    <img src="~/Photos/star.png" class="img-fluid" style="width:20px;" />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col col-12 text-left mt-1"><span class="bg-success text-white p-1 rounded-pill">評價內容</span></div><br>
+                                    <div class="col col-12 col-md-12 text-left text-warning px-5 mt-2 overflow-auto">@i.remarkContent.Replace("\r\n", "<br />")</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
