@@ -24,10 +24,9 @@ namespace JoinFun.Controllers
             ViewBag.actId = actId;
             ActClass classList = new ActClass()
             {
-                ActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId && m.keepAct == true).ToList(),
+                vwActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId && m.keepAct == true).ToList(),
                 ClassList = db.Activity_Class.ToList()
             };
-
             return View(classList);
         }
 
@@ -41,6 +40,7 @@ namespace JoinFun.Controllers
             ViewBag.actId = actId;
 
             var act = db.vw_Activities.Where(m => m.actId == actId).ToList();
+            ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
             return View(act);
         }
 
@@ -57,61 +57,53 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Join_Fun_Activities act, FormCollection form, Photos_of_Activities photo, HttpPostedFileBase picture)
+        public ActionResult Create(Join_Fun_Activities act, FormCollection form, HttpPostedFileBase[] picture)
         {
-            //將Dropdown List的值取回 start
-            string clsValue = form["Activity_Class"].ToString();
-            short age = Int16.Parse(form["Age_Restriction"].ToString());
-            short gender = Int16.Parse(form["Gender_Restriction"].ToString());
-            short people = Int16.Parse(form["People_Restriction"].ToString());
-            short budget = Int16.Parse(form["Budget_Restriction"].ToString());
-            short payment = Int16.Parse(form["Payment_Restriction"].ToString());
-            short county = Int16.Parse(form["County"].ToString());
-            short district = Int16.Parse(form["District"].ToString());
-            bool drop = Convert.ToBoolean(form["Drop"].ToString());
-            //Dropdown List值 end
             //呼叫Sql系統函數GetActId()取得新增的活動ID
             string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
-
             act.actId = actId;
-            //act.hostId = Session["memId"].ToString();
-            act.hostId = "M000000003";
-            act.actClassId = clsValue;
-            act.ageRestrict = age;
-            act.gender = gender;
-            act.maxNumPeople = people;
-            act.maxBudget = budget;
-            act.paymentTerm = payment;
-            act.actCounty = county;
-            act.actDistrict = district;
-            act.acceptDrop = drop;
+            //將Dropdown List的值取回 ---start--- 
+            act.hostId = "M000000003";//Session["memId"].ToString();
+            act.ageRestrict = Int16.Parse(form["Age_Restriction"].ToString());
+            act.gender = Int16.Parse(form["Gender_Restriction"].ToString());
+            act.maxNumPeople = Int16.Parse(form["People_Restriction"].ToString());
+            act.maxBudget = Int16.Parse(form["Budget_Restriction"].ToString());
+            act.paymentTerm = Int16.Parse(form["Payment_Restriction"].ToString());
+            act.actCounty = Int16.Parse(form["County"].ToString());
+            act.actDistrict = Int16.Parse(form["District"].ToString());
+            act.acceptDrop = Convert.ToBoolean(form["Drop"].ToString());
+            //將Dropdown List的值取回 ---end--- 
             act.keepAct = true;
-
-            if (picture != null)
-            {
-                //Stream fs = picture.InputStream;
-                //BinaryReader br = new BinaryReader(fs);
-                //byte[] bytes = br.ReadBytes((Int32)fs.Length);
-                //photo.actPics = bytes;
-                //photo.actPics = new byte[picture.ContentLength];
-                //picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
-            }
-            else
-            {
-                GetSelectList();
-                ViewBag.Drop = GetDropList();
-                ViewBag.UploadError = "請選擇要上傳的圖片";
-                return View();
-            }
-
-            photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-            photo.actId = actId;
             db.Join_Fun_Activities.Add(act);
-            //db.Photos_of_Activities.Add(photo);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            string fileName = "";
+            for (int i = 0; i < picture.Length; i++)
+            {
+                HttpPostedFileBase file = picture[i];
+                Photos_of_Activities photo = new Photos_of_Activities();
+                if (file != null)
+                {
+                    if (file.ContentLength > 0)
+                    {
+                        photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                        photo.actId = actId;
+                        fileName = photo.PhotoSerial + photo.actId + ".jpg";
+                        // 將檔案儲存到網站的Photos資料夾下
+                        file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
+                        photo.actPics = "~/Photos/" + fileName;
+                        db.Photos_of_Activities.Add(photo);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    GetSelectList();
+                    ViewBag.UploadError = "請選擇要上傳的圖片";
+                    return View();
+                }
+            }
 
-            //return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(string actId)
@@ -187,39 +179,20 @@ namespace JoinFun.Controllers
             return list;
         }
 
-        //取得活動照片
-        //public FileContentResult GetPhoto(string actId)
-        //{
-        //    var photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
-        //    if (photo != null)
-        //    {
-        //        return File(photo, "image/jpeg");
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
+        //傳回活動ID取得圖片,給model無法直接關聯Photo_of_Activities使用
+        public FileContentResult GetActPhoto(string actId)
+        {
+            string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
+            if (photo != null)
+            {
+                //將圖片轉成byte[] 傳給View
+                string path = Server.MapPath(photo);
+                byte[] image = System.IO.File.ReadAllBytes(path);
+                return base.File(image, "image/jpeg");
+            }
+            return null;
+        }
 
-        //public ActionResult AddPhoto()
-        //{
-        //    return View();
-        //}
 
-        //[HttpPost]
-        //public ActionResult AddPhoto(string actId, Photos_of_Activities photo, HttpPostedFileBase picture)
-        //{
-        //    if (picture != null)
-        //    {
-        //        //photo.actPics = new byte[picture.ContentLength];
-        //        //picture.InputStream.Read(photo.actPics, 0, picture.ContentLength);
-        //    }
-
-        //    photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-        //    photo.actId = actId;
-        //    db.Photos_of_Activities.Add(photo);
-        //    db.SaveChanges();
-        //    return View();
-        //}
     }
 }
