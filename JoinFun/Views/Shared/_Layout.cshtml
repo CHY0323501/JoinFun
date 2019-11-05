@@ -47,6 +47,10 @@
             padding-left: 15px;
             margin-right: auto;
             margin-left: auto;
+            
+        }
+        .containerMinH {
+            min-height:1200px
         }
 
         @@media (min-width: 576px) {
@@ -75,6 +79,9 @@
                 /*max-width: 1140px;*/
                 max-width: 1500px;
             }
+        }
+        .containerbody {
+            min-height:400px;
         }
         /*調整Scrollbar*/
         .hvr-underline-from-center:before {
@@ -108,59 +115,57 @@
 
 
 </head>
-<body>
+<body >
     <div id="a" class="navbar navbar-expand-lg fixed-top navbar-light bg-dark justify-content-end nav-bg">
+
         <div class="container ">
-            <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/w1.png" style="width:40px" />    JoinFun</a>
+                <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/w1.png" style="width:40px" />    JoinFun</a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
-                    <li class="nav-item ">
-                        <div class="form-group form-inline mb-0">
-                            <input id="Search" type="text" placeholder="搜尋活動或會員" class="form-control  ml-auto" />
-                            <a href="#" class="btn btn-info  mr-auto" style="color:white!important">搜尋</a>
-                        </div>
-                    </li>
-                    <li class="nav-item text-center">
-                        <a class="nav-link hvr-underline-from-center" href="#">登入</a>
-                    </li>
-                    <li class="nav-item text-center">
-                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")">我要揪團</a>
-                    </li>
-                    <li class="nav-item dropdown text-center">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            會員中心
-                        </a>
-                        <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })">我的資訊</a>
-                            <a class="dropdown-item" href="#">新增會員評價</a>
-                            <a class="dropdown-item " href="#">黑名單管理</a>
-                            <a class="dropdown-item" href="#">登出</a>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
+                        <li class="nav-item ">
+                            <div class="form-group form-inline mb-0">
+                                <input id="Search" type="text" placeholder="搜尋活動或會員" class="form-control  ml-auto" />
+                                <a href="#" class="btn btn-info  mr-auto" style="color:white!important">搜尋</a>
+                            </div>
+                        </li>
+                        <li class="nav-item text-center">
+                            <a class="nav-link hvr-underline-from-center" href="#">登入</a>
+                        </li>
+                        <li class="nav-item text-center">
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")">我要揪團</a>
+                        </li>
+                        <li class="nav-item dropdown text-center">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                會員中心
+                            </a>
+                            <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })">我的資訊</a>
+                                <a class="dropdown-item" href="#">我的揪團</a>
+                                <a class="dropdown-item" href="#">新增會員評價</a>
+                                <a class="dropdown-item " href="#">黑名單管理</a>
+                                <a class="dropdown-item" href="#">登出</a>
 
-                        </div>
-                    </li>
-                    <li class="nav-item">
+                            </div>
+                        </li>
+                        <li class="nav-item">
 
-                    </li>
+                        </li>
 
-                </ul>
-            </div>
-
-
-
+                    </ul>
+                </div>
         </div>
     </div>
 
     <div class="container body-content">
         @RenderBody()
     </div>
-    <footer>
-        <hr />
-        <p class="text-center ">&copy; @DateTime.Now.Year - JF Ltd.</p>
+    <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 bg-info mt-3 mb-0 ">
+        <p class="text-center  text-white">&copy; @DateTime.Now.Year - JF Ltd.</p>
     </footer>
     @*<footer class="footer-content bg-dark mb-0">
         <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>

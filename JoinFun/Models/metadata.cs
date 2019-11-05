@@ -727,5 +727,66 @@ namespace JoinFun.Models
         public string CountyName { get; set; }
         [DisplayName("活動區域")]
         public string DistrictName { get; set; }
+        public string hostId { get; set; }
+    }
+    public class Metavw_Participant_Remarks
+    {
+        [DisplayName("評價編號")]
+        public string remarkSerial { get; set; }
+        [DisplayName("活動編號")]
+        public string actId { get; set; }
+        [DisplayName("給評者會員編號")]
+        public string FromMemId { get; set; }
+        [DisplayName("評價對象會員編號")]
+        public string ToMemId { get; set; }
+        [DisplayName("是否保留評價")]
+        public bool keepRemark { get; set; }
+        [DisplayName("評價星等")]
+        public short remarkStar { get; set; }
+        [DisplayName("評價內容")]
+        public string remarkContent { get; set; }
+        [DisplayName("評價時間")]
+        public System.DateTime remarkTime { get; set; }
+        [DisplayName("給評者暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("給評者性別")]
+        public string Sex { get; set; }
+        [DisplayName("活動主題")]
+        public string actTopic { get; set; }
+        [DisplayName("活動縣市")]
+        public string CountyName { get; set; }
+        [DisplayName("活動區域")]
+        public string DistrictName { get; set; }
+        public string hostId { get; set; }
+    }
+    public class Metavw_Host_Remarks
+    {
+        [DisplayName("評價編號")]
+        public string remarkSerial { get; set; }
+        [DisplayName("活動編號")]
+        public string actId { get; set; }
+        [DisplayName("會員編號")]
+        public string FromMemId { get; set; }
+        [DisplayName("主辦人會員編號")]
+        public string ToMemId { get; set; }
+        [DisplayName("是否保留評價")]
+        public bool keepRemark { get; set; }
+        [DisplayName("評價星等")]
+        public short remarkStar { get; set; }
+        [DisplayName("評價內容")]
+        public string remarkContent { get; set; }
+        [DisplayName("評價時間")]
+        public System.DateTime remarkTime { get; set; }
+        [DisplayName("給評者暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("給評者性別")]
+        public string Sex { get; set; }
+        [DisplayName("活動主題")]
+        public string actTopic { get; set; }
+        [DisplayName("活動縣市")]
+        public string CountyName { get; set; }
+        [DisplayName("活動區域")]
+        public string DistrictName { get; set; }
+        public string hostId { get; set; }
     }
 }
