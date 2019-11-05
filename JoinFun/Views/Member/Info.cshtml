@@ -7,294 +7,227 @@
     <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
 }
 
-
-<div class="container">
-    @foreach (var i in Model.Member)
-    {
-        <div class="row ">
-            <div class="col-12 text-center ">
-
-                @if (Session["memid"].ToString() == i.memId)
-                {
-                    <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">個人資訊</h3>
-                    ViewBag.Title = "個人資訊";
-                }
-                else
-                {
-                    <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">會員資訊</h3>
-                    ViewBag.Title = "會員資訊";
-                }
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col col-md-4 text-center  align-self-center">
-                <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
-            </div>
-            <div class="col col-md-8 align-self-center text-center animated fadeInDown">
-                <div class="row mb-2">
-                    <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
-                        @Html.DisplayNameFor(model => i.memId)
-                    </div>
-                    <div class="col-md-8 text-secondary">
-                        @Html.DisplayFor(m => i.memId)
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
-                        @Html.DisplayNameFor(model => i.memNick)
-                    </div>
-                    <div class="col-md-8 ">
-                        @Html.DisplayFor(m => i.memNick)
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
-                        所在地
-                    </div>
-                    <div class="col-md-8 ">
-                        @Html.DisplayFor(m => i.County.CountyName)
-                        @Html.DisplayFor(m => i.District.DistrictName)
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
-                        年齡
-                    </div>
-                    <div class="col-md-8 ">
-                        @(DateTime.Now.Year - i.Birthday.Year) 歲
-                    </div>
-                </div>
-
-                <div class="row  mt-md-4 ">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-8 text-center ml-md-3">
-                        @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
-                        @{ if (Session["memid"].ToString() == i.memId)
-                            {
-                                @Html.ActionLink("編輯個人資訊", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info", style = "width:inherit" })
-                            }
-                            else
-                            {
-                                <div class="row">
-                                    <div class="col-md">
-                                        @Html.ActionLink("追蹤他", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
-                                    </div>
-                                    <div class="col-md">
-                                        @Html.ActionLink("加好友", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
-                                    </div>
-                                    <div class="col-md">
-                                        @Html.ActionLink("加入黑名單", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
-                                    </div>
-                                </div>
-                            }
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div class="row w-100 h-50 text-center mx-auto mt-4 ">
-                <div class="col col-md-12 ">
-                    <div class="row mx-auto justify-content-center" id="btnrow">
-                        <div id="follow" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color  animated bounceIn bshadow  btn-hov">
-                            <div class="adj_fontsize font-weight-bold">@Model.vw_FollowUp.Count</div>
-                            <div>追蹤</div>
-                        </div>
-                        <div id="fans" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow   btn-hov">
-                            <div class="adj_fontsize font-weight-bold">@Model.vw_FansNew.Count</div>
-                            <div>粉絲</div>
-                        </div>
-                        <div id="friend" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow   btn-hov">
-                            <div class="adj_fontsize font-weight-bold">@Model.vw_FriendShip.Count</div>
-                            <div>好友</div>
-                        </div>
-
-                        <div id="remark" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow btn-hov">
-                            <a href="@Url.Action("Remarks","Member",new { memID=i.memId})" class="text-decoration-none ">
-                                <div class="adj_fontsize font-weight-bold text-dark">@Model.vw_Member_Remarks.Count</div>
-                                <div class="text-dark">會員評價</div>
-                            </a>
-                        </div>
-                        <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow   btn-hov">
-                            <a href="#" class="text-decoration-none ">
-                                <div class="adj_fontsize font-weight-bold text-dark">@(Model.vw_Activities.Count + i.Activity_Details.Count)</div>
-                                <div class="text-dark">揪團歷史</div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row w-100 mt-4 mb-4 text-center mx-auto animated fadeInUp">
-                <div class="col-12  col-md-4 border-right mb-3 ">
-                    <div class="row ">
-                        <div class="adj_fontsize text-success font-weight-bold col-12 ">個人簡介</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 text-break">
-                            @if (i.Introduction != null && !i.Introduction.IsEmpty())
-                            {
-
-                                @(Html.Raw(i.Introduction.Replace("\r\n", "<br />")))
-                            }
-                            else
-                            {
-                                @:無資料
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12  col-md-4 border-right mb-3">
-                    <div class="row">
-                        <div class="adj_fontsize text-success font-weight-bold col-12">興趣</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 text-break">
-                            @if (i.Habit != null && !i.Habit.IsEmpty())
-                            {
-                                @(Html.Raw(i.Habit.Replace("\r\n", "<br />")))
-                            }
-                            else
-                            {
-                                <div>
-                                    無資料
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="row ">
-                        <div class="adj_fontsize text-success font-weight-bold col-12">飲食偏好</div>
-                    </div>
-                    <div class="row ">
-                        <div class="col-12 text-break">
-                            @if (i.Dietary_Preference != null && !i.Dietary_Preference.IsEmpty())
-                            {
-                                @(Html.Raw(i.Dietary_Preference.Replace("\r\n", "<br />")))
-                            }
-                            else
-                            {
-                                @:無資料
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @*<div class="row" style="height:300px"></div>*@
-        @*確認是否登入、當使用揪團系統帳號登入才可修改密碼*@
-        if (Session["memid"].ToString() == i.memId && i.Acc_Pass.FirstOrDefault() != null)
+    <div class="container containerMinH" >
+        @foreach (var i in Model.Member)
         {
-            <div class="row">
-                <div class="col-3 offset-2">
-                    @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
-                </div>
-                <div class="col-3 offset-2">
-                    @Html.ActionLink("修改密碼", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+            <div class="row ">
+                <div class="col-12 text-center ">
+
+                    @if (Session["memid"].ToString() == i.memId)
+                    {
+                        <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">個人資訊</h3>
+                        ViewBag.Title = "個人資訊";
+                    }
+                    else
+                    {
+                        <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">會員資訊</h3>
+                        ViewBag.Title = "會員資訊";
+                    }
+
                 </div>
             </div>
-        }
-        else if (Session["memid"].ToString() == i.memId && i.Social_Net_ID.FirstOrDefault() != null)
-        {
             <div class="row">
-                <div class="col-12 col-md-6 offset-md-3">
-                    @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+                <div class="col col-md-4 text-center  align-self-center">
+                    <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
                 </div>
-            </div>
-        }
-
-        //彈出視窗
-        <div class="modal" id="Modal1">
-            <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable ">
-                <div class="modal-content ">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header nav-bg text-white ">
-                        <h5 class="modal-title font-weight-bold">追蹤名單</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                <div class="col col-md-8 align-self-center text-center animated fadeInDown">
+                    <div class="row mb-2">
+                        <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
+                            @Html.DisplayNameFor(model => i.memId)
+                        </div>
+                        <div class="col-md-8 text-secondary">
+                            @Html.DisplayFor(m => i.memId)
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
+                            @Html.DisplayNameFor(model => i.memNick)
+                        </div>
+                        <div class="col-md-8 ">
+                            @Html.DisplayFor(m => i.memNick)
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
+                            所在地
+                        </div>
+                        <div class="col-md-8 ">
+                            @Html.DisplayFor(m => i.County.CountyName)
+                            @Html.DisplayFor(m => i.District.DistrictName)
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
+                            年齡
+                        </div>
+                        <div class="col-md-8 ">
+                            @(DateTime.Now.Year - i.Birthday.Year) 歲
+                        </div>
                     </div>
 
-                    <!-- Modal body -->
-                    <div class="modal-body text-center" style="height:400px">
-                        @{if (Model.vw_FollowUp.FirstOrDefault() != null)
-                            {
-                                var last = Model.vw_FollowUp.Last();
-                                foreach (var fol in Model.vw_FollowUp)
+                    <div class="row  mt-md-4 ">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-8 text-center ml-md-3">
+                            @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
+                            @{ if (Session["memid"].ToString() == i.memId)
                                 {
-                                    if (fol.Equals(last))
-                                    {
-                                        <div class="mb-2"><a href="@Url.Action("Info", "Member", new { memID = fol.memId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
-                                    }
-                                    else
-                                    {
-                                        <div class="mb-2 border-bottom p-3 border-light"><a href="@Url.Action("Info", "Member", new { memID = fol.memId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
-                                    }
+                                    @Html.ActionLink("編輯個人資訊", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info", style = "width:inherit" })
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-md">
+                                            @Html.ActionLink("追蹤他", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                        </div>
+                                        <div class="col-md">
+                                            @Html.ActionLink("加好友", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                        </div>
+                                        <div class="col-md">
+                                            @Html.ActionLink("拉黑他", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                        </div>
+                                    </div>
                                 }
                             }
-                        }
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="modal" id="Modal2">
-            <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable ">
-                <div class="modal-content ">
 
-                    <!-- Modal Header -->
-                    <div class="modal-header nav-bg text-white ">
-                        <h5 class="modal-title font-weight-bold">粉絲名單</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                <div class="row w-100 h-50 text-center mx-auto mt-4 ">
+                    <div class="col col-md-12 ">
+                        <div class="row mx-auto justify-content-center" id="btnrow">
+                            <div id="follow" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color  animated bounceIn bshadow  btn-hov">
+                                <div class="adj_fontsize font-weight-bold">@Model.vw_FollowUp.Count</div>
+                                <div>追蹤</div>
+                            </div>
+                            <div id="fans" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow   btn-hov">
+                                <div class="adj_fontsize font-weight-bold">@Model.vw_FansNew.Count</div>
+                                <div>粉絲</div>
+                            </div>
+                            <div id="friend" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow   btn-hov">
+                                <div class="adj_fontsize font-weight-bold">@Model.vw_FriendShip.Count</div>
+                                <div>好友</div>
+                            </div>
+
+                            <div id="remark" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow btn-hov">
+                                <a href="@Url.Action("Remarks","Member",new { memID=i.memId})" class="text-decoration-none ">
+                                    <div class="adj_fontsize font-weight-bold text-dark">@Model.vw_Member_Remarks.Count</div>
+                                    <div class="text-dark">會員評價</div>
+                                </a>
+                            </div>
+                            <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow   btn-hov">
+                                <a href="#" class="text-decoration-none ">
+                                    <div class="adj_fontsize font-weight-bold text-dark">@(Model.vw_Activities.Count + i.Activity_Details.Count)</div>
+                                    <div class="text-dark">揪團歷史</div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body text-center" style="height:400px">
-                        @{if (Model.vw_FansNew.FirstOrDefault() != null)
-                            {
-                                var last = Model.vw_FansNew.Last();
-                                foreach (var fol in Model.vw_FansNew)
+                </div>
+                <div class="row w-100 mt-4 mb-4 text-center mx-auto animated fadeInUp" >
+                    <div class="col-12  col-md-4 border-right mb-3 ">
+                        <div class="row ">
+                            <div class="adj_fontsize text-success font-weight-bold col-12 ">個人簡介</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-break">
+                                @if (i.Introduction != null && !i.Introduction.IsEmpty())
                                 {
-                                    if (fol.Equals(last))
-                                    {
-                                        <div class="mb-2"><a href="@Url.Action("Info", "Member", new { memID = fol.fanMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
-                                    }
-                                    else
-                                    {
-                                        <div class="mb-2 border-bottom p-3 border-light"><a href="@Url.Action("Info", "Member", new { memID = fol.fanMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
-                                    }
+
+                                    @(Html.Raw(i.Introduction.Replace("\r\n", "<br />")))
                                 }
-                            }
-                        }
+                                else
+                                {
+                                    @:無資料
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12  col-md-4 border-right mb-3">
+                        <div class="row">
+                            <div class="adj_fontsize text-success font-weight-bold col-12">興趣</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-break">
+                                @if (i.Habit != null && !i.Habit.IsEmpty())
+                                {
+                                    @(Html.Raw(i.Habit.Replace("\r\n", "<br />")))
+                                }
+                                else
+                                {
+                                    <div>
+                                        無資料
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="row ">
+                            <div class="adj_fontsize text-success font-weight-bold col-12">飲食偏好</div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-12 text-break">
+                                @if (i.Dietary_Preference != null && !i.Dietary_Preference.IsEmpty())
+                                {
+                                    @(Html.Raw(i.Dietary_Preference.Replace("\r\n", "<br />")))
+                                }
+                                else
+                                {
+                                    @:無資料
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        if (Session["memid"].ToString() == i.memId)
-        {
-            <div class="modal" id="Modal3">
+            <div class="row" style="min-height:500px"></div>
+            @*確認是否登入、當使用揪團系統帳號登入才可修改密碼*@
+            if (Session["memid"].ToString() == i.memId && i.Acc_Pass.FirstOrDefault() != null)
+            {
+                <div class="row ">
+                    <div class="col-3 offset-2 ">
+                        @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+                    </div>
+                    <div class="col-3 offset-2">
+                        @Html.ActionLink("修改密碼", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+                    </div>
+                </div>
+            }
+            else if (Session["memid"].ToString() == i.memId && i.Social_Net_ID.FirstOrDefault() != null)
+            {
+                <div class="row ">
+                    <div class="col-12 col-md-6 offset-md-3">
+                        @Html.ActionLink("登出", "actionname", "controllername", "", new { @class = "btn btn-dark d-block" })
+                    </div>
+                </div>
+            }
+
+            //彈出視窗
+            <div class="modal" id="Modal1">
                 <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable ">
                     <div class="modal-content ">
 
                         <!-- Modal Header -->
                         <div class="modal-header nav-bg text-white ">
-                            <h5 class="modal-title font-weight-bold">好友名單</h5>
+                            <h5 class="modal-title font-weight-bold">追蹤名單</h5>
                             <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body text-center" style="height:400px">
-                            @{if (Model.vw_FriendShip.FirstOrDefault() != null)
+                            @{if (Model.vw_FollowUp.FirstOrDefault() != null)
                                 {
-                                    var last = Model.vw_FriendShip.Last();
-                                    foreach (var fol in Model.vw_FriendShip)
+                                    var last = Model.vw_FollowUp.Last();
+                                    foreach (var fol in Model.vw_FollowUp)
                                     {
                                         if (fol.Equals(last))
                                         {
-                                            <div class="mb-2"><a href="@Url.Action("Info", "Member", new { memID = fol.friendMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@(fol.newNick == null ? fol.memNick : fol.newNick)<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
+                                            <div class="mb-2"><a href="@Url.Action("Info", "Member", new { memID = fol.memId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
                                         }
                                         else
                                         {
-                                            <div class="mb-2 border-bottom p-3 border-light"><a href="@Url.Action("Info", "Member", new { memID = fol.friendMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@(fol.newNick == null ? fol.memNick : fol.newNick)<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
+                                            <div class="mb-2 border-bottom p-3 border-light"><a href="@Url.Action("Info", "Member", new { memID = fol.memId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
                                         }
                                     }
                                 }
@@ -303,9 +236,75 @@
                     </div>
                 </div>
             </div>
+            <div class="modal" id="Modal2">
+                <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable ">
+                    <div class="modal-content ">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header nav-bg text-white ">
+                            <h5 class="modal-title font-weight-bold">粉絲名單</h5>
+                            <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body text-center" style="height:400px">
+                            @{if (Model.vw_FansNew.FirstOrDefault() != null)
+                                {
+                                    var last = Model.vw_FansNew.Last();
+                                    foreach (var fol in Model.vw_FansNew)
+                                    {
+                                        if (fol.Equals(last))
+                                        {
+                                            <div class="mb-2"><a href="@Url.Action("Info", "Member", new { memID = fol.fanMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="mb-2 border-bottom p-3 border-light"><a href="@Url.Action("Info", "Member", new { memID = fol.fanMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@fol.memNick<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
+                                        }
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            if (Session["memid"].ToString() == i.memId)
+            {
+                <div class="modal" id="Modal3">
+                    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable ">
+                        <div class="modal-content ">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header nav-bg text-white ">
+                                <h5 class="modal-title font-weight-bold">好友名單</h5>
+                                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body text-center" style="height:400px">
+                                @{if (Model.vw_FriendShip.FirstOrDefault() != null)
+                                    {
+                                        var last = Model.vw_FriendShip.Last();
+                                        foreach (var fol in Model.vw_FriendShip)
+                                        {
+                                            if (fol.Equals(last))
+                                            {
+                                                <div class="mb-2"><a href="@Url.Action("Info", "Member", new { memID = fol.friendMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@(fol.newNick == null ? fol.memNick : fol.newNick)<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="mb-2 border-bottom p-3 border-light"><a href="@Url.Action("Info", "Member", new { memID = fol.friendMemId })" class="text-decoration-none hvr-icon-spin hvr-icon-up text-warning"><img src="~/Photos/@(fol.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:35px" />@(fol.newNick == null ? fol.memNick : fol.newNick)<i class="material-icons   text-warning hvr-icon" style="font-size:1.05em">open_in_new</i></a></div>
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
-    }
-</div>
+    </div>
 <script>
     $('#follow').click(function () {
         $('#Modal1').modal('toggle');

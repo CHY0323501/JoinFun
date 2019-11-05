@@ -13,9 +13,9 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(Metavw_Member_Remarks))]
+    [MetadataType(typeof(Metavw_Participant_Remarks))]
 
-    public partial class vw_Member_Remarks
+    public partial class vw_Participant_Remarks
     {
         public string remarkSerial { get; set; }
         public string actId { get; set; }

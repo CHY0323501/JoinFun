@@ -96,13 +96,20 @@ namespace JoinFun.Controllers
             return RedirectToAction("Info", new { memID= Session["memid"] });
         }
         public ActionResult Remarks(string memID) {
-            var Mem_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList();
+            MemRemarkViewModel MRemark = new MemRemarkViewModel()
+            {
+                //判斷是否為主辦人評價
+                vw_Host_Remarks = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).ToList(),
+                //判斷是否為參與者評價
+                vw_Participant_Remarks = db.vw_Participant_Remarks.Where(m=>m.ToMemId==memID).ToList()
+            };
+
             //查詢評價對象暱稱
             ViewBag.ToMemNick = (from m in db.Member
                                 where m.memId == memID
                                 select m.memNick).FirstOrDefault();
                 
-            return View(Mem_Remarks);
+            return View(MRemark);
         }
     }
 }
