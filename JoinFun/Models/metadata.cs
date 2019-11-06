@@ -15,7 +15,6 @@ namespace JoinFun.Models
         public string Account { get; set; }
         [DisplayName("會員密碼")]
         [Required(ErrorMessage = "請輸入會員密碼")]
-        [StringLength(15, ErrorMessage = "最多輸入15字")]
         public string Password { get; set; }
         [DisplayName("會員編號")]
         [Required(ErrorMessage = "請輸入會員編號")]

@@ -9,7 +9,7 @@
 <h2 class="mt-5">註冊</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm( ) )
     {
         @Html.AntiForgeryToken()
 
@@ -21,7 +21,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id="acc" } })
+                <div>
+                </div> 
                 @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -31,7 +33,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Password" } })
+                <div>
+                </div>
                 @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,7 +53,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control"  } })
                 @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,7 +61,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",type="Email",id="email" } } )
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -167,7 +171,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="送出資料" class="btn btn-default" />
+                <input id="submit"type="submit" value="送出資料" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -193,7 +197,7 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 @section scripts{
     <script>
-        
+
         $('#memCounty').change(function () {
             $('#memDistrict').empty();
             $.ajax({
@@ -209,6 +213,67 @@
                 }
             });
         });
+
+       
+
+        //var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+        //var flag = false;
+
+        //$('#submit').submit(function () {
+
+        //    if ($('#email').val() == "") {
+        //        $('#email').addClass("is-invalid");
+        //        $('#email~div').addClass("invalid-feedback").text('Required!!');
+        //        return false;
+        //    }
+        //    if ($('#pwd').val() == "") {
+        //        $('#pwd').addClass("is-invalid");
+        //        $('#pwd~div').addClass("invalid-feedback").text('Required!!');
+        //        return false;
+        //    }
+
+
+        //    if (!flag)
+        //        return false;
+
+        //    return true;
+        //});
+
+        //$('#email').keyup(function () {
+        //    if (!rex.test($('#email').val())) {
+        //        $('#email').addClass("is-invalid");
+        //        $('#email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
+        //        flag = false;
+        //    }
+        //    else {
+        //        $('#email').removeClass('is-invalid').addClass("is-valid");
+        //        $('#email~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+        //        flag = true;
+        //    }
+
+        //});
+
+
+        //$('#pwd').keyup(function () {
+        //    if ($('#pwd').val().length < 8) {
+        //        $('#pwd').addClass("is-invalid");
+        //        $('#pwd~div').addClass("invalid-feedback").text('至少8個字元!!');
+        //        flag = false;
+        //    }
+        //    else {
+        //        $('#pwd').removeClass('is-invalid').addClass("is-valid");
+        //        $('#pwd~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+        //        flag = true;
+        //    }
+        //});
+
+
+
+
+
     </script>
+
+
+
 
 }
