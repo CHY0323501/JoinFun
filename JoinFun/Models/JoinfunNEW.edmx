@@ -422,6 +422,52 @@
           <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_HostHistory' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_HostHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+          </Key>
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="actTime" Type="datetime" Nullable="false" />
+          <Property Name="actDeadline" Type="datetime" Nullable="false" />
+          <Property Name="actDescription" Type="nvarchar(max)" />
+          <Property Name="ageRestrict" Type="smallint" Nullable="false" />
+          <Property Name="gender" Type="smallint" Nullable="false" />
+          <Property Name="maxNumPeople" Type="smallint" Nullable="false" />
+          <Property Name="maxBudget" Type="smallint" Nullable="false" />
+          <Property Name="actCounty" Type="smallint" Nullable="false" />
+          <Property Name="actDistrict" Type="smallint" Nullable="false" />
+          <Property Name="actRoad" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="paymentTerm" Type="smallint" Nullable="false" />
+          <Property Name="acceptDrop" Type="bit" Nullable="false" />
+          <Property Name="clickTimes" Type="int" Nullable="false" />
+          <Property Name="keepAct" Type="bit" Nullable="false" />
+          <Property Name="hashTag" Type="nvarchar(max)" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Member_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="vw_Member_Remarks">
           <Key>
@@ -453,6 +499,54 @@
           <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_PartHistory' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_PartHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="actTime" Type="datetime" Nullable="false" />
+          <Property Name="actDeadline" Type="datetime" Nullable="false" />
+          <Property Name="actDescription" Type="nvarchar(max)" />
+          <Property Name="ageRestrict" Type="smallint" Nullable="false" />
+          <Property Name="gender" Type="smallint" Nullable="false" />
+          <Property Name="maxNumPeople" Type="smallint" Nullable="false" />
+          <Property Name="maxBudget" Type="smallint" Nullable="false" />
+          <Property Name="actCounty" Type="smallint" Nullable="false" />
+          <Property Name="actDistrict" Type="smallint" Nullable="false" />
+          <Property Name="actRoad" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="paymentTerm" Type="smallint" Nullable="false" />
+          <Property Name="acceptDrop" Type="bit" Nullable="false" />
+          <Property Name="clickTimes" Type="int" Nullable="false" />
+          <Property Name="keepAct" Type="bit" Nullable="false" />
+          <Property Name="hashTag" Type="nvarchar(max)" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Participant_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -1007,6 +1101,31 @@
     [vw_Host_Remarks].[hostId] AS [hostId]
     FROM [dbo].[vw_Host_Remarks] AS [vw_Host_Remarks]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_HostHistory" EntityType="Self.vw_HostHistory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_HostHistory].[actId] AS [actId], 
+    [vw_HostHistory].[actClassId] AS [actClassId], 
+    [vw_HostHistory].[hostId] AS [hostId], 
+    [vw_HostHistory].[actTopic] AS [actTopic], 
+    [vw_HostHistory].[actTime] AS [actTime], 
+    [vw_HostHistory].[actDeadline] AS [actDeadline], 
+    [vw_HostHistory].[actDescription] AS [actDescription], 
+    [vw_HostHistory].[ageRestrict] AS [ageRestrict], 
+    [vw_HostHistory].[gender] AS [gender], 
+    [vw_HostHistory].[maxNumPeople] AS [maxNumPeople], 
+    [vw_HostHistory].[maxBudget] AS [maxBudget], 
+    [vw_HostHistory].[actCounty] AS [actCounty], 
+    [vw_HostHistory].[actDistrict] AS [actDistrict], 
+    [vw_HostHistory].[actRoad] AS [actRoad], 
+    [vw_HostHistory].[paymentTerm] AS [paymentTerm], 
+    [vw_HostHistory].[acceptDrop] AS [acceptDrop], 
+    [vw_HostHistory].[clickTimes] AS [clickTimes], 
+    [vw_HostHistory].[keepAct] AS [keepAct], 
+    [vw_HostHistory].[hashTag] AS [hashTag], 
+    [vw_HostHistory].[CountyName] AS [CountyName], 
+    [vw_HostHistory].[DistrictName] AS [DistrictName]
+    FROM [dbo].[vw_HostHistory] AS [vw_HostHistory]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Member_Remarks" EntityType="Self.vw_Member_Remarks" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Member_Remarks].[remarkSerial] AS [remarkSerial], 
@@ -1024,6 +1143,32 @@
     [vw_Member_Remarks].[DistrictName] AS [DistrictName], 
     [vw_Member_Remarks].[hostId] AS [hostId]
     FROM [dbo].[vw_Member_Remarks] AS [vw_Member_Remarks]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_PartHistory" EntityType="Self.vw_PartHistory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_PartHistory].[actId] AS [actId], 
+    [vw_PartHistory].[actClassId] AS [actClassId], 
+    [vw_PartHistory].[hostId] AS [hostId], 
+    [vw_PartHistory].[actTopic] AS [actTopic], 
+    [vw_PartHistory].[actTime] AS [actTime], 
+    [vw_PartHistory].[actDeadline] AS [actDeadline], 
+    [vw_PartHistory].[actDescription] AS [actDescription], 
+    [vw_PartHistory].[ageRestrict] AS [ageRestrict], 
+    [vw_PartHistory].[gender] AS [gender], 
+    [vw_PartHistory].[maxNumPeople] AS [maxNumPeople], 
+    [vw_PartHistory].[maxBudget] AS [maxBudget], 
+    [vw_PartHistory].[actCounty] AS [actCounty], 
+    [vw_PartHistory].[actDistrict] AS [actDistrict], 
+    [vw_PartHistory].[actRoad] AS [actRoad], 
+    [vw_PartHistory].[paymentTerm] AS [paymentTerm], 
+    [vw_PartHistory].[acceptDrop] AS [acceptDrop], 
+    [vw_PartHistory].[clickTimes] AS [clickTimes], 
+    [vw_PartHistory].[keepAct] AS [keepAct], 
+    [vw_PartHistory].[hashTag] AS [hashTag], 
+    [vw_PartHistory].[CountyName] AS [CountyName], 
+    [vw_PartHistory].[DistrictName] AS [DistrictName], 
+    [vw_PartHistory].[memId] AS [memId]
+    FROM [dbo].[vw_PartHistory] AS [vw_PartHistory]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Participant_Remarks" EntityType="Self.vw_Participant_Remarks" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2230,6 +2375,8 @@
           <EntitySet Name="vw_Host_Remarks" EntityType="JoinFunModel.vw_Host_Remarks" />
           <EntitySet Name="vw_Member_Remarks" EntityType="JoinFunModel.vw_Member_Remarks" />
           <EntitySet Name="vw_Participant_Remarks" EntityType="JoinFunModel.vw_Participant_Remarks" />
+          <EntitySet Name="vw_HostHistory" EntityType="JoinFunModel.vw_HostHistory" />
+          <EntitySet Name="vw_PartHistory" EntityType="JoinFunModel.vw_PartHistory" />
         </EntityContainer>
         <EntityType Name="vw_Host_Remarks">
           <Key>
@@ -2323,6 +2470,96 @@
           <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_HostHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+          </Key>
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="gender" Type="Int16" Nullable="false" />
+          <Property Name="maxNumPeople" Type="Int16" Nullable="false" />
+          <Property Name="maxBudget" Type="Int16" Nullable="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="paymentTerm" Type="Int16" Nullable="false" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_PartHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="gender" Type="Int16" Nullable="false" />
+          <Property Name="maxNumPeople" Type="Int16" Nullable="false" />
+          <Property Name="maxBudget" Type="Int16" Nullable="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="paymentTerm" Type="Int16" Nullable="false" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2759,6 +2996,61 @@
                 <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
                 <ScalarProperty Name="actId" ColumnName="actId" />
                 <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_HostHistory">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_HostHistory">
+              <MappingFragment StoreEntitySet="vw_HostHistory">
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="hashTag" ColumnName="hashTag" />
+                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="paymentTerm" ColumnName="paymentTerm" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="maxBudget" ColumnName="maxBudget" />
+                <ScalarProperty Name="maxNumPeople" ColumnName="maxNumPeople" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_PartHistory">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_PartHistory">
+              <MappingFragment StoreEntitySet="vw_PartHistory">
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="hashTag" ColumnName="hashTag" />
+                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="paymentTerm" ColumnName="paymentTerm" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="maxBudget" ColumnName="maxBudget" />
+                <ScalarProperty Name="maxNumPeople" ColumnName="maxNumPeople" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

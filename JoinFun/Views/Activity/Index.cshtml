@@ -6,16 +6,13 @@
     ViewBag.Title = "揪團活動列表";
 }
 
-<<<<<<< HEAD
-    <div class="container containerMinH">
+    @*<div class="container containerMinH">
         <h1 class="font-weight-bolder mt-4" >揪團活動列表</h1>
         <hr />
         <nav class="navbar navbar-expand-sm bg-light navbar-light mb-2">
-        @*<nav class="navbar navbar-expand-sm bg-warning  mb-2">*@
-            <ul class="nav navbar-nav">
+        <nav class="navbar navbar-expand-sm bg-warning  mb-2">
+            <ul class="nav navbar-nav">*@
 
-                @foreach (var item in Model.ClassList)
-=======
 <div class="container">
     <h5 class="display-4 font-weight-bolder mt-2" style="font-family:'Comic Sans MS'">揪團活動列表</h5>
     <hr />
@@ -25,7 +22,6 @@
             @foreach (var item in Model.ClassList)
             {
                 if (item.actClassId == "cls001")
->>>>>>> cc604d7358d36c33a0b98c2bb7360fcc3ed13d18
                 {
                     <li class="nav-item">
                         <a class="nav-link text-light" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
