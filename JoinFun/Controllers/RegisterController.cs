@@ -54,21 +54,38 @@ namespace JoinFun.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(Member mem, string account, string password)
         {
-            //string nick,string Email,int county,int district
-            //Member mem = new Member();
-            //, FormCollection form
+            
 
-
+            //密碼雜湊 salt+hash
             string salt = Guid.NewGuid().ToString();
+            byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(password + salt);
+            byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
+            string hashString = Convert.ToBase64String(hashBytes);
+            
 
-            string getmmId = db.Database.SqlQuery<string>("select [dbo].[GetMemId]()").FirstOrDefault();
+
+                string getmmId = db.Database.SqlQuery<string>("select [dbo].[GetMemId]()").FirstOrDefault();
                 Acc_Pass acc = new Acc_Pass();
                 acc.memId = getmmId;
                 acc.Account = account;
-                acc.Password = password;
+                acc.Password = hashString;
                 mem.memCounty = Int16.Parse(Request["memCounty"]);
                 mem.memDistrict = Int16.Parse(Request["memDistrict"]);
+
+            //型別vu/6w94轉換(string->char(1))
+            string gender = Request["Sex"];
+            if (gender == "男")
+                gender = "M";
+            else
+                gender = "F";
+
+            //mem.Birthday = DateTime.Parse(Request["Birthday"]).ToString();           
+            //mem.Birthday = Convert.ToString(mem.Birthday.ToDateTime("yyyy/MM/dd"));
+
+                mem.Sex = gender;
+                mem.timeReg = DateTime.Now;
                 mem.memId = getmmId;
+                acc.Salt = salt;
                 db.Acc_Pass.Add(acc);
                 db.Member.Add(mem);
                 db.SaveChanges();
