@@ -6,42 +6,31 @@
 
 <h2 class="mt-5">Login</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-   
-
-       
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+<form class="form-horizontal" method="post" action="@Url.Action("Login")">
+    <div class="form-group">
+        <label  class="col-md-3">帳號:</label>
+        <div>
+            <input id="account" name="account" type="text" class="form-control" />
         </div>
     </div>
-}
+    <div class="form-group">
+        <label  class="col-md-3">密碼:</label>
+        <div>
+            <input id="pass" name="pass" type="password" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-9 col-md-offset-3">
+            <input id="Submit1" type="submit" value="Login" class="btn btn-primary" />
+            <input id="Reset1" type="reset" value="reset" class="btn btn-default" />
+        </div>
 
-<div>
-    @Html.ActionLink("Back to Home", "Index")
-</div>
+    </div>
+
+</form>
+<h3 class="text-danger">@ViewBag.LoginErr</h3>
+
+@*<div>
+        @Html.ActionLink("Back to Home", "Index")
+    </div>*@
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>

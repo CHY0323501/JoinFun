@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoinFun.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -11,6 +12,7 @@ namespace JoinFun.Controllers
     public class LoginController : Controller
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
+        JoinFunEntities db = new JoinFunEntities();
         // GET: Login
         //假想首頁
         public ActionResult Home()
@@ -24,39 +26,47 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string acc, string pwd)
+        public ActionResult Login(string account, string pass)
         {
-
-            string sql = "select * from tStudent where Account=@Account and Password=@Password";
+            //使用Linq查詢取得帳號(加密用)
+            var getAcc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
+            if (getAcc == null)
+            {
+                ViewBag.LoginERR = "您輸入的帳號或密碼錯誤";
+                return View();
+            }
+            //查詢管理員帳號及密碼
+            string sql = "select * from Acc_Pass where Account=@acc and Password=@pass";
             SqlCommand cmd = new SqlCommand(sql, Conn);
-            cmd.Parameters.AddWithValue("@Account", acc);
-            cmd.Parameters.AddWithValue("@Password", pwd);
-            SqlDataReader rd;
+            //取得salt字串
+            string salt = getAcc.Salt;
+            //產生雜湊
+            byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(pass + salt);
+            byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
+            string HashString = Convert.ToBase64String(HashBytes);
+            cmd.Parameters.AddWithValue("@acc", account);
+            cmd.Parameters.AddWithValue("@pass", HashString);
+            SqlDataReader reader;
+      
 
             Conn.Open();
-            rd = cmd.ExecuteReader();
+            reader = cmd.ExecuteReader();
 
-
-            if (rd.Read())
+            
+            if (reader.Read())
             {
-                Session["acc"] = rd["Account"].ToString();
-
-
+                
+                Session["account"] = reader["Account"].ToString();
+               
+                
                 Conn.Close();
+                
                 return RedirectToAction("Home");
             }
-
-
             Conn.Close();
-            ViewBag.LoginErr = "帳號或密碼有誤!!";
+            ViewBag.LoginERR = "您輸入的帳號或密碼錯誤";
             return View();
-
         }
 
-        public ActionResult Logout()
-        {
-            Session.Clear();
-            return RedirectToAction("Index", "Home");
-        }
     }
 }

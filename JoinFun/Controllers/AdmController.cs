@@ -61,9 +61,6 @@ namespace JoinFun.Controllers
             ViewBag.admLoginERR = "您輸入的帳號或密碼錯誤";
             return View();
         }
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }
