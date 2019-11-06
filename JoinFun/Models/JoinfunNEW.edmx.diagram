@@ -76,6 +76,8 @@
         <EntityTypeShape EntityType="JoinFunModel.vw_Host_Remarks" Width="1.5" PointX="5.75" PointY="3.75" />
         <EntityTypeShape EntityType="JoinFunModel.vw_Member_Remarks" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="JoinFunModel.vw_Participant_Remarks" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_HostHistory" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_PartHistory" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

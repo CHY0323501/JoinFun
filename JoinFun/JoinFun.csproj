@@ -690,10 +690,16 @@
     <Compile Include="Models\vw_FriendShip.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_HostHistory.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Host_Remarks.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Member_Remarks.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_PartHistory.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_Participant_Remarks.cs">
@@ -701,6 +707,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
+    <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
   </ItemGroup>

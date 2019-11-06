@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -117,6 +118,11 @@ namespace JoinFun.Controllers
 
                 return View(MRemark);
             }
+        }
+        public ActionResult History(string memID) {
+            
+
+            return View();
         }
     }
 }
