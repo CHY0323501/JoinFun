@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acc_Pass">
           <Key>
             <PropertyRef Name="Account" />
@@ -389,6 +389,85 @@
           <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Host_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_Host_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="hostId" />
+          </Key>
+          <Property Name="remarkSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FromMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ToMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="keepRemark" Type="bit" Nullable="false" />
+          <Property Name="remarkStar" Type="smallint" Nullable="false" />
+          <Property Name="remarkContent" Type="nvarchar(max)" />
+          <Property Name="remarkTime" Type="datetime" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_HostHistory' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_HostHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+          </Key>
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="actTime" Type="datetime" Nullable="false" />
+          <Property Name="actDeadline" Type="datetime" Nullable="false" />
+          <Property Name="actDescription" Type="nvarchar(max)" />
+          <Property Name="ageRestrict" Type="smallint" Nullable="false" />
+          <Property Name="gender" Type="smallint" Nullable="false" />
+          <Property Name="maxNumPeople" Type="smallint" Nullable="false" />
+          <Property Name="maxBudget" Type="smallint" Nullable="false" />
+          <Property Name="actCounty" Type="smallint" Nullable="false" />
+          <Property Name="actDistrict" Type="smallint" Nullable="false" />
+          <Property Name="actRoad" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="paymentTerm" Type="smallint" Nullable="false" />
+          <Property Name="acceptDrop" Type="bit" Nullable="false" />
+          <Property Name="clickTimes" Type="int" Nullable="false" />
+          <Property Name="keepAct" Type="bit" Nullable="false" />
+          <Property Name="hashTag" Type="nvarchar(max)" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Member_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="vw_Member_Remarks">
           <Key>
@@ -404,6 +483,7 @@
             <PropertyRef Name="actTopic" />
             <PropertyRef Name="CountyName" />
             <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="hostId" />
           </Key>
           <Property Name="remarkSerial" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
@@ -418,6 +498,88 @@
           <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_PartHistory' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_PartHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="actTime" Type="datetime" Nullable="false" />
+          <Property Name="actDeadline" Type="datetime" Nullable="false" />
+          <Property Name="actDescription" Type="nvarchar(max)" />
+          <Property Name="ageRestrict" Type="smallint" Nullable="false" />
+          <Property Name="gender" Type="smallint" Nullable="false" />
+          <Property Name="maxNumPeople" Type="smallint" Nullable="false" />
+          <Property Name="maxBudget" Type="smallint" Nullable="false" />
+          <Property Name="actCounty" Type="smallint" Nullable="false" />
+          <Property Name="actDistrict" Type="smallint" Nullable="false" />
+          <Property Name="actRoad" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="paymentTerm" Type="smallint" Nullable="false" />
+          <Property Name="acceptDrop" Type="bit" Nullable="false" />
+          <Property Name="clickTimes" Type="int" Nullable="false" />
+          <Property Name="keepAct" Type="bit" Nullable="false" />
+          <Property Name="hashTag" Type="nvarchar(max)" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Participant_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_Participant_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="hostId" />
+          </Key>
+          <Property Name="remarkSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="FromMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ToMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="keepRemark" Type="bit" Nullable="false" />
+          <Property Name="remarkStar" Type="smallint" Nullable="false" />
+          <Property Name="remarkContent" Type="nvarchar(max)" />
+          <Property Name="remarkTime" Type="datetime" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
         </EntityType>
         <Association Name="FK__Acc_Pass__memId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
@@ -921,6 +1083,49 @@
     [vw_FriendShip].[Sex] AS [Sex]
     FROM [dbo].[vw_FriendShip] AS [vw_FriendShip]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_Host_Remarks" EntityType="Self.vw_Host_Remarks" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Host_Remarks].[remarkSerial] AS [remarkSerial], 
+    [vw_Host_Remarks].[actId] AS [actId], 
+    [vw_Host_Remarks].[FromMemId] AS [FromMemId], 
+    [vw_Host_Remarks].[ToMemId] AS [ToMemId], 
+    [vw_Host_Remarks].[keepRemark] AS [keepRemark], 
+    [vw_Host_Remarks].[remarkStar] AS [remarkStar], 
+    [vw_Host_Remarks].[remarkContent] AS [remarkContent], 
+    [vw_Host_Remarks].[remarkTime] AS [remarkTime], 
+    [vw_Host_Remarks].[memNick] AS [memNick], 
+    [vw_Host_Remarks].[Sex] AS [Sex], 
+    [vw_Host_Remarks].[actTopic] AS [actTopic], 
+    [vw_Host_Remarks].[CountyName] AS [CountyName], 
+    [vw_Host_Remarks].[DistrictName] AS [DistrictName], 
+    [vw_Host_Remarks].[hostId] AS [hostId]
+    FROM [dbo].[vw_Host_Remarks] AS [vw_Host_Remarks]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_HostHistory" EntityType="Self.vw_HostHistory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_HostHistory].[actId] AS [actId], 
+    [vw_HostHistory].[actClassId] AS [actClassId], 
+    [vw_HostHistory].[hostId] AS [hostId], 
+    [vw_HostHistory].[actTopic] AS [actTopic], 
+    [vw_HostHistory].[actTime] AS [actTime], 
+    [vw_HostHistory].[actDeadline] AS [actDeadline], 
+    [vw_HostHistory].[actDescription] AS [actDescription], 
+    [vw_HostHistory].[ageRestrict] AS [ageRestrict], 
+    [vw_HostHistory].[gender] AS [gender], 
+    [vw_HostHistory].[maxNumPeople] AS [maxNumPeople], 
+    [vw_HostHistory].[maxBudget] AS [maxBudget], 
+    [vw_HostHistory].[actCounty] AS [actCounty], 
+    [vw_HostHistory].[actDistrict] AS [actDistrict], 
+    [vw_HostHistory].[actRoad] AS [actRoad], 
+    [vw_HostHistory].[paymentTerm] AS [paymentTerm], 
+    [vw_HostHistory].[acceptDrop] AS [acceptDrop], 
+    [vw_HostHistory].[clickTimes] AS [clickTimes], 
+    [vw_HostHistory].[keepAct] AS [keepAct], 
+    [vw_HostHistory].[hashTag] AS [hashTag], 
+    [vw_HostHistory].[CountyName] AS [CountyName], 
+    [vw_HostHistory].[DistrictName] AS [DistrictName]
+    FROM [dbo].[vw_HostHistory] AS [vw_HostHistory]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Member_Remarks" EntityType="Self.vw_Member_Remarks" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Member_Remarks].[remarkSerial] AS [remarkSerial], 
@@ -935,8 +1140,53 @@
     [vw_Member_Remarks].[Sex] AS [Sex], 
     [vw_Member_Remarks].[actTopic] AS [actTopic], 
     [vw_Member_Remarks].[CountyName] AS [CountyName], 
-    [vw_Member_Remarks].[DistrictName] AS [DistrictName]
+    [vw_Member_Remarks].[DistrictName] AS [DistrictName], 
+    [vw_Member_Remarks].[hostId] AS [hostId]
     FROM [dbo].[vw_Member_Remarks] AS [vw_Member_Remarks]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_PartHistory" EntityType="Self.vw_PartHistory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_PartHistory].[actId] AS [actId], 
+    [vw_PartHistory].[actClassId] AS [actClassId], 
+    [vw_PartHistory].[hostId] AS [hostId], 
+    [vw_PartHistory].[actTopic] AS [actTopic], 
+    [vw_PartHistory].[actTime] AS [actTime], 
+    [vw_PartHistory].[actDeadline] AS [actDeadline], 
+    [vw_PartHistory].[actDescription] AS [actDescription], 
+    [vw_PartHistory].[ageRestrict] AS [ageRestrict], 
+    [vw_PartHistory].[gender] AS [gender], 
+    [vw_PartHistory].[maxNumPeople] AS [maxNumPeople], 
+    [vw_PartHistory].[maxBudget] AS [maxBudget], 
+    [vw_PartHistory].[actCounty] AS [actCounty], 
+    [vw_PartHistory].[actDistrict] AS [actDistrict], 
+    [vw_PartHistory].[actRoad] AS [actRoad], 
+    [vw_PartHistory].[paymentTerm] AS [paymentTerm], 
+    [vw_PartHistory].[acceptDrop] AS [acceptDrop], 
+    [vw_PartHistory].[clickTimes] AS [clickTimes], 
+    [vw_PartHistory].[keepAct] AS [keepAct], 
+    [vw_PartHistory].[hashTag] AS [hashTag], 
+    [vw_PartHistory].[CountyName] AS [CountyName], 
+    [vw_PartHistory].[DistrictName] AS [DistrictName], 
+    [vw_PartHistory].[memId] AS [memId]
+    FROM [dbo].[vw_PartHistory] AS [vw_PartHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_Participant_Remarks" EntityType="Self.vw_Participant_Remarks" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Participant_Remarks].[remarkSerial] AS [remarkSerial], 
+    [vw_Participant_Remarks].[actId] AS [actId], 
+    [vw_Participant_Remarks].[FromMemId] AS [FromMemId], 
+    [vw_Participant_Remarks].[ToMemId] AS [ToMemId], 
+    [vw_Participant_Remarks].[keepRemark] AS [keepRemark], 
+    [vw_Participant_Remarks].[remarkStar] AS [remarkStar], 
+    [vw_Participant_Remarks].[remarkContent] AS [remarkContent], 
+    [vw_Participant_Remarks].[remarkTime] AS [remarkTime], 
+    [vw_Participant_Remarks].[memNick] AS [memNick], 
+    [vw_Participant_Remarks].[Sex] AS [Sex], 
+    [vw_Participant_Remarks].[actTopic] AS [actTopic], 
+    [vw_Participant_Remarks].[CountyName] AS [CountyName], 
+    [vw_Participant_Remarks].[DistrictName] AS [DistrictName], 
+    [vw_Participant_Remarks].[hostId] AS [hostId]
+    FROM [dbo].[vw_Participant_Remarks] AS [vw_Participant_Remarks]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Acc_Pass__memId__6EF57B66" Association="Self.FK__Acc_Pass__memId__6EF57B66">
             <End Role="Member" EntitySet="Member" />
@@ -1079,8 +1329,7 @@
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JoinFunModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1528,35 +1777,6 @@
           <Property Name="newNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_Member_Remarks">
-          <Key>
-            <PropertyRef Name="remarkSerial" />
-            <PropertyRef Name="actId" />
-            <PropertyRef Name="FromMemId" />
-            <PropertyRef Name="ToMemId" />
-            <PropertyRef Name="keepRemark" />
-            <PropertyRef Name="remarkStar" />
-            <PropertyRef Name="remarkTime" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="Sex" />
-            <PropertyRef Name="actTopic" />
-            <PropertyRef Name="CountyName" />
-            <PropertyRef Name="DistrictName" />
-          </Key>
-          <Property Name="remarkSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="FromMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ToMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
-          <Property Name="remarkStar" Type="Int16" Nullable="false" />
-          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="actTopic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CountyName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DistrictName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="FK__Acc_Pass__memId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
@@ -2012,7 +2232,6 @@
           <EntitySet Name="vw_FansNew" EntityType="Self.vw_FansNew" />
           <EntitySet Name="vw_FollowUp" EntityType="Self.vw_FollowUp" />
           <EntitySet Name="vw_FriendShip" EntityType="Self.vw_FriendShip" />
-          <EntitySet Name="vw_Member_Remarks" EntityType="Self.vw_Member_Remarks" />
           <AssociationSet Name="FK__Acc_Pass__memId__6EF57B66" Association="Self.FK__Acc_Pass__memId__6EF57B66">
             <End Role="Member" EntitySet="Member" />
             <End Role="Acc_Pass" EntitySet="Acc_Pass" />
@@ -2153,7 +2372,195 @@
             <End Role="Type_of_Violate" EntitySet="Type_of_Violate" />
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
+          <EntitySet Name="vw_Host_Remarks" EntityType="JoinFunModel.vw_Host_Remarks" />
+          <EntitySet Name="vw_Member_Remarks" EntityType="JoinFunModel.vw_Member_Remarks" />
+          <EntitySet Name="vw_Participant_Remarks" EntityType="JoinFunModel.vw_Participant_Remarks" />
+          <EntitySet Name="vw_HostHistory" EntityType="JoinFunModel.vw_HostHistory" />
+          <EntitySet Name="vw_PartHistory" EntityType="JoinFunModel.vw_PartHistory" />
         </EntityContainer>
+        <EntityType Name="vw_Host_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="hostId" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_Member_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="hostId" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_Participant_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="hostId" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vw_HostHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+          </Key>
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="gender" Type="Int16" Nullable="false" />
+          <Property Name="maxNumPeople" Type="Int16" Nullable="false" />
+          <Property Name="maxBudget" Type="Int16" Nullable="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="paymentTerm" Type="Int16" Nullable="false" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_PartHistory">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="ageRestrict" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="maxNumPeople" />
+            <PropertyRef Name="maxBudget" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="paymentTerm" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="keepAct" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="memId" />
+          </Key>
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ageRestrict" Type="Int16" Nullable="false" />
+          <Property Name="gender" Type="Int16" Nullable="false" />
+          <Property Name="maxNumPeople" Type="Int16" Nullable="false" />
+          <Property Name="maxBudget" Type="Int16" Nullable="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="paymentTerm" Type="Int16" Nullable="false" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="keepAct" Type="Boolean" Nullable="false" />
+          <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2532,22 +2939,118 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_Host_Remarks">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_Host_Remarks">
+              <MappingFragment StoreEntitySet="vw_Host_Remarks">
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
+                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
+                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
+                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_Member_Remarks">
             <EntityTypeMapping TypeName="JoinFunModel.vw_Member_Remarks">
               <MappingFragment StoreEntitySet="vw_Member_Remarks">
-                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
-                <ScalarProperty Name="actId" ColumnName="actId" />
-                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
-                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
-                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
-                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
-                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
-                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
-                <ScalarProperty Name="memNick" ColumnName="memNick" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
-                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
+                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
+                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
+                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Participant_Remarks">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_Participant_Remarks">
+              <MappingFragment StoreEntitySet="vw_Participant_Remarks">
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
+                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
+                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
+                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_HostHistory">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_HostHistory">
+              <MappingFragment StoreEntitySet="vw_HostHistory">
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="hashTag" ColumnName="hashTag" />
+                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="paymentTerm" ColumnName="paymentTerm" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="maxBudget" ColumnName="maxBudget" />
+                <ScalarProperty Name="maxNumPeople" ColumnName="maxNumPeople" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_PartHistory">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_PartHistory">
+              <MappingFragment StoreEntitySet="vw_PartHistory">
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="hashTag" ColumnName="hashTag" />
+                <ScalarProperty Name="keepAct" ColumnName="keepAct" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="paymentTerm" ColumnName="paymentTerm" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="maxBudget" ColumnName="maxBudget" />
+                <ScalarProperty Name="maxNumPeople" ColumnName="maxNumPeople" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="ageRestrict" ColumnName="ageRestrict" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

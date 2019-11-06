@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -96,13 +97,40 @@ namespace JoinFun.Controllers
             return RedirectToAction("Info", new { memID= Session["memid"] });
         }
         public ActionResult Remarks(string memID) {
-            var Mem_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList();
-            //查詢評價對象暱稱
+            var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
+            if (memID == null || member == null)
+            {
+                return RedirectToAction("Index", "Activity");
+            }
+            else {
+                MemRemarkViewModel MRemark = new MemRemarkViewModel()
+                {
+                    //判斷是否為主辦人評價
+                    vw_Host_Remarks = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).ToList(),
+                    //判斷是否為參與者評價
+                    vw_Participant_Remarks = db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).ToList()
+                };
+
+                //查詢評價對象暱稱
+                ViewBag.ToMemNick = (from m in db.Member
+                                     where m.memId == memID
+                                     select m.memNick).FirstOrDefault();
+
+                return View(MRemark);
+            }
+        }
+        public ActionResult History(string memID) {
+            HistoryViewModel History = new HistoryViewModel()
+            {
+                vw_HostHistory=db.vw_HostHistory.Where(m=>m.hostId== memID).ToList(),
+                vw_PartHistory = db.vw_PartHistory.Where(m=>m.memId== memID).ToList(),
+                Photos_of_Activities = db.Photos_of_Activities.ToList(),
+                Activity_Class = db.Activity_Class.ToList()
+            };
             ViewBag.ToMemNick = (from m in db.Member
-                                where m.memId == memID
-                                select m.memNick).FirstOrDefault();
-                
-            return View(Mem_Remarks);
+                                 where m.memId == memID
+                                 select m.memNick).FirstOrDefault();
+            return View(History);
         }
     }
 }

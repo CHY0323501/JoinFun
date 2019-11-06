@@ -38,7 +38,6 @@
         <EntityTypeShape EntityType="JoinFunModel.vw_FansNew" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.vw_FollowUp" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.vw_FriendShip" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="JoinFunModel.vw_Member_Remarks" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="JoinFunModel.FK__Acc_Pass__memId__6EF57B66" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Join_Fun___actCl__7C4F7684" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Activity___actId__76969D2E" ManuallyRouted="false" />
@@ -74,6 +73,11 @@
         <AssociationConnector Association="JoinFunModel.FK__Violation__FromM__6A30C649" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Violation__punis__01142BA1" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Violation__typeI__00200768" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Host_Remarks" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Member_Remarks" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Participant_Remarks" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_HostHistory" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_PartHistory" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
