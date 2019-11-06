@@ -15,7 +15,6 @@ namespace JoinFun.Models
         public string Account { get; set; }
         [DisplayName("會員密碼")]
         [Required(ErrorMessage = "請輸入會員密碼")]
-        [StringLength(15, ErrorMessage = "最多輸入15字")]
         public string Password { get; set; }
         [DisplayName("會員編號")]
         [Required(ErrorMessage = "請輸入會員編號")]
@@ -450,24 +449,7 @@ namespace JoinFun.Models
 
        }
 
-    //public class MetaHash_Tag
-    //{
-
-    //    [DisplayName("HashTag編號")]
-    //    public string hashSerial { get; set; }
-
-    //    [DisplayName("活動編號")]
-    //    public string actId { get; set; }
-
-    //    [DisplayName("HashTag內容")]
-    //    [StringLength(30, ErrorMessage = "最多輸入30個字")]
-    //    [Required(ErrorMessage = "必填")]
-    //    public string hashContent { get; set; }
-
-
-    //}
-
-   
+     
     public class MetaMember_Remarks
     {
         [DisplayName("評價編號")]
