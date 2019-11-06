@@ -744,6 +744,7 @@
     <Content Include="Views\Member\Remarks.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Member\History.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

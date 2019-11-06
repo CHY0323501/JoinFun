@@ -120,9 +120,17 @@ namespace JoinFun.Controllers
             }
         }
         public ActionResult History(string memID) {
-            
-
-            return View();
+            HistoryViewModel History = new HistoryViewModel()
+            {
+                vw_HostHistory=db.vw_HostHistory.Where(m=>m.hostId== memID).ToList(),
+                vw_PartHistory = db.vw_PartHistory.Where(m=>m.memId== memID).ToList(),
+                Photos_of_Activities = db.Photos_of_Activities.ToList(),
+                Activity_Class = db.Activity_Class.ToList()
+            };
+            ViewBag.ToMemNick = (from m in db.Member
+                                 where m.memId == memID
+                                 select m.memNick).FirstOrDefault();
+            return View(History);
         }
     }
 }

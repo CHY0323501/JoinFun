@@ -523,6 +523,7 @@
             <PropertyRef Name="keepAct" />
             <PropertyRef Name="CountyName" />
             <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="memId" />
           </Key>
           <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
@@ -545,6 +546,7 @@
           <Property Name="hashTag" Type="nvarchar(max)" />
           <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Participant_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -1164,7 +1166,8 @@
     [vw_PartHistory].[keepAct] AS [keepAct], 
     [vw_PartHistory].[hashTag] AS [hashTag], 
     [vw_PartHistory].[CountyName] AS [CountyName], 
-    [vw_PartHistory].[DistrictName] AS [DistrictName]
+    [vw_PartHistory].[DistrictName] AS [DistrictName], 
+    [vw_PartHistory].[memId] AS [memId]
     FROM [dbo].[vw_PartHistory] AS [vw_PartHistory]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Participant_Remarks" EntityType="Self.vw_Participant_Remarks" store:Type="Views" store:Schema="dbo">
@@ -2533,6 +2536,7 @@
             <PropertyRef Name="keepAct" />
             <PropertyRef Name="CountyName" />
             <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="memId" />
           </Key>
           <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
@@ -2555,6 +2559,7 @@
           <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3024,6 +3029,7 @@
           <EntitySetMapping Name="vw_PartHistory">
             <EntityTypeMapping TypeName="JoinFunModel.vw_PartHistory">
               <MappingFragment StoreEntitySet="vw_PartHistory">
+                <ScalarProperty Name="memId" ColumnName="memId" />
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
                 <ScalarProperty Name="CountyName" ColumnName="CountyName" />
                 <ScalarProperty Name="hashTag" ColumnName="hashTag" />

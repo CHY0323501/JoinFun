@@ -35,5 +35,6 @@ namespace JoinFun.Models
         public string hashTag { get; set; }
         public string CountyName { get; set; }
         public string DistrictName { get; set; }
+        public string memId { get; set; }
     }
 }

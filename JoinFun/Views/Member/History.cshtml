@@ -1,0 +1,183 @@
+﻿@model JoinFun.ViewModel.HistoryViewModel
+
+@section memberRemarks{
+    <link href="~/CSS/MemberRemarks.css" rel="stylesheet" />
+}
+@{
+    ViewBag.Title = "揪團歷史";
+}
+
+<style>
+    .p-adjust {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+
+    .w-35 {
+        width: 35%;
+    }
+
+    .border-right {
+        border-right: none !important;
+    }
+
+    @@media (min-width: 768px) {
+        .border-right {
+            border-right: 0.1px solid #ffe96f !important;
+        }
+    }
+
+    .b-top {
+        border-top: 1px solid #ffe96f !important;
+    }
+
+    @@media (min-width: 768px) {
+        .b-top {
+            border-top: none !important;
+        }
+    }
+
+    .Remarkcard {
+        box-shadow: 0 0 10px #ffe96f;
+    }
+
+    .b-bottomDash {
+        border-bottom-style: dashed !important;
+    }
+
+    .changeCursor {
+        cursor: pointer;
+    }
+</style>
+
+<div class="container containerMinH">
+    <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.ToMemNick)的揪團歷史</h2>
+    <div class="card text-center border-0 p-adjust">
+        <div class="card-header bg-transparent text-white ">
+            <div class="d-flex">
+                <ul class="nav nav-tabs card-header-tabs mx-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link active p-3 text-success" href="#tab1" data-toggle="tab"><strong>開團歷史</strong></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>參團歷史</strong></a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="tab-content">
+            <div class="card-body tab-pane show active fade " id="tab1">
+                @foreach (var i in Model.vw_HostHistory)
+                {
+                <a href="@Url.Action("Details", "Activity", new { actId = i.actId })" class="text-decoration-none" title="點擊連結至活動資訊">
+                    <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                        <div class="row mb-1 align-items-center ">
+                            <div class="col col-12 col-md-4 border-right changeCursor ">
+                                <div class="border-bottom mb-3 pb-2 pl-3">
+                                    <img src="~/Photos/Activities/
+                                             @if(Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault() == null)
+                                             {
+                                                 @Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault().actPics;
+                                             }else
+                                             {
+                                                 @Model.Activity_Class.Where(m => m.actClassId == i.actClassId).FirstOrDefault().Photos;
+                                             }
+                                      " class="img-fluid w-75 " />
+                                </div>
+                            </div>
+
+                            <div class="col col-12 col-md-8 b-top ">
+                                <div class="row text-center mt-3 ">
+                                    <div class="col-12 col-md-6 ">
+                                        <div class="row">
+                                            <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動編號</span></div>
+                                            <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actId</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 ">
+                                        <div class="row">
+                                            <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動主題</span></div>
+                                            <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actTopic</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center mt-md-3">
+                                    <div class="col-12 col-md-6 ">
+                                        <div class="row">
+                                            <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動時間</span></div>
+                                            <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.actTime.ToString().Substring(0, 10).Replace("/", "-")</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6  ">
+                                        <div class="row ">
+                                            <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動地點</span></div>
+                                            <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.CountyName @i.DistrictName</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                }
+            </div>
+            <div class="card-body tab-pane fade " id="tab2">
+                @foreach (var i in Model.vw_PartHistory)
+                {
+                    <a href="@Url.Action("Details", "Activity", new { actId = i.actId })" class="text-decoration-none" title="點擊連結至活動資訊">
+                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                            <div class="row mb-1 align-items-center ">
+                                <div class="col col-12 col-md-4 border-right changeCursor ">
+                                    <div class="border-bottom mb-3 pb-2 pl-3">
+                                        <img src="~/Photos/Activities/
+                                             @if(Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault() == null)
+                                             {
+                                                 @Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault().actPics;
+                                             }else
+                                             {
+                                                 @Model.Activity_Class.Where(m => m.actClassId == i.actClassId).FirstOrDefault().Photos;
+                                             }
+                                      " class="img-fluid w-75 " />
+                                    </div>
+                                </div>
+
+                                <div class="col col-12 col-md-8 b-top ">
+                                    <div class="row text-center mt-3 ">
+                                        <div class="col-12 col-md-6 ">
+                                            <div class="row">
+                                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動編號</span></div>
+                                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actId</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 ">
+                                            <div class="row">
+                                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動主題</span></div>
+                                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actTopic</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center mt-md-3">
+                                        <div class="col-12 col-md-6 ">
+                                            <div class="row">
+                                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動時間</span></div>
+                                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.actTime.ToString().Substring(0, 10).Replace("/", "-")</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6  ">
+                                            <div class="row ">
+                                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動地點</span></div>
+                                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.CountyName @i.DistrictName</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
