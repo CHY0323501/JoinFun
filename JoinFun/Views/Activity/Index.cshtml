@@ -12,11 +12,19 @@
         <nav class="navbar navbar-expand-sm bg-light navbar-light mb-2">
         <nav class="navbar navbar-expand-sm bg-warning  mb-2">
             <ul class="nav navbar-nav">*@
+<style>
+.banner {
+            /*background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);*/
+            color:aliceblue;
+            background-color:Moccasin;
+        }
+</style>
 
 <div class="container">
+    <br>
     <h5 class="display-4 font-weight-bolder mt-2" style="font-family:'Comic Sans MS'">揪團活動列表</h5>
     <hr />
-    <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
+    <nav class="navbar navbar-expand-sm banner navbar-light mb-2">
         <ul class="nav navbar-nav">
 
             @foreach (var item in Model.ClassList)
@@ -24,13 +32,13 @@
                 if (item.actClassId == "cls001")
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
+                        <a class="nav-link text-danger" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
                     </li>
                 }
                 else
                 {
                     <li class="nav-item ml-5">
-                        <a class="nav-link text-light" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
+                        <a class="nav-link text-danger" href="@Url.Action("Index", new { actClassId = item.actClassId })">@item.actClassName</a>
                     </li>
                 }
 
@@ -40,7 +48,7 @@
         <ul class="navbar-nav ml-auto">
             @*@if (Session["memId"] != null)
                 {*@
-            @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("新增活動", "Create", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-warning" })
             @*}*@
         </ul>
 
