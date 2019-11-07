@@ -77,13 +77,13 @@
                             {
                                 <div class="row">
                                     <div class="col-md">
-                                        @Html.ActionLink("追蹤他", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                        <button id="FollowBtn" class="btn btn-outline-info mb-1" style = "width:inherit">追蹤他</button>
                                     </div>
                                     <div class="col-md">
-                                        @Html.ActionLink("加好友", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                        <button id="FriendBtn" class="btn btn-outline-info mb-1" style="width:inherit">加好友</button>
                                     </div>
                                     <div class="col-md">
-                                        @Html.ActionLink("拉黑他", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit" })
+                                        <button id="BlockBtn" class="btn btn-outline-info mb-1" style="width:inherit">拉黑他</button>
                                     </div>
                                 </div>
                             }
@@ -330,6 +330,10 @@
     });
     //WebAPI
     //判斷是否為好友狀態
+    $.ready(function () {
+        $.ajax(function () {
 
+        })
+    })
 
 </script>
