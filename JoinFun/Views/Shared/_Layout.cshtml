@@ -19,6 +19,11 @@
     @RenderSection("memberinfo", required: false)
     @RenderSection("memberRemarks",required:false)
     <style>
+        .dropdown-item.active, .dropdown-item:active {
+
+  text-decoration: none;
+  background-color: #EEE8AA;
+}
         body {
             font-family: 微軟正黑體;
             margin-bottom:0;
@@ -31,6 +36,11 @@
 
         .nav-bg {
             background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        }
+
+        .foot-bg{
+            background-color:bisque;
+            color:brown;
         }
 
         .dropdown-menu li:hover .sub-menu {
@@ -103,7 +113,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
             border-radius: 8px;
         }
         /*/////*/
@@ -116,10 +126,10 @@
 
 </head>
 <body >
-    <div id="a" class="navbar navbar-expand-lg fixed-top navbar-light bg-dark justify-content-end nav-bg">
+    <div id="a" class="navbar navbar-expand-lg fixed-top navbar-light justify-content-end nav-bg">
 
         <div class="container ">
-                <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/w1.png" style="width:40px" />    JoinFun</a>
+                <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/img.png" style="width:115px" />    JoinFun</a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
@@ -165,8 +175,10 @@
     <div class="container body-content">
         @RenderBody()
     </div>
-    <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 bg-info mt-3 mb-0 ">
-        <p class="text-center  text-white">&copy; @DateTime.Now.Year - JF Ltd.</p>
+    <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 mt-3 mb-0 foot-bg">
+        <p class="text-center">
+            <img src="~/Photos/title2.png" style="width:260px" />&copy; @DateTime.Now.Year - JF Ltd.
+        </p>
     </footer>
     @*<footer class="footer-content bg-dark mb-0">
         <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>

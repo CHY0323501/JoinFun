@@ -124,7 +124,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="CSS\ADM_login.css" />
     <Content Include="CSS\MemberInfo.css" />
-    <Content Include="CSS\MemberRemarks.css" />
+    <Content Include="CSS\Remarks.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
@@ -143,6 +143,15 @@
     <Content Include="Photos\Activities\P000000003A000000013.jpg" />
     <Content Include="Photos\Activities\P000000004A000000014.jpg" />
     <Content Include="Photos\Activities\枕頭山.jpg" />
+<<<<<<< HEAD
+=======
+    <Content Include="Photos\ClassIMG\休閒.jpg" />
+    <Content Include="Photos\ClassIMG\休閒.png" />
+    <Content Include="Photos\ClassIMG\商務.jpg" />
+    <Content Include="Photos\ClassIMG\商務.png" />
+    <Content Include="Photos\ClassIMG\活動.jpg" />
+    <Content Include="Photos\ClassIMG\活動.png" />
+>>>>>>> 3a93baf01d057a8f49b045cf79aeeea922d8f09c
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
     <Content Include="Photos\male.png" />
@@ -576,6 +585,7 @@
     <Compile Include="Controllers\getDistrictController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\MemberWebAPIController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

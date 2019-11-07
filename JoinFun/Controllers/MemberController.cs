@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -42,7 +43,8 @@ namespace JoinFun.Controllers
                     vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
                     vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList(),
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
-                    vw_Activities = db.vw_Activities.Where(m => m.hostId == memID).ToList()
+                    vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
+                    vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList()
                 };
                 return View(Minfo);
             }
@@ -120,17 +122,26 @@ namespace JoinFun.Controllers
             }
         }
         public ActionResult History(string memID) {
-            HistoryViewModel History = new HistoryViewModel()
+            var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
+            if (memID == null || member == null)
             {
-                vw_HostHistory=db.vw_HostHistory.Where(m=>m.hostId== memID).ToList(),
-                vw_PartHistory = db.vw_PartHistory.Where(m=>m.memId== memID).ToList(),
-                Photos_of_Activities = db.Photos_of_Activities.ToList(),
-                Activity_Class = db.Activity_Class.ToList()
-            };
-            ViewBag.ToMemNick = (from m in db.Member
-                                 where m.memId == memID
-                                 select m.memNick).FirstOrDefault();
-            return View(History);
+                return RedirectToAction("Index", "Activity");
+            }
+            else
+            {
+                HistoryViewModel History = new HistoryViewModel()
+                {
+                    vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
+                    vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList(),
+                    Photos_of_Activities = db.Photos_of_Activities.ToList(),
+                    Activity_Class= db.Activity_Class.ToList()
+                };
+
+                ViewBag.ToMemNick = (from m in db.Member
+                                     where m.memId == memID
+                                     select m.memNick).FirstOrDefault();
+                return View(History);
+            }
         }
     }
 }
