@@ -17,7 +17,5 @@ namespace JoinFun.ViewModel
         public List<vw_FansNew> vw_FansNew { get; set; }
         public List<vw_FollowUp> vw_FollowUp { get; set; }
         public List<vw_FriendShip> vw_FriendShip { get; set; }
-        public List<vw_HostHistory> vw_HostHistory { get; set; }
-        public List<vw_PartHistory> vw_PartHistory { get; set; }
     }
 }
