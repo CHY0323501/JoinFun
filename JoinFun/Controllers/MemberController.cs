@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -45,7 +44,6 @@ namespace JoinFun.Controllers
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
                     vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList()
-                    //
                 };
                 return View(Minfo);
             }
@@ -124,12 +122,12 @@ namespace JoinFun.Controllers
         }
         public ActionResult History(string memID) {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
-            if (memID == null || member == null)
-            {
-                return RedirectToAction("Index", "Activity");
-            }
-            else
-            {
+            //if (memID == null || member == null)
+            //{
+            //    return RedirectToAction("Index", "Activity");
+            //}
+            //else
+            //{
                 HistoryViewModel History = new HistoryViewModel()
                 {
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
@@ -142,7 +140,25 @@ namespace JoinFun.Controllers
                                      where m.memId == memID
                                      select m.memNick).FirstOrDefault();
                 return View(History);
+            //}
+        }
+
+
+        //取得活動照片用，若原活動無上傳照片時，抓取對應的類別圖片
+        public FileContentResult GetActPhoto(string actId, string actClassId)
+        {
+            string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
+            string AclassPhoto = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
+            if (photo != null)
+            {
+                //將圖片轉成byte[] 傳給View
+                string path = Server.MapPath(photo);
+                byte[] image = System.IO.File.ReadAllBytes(path);
+                return base.File(image, "image/jpeg");
             }
+            string CLASSpath = Server.MapPath(AclassPhoto);
+            byte[] CLASSimage = System.IO.File.ReadAllBytes(CLASSpath);
+            return base.File(CLASSimage, "image/jpeg");
         }
     }
 }

@@ -35,7 +35,7 @@ namespace JoinFun.Controllers
                 ViewBag.LoginERR = "您輸入的帳號或密碼錯誤";
                 return View();
             }
-            //查詢管理員帳號及密碼
+            //查詢會員帳號及密碼
             string sql = "select * from Acc_Pass where Account=@acc and Password=@pass";
             SqlCommand cmd = new SqlCommand(sql, Conn);
             //取得salt字串
