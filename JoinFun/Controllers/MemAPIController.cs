@@ -25,41 +25,50 @@ namespace JoinFun.Controllers
             return Ok(friendship);
         }
 
-        ////Post加入好友
-        ////需寫入Friendship、fans、followup三張資料表
-        //public IHttpActionResult Post(string memID)
-        //{
+        //Post加入好友
+        //需寫入Friendship
+        public IHttpActionResult Post(string FriendID, string memID)
+        {
+            //寫入Friendship資料表
+            Friendship friend1 = new Friendship();
+            friend1.memId = memID;
+            friend1.friendMemId = FriendID;
 
-        //    db.Add();
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateException)
-        //    {
-        //        if (db.學生.Count(m => m.學號 == stu.學號) > 0)
-        //            return Conflict();
-        //        else
-        //            throw;      //拋出例外
-        //    }
+            Friendship friend2 = new Friendship();
+            friend2.memId = FriendID;
+            friend2.friendMemId = memID;
 
-
-        //    return Ok();
-        //}
+            db.Friendship.Add(friend1);
+            db.Friendship.Add(friend2);
+            
+            db.SaveChanges();
+            return Ok();
+        }
 
 
-        //// DELETE刪除好友
-        /////需刪除Friendship、fans、followup三張資料表中的該會員資料
-        //public IHttpActionResult Delete(string id)
-        //{
-        //    var stu = db.學生.Find(id);
-        //    if (stu == null)
-        //        return NotFound();
+        // DELETE刪除好友
+        //需刪除Friendship、fans、followup三張資料表中的該會員資料
+        public IHttpActionResult Delete(string FriendID, string memID)
+        {
+            //刪除Friendship資料表中資料
+            var friend1 = db.Friendship.Where(m => m.memId == memID && m.friendMemId == FriendID).FirstOrDefault();
+            var friend2 = db.Friendship.Where(m => m.memId == FriendID && m.friendMemId == memID).FirstOrDefault();
 
-        //    db.學生.Remove(stu);
-        //    db.SaveChanges();
+            db.Friendship.Remove(friend1);
+            db.Friendship.Remove(friend2);
 
-        //    return Ok(stu);
-        //}
+            //刪除fans資料表中資料
+            var fan = db.Fans.Where(m => m.memId == FriendID && m.fanMemId == memID).FirstOrDefault();
+            db.Fans.Remove(fan);
+
+            //刪除followup資料表中資料
+            var followUp = db.FollowUp.Where(m => m.memId == FriendID && m.FoMemId == memID).FirstOrDefault();
+            db.FollowUp.Remove(followUp);
+
+
+            db.SaveChanges();
+
+            return Ok();
+        }
     }
 }

@@ -1,21 +1,30 @@
 ﻿@model JoinFun.ViewModel.MemberViewModel
 
 
+
 @section memberinfo{
 
     <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
 }
 
 <div class="container containerMinH">
+
+
     @foreach (var i in Model.Member)
     {
+        //給好友新增、刪除使用
+        <input id="FriendID" type="hidden" value="@i.memId" />
+
         <div class="row ">
             <div class="col-12 text-center ">
 
-                @if (Session["memid"].ToString() == i.memId)
+                @if (!Session["memid"].ToString().IsEmpty() )
                 {
                     <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">個人資訊</h3>
                     ViewBag.Title = "個人資訊";
+
+                    //給好友新增、刪除使用
+                    <input type="hidden" id="memID" value="@Session["memid"].ToString()"/>
                 }
                 else
                 {
@@ -69,18 +78,31 @@
                     </div>
                     <div class="col-md-8 text-center ml-md-3">
                         @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
-                        @{ if (Session["memid"].ToString() == i.memId)
+                        @{ if (Session["memid"].ToString() ==i.memId)
                             {
                                 @Html.ActionLink("編輯個人資訊", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info", style = "width:inherit" })
                             }
-                            else
+                            else if(!Session["memid"].ToString().IsEmpty())
                             {
                                 <div class="row">
                                     <div class="col-md">
-                                        <button id="FollowBtn" class="btn btn-outline-info mb-1" style = "width:inherit">追蹤他</button>
+                                        <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit">追蹤他</button>
                                     </div>
                                     <div class="col-md">
-                                        <button id="FriendBtn" class="btn btn-outline-info mb-1" style="width:inherit">加好友</button>
+                                        <button id="FriendBtn" class="btn btn-outline-info mb-1" style="width:inherit">
+                                            @if (Model.Friendship.ToList().FirstOrDefault() == null)
+                                            {
+                                                @:加好友
+                                            }
+                                            else if (Model.Friendship.ToList()[0].Approved == false)
+                                            {
+                                                @:好友審核中
+                                            }
+                                            else
+                                            {
+                                                @:刪除好友
+                                            }
+                                        </button>
                                     </div>
                                     <div class="col-md">
                                         <button id="BlockBtn" class="btn btn-outline-info mb-1" style="width:inherit">拉黑他</button>
@@ -108,18 +130,18 @@
                             <div>好友</div>
                         </div>
 
-                            <div id="remark" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow btn-hov">
-                                <a href="@Url.Action("Remarks","Member",new { memID=i.memId})" class="text-decoration-none ">
-                                    <div class="adj_fontsize font-weight-bold text-dark">@Model.vw_Member_Remarks.Count</div>
-                                    <div class="text-dark">會員評價</div>
-                                </a>
-                            </div>
-                            <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow   btn-hov">
-                                <a href="@Url.Action("History","Member",new { memID=i.memId})" class="text-decoration-none ">
-                                    <div class="adj_fontsize font-weight-bold text-dark">@(Model.vw_HostHistory.Count + Model.vw_PartHistory.Count)</div>
-                                    <div class="text-dark">揪團歷史</div>
-                                </a>
-                            </div>
+                        <div id="remark" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow btn-hov">
+                            <a href="@Url.Action("Remarks","Member",new { memID=i.memId})" class="text-decoration-none ">
+                                <div class="adj_fontsize font-weight-bold text-dark">@Model.vw_Member_Remarks.Count</div>
+                                <div class="text-dark">會員評價</div>
+                            </a>
+                        </div>
+                        <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow   btn-hov">
+                            <a href="@Url.Action("History","Member",new { memID=i.memId})" class="text-decoration-none ">
+                                <div class="adj_fontsize font-weight-bold text-dark">@(Model.vw_HostHistory.Count + Model.vw_PartHistory.Count)</div>
+                                <div class="text-dark">揪團歷史</div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -329,11 +351,39 @@
         $('#history div').removeClass('text-white').addClass('text-dark');
     });
     //WebAPI
-    //判斷是否為好友狀態
-    $.ready(function () {
-        $.ajax(function () {
+    //判斷好友狀態
+    function CheckFriendShip() {
+        $.ajax({
+            type: "Get",
+            url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val(),
+            success: function (d) {
+                if (d.length == 0) {
+                    $('#FriendBtn').text('加好友');
+                } else if (d[0].Approved == false) {
+                    $('#FriendBtn').text('好友審核中');
+                } else {
+                    $('#FriendBtn').text('刪除好友');
+                }
+                console.log(d)
+            }
+        });
+    }
+    $('#FriendBtn').click(function () {
+        if ($('#FriendBtn').text().includes('加好友')) {
+            $.ajax({
+                type: "Post",
+                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+            });
+            console.log("friendid:" + $('#FriendID').val() + " memid:" + $('#memID').val())
+        } else if ($('#FriendBtn').text().includes('好友審核中')) {
 
-        })
+        } else {
+            $.ajax({
+                type: "Delete",
+                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+            });
+        }
+        CheckFriendShip();
     })
 
 </script>
