@@ -42,7 +42,8 @@ namespace JoinFun.Controllers
                     vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
                     vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList(),
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
-                    vw_Activities = db.vw_Activities.Where(m => m.hostId == memID).ToList()
+                    vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
+                    vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList()
                 };
                 return View(Minfo);
             }
