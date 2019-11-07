@@ -116,7 +116,7 @@
                             </div>
                             <div id="history" class="col-md-2 col-sm-12 card rounded-pill  mb-md-2 ml-sm-2 bg-color animated bounceIn bshadow   btn-hov">
                                 <a href="@Url.Action("History","Member",new { memID=i.memId})" class="text-decoration-none ">
-                                    <div class="adj_fontsize font-weight-bold text-dark">@(Model.vw_PartHistory.Count + Model.vw_PartHistory.Count)</div>
+                                    <div class="adj_fontsize font-weight-bold text-dark">@(Model.vw_HostHistory.Count + Model.vw_PartHistory.Count)</div>
                                     <div class="text-dark">揪團歷史</div>
                                 </a>
                             </div>
@@ -305,6 +305,7 @@
         }
     </div>
 <script>
+    //觸發追蹤、粉絲、好友的彈出視窗
     $('#follow').click(function () {
         $('#Modal1').modal('toggle');
     });
@@ -314,6 +315,7 @@
     $('#friend').click(function () {
         $('#Modal3').modal('toggle');
     });
+    //新增會員評價、揪團歷史按鈕的hover效果
     $('#remark').mouseover(function () {
         $('#remark div').removeClass('text-dark').addClass('text-white');
     });
@@ -326,4 +328,8 @@
     $('#history').mouseout(function () {
         $('#history div').removeClass('text-white').addClass('text-dark');
     });
+    //WebAPI
+    //判斷是否為好友狀態
+
+
 </script>
