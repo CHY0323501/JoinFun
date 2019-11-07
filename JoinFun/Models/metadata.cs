@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -216,6 +217,8 @@ namespace JoinFun.Models
         public string Habit { get; set; }
         [DisplayName("飲食偏好")]
         public string Dietary_Preference { get; set; }
+        [JsonIgnore()]
+        public virtual ICollection<Friendship> Friendship { get; set; }
     }
 
     public class MetaPayment_Restriction
@@ -432,6 +435,8 @@ namespace JoinFun.Models
         public string friendNick { get; set; }
         [DisplayName("是否確認好友")]
         public bool Approved { get; set; }
+        [JsonIgnore()]
+        public virtual Member Member { get; set; }
 
     }
 

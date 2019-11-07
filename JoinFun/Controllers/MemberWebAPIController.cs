@@ -16,21 +16,19 @@ namespace JoinFun.Controllers
         //Get確認好友狀態
         public IHttpActionResult Get(string FriendID)
         {
-            var friendShip = (from i in db.Friendship
-                      where i.friendMemId == FriendID && i.memId == HttpContext.Current.Session["memid"].ToString()
-                      select i).FirstOrDefault();
+            //var friendShip = (from i in db.Friendship
+            //          where i.friendMemId == FriendID /*&& i.memId == HttpContext.Current.Session["memid"].ToString()*/
+            //          select i).FirstOrDefault();
 
+            var friendship = db.Friendship.Where(m => m.friendMemId == FriendID).ToList();
 
-            return Ok(friendShip); 
+            return Ok(friendship); 
         }
 
-        //Post加入好友
+        ////Post加入好友
+        ////需寫入Friendship、fans、followup三張資料表
         //public IHttpActionResult Post(string memID)
         //{
-        //    if (!ModelState.IsValid)
-        //    {         
-        //        return BadRequest(ModelState);
-        //    }
 
         //    db.Add();
         //    try
@@ -48,7 +46,10 @@ namespace JoinFun.Controllers
 
         //    return Ok();
         //}
+
+
         //// DELETE刪除好友
+        /////需刪除Friendship、fans、followup三張資料表中的該會員資料
         //public IHttpActionResult Delete(string id)
         //{
         //    var stu = db.學生.Find(id);
