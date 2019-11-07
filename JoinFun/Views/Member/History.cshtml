@@ -43,11 +43,11 @@
 
                                                 if (photo != null)
                                                 {
-                                                    <img src="~/Photos/Activities/@photo.actPics.Remove(0,20)" class="img-fluid w-75 " style="height:190px" />
+                                                    <img src="@Url.Content(photo.actPics)" class="img-fluid w-75 " style="height:190px" />
                                                 }
                                                 else
                                                 {
-                                                    <img src="~/Photos/ClassIMG/@Model.Activity_Class.Where(m=>m.actClassId==i.actClassId).FirstOrDefault().Photos.Remove(0,18)" class="img-fluid w-75 " style="height:190px" />
+                                                    <img src="@Url.Content(Model.Activity_Class.Where(m=>m.actClassId==i.actClassId).FirstOrDefault().Photos)" class="img-fluid w-75 " style="height:190px" />
                                                 }
                                             }
                                         </div>
