@@ -9,6 +9,7 @@
 
 namespace JoinFun.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -21,7 +22,6 @@ namespace JoinFun.Models
         public string friendMemId { get; set; }
         public string friendNick { get; set; }
         public bool Approved { get; set; }
-    
         public virtual Member Member { get; set; }
     }
 }
