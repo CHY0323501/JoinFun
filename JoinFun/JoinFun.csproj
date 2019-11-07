@@ -139,6 +139,10 @@
       <DependentUpon>JoinfunNEW.edmx</DependentUpon>
       <LastGenOutput>JoinfunNEW.cs</LastGenOutput>
     </Content>
+    <Content Include="Photos\Activities\P000000002A000000013.jpg" />
+    <Content Include="Photos\Activities\P000000003A000000013.jpg" />
+    <Content Include="Photos\Activities\P000000004A000000014.jpg" />
+    <Content Include="Photos\Activities\枕頭山.jpg" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
     <Content Include="Photos\male.png" />
