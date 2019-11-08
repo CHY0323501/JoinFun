@@ -97,6 +97,11 @@ namespace JoinFun.Controllers
             //編輯完畢時回到個人資訊頁
             return RedirectToAction("Info", new { memID= Session["memid"] });
         }
+
+       
+
+
+
         public ActionResult Remarks(string memID) {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null)
@@ -119,6 +124,29 @@ namespace JoinFun.Controllers
 
                 return View(MRemark);
             }
+        }
+        public ActionResult RemarkCreate()
+        {
+            
+            
+
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult RemarkCreate(string remarkContent ,short remarkStar,DateTime remarkTime)
+        {
+            Member_Remarks aaa = new Member_Remarks();
+
+            aaa.remarkContent = remarkContent;
+            aaa.remarkStar = remarkStar;
+            aaa.remarkTime = remarkTime;
+
+            db.Member_Remarks.Add(aaa);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
         //揪團歷史
         public ActionResult History(string memID) {
