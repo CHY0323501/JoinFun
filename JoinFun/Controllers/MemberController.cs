@@ -120,14 +120,15 @@ namespace JoinFun.Controllers
                 return View(MRemark);
             }
         }
+        //揪團歷史
         public ActionResult History(string memID) {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
-            //if (memID == null || member == null)
-            //{
-            //    return RedirectToAction("Index", "Activity");
-            //}
-            //else
-            //{
+            if (memID == null || member == null)
+            {
+                return RedirectToAction("Index", "Activity");
+            }
+            else
+            {
                 HistoryViewModel History = new HistoryViewModel()
                 {
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
@@ -140,7 +141,15 @@ namespace JoinFun.Controllers
                                      where m.memId == memID
                                      select m.memNick).FirstOrDefault();
                 return View(History);
-            //}
+            }
+        }
+
+        public ActionResult FriendManagement(string memID) {
+            var friend = (from f in db.Friendship
+                         join m in db.Member on f.friendMemId equals m.memId
+                         where f.memId == memID
+                         select new { f.memId, f.friendMemId, f.friendNick, m.memNick, f.Approved, m.Sex }).ToList();
+            return View(friend);
         }
 
 
