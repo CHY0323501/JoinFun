@@ -8,7 +8,7 @@
 
 <h2 class="mt-5">註冊</h2>
 
-<div class="container">
+<div class="container border">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -17,179 +17,158 @@
 
 
             <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "acc" } })
-                    <div>
+            <div class="row ">
+                <div class="col-md-6">
+                    <div class="form-group col-md-12">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-12 align-items-center">
+
+                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
+                        </div>
+                        <div class="col-12 align-items-center">
+                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "Account" } })
+                        </div>
+
+                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
+
                     </div>
-                    @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
-                </div>
-            </div>
+
+                    <div class="form-group col-md-12">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password",id="Password"} })
 
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Password" } })
-                    <div>
+                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @class = "text-danger" })
+
                     </div>
-                    @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            @*<hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.memId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.memId, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.memId, "", new { @class = "text-danger" })
+
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control" ,id="pwd"} })
+                        @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
+
                     </div>
-                </div>*@
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope "></span></span>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "Email", id = "Email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope "></span></span>
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "Email", id = "email" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.memCounty, "", new { @class = "text-danger" })
+                        <select id="memCounty" name="memCounty" class="form-control">
+                            @foreach (var i in co)
+                            {
+                                <option value="@i.CountyNo">@i.CountyName</option>
+                            }
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.memDistrict, "", new { @class = "text-danger" })
+                        <select id="memDistrict" name="memDistrict" class="form-control ">
+                            @foreach (var i in dis)
+                            {
+                                <option value="@i.DistrictSerial">@i.DistrictName</option>
+                            }
+                        </select>
+
+                    </div>
 
 
 
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.County, "縣/市", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("County", null, htmlAttributes: new { @id = "county", @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.County, "", new { @class = "text-danger" })
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                        <select id="Sex" name="Sex" class="form-control">
+                            <option selected>男</option>
+                            <option>女</option>
+                        </select>
+
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.District, "鄉/鎮/市/區", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("District", null, htmlAttributes: new { @id = "district", @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.District, "", new { @class = "text-danger" })
+
+                <div class="col-md-6">
+                    <div class="form-group col-md-12">
+                        <div class="row mt-5 ">
+                            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <textarea id="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                            @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="row mt-3">
+                                @Html.LabelFor(model => model.Habit,"興趣愛好", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                <textarea id="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                                @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
+                                @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <textarea id="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                                @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
+                                @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row align-items-end">
+                            <div class="form-group">
+                                <div class="col-12 align-self-end ">
+                                    <input id="submit" type="submit" value="送出資料" class="btn btn-success " />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>*@
-
-
-
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
-                    @Html.ValidationMessageFor(model => model.memCounty, "", new { @class = "text-danger" })
-
-                    <select id="memCounty" name="memCounty" class="form-control">
-                        @foreach (var i in co)
-                        {
-                            <option value="@i.CountyNo">@i.CountyName</option>
-
-                        }
-                    </select>
                 </div>
+
             </div>
 
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
-                    @Html.ValidationMessageFor(model => model.memDistrict, "", new { @class = "text-danger" })
-                    <select id="memDistrict" name="memDistrict" class="form-control ">
-                        @foreach (var i in dis)
-                        {
-                            <option value="@i.DistrictSerial">@i.DistrictName</option>
-
-                        }
-                    </select>
-                </div>
-            </div>
-
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
-                    <select id="Sex" name="Sex" class="form-control">
-                        <option selected>男</option>
-                        <option>女</option>
-                    </select>
-                </div>
-            </div>
-
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <textarea id="Introduction"style="resize:none" class="form-control "rows="5"> </textarea>
-                    @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger"})
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Habit, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <textarea id="Introduction" style="resize:none"class="form-control " rows="5"> </textarea>
-                    @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger"  })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <textarea id="Introduction" style="resize:none" class="form-control " rows="5"> </textarea>
-                    @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
-                    @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @class = "text-danger"})
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input id="submit" type="submit" value="送出資料" class="btn btn-default" />
-                </div>
-            </div>
         </div>
 
 
-        <div class="form-group">
+
+    }
+
+    @*<div class="form-group">
             <div class="btn btn-danger">
                 @Html.ActionLink("使用 Google 註冊", "Index")
             </div>
             <div class="btn btn-primary">
                 @Html.ActionLink("使用 Facebook 註冊", "Index")
             </div>
-        </div>
-    }
+        </div>*@
+
 </div>
 
 
@@ -221,56 +200,56 @@
 
 
 
-            //var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-            //var flag = false;
+                    //var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                    //var flag = false;
 
-            //$('#submit').submit(function () {
+                    //$('#submit').submit(function () {
 
-            //    if ($('#email').val() == "") {
-            //        $('#email').addClass("is-invalid");
-            //        $('#email~div').addClass("invalid-feedback").text('Required!!');
-            //        return false;
-            //    }
-            //    if ($('#pwd').val() == "") {
-            //        $('#pwd').addClass("is-invalid");
-            //        $('#pwd~div').addClass("invalid-feedback").text('Required!!');
-            //        return false;
-            //    }
-
-
-            //    if (!flag)
-            //        return false;
-
-            //    return true;
-            //});
-
-            //$('#email').keyup(function () {
-            //    if (!rex.test($('#email').val())) {
-            //        $('#email').addClass("is-invalid");
-            //        $('#email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
-            //        flag = false;
-            //    }
-            //    else {
-            //        $('#email').removeClass('is-invalid').addClass("is-valid");
-            //        $('#email~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
-            //        flag = true;
-            //    }
-
-            //});
+                    //    if ($('#email').val() == "") {
+                    //        $('#email').addClass("is-invalid");
+                    //        $('#email~div').addClass("invalid-feedback").text('Required!!');
+                    //        return false;
+                    //    }
+                    //    if ($('#pwd').val() == "") {
+                    //        $('#pwd').addClass("is-invalid");
+                    //        $('#pwd~div').addClass("invalid-feedback").text('Required!!');
+                    //        return false;
+                    //    }
 
 
-            //$('#pwd').keyup(function () {
-            //    if ($('#pwd').val().length < 8) {
-            //        $('#pwd').addClass("is-invalid");
-            //        $('#pwd~div').addClass("invalid-feedback").text('至少8個字元!!');
-            //        flag = false;
-            //    }
-            //    else {
-            //        $('#pwd').removeClass('is-invalid').addClass("is-valid");
-            //        $('#pwd~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
-            //        flag = true;
-            //    }
-            //});
+                    //    if (!flag)
+                    //        return false;
+
+                    //    return true;
+                    //});
+
+                    //$('#email').keyup(function () {
+                    //    if (!rex.test($('#email').val())) {
+                    //        $('#email').addClass("is-invalid");
+                    //        $('#email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
+                    //        flag = false;
+                    //    }
+                    //    else {
+                    //        $('#email').removeClass('is-invalid').addClass("is-valid");
+                    //        $('#email~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+                    //        flag = true;
+                    //    }
+
+                    //});
+
+
+                    //$('#pwd').keyup(function () {
+                    //    if ($('#pwd').val().length < 8) {
+                    //        $('#pwd').addClass("is-invalid");
+                    //        $('#pwd~div').addClass("invalid-feedback").text('至少8個字元!!');
+                    //        flag = false;
+                    //    }
+                    //    else {
+                    //        $('#pwd').removeClass('is-invalid').addClass("is-valid");
+                    //        $('#pwd~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+                    //        flag = true;
+                    //    }
+                    //});
 
 
 
