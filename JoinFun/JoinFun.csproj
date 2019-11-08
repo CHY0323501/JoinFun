@@ -757,6 +757,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Member\History.cshtml" />
     <Content Include="Views\Login\Home.cshtml" />
+    <Content Include="Views\Member\RemarkCreate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
