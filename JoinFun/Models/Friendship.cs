@@ -9,19 +9,19 @@
 
 namespace JoinFun.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(MetaFriendship))]
 
+    [MetadataType(typeof(MetaFriendship))]
     public partial class Friendship
     {
         public string memId { get; set; }
         public string friendMemId { get; set; }
         public string friendNick { get; set; }
         public bool Approved { get; set; }
+    
         public virtual Member Member { get; set; }
     }
 }
