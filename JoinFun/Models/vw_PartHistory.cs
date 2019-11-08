@@ -11,7 +11,9 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class vw_PartHistory
     {
         public string actId { get; set; }
@@ -36,5 +38,6 @@ namespace JoinFun.Models
         public string CountyName { get; set; }
         public string DistrictName { get; set; }
         public string memId { get; set; }
+        public string memNick { get; set; }
     }
 }

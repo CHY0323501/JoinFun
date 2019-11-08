@@ -40,5 +40,12 @@ namespace JoinFun.Models
         public string memNick { get; set; }
         public string payment { get; set; }
         public int PeoRestriction { get; set; }
+        public string hashTag { get; set; }
+        public short genderSerial { get; set; }
+        public short serial { get; set; }
+        public short BudgetNo { get; set; }
+        public short CountyNo { get; set; }
+        public short peoSerial { get; set; }
+        public short paymentSerial { get; set; }
     }
 }

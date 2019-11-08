@@ -320,6 +320,12 @@
             <PropertyRef Name="memNick" />
             <PropertyRef Name="payment" />
             <PropertyRef Name="PeoRestriction" />
+            <PropertyRef Name="genderSerial" />
+            <PropertyRef Name="serial" />
+            <PropertyRef Name="BudgetNo" />
+            <PropertyRef Name="CountyNo" />
+            <PropertyRef Name="peoSerial" />
+            <PropertyRef Name="paymentSerial" />
           </Key>
           <Property Name="age" Type="nvarchar" MaxLength="8" Nullable="false" />
           <Property Name="actClassName" Type="nvarchar" MaxLength="20" Nullable="false" />
@@ -344,6 +350,13 @@
           <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="payment" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PeoRestriction" Type="int" Nullable="false" />
+          <Property Name="hashTag" Type="nvarchar(max)" />
+          <Property Name="genderSerial" Type="smallint" Nullable="false" />
+          <Property Name="serial" Type="smallint" Nullable="false" />
+          <Property Name="BudgetNo" Type="smallint" Nullable="false" />
+          <Property Name="CountyNo" Type="smallint" Nullable="false" />
+          <Property Name="peoSerial" Type="smallint" Nullable="false" />
+          <Property Name="paymentSerial" Type="smallint" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_FansNew' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -524,6 +537,7 @@
             <PropertyRef Name="CountyName" />
             <PropertyRef Name="DistrictName" />
             <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
           </Key>
           <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
@@ -547,6 +561,7 @@
           <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Participant_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -1055,7 +1070,14 @@
     [vw_Activities].[keepAct] AS [keepAct], 
     [vw_Activities].[memNick] AS [memNick], 
     [vw_Activities].[payment] AS [payment], 
-    [vw_Activities].[PeoRestriction] AS [PeoRestriction]
+    [vw_Activities].[PeoRestriction] AS [PeoRestriction], 
+    [vw_Activities].[hashTag] AS [hashTag], 
+    [vw_Activities].[genderSerial] AS [genderSerial], 
+    [vw_Activities].[serial] AS [serial], 
+    [vw_Activities].[BudgetNo] AS [BudgetNo], 
+    [vw_Activities].[CountyNo] AS [CountyNo], 
+    [vw_Activities].[peoSerial] AS [peoSerial], 
+    [vw_Activities].[paymentSerial] AS [paymentSerial]
     FROM [dbo].[vw_Activities] AS [vw_Activities]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_FansNew" EntityType="Self.vw_FansNew" store:Type="Views" store:Schema="dbo">
@@ -1167,7 +1189,8 @@
     [vw_PartHistory].[hashTag] AS [hashTag], 
     [vw_PartHistory].[CountyName] AS [CountyName], 
     [vw_PartHistory].[DistrictName] AS [DistrictName], 
-    [vw_PartHistory].[memId] AS [memId]
+    [vw_PartHistory].[memId] AS [memId], 
+    [vw_PartHistory].[memNick] AS [memNick]
     FROM [dbo].[vw_PartHistory] AS [vw_PartHistory]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Participant_Remarks" EntityType="Self.vw_Participant_Remarks" store:Type="Views" store:Schema="dbo">
@@ -1716,6 +1739,12 @@
             <PropertyRef Name="memNick" />
             <PropertyRef Name="payment" />
             <PropertyRef Name="PeoRestriction" />
+            <PropertyRef Name="genderSerial" />
+            <PropertyRef Name="serial" />
+            <PropertyRef Name="BudgetNo" />
+            <PropertyRef Name="CountyNo" />
+            <PropertyRef Name="peoSerial" />
+            <PropertyRef Name="paymentSerial" />
           </Key>
           <Property Name="age" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="actClassName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1740,6 +1769,13 @@
           <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="payment" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
+          <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="genderSerial" Type="Int16" Nullable="false" />
+          <Property Name="serial" Type="Int16" Nullable="false" />
+          <Property Name="BudgetNo" Type="Int16" Nullable="false" />
+          <Property Name="CountyNo" Type="Int16" Nullable="false" />
+          <Property Name="peoSerial" Type="Int16" Nullable="false" />
+          <Property Name="paymentSerial" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="vw_FansNew">
           <Key>
@@ -2537,6 +2573,7 @@
             <PropertyRef Name="CountyName" />
             <PropertyRef Name="DistrictName" />
             <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
           </Key>
           <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
@@ -2560,6 +2597,7 @@
           <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2882,6 +2920,13 @@
           <EntitySetMapping Name="vw_Activities">
             <EntityTypeMapping TypeName="JoinFunModel.vw_Activities">
               <MappingFragment StoreEntitySet="vw_Activities">
+                <ScalarProperty Name="paymentSerial" ColumnName="paymentSerial" />
+                <ScalarProperty Name="peoSerial" ColumnName="peoSerial" />
+                <ScalarProperty Name="CountyNo" ColumnName="CountyNo" />
+                <ScalarProperty Name="BudgetNo" ColumnName="BudgetNo" />
+                <ScalarProperty Name="serial" ColumnName="serial" />
+                <ScalarProperty Name="genderSerial" ColumnName="genderSerial" />
+                <ScalarProperty Name="hashTag" ColumnName="hashTag" />
                 <ScalarProperty Name="age" ColumnName="age" />
                 <ScalarProperty Name="actClassName" ColumnName="actClassName" />
                 <ScalarProperty Name="Budget" ColumnName="Budget" />
@@ -3029,6 +3074,7 @@
           <EntitySetMapping Name="vw_PartHistory">
             <EntityTypeMapping TypeName="JoinFunModel.vw_PartHistory">
               <MappingFragment StoreEntitySet="vw_PartHistory">
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
                 <ScalarProperty Name="memId" ColumnName="memId" />
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
                 <ScalarProperty Name="CountyName" ColumnName="CountyName" />
