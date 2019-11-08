@@ -13,14 +13,15 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(MetaAcc_Pass))]
 
+    [MetadataType(typeof(MetaAcc_Pass))]
     public partial class Acc_Pass
     {
         public string Account { get; set; }
         public string Password { get; set; }
         public string memId { get; set; }
         public string Salt { get; set; }
+        public string PasswordConfirm { get; set; }
     
         public virtual Member Member { get; set; }
     }

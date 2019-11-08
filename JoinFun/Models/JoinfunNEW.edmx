@@ -13,6 +13,7 @@
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
           <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="Salt" Type="varchar(max)" Nullable="false" />
+          <Property Name="PasswordConfirm" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Activity_Class">
           <Key>
@@ -1365,6 +1366,7 @@
           <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Member" Relationship="Self.FK__Acc_Pass__memId__6EF57B66" FromRole="Acc_Pass" ToRole="Member" />
+          <Property Name="PasswordConfirm" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Activity_Class">
           <Key>
@@ -2608,6 +2610,7 @@
           <EntitySetMapping Name="Acc_Pass">
             <EntityTypeMapping TypeName="JoinFunModel.Acc_Pass">
               <MappingFragment StoreEntitySet="Acc_Pass">
+                <ScalarProperty Name="PasswordConfirm" ColumnName="PasswordConfirm" />
                 <ScalarProperty Name="Account" ColumnName="Account" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="memId" ColumnName="memId" />
