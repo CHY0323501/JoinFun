@@ -14,19 +14,20 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <link href="~/Content/animate.min.css" rel="stylesheet" />
     <link href="~/Content/hover-min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"   rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     @RenderSection("memberinfo", required: false)
-    @RenderSection("memberRemarks",required:false)
+    @RenderSection("memberRemarks", required: false)
     <style>
         .dropdown-item.active, .dropdown-item:active {
+            text-decoration: none;
+            background-color: #EEE8AA;
+        }
 
-  text-decoration: none;
-  background-color: #EEE8AA;
-}
         body {
             font-family: 微軟正黑體;
-            margin-bottom:0;
+            margin-bottom: 0;
         }
 
         .navbar-light a {
@@ -38,9 +39,9 @@
             background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
         }
 
-        .foot-bg{
-            background-color:bisque;
-            color:brown;
+        .foot-bg {
+            background-color: bisque;
+            color: brown;
         }
 
         .dropdown-menu li:hover .sub-menu {
@@ -57,10 +58,10 @@
             padding-left: 15px;
             margin-right: auto;
             margin-left: auto;
-            
         }
+
         .containerMinH {
-            min-height:1200px
+            min-height: 1200px
         }
 
         @@media (min-width: 576px) {
@@ -90,8 +91,9 @@
                 max-width: 1500px;
             }
         }
+
         .containerbody {
-            min-height:400px;
+            min-height: 400px;
         }
         /*調整Scrollbar*/
         .hvr-underline-from-center:before {

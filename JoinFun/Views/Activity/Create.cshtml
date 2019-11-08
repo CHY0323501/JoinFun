@@ -4,158 +4,176 @@
     ViewBag.Title = "新增活動";
 }
 
-<h2>揪團活動</h2>
-
+<h2 class="mt-5 font-weight-bold">建立新揪團</h2>
 
 @using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>新增活動</h4>
+    <div class="form-horizontal pl-0 pr-0">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.actId)
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.actId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.actId, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.actId, "", new { @class = "text-danger" })
+        <div class="carousel col col-11 pl-0">
+            @Html.LabelFor(model => model.Photos_of_Activities.FirstOrDefault().actId, "活動照片", htmlAttributes: new { @class = "control-label col-md-2 pl-0 font-weight-bold" })
+            <div class="carousel-inner">
+                <div class="bg-white">
+                    <img id="uploadMain" src="~/Assets/pages/images/main.jpg" class="img-fluid"/>
                 </div>
-            </div>*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.actClassId, "活動類別", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Activity_Class", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.actClassId, "", new { @class = "text-danger" })
+                <input style="display:none" type="file" name="picture" id="picture" />
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.hostId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.hostId, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.hostId, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+        <div class="form-group col col-md-12 col-xs-6 pl-0 mt-3">
+            @Html.LabelFor(model => model.Activity_Class.actClassDescrip, "活動類別說明", htmlAttributes: new { @class = "col-lg-6 col-xs-6 control-label pl-0 font-weight-bold" })
+            <div class="col-md-12 col-xs-12 pl-0">
+                <input id="classDescrip" type="text" readonly="readonly" value="" class="form-control col col-md-10 col-xs-10" />
+            </div>
+        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.actTopic, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control" } })
+            <label class="col-md-6 col-xs-6 control-label pl-0 font-weight-bold">
+                請選擇活動類別 <span class="text-danger">*</span>
+            </label>
+            <div class="col col-md-10 col-sm-12 col-xs-12 pl-0 mt-3" id="test">
+                <nav class="navbar navbar-expand-sm navbar-light pl-0 justify-content-around">
+                    <ul class="nav navbar-nav" id="classUl">
+                        <li class="nav-item text-center col col-md-4 mb-3 rounded-pill bg-light font-weight-bold" id="cls001" style="width:200px">活動</li>
+                        <li class="nav-item text-center col col-md-4 mb-3 rounded-pill bg-light font-weight-bold" id="cls002" style="width:200px">休閒</li>
+                        <li class="nav-item text-center col col-md-4 mb-3 rounded-pill bg-light font-weight-bold" id="cls003" style="width:200px">商務</li>
+                        @Html.EditorFor(model => model.actClassId, new { htmlAttributes = new { @class = "form-control", @type = "Hidden", @id = "classId" } })
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col col-md-12 col-xs-6 pl-0">
+            <div class="col col-md-12 col-xs-6 pl-0">
+                @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control text-black-50 mt-3 col col-md-10 col-xs-10", @id = "topic", placeholder = "請輸入揪團主題" } })
                 @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.actTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.actTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+        @*<div class="row col col-md-12">*@
+        @*<div class="col col-md-12">*@
+        <ul class="mt-3 col col-12 pl-0 pr-0">
+            <li class="fa col col-md-11 col-xs-11 pl-0">
+                <label class="col col-md col-xs-12 pl-0">
+                    <label class="mr-1"><i class="fa fa-edit">活動描述</i></label>
+                    @Html.EditorFor(model => model.actDescription, new { htmlAttributes = new { @class = "form-control col col-md-11", placeholder = "請說明活動內容", @id = "content" } })
+                    @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
+                </label>
+            </li>
+            <li class="fa col col-md-12 col-xs-12 pl-0">
+
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label><i class="fas fa-calendar-alt">活動日期</i></label>
+                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "date" })
+                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+                </label>
+
+                <label class="col col-md-2 col-xs-12 pl-0">
+                    <label><i class="fas fa-clock">活動時間</i></label>
+                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "time" })
+                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+                </label>
+
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label><i class="fas fa-calendar-check">截止日期</i></label>
+                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "date" })
+                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+                </label>
+
+                <label class="col col-md-2 col-xs-12 pl-0">
+                    <label><i class="fas fa-stopwatch">截止時間</i></label>
+                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "time" })
+                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+                </label>
+            </li>
+
+            <li class="fa col col-md-12 col-xs-12 pl-0">
+
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label><i class="fa fa-plus">年齡限制</i></label>
+                    @Html.DropDownList("Age_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
+                </label>
+
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label><i class="fa fa-venus-mars">性別限制</i></label>
+                    @Html.DropDownList("Gender_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                </label>
+
+                <label class="col col-md-4 col-xs-12 pl-0">
+                    <label><i class="fas fa-user-plus">人數上限</i></label>
+                    @Html.DropDownList("People_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
+                </label>
+            </li>
+
+            <li class="fa col col-md-12 col-xs-12 pl-0">
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
+                    @Html.DropDownList("Budget_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
+                </label>
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label><i class="fas fa-dollar-sign">付款方式</i></label>
+                    @Html.DropDownList("Payment_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.paymentTerm, "", new { @class = "text-danger" })
+                </label>
+
+
+                <label class="col col-md-4 col-xs-12 pl-0">
+                    <label><i class="fas fa-reply">是否可退出</i></label>
+                    @Html.DropDownList("Drop", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.acceptDrop, "", new { @class = "text-danger" })
+                </label>
+            </li>
+
+            <li class="fa col col-md-12 col-xs-12 pl-0">
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label class="mr-4"><i class="fas fa-university">縣/市</i></label>
+                    @Html.DropDownList("County", null, htmlAttributes: new { @id = "county", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
+                </label>
+
+                <label class="col col-md-3 col-xs-12 pl-0">
+                    <label><i class="fas fa-street-view">鄉/鎮/市/區</i></label>
+                    @Html.DropDownList("District", null, htmlAttributes: new { @id = "district", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
+                </label>
+
+                <label class="col col-md-4 col-sx-12 pl-0">
+                    <label class="pl-0"><i class="fas fa-home">地址</i></label>
+                    @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control col col-md-12" } })
+                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
+                </label>
+            </li>
+
+        </ul>
+        @*</div>*@
+        @*</div>*@
+        <label class="font-weight-bold col col-md-12 col-xs-12 pl-0">選擇照片(上限3張)</label>
+        <div class="row">
+
+            <div id="uploadPics" class="border-dark col col-md-12 col-xs-12">
+                <img src="~/Assets/pages/images/add.png" id="addPic" class="img-fluid bg-transparent" style="width:150px;height:auto" />
+                <input id="contentPic" type="file" name="picture" class="form-control" style="display:none" />
+            </div>
+        </div>
+        <input id="addFile" type="button" value="增加照片" class="btn btn-light font-weight-bold mt-2" />
+
+        <div class="form-group mt-3">
+            @Html.LabelFor(model => model.hashTag, "加入Hash Tag", htmlAttributes: new { @class = "control-label col-md-2 pl-0 font-weight-bold" })
+            <div class="col-md-12 pl-0">
+                @Html.EditorFor(model => model.hashTag, new { htmlAttributes = new { @class = "form-control col-md-10 col-sm-10 col-xs-10" } })
+                @Html.ValidationMessageFor(model => model.hashTag, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.actDeadline, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.actDeadline, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.actDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.actDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ageRestrict, "年齡限制", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Age_Restriction", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.gender, "性別限制", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Gender_Restriction", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.maxNumPeople, "可參加人數", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("People_Restriction", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.maxBudget, "預算", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Budget_Restriction", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.actCounty, "縣/市", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("County", null, htmlAttributes: new { @id="county", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.actDistrict, "鄉/鎮/市/區", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("District", null, htmlAttributes: new { @id="district", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.actRoad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="picture" class="control-label col-md-2">活動照片</label>
-            <div class="col-md-10">
-                <input type="file" id="picture" name="picture" />
-                <h5 class="text-danger">@ViewBag.UploadError</h5>
-            </div>
-           
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.paymentTerm, "付款方式", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Payment_Restriction", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.paymentTerm, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.acceptDrop, "是否可退出", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Drop", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.acceptDrop, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary">新增</button>
-            </div>
+        <div class="col col-md-10 text-center pl-0">
+            <input type="submit" value="開團" class="btn btn-primary" id="buildUp" />
         </div>
     </div>
 }
@@ -174,7 +192,7 @@
             $('#district').empty();
             $.ajax({
                 type: "Get",
-                url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#county').val(),
+                url: "http://localhost:54934/api/getDistrict?countyNo=" + $('#county').val(),
                 success: function (d) {
                     console.log(d);
                     d.forEach(function (currentValue, index, array) {
@@ -184,6 +202,113 @@
                     });
                 }
             });
+        });
+
+        //更換活動類別說明
+        $('#classUl>li').click(function (e) {
+            $('#classDescrip').empty();
+            var value;
+            switch ($(this).text()) {
+                case "活動":
+                    value = "cls001";
+                    break;
+                case "休閒":
+                    value = "cls002";
+                    break;
+                case "商務":
+                    value = "cls003";
+                    break;
+            }
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:54129/api/getClassDescription?id=" + value,
+                success: function (d) {
+                    console.log(d);
+                    d.forEach(function (currentValue) {
+                        $('#classDescrip').val(currentValue);
+                    });
+                }
+            });
+            $('#classId').val(value);
+            if (e.target.id == "cls001") {
+                $('#classUl>li').removeClass('bg-warning').addClass('bg-light');
+                $("#cls001").removeClass('bg-light').addClass("bg-warning");
+            }
+            else if (e.target.id == "cls002") {
+                $('#classUl>li').removeClass('bg-warning').addClass('bg-light');
+                $("#cls002").removeClass('bg-light').addClass("bg-warning");
+            } else {
+                $('#classUl>li').removeClass('bg-warning').addClass('bg-light');
+                $("#cls003").removeClass('bg-light').addClass("bg-warning");
+            }
+
+        });
+
+        //點圖上傳圖片
+        $('#uploadMain').click(function () {
+            $('#picture').click();
+        });
+        $('#addPic').click(function () {
+            $('#contentPic').click();
+        });
+
+        //預覽主題圖片
+        $('#picture').on("change", function () {
+            var file = this.files[0];
+            if (this.files && file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#uploadMain').attr("src", e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        //預覽其他圖片(預設第一張)
+        $('#uploadPics>input').on("change", function (e) {
+            var file = this.files[0];
+            if (this.files && file) {
+                var reader = new FileReader();
+                reader.onload = function (evnt) {
+                    if (e.target.id == "contentPic")
+                        $('#addPic').attr("src", evnt.target.result).addClass('w-50');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        //增加上傳的照片
+        $('#addFile').click(function () {
+            var n = $('#uploadPics').children().length;
+            if (n < 6) {
+                $('#uploadPics').append('<img src="/Assets/pages/images/add.png" id="addPic' + n / 2 + '" ' + 'class="img-fluid bg-transparent mr-1 mt-1" style="width:150px;height:auto" />')
+                    .append("<input id='contentPic" + n / 2 + "' " + "type='file' name='picture' class='form-control' style='display:none' />");
+            }
+            if (n < 4)
+                $('#addPic1').click(function () {
+                    $('#contentPic1').click();
+                });
+            else if (n >= 4)
+                $('#addPic2').click(function () {
+                    $('#contentPic2').click();
+                });
+            //預覽增加的圖片
+            $('#uploadPics>input').on("change", function (e) {
+                var file = this.files[0];
+                if (this.files && file) {
+                    var reader = new FileReader();
+                    reader.onload = function (evnt) {
+                        if (e.target.id == "contentPic1")
+                            $('#addPic1').attr("src", evnt.target.result).addClass('w-50');
+                        if (e.target.id == "contentPic2")
+                            $('#addPic2').attr("src", evnt.target.result).addClass('w-50');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        $('#buildUp').click(function () {
+            alert("請確認填寫的資料是否正確，揪團建立後")
         });
     </script>
 }
