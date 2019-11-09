@@ -54,23 +54,24 @@ namespace JoinFun.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(Member mem, string account, string password)
         {
-            
+
 
             //密碼雜湊 salt+hash
             string salt = Guid.NewGuid().ToString();
             byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(password + salt);
             byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
             string hashString = Convert.ToBase64String(hashBytes);
-            
 
 
-                string getmmId = db.Database.SqlQuery<string>("select [dbo].[GetMemId]()").FirstOrDefault();
-                Acc_Pass acc = new Acc_Pass();
-                acc.memId = getmmId;
-                acc.Account = account;
-                acc.Password = hashString;
-                mem.memCounty = Int16.Parse(Request["memCounty"]);
-                mem.memDistrict = Int16.Parse(Request["memDistrict"]);
+
+            string getmmId = db.Database.SqlQuery<string>("select [dbo].[GetMemId]()").FirstOrDefault();
+            Acc_Pass acc = new Acc_Pass();
+            acc.memId = getmmId;
+            acc.Account = account;
+            acc.Password = hashString;
+            acc.PasswordConfirm = hashString;
+            mem.memCounty = Int16.Parse(Request["memCounty"]);
+            mem.memDistrict = Int16.Parse(Request["memDistrict"]);
 
             //型別vu/6w94轉換(string->char(1))
             string gender = Request["Sex"];
@@ -82,19 +83,19 @@ namespace JoinFun.Controllers
             //mem.Birthday = DateTime.Parse(Request["Birthday"]).ToString();           
             //mem.Birthday = Convert.ToString(mem.Birthday.ToDateTime("yyyy/MM/dd"));
 
-                mem.Sex = gender;
-                mem.timeReg = DateTime.Now;
-                mem.memId = getmmId;
-                acc.Salt = salt;
-                db.Acc_Pass.Add(acc);
-                db.Member.Add(mem);
-                db.SaveChanges();
+            mem.Sex = gender;
+            mem.timeReg = DateTime.Now;
+            mem.memId = getmmId;
+            acc.Salt = salt;
+            db.Acc_Pass.Add(acc);
+            db.Member.Add(mem);
+            db.SaveChanges();
 
 
-                return RedirectToAction("Index");
-        //ViewBag.Acc = account;
-        //    ViewBag.Pwd = password;
-        //    return View();
+            return RedirectToAction("Index");
+            //ViewBag.Acc = account;
+            //    ViewBag.Pwd = password;
+            //    return View();
         }
         //修改密碼
         public ActionResult PwdEdit()

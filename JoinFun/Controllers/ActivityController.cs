@@ -117,16 +117,8 @@ namespace JoinFun.Controllers
             {
                 return HttpNotFound();
             }
-            GetSelectList();
-
-            if (act.acceptDrop == true)
-            {
-                ViewBag.Drop = "是";
-            }
-            else
-            {
-                ViewBag.Drop = "否";
-            }
+            GetSelectList(actId);
+            ViewBag.Drop = GetDropList();
             ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
             return View(act);
@@ -166,6 +158,18 @@ namespace JoinFun.Controllers
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment");
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName");
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName");
+        }
+        private void GetSelectList(string actId)
+        {
+            var act = db.Join_Fun_Activities.Find(actId);
+            ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName", act.actClassId);
+            ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age", act.ageRestrict);
+            ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender", act.gender);
+            ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction", act.maxNumPeople);
+            ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget", act.maxBudget);
+            ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment", act.paymentTerm);
+            ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName", act.actCounty);
+            ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName", act.actDistrict);
         }
 
         //建立"acceptDrop"的Dropdow list

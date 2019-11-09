@@ -21,6 +21,11 @@ namespace JoinFun.Models
         [Required(ErrorMessage = "請輸入會員編號")]
         public string memId { get; set; }
         public string Salt { get; set; }
+
+        [Required]
+        [DisplayName("確認密碼")]
+        [Compare("Password")]
+        public string PasswordConfirm { get; set; }
     }
     public  class MetaActivity_Class
     {

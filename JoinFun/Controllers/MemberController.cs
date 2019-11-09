@@ -128,7 +128,6 @@ namespace JoinFun.Controllers
         public ActionResult RemarkCreate()
         {
             
-            
 
             return View();
 
