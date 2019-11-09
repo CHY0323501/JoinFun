@@ -1,7 +1,146 @@
-﻿@model IEnumerable<JoinFun.Models.Friendship>
-
+﻿@model IEnumerable<JoinFun.Models.vw_FriendShip>
 @{
-    ViewBag.Title = "FriendManagement";
+    ViewBag.Title = "好友管理";
 }
 
 
+
+@section memberRemarks{
+    <link href="~/CSS/Remarks.css" rel="stylesheet" />
+}
+
+
+<div class="container containerMinH">
+    <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.FdManagementMemNick)－好友管理</h2>
+    <div class="card text-center border-0 p-adjust">
+        <div class="card-header bg-transparent text-white ">
+            <div class="d-flex">
+                <ul class="nav nav-tabs card-header-tabs mx-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link active p-3 text-success" href="#tab1" data-toggle="tab"><strong>待審好友清單</strong></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>修改好友暱稱</strong></a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="tab-content">
+            <div class="card-body tab-pane show active fade " id="tab1">
+                @if (Model.Where(m => m.Approved == false).ToList() == null)
+                {
+                    <h2 class="text-center text-success ">無未審核好友</h2>
+                }
+                else
+                {
+                    foreach (var i in Model)
+                    {
+                        if (!i.Approved)
+                        {
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                                <div class="row mb-1 align-items-center ">
+                                    <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+
+                                            <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />
+                                        </a>
+                                    </div>
+
+                                    <div class="col col-12 col-md-8 b-top ">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+                                            <div class="row text-center mt-3 ">
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">會員編號</span></div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.friendMemId</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill">會員暱稱</span></div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.memNick</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="row text-center  mt-md-3 b-top">
+                                            <div class="col-6 col-md-4 offset-md-2 mt-3">
+                                                <input type="button" id="Accept" value="確認好友" class="btn btn-info" />
+                                            </div>
+                                            <div class="col-6 col-md-2  mt-3">
+                                                <input type="button" id="Reject" value="拒絕邀請" class="btn btn-danger" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="card-body tab-pane fade " id="tab2">
+                @if (Model.Where(m => m.Approved == true).Count() == 0)
+                {
+                    <h2 class="text-center text-success ">目前尚無好友</h2>
+                }
+                else
+                {
+                    foreach (var i in Model)
+                    {
+                        if (i.Approved)
+                        {
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                                <div class="row mb-1 align-items-center ">
+                                    <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+
+                                            <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />
+                                        </a>
+                                    </div>
+
+                                    <div class="col col-12 col-md-8 b-top ">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+                                            <div class="row text-center mt-3 ">
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">會員編號</span></div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.friendMemId</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill">會員暱稱</span></div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.memNick</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="row text-center  mt-md-3 b-top">
+                                            <div class="col-12 col-md-6 mt-3">
+                                                <div class="row">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">修改暱稱</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                        <form>@Html.EditorFor(model => i.newNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-100" } })<div></div></form>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6  mt-3">
+                                                <input type="button" id="memNick" value="確認修改" class="btn btn-danger" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/JS/FriendManage.js"></script>
+}

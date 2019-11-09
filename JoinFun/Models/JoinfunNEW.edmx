@@ -395,12 +395,14 @@
             <PropertyRef Name="memNick" />
             <PropertyRef Name="memId" />
             <PropertyRef Name="Sex" />
+            <PropertyRef Name="Approved" />
           </Key>
           <Property Name="friendMemId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="newNick" Type="nvarchar" MaxLength="15" />
           <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Host_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -1103,7 +1105,8 @@
     [vw_FriendShip].[memNick] AS [memNick], 
     [vw_FriendShip].[newNick] AS [newNick], 
     [vw_FriendShip].[memId] AS [memId], 
-    [vw_FriendShip].[Sex] AS [Sex]
+    [vw_FriendShip].[Sex] AS [Sex], 
+    [vw_FriendShip].[Approved] AS [Approved]
     FROM [dbo].[vw_FriendShip] AS [vw_FriendShip]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Host_Remarks" EntityType="Self.vw_Host_Remarks" store:Type="Views" store:Schema="dbo">
@@ -1809,12 +1812,14 @@
             <PropertyRef Name="memNick" />
             <PropertyRef Name="memId" />
             <PropertyRef Name="Sex" />
+            <PropertyRef Name="Approved" />
           </Key>
           <Property Name="friendMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="newNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK__Acc_Pass__memId__6EF57B66">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
@@ -2979,6 +2984,7 @@
           <EntitySetMapping Name="vw_FriendShip">
             <EntityTypeMapping TypeName="JoinFunModel.vw_FriendShip">
               <MappingFragment StoreEntitySet="vw_FriendShip">
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="friendMemId" ColumnName="friendMemId" />
                 <ScalarProperty Name="memNick" ColumnName="memNick" />
                 <ScalarProperty Name="newNick" ColumnName="newNick" />

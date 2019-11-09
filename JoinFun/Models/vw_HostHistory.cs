@@ -12,11 +12,6 @@ namespace JoinFun.Models
     using System;
     using System.Collections.Generic;
 
-
-
-
-
-
     public partial class vw_HostHistory
     {
         public string actId { get; set; }

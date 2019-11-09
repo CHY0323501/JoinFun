@@ -685,6 +685,8 @@ namespace JoinFun.Models
         [DisplayName("好友暱稱")]
         public string memNick { get; set; }
         [DisplayName("好友新暱稱")]
+        [Required(ErrorMessage = "請輸入新暱稱")]
+        [StringLength(15, ErrorMessage = "暱稱長度不可超過15字")]
         public string newNick { get; set; }
         [DisplayName("會員編號")]
         public string memId { get; set; }
