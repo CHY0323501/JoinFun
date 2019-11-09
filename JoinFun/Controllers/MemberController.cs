@@ -173,10 +173,17 @@ namespace JoinFun.Controllers
         }
 
         public ActionResult FriendManagement(string memID) {
-            var friend = (from f in db.Friendship
-                         join m in db.Member on f.friendMemId equals m.memId
-                         where f.memId == memID
-                         select new { f.memId, f.friendMemId, f.friendNick, m.memNick, f.Approved, m.Sex }).ToList();
+            //var friend = (from f in db.Friendship
+            //             join m in db.Member on f.friendMemId equals m.memId
+            //             where f.memId == memID
+            //             select new { f.memId, f.friendMemId, f.friendNick, m.memNick, f.Approved, m.Sex }).ToList();
+
+            FriendManagementVW friend = new FriendManagementVW()
+            {
+                Friendship=db.Friendship.Where(m=>m.memId== memID).ToList(),
+                vw_FriendShip = db.vw_FriendShip.Where(m=>m.memId == memID).ToList()
+            };
+
             return View(friend);
         }
 
