@@ -34,11 +34,13 @@
                 }
                 else
                 {
+                    int count = 0;
                     foreach (var i in Model)
                     {
                         if (!i.Approved)
                         {
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp" id="@count">
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
                                         <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
@@ -66,15 +68,16 @@
                                         </a>
                                         <div class="row text-center  mt-md-3 b-top">
                                             <div class="col-6 col-md-4 offset-md-2 mt-3">
-                                                <input type="button" id="Accept" value="確認好友" class="btn btn-info" />
+                                                <input type="button" id="Accept@(+count)" value="確認好友" class="btn btn-info Accept" />
                                             </div>
                                             <div class="col-6 col-md-2  mt-3">
-                                                <input type="button" id="Reject" value="拒絕邀請" class="btn btn-danger" />
+                                                <input type="button" id="Reject@(+count)" value="取消邀請" class="btn btn-danger" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            count += 1;
                         }
                     }
                 }
@@ -86,11 +89,13 @@
                 }
                 else
                 {
+                    int count = 0;
+                    string f = "f";
                     foreach (var i in Model)
                     {
                         if (i.Approved)
                         {
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@(f+count)">
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
                                         <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
@@ -123,7 +128,7 @@
                                                     <div class="col col-12 col-md-8 mb-2 mb-md-0">
                                                         <form>@Html.EditorFor(model => i.newNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-100" } })<div></div></form>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6  mt-3">
@@ -133,8 +138,9 @@
                                     </div>
                                 </div>
                             </div>
-
                         }
+                        count++;
+
                     }
                 }
             </div>
@@ -143,4 +149,11 @@
 </div>
 @section scripts{
     <script src="~/JS/FriendManage.js"></script>
+    <script>
+        $('.Accept').click(function (evt) {
+            console.log($(this).attr("id").slice(6));
+            var id = $(this).attr("id").slice(6);
+            $("div").find("div[id='"+id+"']").remove();
+        })
+    </script>
 }
