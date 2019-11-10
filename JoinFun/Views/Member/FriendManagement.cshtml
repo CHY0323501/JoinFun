@@ -74,7 +74,7 @@
                                                 <input type="button" id="Accept@(+count)" value="確認好友" class="btn btn-info Accept" />
                                             </div>
                                             <div class="col-6 col-md-2  mt-3">
-                                                <input type="button" id="Reject@(+count)" value="取消邀請" class="btn btn-danger" />
+                                                <input type="button" id="Reject@(+count)" value="取消邀請" class="btn btn-danger Reject" />
                                             </div>
                                         </div>
                                     </div>
@@ -157,26 +157,44 @@
 @section scripts{
     <script src="~/JS/FriendManage.js"></script>
     <script>
-        //確認交友邀請並移除該好友未審資料
+        
         $(document).ready(function () {
+            //確認交友邀請並移除該好友未審資料
             $('.Accept').click(function () {
                 //移除未審資料
                 var btnid = $(this).attr("id").slice(6);
-                $("div").find("div[id='" + btnid + "']").remove();
+                
                 console.log(btnid);
                 //確認交友邀請
                 $.ajax({
-                    type: "put",
-                    url: "http://localhost:54129/api/memapi?friendid=" + $('#f' + btnid).attr('value') + "&memid=" + $('#memid').val() + "&newnick=null&checkfd=true",
+                    type: "Put",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#f' + btnid).attr('value') + "&memid=" + $('#memID').val() + "&newnick=null&checkfd=true",
                     success: function () {
                         console.log("成功");
                     },
                     error: function () {
-                        //$('#f' + btnid).val()
-                        //console.log($("input").find("input[id='f" + btnid + "']").val())
-                        console.log($('[name=f]' + btnid).val());
+                        console.log("失敗");
                     }
                 });
+                $("div").find("div[id='" + btnid + "']").remove();
+            })
+            $('.Reject').click(function () {
+                //移除未審資料
+                var btnid = $(this).attr("id").slice(6);
+                
+                console.log(btnid);
+                //取消交友邀請
+                $.ajax({
+                    type: "Delete",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#f' + btnid).attr('value') + "&memid=" + $('#memID').val() ,
+                    success: function () {
+                        console.log("成功");
+                    },
+                    error: function () {
+                        console.log("失敗");
+                    }
+                });
+                $("div").find("div[id='" + btnid + "']").remove();
             })
         })
     </script>
