@@ -101,31 +101,31 @@
             <li class="fa col col-md-12 col-sm-12 col-xs-12 pl-0">
                 <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
                     <label><i class="fa fa-plus">年齡限制</i></label>
-                    @Html.DropDownList("Age_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.ageRestrict, ViewBag.Age_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
                 </label>
 
                 <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
                     <label><i class="fa fa-venus-mars">性別限制</i></label>
-                    @Html.DropDownList("Gender_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.gender, ViewBag.Gender_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
                 </label>
 
                 <label class="col col-md-4 col-sm-12 col-xs-12 pl-0">
                     <label><i class="fas fa-user-plus">人數上限</i></label>
-                    @Html.DropDownList("People_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.maxNumPeople, ViewBag.People_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
                 </label>
             </li>
             <li class="fa col col-md-12 col-xs-12 pl-0">
                 <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
                     <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
-                    @Html.DropDownList("Budget_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
                 </label>
                 <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
                     <label><i class="fas fa-dollar-sign">付款方式</i></label>
-                    @Html.DropDownList("Payment_Restriction", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.paymentTerm, ViewBag.Payment_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.paymentTerm, "", new { @class = "text-danger" })
                 </label>
 
@@ -139,13 +139,13 @@
             <li class="fa col col-md-12 col-xs-12 pl-0">
                 <label class="col col-md-3 col-xs-12 pl-0">
                     <label class="mr-4"><i class="fas fa-university">縣/市</i></label>
-                    @Html.DropDownList("County", null, htmlAttributes: new { @id = "county", @class = "form-control" })
+                    @Html.DropDownListFor(m => m.actCounty, ViewBag.County as SelectList, htmlAttributes: new { @id = "county", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
                 </label>
 
                 <label class="col col-md-3 col-xs-12 pl-0">
                     <label><i class="fas fa-street-view">鄉/鎮/市/區</i></label>
-                    @Html.DropDownList("District", null, htmlAttributes: new { @id = "district", @class = "form-control" })
+                    @Html.DropDownListFor(m => m.actDistrict, ViewBag.District as SelectList, htmlAttributes: new { @id = "district", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
                 </label>
 
