@@ -13,8 +13,8 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-
     [MetadataType(typeof(Metavw_FriendShip))]
+
     public partial class vw_FriendShip
     {
         public string friendMemId { get; set; }
@@ -22,5 +22,6 @@ namespace JoinFun.Models
         public string newNick { get; set; }
         public string memId { get; set; }
         public string Sex { get; set; }
+        public bool Approved { get; set; }
     }
 }

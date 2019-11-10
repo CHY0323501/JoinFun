@@ -128,6 +128,7 @@
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
+    <Content Include="JS\FriendManage.js" />
     <Content Include="JS\MemberEdit.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -719,7 +720,9 @@
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\MessageCenter.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
+    <Compile Include="ViewModel\FriendManagementVW.cs" />
     <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
@@ -759,7 +762,12 @@
     <Content Include="Views\Member\History.cshtml" />
     <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Member\RemarkCreate.cshtml" />
+
     <Content Include="Views\Register\PwdEdit.cshtml" />
+
+    <Content Include="Views\Member\FriendManagement.cshtml" />
+    <Content Include="Views\Activity\Report.cshtml" />
+>>>>>>> 27ce5a2c771dad0e4a81a7abef98af731939b77b
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

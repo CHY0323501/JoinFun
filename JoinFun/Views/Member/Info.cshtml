@@ -374,9 +374,11 @@
                 type: "Post",
                 url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
             });
-            console.log("friendid:" + $('#FriendID').val() + " memid:" + $('#memID').val())
         } else if ($('#FriendBtn').text().includes('好友審核中')) {
-            
+            $.ajax({
+                type: "Delete",
+                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+            });
         } else {
             $.ajax({
                 type: "Delete",

@@ -64,13 +64,13 @@ namespace JoinFun.Controllers
             act.actId = actId;
             //將Dropdown List的值取回 ---start--- 
             act.hostId = "M000000003";//Session["memId"].ToString();
-            act.ageRestrict = Int16.Parse(form["Age_Restriction"].ToString());
-            act.gender = Int16.Parse(form["Gender_Restriction"].ToString());
-            act.maxNumPeople = Int16.Parse(form["People_Restriction"].ToString());
-            act.maxBudget = Int16.Parse(form["Budget_Restriction"].ToString());
-            act.paymentTerm = Int16.Parse(form["Payment_Restriction"].ToString());
-            act.actCounty = Int16.Parse(form["County"].ToString());
-            act.actDistrict = Int16.Parse(form["District"].ToString());
+            //act.ageRestrict = Int16.Parse(form["Age_Restriction"].ToString());
+            //act.gender = Int16.Parse(form["Gender_Restriction"].ToString());
+            //act.maxNumPeople = Int16.Parse(form["People_Restriction"].ToString());
+            //act.maxBudget = Int16.Parse(form["Budget_Restriction"].ToString());
+            //act.paymentTerm = Int16.Parse(form["Payment_Restriction"].ToString());
+            //act.actCounty = Int16.Parse(form["County"].ToString());
+            //act.actDistrict = Int16.Parse(form["District"].ToString());
             act.acceptDrop = Convert.ToBoolean(form["Drop"].ToString());
             //將Dropdown List的值取回 ---end--- 
             act.keepAct = true;
@@ -128,12 +128,12 @@ namespace JoinFun.Controllers
         public ActionResult Edit(string actId, FormCollection form, HttpPostedFileBase picture)
         {
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
-            string actTopic = form["actTopic"].ToString();
-            string actDescription = form["actDescription"].ToString();
-            short payment = Int16.Parse(form["Payment_Restriction"].ToString());
-            act.actTopic = actTopic;
-            act.actDescription = actDescription;
-            act.paymentTerm = payment;
+            //string actTopic = form["actTopic"].ToString();
+            //string actDescription = form["actDescription"].ToString();
+            //short payment = Int16.Parse(form["Payment_Restriction"].ToString());
+            //act.actTopic = actTopic;
+            //act.actDescription = actDescription;
+            //act.paymentTerm = payment;
 
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -147,10 +147,26 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Report()
+        {
+            ViewBag.Type = new SelectList(db.Type_of_Violate, "typeId", "vioClass");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Report(Violation violate)
+        {
+            violate.vioId = db.Database.SqlQuery<string>("Select dbo.GetVioId()").FirstOrDefault();
+            violate.vioReportTime = DateTime.Now;
+            db.Violation.Add(violate);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         //建立"新增"或"編輯"有對應資料表Dropdown list
         private void GetSelectList()
         {
-            ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName");
+            //ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName");
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age");
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender");
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction");

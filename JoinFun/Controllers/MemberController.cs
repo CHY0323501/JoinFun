@@ -39,7 +39,7 @@ namespace JoinFun.Controllers
                     Friendship = db.Friendship.Where(m => m.friendMemId == memID).ToList(),
                     vw_FansNew = db.vw_FansNew.Where(m => m.memId == memID).ToList(),
                     vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
-                    vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList(),
+                    vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID&&m.Approved==true).ToList(),
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
                     vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList()
@@ -172,29 +172,11 @@ namespace JoinFun.Controllers
         }
 
         public ActionResult FriendManagement(string memID) {
-            var friend = (from f in db.Friendship
-                         join m in db.Member on f.friendMemId equals m.memId
-                         where f.memId == memID
-                         select new { f.memId, f.friendMemId, f.friendNick, m.memNick, f.Approved, m.Sex }).ToList();
+            //好友相關資料
+            var friend = db.vw_FriendShip.Where(m => m.memId == memID).ToList();
+            
+            ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
             return View(friend);
-        }
-
-
-        //取得活動照片用，若原活動無上傳照片時，抓取對應的類別圖片
-        public FileContentResult GetActPhoto(string actId, string actClassId)
-        {
-            string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
-            string AclassPhoto = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
-            if (photo != null)
-            {
-                //將圖片轉成byte[] 傳給View
-                string path = Server.MapPath(photo);
-                byte[] image = System.IO.File.ReadAllBytes(path);
-                return base.File(image, "image/jpeg");
-            }
-            string CLASSpath = Server.MapPath(AclassPhoto);
-            byte[] CLASSimage = System.IO.File.ReadAllBytes(CLASSpath);
-            return base.File(CLASSimage, "image/jpeg");
         }
     }
 }
