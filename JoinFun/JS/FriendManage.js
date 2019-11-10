@@ -1,4 +1,16 @@
-﻿$('#i_newNick').keyup(function () {
+﻿var requiredText = "此為必填欄位";
+$('#memNickComfirm').submit(function () {        //送出表單前觸發的事件
+    //表單為空時無法post
+
+    checkform("#memNick", true, requiredText);
+    if (!check)
+        return false
+
+    if (!flag)
+        return false
+    return true;
+});
+$('#i_newNick').keyup(function () {
     if ($('#i_newNick').val().length > 15) {
         checkform("#i_newNick", false, "暱稱不可超過15字");
     } else {

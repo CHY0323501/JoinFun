@@ -128,6 +128,7 @@
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
+    <Content Include="JS\FriendManage.js" />
     <Content Include="JS\MemberEdit.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

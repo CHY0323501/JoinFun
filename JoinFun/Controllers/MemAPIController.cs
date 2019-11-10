@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -13,7 +14,7 @@ namespace JoinFun.Controllers
     public class MemAPIController : ApiController
     {
         JoinFunEntities db = new JoinFunEntities();
-        //Get確認好友狀態
+        //確認好友狀態
         public IHttpActionResult Get(string FriendID)
         {
             //var friendShip = (from i in db.Friendship
@@ -25,7 +26,7 @@ namespace JoinFun.Controllers
             return Ok(friendship);
         }
 
-        //Post加入好友
+        //加入好友
         //需寫入Friendship
         public IHttpActionResult Post(string FriendID, string memID)
         {
@@ -45,8 +46,25 @@ namespace JoinFun.Controllers
             return Ok();
         }
 
+        //確認好友、修改好友暱稱
+        public IHttpActionResult Put(string FriendID, string memID,string newNick,bool checkFD)
+        {
+            var FDdata1 = db.Friendship.Where(m => m.memId == memID && m.friendMemId == FriendID).FirstOrDefault();
+            var FDdata2 = db.Friendship.Where(m => m.memId == FriendID && m.friendMemId == memID).FirstOrDefault();
 
-        // DELETE刪除好友
+            //確認好友
+            if (checkFD) {
+                FDdata1.Approved = true;
+                FDdata2.Approved = true;
+            }
+            else
+                FDdata1.friendNick = newNick;
+
+            db.SaveChanges();
+            return Ok();
+        }
+
+        //刪除好友、取消邀請
         //需刪除Friendship、fans、followup三張資料表中的該會員資料
         public IHttpActionResult Delete(string FriendID, string memID)
         {
