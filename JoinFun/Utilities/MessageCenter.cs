@@ -29,7 +29,7 @@ namespace JoinFun.Utilities
             #endregion
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
             //設定帳號密碼
-            client.Credentials = new System.Net.NetworkCredential("jeffrey.liqiao@gmail.com", "PphsuN@1978");
+            client.Credentials = new System.Net.NetworkCredential("Gmail Account", "Gmail Password");//括號內輸入自己的Gmail信箱帳號與密碼
             //Gmail SSL
             client.EnableSsl = true;
             client.Send(msg);
