@@ -767,7 +767,7 @@
 
     <Content Include="Views\Member\FriendManagement.cshtml" />
     <Content Include="Views\Activity\Report.cshtml" />
->>>>>>> 27ce5a2c771dad0e4a81a7abef98af731939b77b
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
