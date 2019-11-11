@@ -762,8 +762,12 @@
     <Content Include="Views\Member\History.cshtml" />
     <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Member\RemarkCreate.cshtml" />
+
+    <Content Include="Views\Register\PwdEdit.cshtml" />
+
     <Content Include="Views\Member\FriendManagement.cshtml" />
     <Content Include="Views\Activity\Report.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
