@@ -36,7 +36,7 @@ namespace JoinFun.Controllers
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
                     Bookmark_Details= db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
-                    Friendship = db.Friendship.Where(m => m.friendMemId == memID).ToList(),
+                    Friendship = db.Friendship.Where(m => m.memId == memID).ToList(),
                     vw_FansNew = db.vw_FansNew.Where(m => m.memId == memID).ToList(),
                     vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
                     vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID&&m.Approved==true).ToList(),
@@ -171,12 +171,17 @@ namespace JoinFun.Controllers
             }
         }
 
-        public ActionResult FriendManagement(string memID) {
+        public ActionResult FriendManagement(string memID="M000000005") {
             //好友相關資料
-            var friend = db.vw_FriendShip.Where(m => m.memId == memID).ToList();
+            FriendManagementVW FDvw = new FriendManagementVW()
+            {
+                Member = db.Member.Where(m => m.memId == memID).ToList(),
+                vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList()
+            };
+
             
             ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
-            return View(friend);
+            return View(FDvw);
         }
     }
 }

@@ -355,7 +355,7 @@
     function CheckFriendShip() {
         $.ajax({
             type: "Get",
-            url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val(),
+            url: "http://localhost:54129/api/MemAPI?memID=" + $('#FriendID').val(),
             success: function (d) {
                 if (d.length == 0) {
                     $('#FriendBtn').text('加好友');
@@ -382,7 +382,7 @@
         } else {
             $.ajax({
                 type: "Delete",
-                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val()+"&Cancel=false",
             });
         }
         CheckFriendShip();

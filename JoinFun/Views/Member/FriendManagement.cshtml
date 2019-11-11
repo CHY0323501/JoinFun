@@ -1,4 +1,4 @@
-﻿@model IEnumerable<JoinFun.Models.vw_FriendShip>
+﻿@model JoinFun.ViewModel.FriendManagementVW
 @{
     ViewBag.Title = "好友管理";
 }
@@ -28,20 +28,20 @@
         </div>
         <div class="tab-content">
             <div class="card-body tab-pane show active fade " id="tab1">
-                @if (Model.Where(m => m.Approved == false).ToList() == null)
+                @if (Model.vw_FriendShip.Where(m => m.Approved == false).ToList() == null)
                 {
                     <h2 class="text-center text-success ">無未審核好友</h2>
                 }
                 else
                 {
-                    <input type="hidden" id="memID" value="@Model.ToList()[0].memId" />
+                    <input type="hidden" id="memID" value="@Model.Member.ToList()[0].memId" />
                     int count = 0;
-                    foreach (var i in Model)
+                    foreach (var i in Model.vw_FriendShip)
                     {
                         if (!i.Approved)
                         {
 
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp" id="@count" >
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp" id="@count">
                                 <input type="hidden" id="f@(+count)" value="@i.friendMemId" class="fdUSE" />
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
@@ -86,7 +86,7 @@
                 }
             </div>
             <div class="card-body tab-pane fade " id="tab2">
-                @if (Model.Where(m => m.Approved == true).Count() == 0)
+                @if (Model.vw_FriendShip.Where(m => m.Approved == true).Count() == 0)
                 {
                     <h2 class="text-center text-success ">目前尚無好友</h2>
                 }
@@ -94,7 +94,7 @@
                 {
                     int count = 0;
                     string f = "f";
-                    foreach (var i in Model)
+                    foreach (var i in Model.vw_FriendShip)
                     {
                         if (i.Approved)
                         {
@@ -112,13 +112,13 @@
                                             <div class="row text-center mt-3 ">
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">會員編號</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill ">會員編號</span></div>
                                                         <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.friendMemId</span></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill">會員暱稱</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill">會員暱稱</span></div>
                                                         <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.memNick</span></div>
                                                     </div>
                                                 </div>
@@ -129,7 +129,7 @@
 
                                                 <div class="col-12 col-md-6 mt-3">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">修改暱稱</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill ">修改暱稱</span></div>
                                                         <div class="col col-12 col-md-8 mb-2 mb-md-0">
                                                             @Html.EditorFor(model => i.newNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-100" } })<div></div>
                                                         </div>
@@ -157,18 +157,18 @@
 @section scripts{
     <script src="~/JS/FriendManage.js"></script>
     <script>
-        
+
         $(document).ready(function () {
             //確認交友邀請並移除該好友未審資料
             $('.Accept').click(function () {
                 //移除未審資料
                 var btnid = $(this).attr("id").slice(6);
-                
+
                 console.log(btnid);
                 //確認交友邀請
                 $.ajax({
                     type: "Put",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#f' + btnid).attr('value') + "&memid=" + $('#memID').val() + "&newnick=null&checkfd=true",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
                     success: function () {
                         console.log("成功");
                     },
@@ -181,12 +181,12 @@
             $('.Reject').click(function () {
                 //移除未審資料
                 var btnid = $(this).attr("id").slice(6);
-                
+
                 console.log(btnid);
                 //取消交友邀請
                 $.ajax({
                     type: "Delete",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#f' + btnid).attr('value') + "&memid=" + $('#memID').val() ,
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" +$('#f' + btnid).attr('value') + "&Cancel=true",
                     success: function () {
                         console.log("成功");
                     },
