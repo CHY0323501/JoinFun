@@ -364,7 +364,6 @@
                 } else {
                     $('#FriendBtn').text('刪除好友');
                 }
-                console.log(d)
             }
         });
     }
@@ -373,19 +372,28 @@
             $.ajax({
                 type: "Post",
                 url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+                success: function () {
+                    CheckFriendShip();
+                }
             });
         } else if ($('#FriendBtn').text().includes('好友審核中')) {
             $.ajax({
                 type: "Delete",
-                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val()+"&Cancel=false",
+                success: function () {
+                    CheckFriendShip();
+                }
             });
         } else {
             $.ajax({
                 type: "Delete",
-                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val()+"&Cancel=false",
+                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
+                success: function () {
+                    CheckFriendShip();
+                }
             });
         }
-        CheckFriendShip();
+        
     })
 
 </script>

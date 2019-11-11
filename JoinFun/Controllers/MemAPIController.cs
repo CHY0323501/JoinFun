@@ -131,12 +131,12 @@ namespace JoinFun.Controllers
             return Ok();
         }
 
-        //刪除好友、取消邀請
+        //刪除好友(Cancel=true)、取消邀請(Cancel=false)
         //刪除好友需刪除Friendship、fans、followup三張資料表中的該會員資料
         //取消邀請需刪除Friendship資料表中的該會員資料
         public IHttpActionResult Delete(string FriendID, string memID,bool Cancel)
         {
-            if (Cancel==false) {
+            if (Cancel) {
                 //刪除fans資料表中資料
                 var fan = db.Fans.Where(m => m.memId == FriendID && m.fanMemId == memID).FirstOrDefault();
                 var fan2 = db.Fans.Where(m => m.memId == memID && m.fanMemId == FriendID).FirstOrDefault();
