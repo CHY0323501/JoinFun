@@ -125,10 +125,10 @@ namespace JoinFun.Controllers
                 return View(MRemark);
             }
         }
-        public ActionResult RemarkCreate()
+        public ActionResult RemarkCreate(string actID, string FromMemID)
         {
-            
-
+            //取得被評價會員的清單
+            GetMemList(actID, FromMemID);
             return View();
 
         }
@@ -177,6 +177,23 @@ namespace JoinFun.Controllers
             
             ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
             return View(friend);
+        }
+
+
+        //取得被評價會員的DropDownList清單方法
+        public void GetMemList(string actID, string FromMemID)
+        {
+            var members = db.Activity_Details.Where(m=>m.actId == actID).ToList();
+            //var member = db.Member.ToList();
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach(var item in members)
+            {
+                if(item.memId != FromMemID)
+                {
+                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick , Value = item.memId});
+                }                
+            }
+            ViewBag.MemList = new SelectList(list, "Value", "Text");
         }
     }
 }

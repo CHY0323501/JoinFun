@@ -43,8 +43,9 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ToMemId, "ToMemId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*@Html.DropDownList("ToMemId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ToMemId, "", new { @class = "text-danger" })*@
+            @*@Html.DropDownListFor(model=>model.ToMemId, ViewBag.MemList as SelectList, htmlAttributes: new { @class = "form-control" })*@
+            @Html.DropDownList("MemList", null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.ValidationMessageFor(model => model.ToMemId, "", new { @class = "text-danger" })*@
         </div>
     </div>
 
