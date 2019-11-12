@@ -97,12 +97,45 @@ namespace JoinFun.Controllers
             //    ViewBag.Pwd = password;
             //    return View();
         }
+
         //修改密碼
-        public ActionResult PwdEdit()
+        public ActionResult PwdEdit(string memId)
         {
+            var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
+
+            return View(accPwd);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PwdEdit(string memId, string OldPassword, string NewPassword)
+        {
+            var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
+
+           
 
 
-            return View(db.Member.ToList());
+            if (accPwd.Password == OldPassword)
+            {
+
+
+                //密碼雜湊 salt+hash
+                string salt = Guid.NewGuid().ToString();
+                byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(NewPassword + salt);
+                byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
+                string hashString = Convert.ToBase64String(hashBytes);
+
+                accPwd.memId = memId;
+                accPwd.Password = hashString;
+                accPwd.PasswordConfirm = hashString;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+
+            return View();
+
         }
 
 

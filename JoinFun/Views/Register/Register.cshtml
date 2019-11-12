@@ -21,13 +21,12 @@
                 <div class="col-md-6">
                     <div class="form-group col-md-12">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="col-12 align-items-center">
 
-                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
-                        </div>
-                        <div class="col-12 align-items-center">
-                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "Account" } })
-                        </div>
+
+                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
+
+                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "Account" } })
+
 
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
 
@@ -53,23 +52,31 @@
 
 
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new { @class = "text-danger" })
+                        <div>
 
+                        </div>
                     </div>
 
 
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "pwd" } })
+                        @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
                         @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
+                        <div>
 
+                        </div>
                     </div>
 
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope "></span></span>
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", type = "Email", id = "Email" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
+                        @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })*@
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <input id="Email" type="text" class="form-control" />
+                        <div>
+
+                        </div>
                     </div>
 
                     <div class="form-group col-md-12">
@@ -137,7 +144,7 @@
 
                         <div class="form-group col-md-12">
                             <div class="row mt-3">
-                                @Html.LabelFor(model => model.Habit,"興趣愛好", htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-2" })
 
                                 <textarea id="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
                                 @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -210,61 +217,79 @@
         });
 
 
+        //驗證:Email、memNick、Password
+        var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+        var flag = false;
 
-                    //var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                    //var flag = false;
+        $('#login').submit(function () {
 
-                    //$('#submit').submit(function () {
-
-                    //    if ($('#email').val() == "") {
-                    //        $('#email').addClass("is-invalid");
-                    //        $('#email~div').addClass("invalid-feedback").text('Required!!');
-                    //        return false;
-                    //    }
-                    //    if ($('#pwd').val() == "") {
-                    //        $('#pwd').addClass("is-invalid");
-                    //        $('#pwd~div').addClass("invalid-feedback").text('Required!!');
-                    //        return false;
-                    //    }
+            if ($('#Email').val() == "") {
+                $('#Email').addClass("is-invalid");
+                $('#Email~div').addClass('invalid-feedback').text('請輸入Email!');
+                flag = false;
+            }
 
 
-                    //    if (!flag)
-                    //        return false;
+            if ($('#memNick').val() == "") {
+                $('#memNick').addClass("is-invalid");
+                $('#memNick~div').addClass("invalid-feedback").text('請輸入暱稱!');
+                flag = false;
+            }
 
-                    //    return true;
-                    //});
-
-                    //$('#email').keyup(function () {
-                    //    if (!rex.test($('#email').val())) {
-                    //        $('#email').addClass("is-invalid");
-                    //        $('#email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
-                    //        flag = false;
-                    //    }
-                    //    else {
-                    //        $('#email').removeClass('is-invalid').addClass("is-valid");
-                    //        $('#email~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
-                    //        flag = true;
-                    //    }
-
-                    //});
+            if ($('#Password').val() == "") {
+                $('#Password').addClass("is-invalid");
+                $('#Password~div').addClass("invalid-feedback").text('請輸入Email!');
+                flag = false;
+            }
 
 
-                    //$('#pwd').keyup(function () {
-                    //    if ($('#pwd').val().length < 8) {
-                    //        $('#pwd').addClass("is-invalid");
-                    //        $('#pwd~div').addClass("invalid-feedback").text('至少8個字元!!');
-                    //        flag = false;
-                    //    }
-                    //    else {
-                    //        $('#pwd').removeClass('is-invalid').addClass("is-valid");
-                    //        $('#pwd~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
-                    //        flag = true;
-                    //    }
-                    //});
+            if (!flag)
+                return false;
+
+            return true;
+        });
+
+        $('#Email').keyup(function () {
+            if (!rex.test($('#Email').val())) {
+                $('#Email').addClass("is-invalid");
+                $('#Email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
+                flag = false;
+            }
+            else {
+                $('#Email').removeClass("is-invalid").addClass("is-valid");
+                $('#Email~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+                flag = true;
+            }
+
+        });
 
 
+        $('#Password').keyup(function () {
+            if ($('#Password').val().length < 8) {
+                $('#Password').addClass("is-invalid");
+                $('#Password~div').addClass("invalid-feedback").text('至少8個字元!!');
+                flag = false;
+            }
+            else {
+                $('#Password').removeClass('is-invalid').addClass("is-valid");
+                $('#Password~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+                flag = true;
+            }
+        });
 
+        $('#memNick').keyup(function () {
+            if ($('#memNick').val() >= 15) {
+                $('#memNick').addClass("is-invalid");
+                $('#memNick~div').addClass('invalid-feedback').text('最多15個字!');
+                flag = false;
+            }
+            else {
+                $('#memNick').remove('is-invalid').addClass('is-valid');
+                $('#memNick~div').remove('invalid-feedback').addClass('valid-feedback').text('ok');
+                flag = true;
+            }
 
+        });
 
     </script>
 
