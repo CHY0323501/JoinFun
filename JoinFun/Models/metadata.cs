@@ -172,14 +172,15 @@ namespace JoinFun.Models
         [DisplayName("會員編號")]
         public string memId { get; set; }
 
-        [Required(ErrorMessage = " ")]
-        [StringLength(15,ErrorMessage = " ")]
+        [Required(ErrorMessage = "暱稱為必填欄位")]
+        [StringLength(15,ErrorMessage = "暱稱長度不可超過15字")]
         [DisplayName("暱稱")]
         public string memNick { get; set; }
 
         [DisplayName("電子信箱")]
-        [Required(ErrorMessage =" ")]
-        [StringLength(50, ErrorMessage = " ")]
+        [Required(ErrorMessage ="信箱為必填欄位")]
+        [StringLength(50, ErrorMessage = "信箱不可超過50字")]
+        [RegularExpression("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?", ErrorMessage = "Email格式有誤")]
         public string Email { get; set; }
 
         [StringLength(24, ErrorMessage = "手機不可超過24字")]
