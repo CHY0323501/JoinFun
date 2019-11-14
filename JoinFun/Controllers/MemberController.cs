@@ -22,7 +22,7 @@ namespace JoinFun.Controllers
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
 
-        public ActionResult Info(string memID="M000000003")
+        public ActionResult Info(string memID="M000000002")
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             //當會員編號不存在時執行
@@ -36,7 +36,7 @@ namespace JoinFun.Controllers
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
                     Bookmark_Details= db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
-                    Friendship = db.Friendship.Where(m => m.friendMemId == memID).ToList(),
+                    Friendship = db.Friendship.Where(m => m.memId == memID).ToList(),
                     vw_FansNew = db.vw_FansNew.Where(m => m.memId == memID).ToList(),
                     vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
                     vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID&&m.Approved==true).ToList(),
@@ -125,10 +125,10 @@ namespace JoinFun.Controllers
                 return View(MRemark);
             }
         }
-        public ActionResult RemarkCreate()
+        public ActionResult RemarkCreate(string actID, string FromMemID)
         {
-            
-
+            //取得被評價會員的清單
+            GetMemList(actID, FromMemID);
             return View();
 
         }
@@ -171,12 +171,34 @@ namespace JoinFun.Controllers
             }
         }
 
-        public ActionResult FriendManagement(string memID) {
+        public ActionResult FriendManagement(string memID="M000000005") {
             //好友相關資料
-            var friend = db.vw_FriendShip.Where(m => m.memId == memID).ToList();
+            FriendManagementVW FDvw = new FriendManagementVW()
+            {
+                Member = db.Member.Where(m => m.memId == memID).ToList(),
+                vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList()
+            };
+
             
             ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
-            return View(friend);
+            return View(FDvw);
+        }
+
+
+        //取得被評價會員的DropDownList清單方法
+        public void GetMemList(string actID, string FromMemID)
+        {
+            var members = db.Activity_Details.Where(m=>m.actId == actID).ToList();
+            //var member = db.Member.ToList();
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach(var item in members)
+            {
+                if(item.memId != FromMemID)
+                {
+                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick , Value = item.memId});
+                }                
+            }
+            ViewBag.MemList = new SelectList(list, "Value", "Text");
         }
     }
 }

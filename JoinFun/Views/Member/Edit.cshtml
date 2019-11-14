@@ -42,8 +42,14 @@
                     @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
                 <div class="col-12 col-md-8">
-                    @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
-                    @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-12">
+                            @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
+                        </div>
+                        <div class="col-12">
+                            @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     <div></div>
                 </div>
             </div>
@@ -52,8 +58,14 @@
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
                 <div class="col-12 col-md-8">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-12">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
+                        </div>
+                        <div class="col-12">
+                            <span>@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })</span>
+                        </div>
+                    </div>
                     <div></div>
                 </div>
             </div>
@@ -101,7 +113,6 @@
                     @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
                 </div>
                 <div class="col-12 col-md-8 ">
-                    @*<input id="Birthday" name="Birthday" class="form-control mx-auto text-center w-50" type="date" />*@
                     @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
                     @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
                 </div>
@@ -119,7 +130,6 @@
             <div>
                 @Html.LabelFor(model => model.Habit, "興趣", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
                 @Html.TextArea("Habit", Model.Habit, 8, 50, new { @class = "form-control mx-auto text-center " ,style = "resize:none"})
-                @*@Html.EditorFor(m => m.Habit1, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center mb-1" } })*@
             </div>
             @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
         </div>
@@ -127,7 +137,6 @@
             <div>
                 @Html.LabelFor(model => model.Dietary_Preference, "飲食偏好", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
                 @Html.TextArea("Dietary_Preference", Model.Dietary_Preference, 8, 50, new { @class = "form-control mx-auto text-center ", style = "resize:none" })
-                @*@Html.EditorFor(m => m.Dietary_Preference1, new { htmlAttributes = new { @class = "form-control ml-auto mr-auto text-center mb-1" } })*@
             </div>
             @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @class = "text-danger" })
         </div>
@@ -139,9 +148,6 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section scripts{
     <script src="~/JS/MemberEdit.js"></script>

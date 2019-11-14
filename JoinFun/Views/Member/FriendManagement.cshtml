@@ -1,4 +1,4 @@
-﻿@model IEnumerable<JoinFun.Models.vw_FriendShip>
+﻿@model JoinFun.ViewModel.FriendManagementVW
 @{
     ViewBag.Title = "好友管理";
 }
@@ -20,7 +20,7 @@
                         <a class="nav-link active p-3 text-success" href="#tab1" data-toggle="tab"><strong>待審好友清單</strong></a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>修改好友暱稱</strong></a>
+                        <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>好友管理</strong></a>
                     </li>
                 </ul>
             </div>
@@ -28,21 +28,21 @@
         </div>
         <div class="tab-content">
             <div class="card-body tab-pane show active fade " id="tab1">
-                @if (Model.Where(m => m.Approved == false).ToList() == null)
+                @if (Model.vw_FriendShip.Where(m => m.Approved == false).ToList().Count == 0)
                 {
-                    <h2 class="text-center text-success ">無未審核好友</h2>
+                    <h2 class="text-center text-success ">無未審核資料</h2>
                 }
                 else
                 {
-                    <input type="hidden" id="memID" value="@Model.ToList()[0].memId" />
+                    <input type="hidden" id="memID" value="@Model.Member.ToList()[0].memId" />
                     int count = 0;
-                    foreach (var i in Model)
+                    foreach (var i in Model.vw_FriendShip)
                     {
                         if (!i.Approved)
                         {
 
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp" id="@count" >
-                                <input type="hidden" id="f@(+count)" value="@i.friendMemId" class="fdUSE" />
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp" id="@count">
+                                <input type="hidden" id="f@(+count)" value="@i.friendMemId"  />
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
 
@@ -86,19 +86,20 @@
                 }
             </div>
             <div class="card-body tab-pane fade " id="tab2">
-                @if (Model.Where(m => m.Approved == true).Count() == 0)
+                @if (Model.vw_FriendShip.Where(m => m.Approved == true).Count() == 0)
                 {
                     <h2 class="text-center text-success ">目前尚無好友</h2>
                 }
                 else
                 {
+                    <input type="hidden" id="memID2" value="@Model.Member.ToList()[0].memId" />
                     int count = 0;
-                    string f = "f";
-                    foreach (var i in Model)
+                    foreach (var i in Model.vw_FriendShip)
                     {
                         if (i.Approved)
                         {
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@(f+count)">
+                            <input type="hidden" id="d@(+count)" value="@i.friendMemId" />
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@("c"+count)">
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
                                         <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
@@ -112,13 +113,13 @@
                                             <div class="row text-center mt-3 ">
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">會員編號</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill ">會員編號</span></div>
                                                         <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.friendMemId</span></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill">會員暱稱</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill">會員暱稱</span></div>
                                                         <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.memNick</span></div>
                                                     </div>
                                                 </div>
@@ -129,15 +130,17 @@
 
                                                 <div class="col-12 col-md-6 mt-3">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">修改暱稱</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill ">修改暱稱</span></div>
                                                         <div class="col col-12 col-md-8 mb-2 mb-md-0">
-                                                            @Html.EditorFor(model => i.newNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-100" } })<div></div>
+                                                            @*@Html.EditorFor(model => i.newNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-100" } })<div></div>*@
+                                                            @Html.TextBoxFor(model=>i.newNick, new { id = "newNick"+@count ,@class = "form-control mx-auto text-center w-100 newNick"})
+                                                            <div></div>
                                                         </div>
-
                                                     </div>
                                                 </div>
-                                                <div class="col-12 col-md-6  mt-3">
-                                                    <input type="submit" id="memNickComfirm" value="確認修改" class="btn btn-danger" />
+                                                <div class="col-12 col-md-6  mt-3 " >
+                                                    <input type="button" id="changeNick@(+count)" value="確認修改" class="btn btn-outline-info changeNick" />
+                                                    <input type="button" id="deleteFD@(+count)" value="刪除好友" class="btn btn-outline-danger ml-5 deleteFD" />
                                                 </div>
 
                                             </div>
@@ -157,45 +160,128 @@
 @section scripts{
     <script src="~/JS/FriendManage.js"></script>
     <script>
-        
+
         $(document).ready(function () {
             //確認交友邀請並移除該好友未審資料
             $('.Accept').click(function () {
-                //移除未審資料
+                //取得目前id
                 var btnid = $(this).attr("id").slice(6);
-                
-                console.log(btnid);
+
                 //確認交友邀請
                 $.ajax({
                     type: "Put",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#f' + btnid).attr('value') + "&memid=" + $('#memID').val() + "&newnick=null&checkfd=true",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
                     success: function () {
                         console.log("成功");
+                        //移除未審資料
+                        $("div").find("div[id='" + btnid + "']").remove();
                     },
                     error: function () {
                         console.log("失敗");
                     }
                 });
-                $("div").find("div[id='" + btnid + "']").remove();
-            })
-            $('.Reject').click(function () {
-                //移除未審資料
-                var btnid = $(this).attr("id").slice(6);
                 
-                console.log(btnid);
+            })
+
+            //拒絕交友邀請並移除該好友未審資料
+            $('.Reject').click(function () {
+                //取得目前id
+                var btnid = $(this).attr("id").slice(6);
+
                 //取消交友邀請
                 $.ajax({
                     type: "Delete",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#f' + btnid).attr('value') + "&memid=" + $('#memID').val() ,
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" +$('#f' + btnid).attr('value') + "&Cancel=false",
                     success: function () {
                         console.log("成功");
+                        //移除未審資料
+                        $("div").find("div[id='" + btnid + "']").remove();
                     },
                     error: function () {
                         console.log("失敗");
                     }
                 });
-                $("div").find("div[id='" + btnid + "']").remove();
             })
+
+            //修改暱稱
+            $('.changeNick').click(function () {
+                //取得目前id
+                var btnid = $(this).attr("id").slice(10);
+
+                //修改暱稱
+                $.ajax({
+                    type: "Put",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#d' + btnid).attr('value') + "&memid=" + $('#memID2').val() + "&newnick=" + $('#newNick' + btnid).val() + "&checkfd=false",
+                    success: function () {
+                        console.log("成功");
+                        alert("暱稱修改成功，點擊確定後將重整頁面，即可看到修改後暱稱");
+                        myrefresh();
+                    },
+                    error: function () {
+                        alert("請確認暱稱是否符合格式要求");
+                    }
+                });
+            })
+            //重整頁面
+            function myrefresh() {
+                window.location.reload();
+            }
+            
+
+            var requiredText = "此為必填欄位";
+            //新暱稱資料驗證
+            $('.newNick').keyup(function () {
+                //取得目前id
+                var NowID = $(this).attr("id").slice(7);
+                console.log(NowID);
+
+                if ($('#newNick' + NowID).val().length > 15) {
+                    checkform('#newNick' + NowID, false, "暱稱不可超過15字");
+                } else {
+                    clearErrText('#newNick' + NowID);
+                }
+                checkform('#newNick' + NowID, true, requiredText);
+            });
+
+            function checkform(id, required, msg) {
+                if (required) {
+                    if ($(id).val() == "") {
+                        $(id).addClass('is-invalid');
+                        $(id + '~div').addClass('invalid-feedback').text(msg);
+                        check = false;
+                    }
+                } else {
+                    $(id).addClass('is-invalid');
+                    $(id + '~div').addClass('invalid-feedback').text(msg);
+                    flag = false;
+                }
+            }
+            function clearErrText(id) {
+                $(id).removeClass('is-invalid').addClass('is-valid');
+                $(id + '~div').removeClass('invalid-feedback').addClass('valid-feedback').text('');
+                flag = true;
+            }
+
+
+            //刪除好友
+            $('.deleteFD').click(function () {
+                //取得目前id
+                var NowID = $(this).attr("id").slice(8);
+                if (confirm("您確定要刪除嗎？")) {
+
+                    //刪除好友
+                    $.ajax({
+                        type: "Delete",
+                        url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#d' + NowID).attr('value') + "&memID="+ $('#memID2').val() +"&Cancel=true",
+                        success: function () {
+                            console.log("fdid="+$('#d' + NowID).attr('value')+",memid="+$('#memID2').val())
+                            alert("刪除成功");
+                            myrefresh();
+                        }
+                    });
+                }
+            })
+
         })
     </script>
 }
