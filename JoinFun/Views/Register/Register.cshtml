@@ -20,16 +20,16 @@
             <div class="row ">
                 <div class="col-md-6">
                     <div class="form-group col-md-12">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
 
                         @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
 
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "Account" } })
+                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "account", name = "account" } })
 
 
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
-
+                        <div></div>
                     </div>
 
                     <div class="form-group col-md-12">
@@ -41,20 +41,18 @@
 
 
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @class = "text-danger" })
-
+                        <div></div>
                     </div>
                     <div class="form-group col-md-12">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-2" })
 
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "password", id = "Password" } })
+                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "password", id = "PasswordConfirm" } })
 
 
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new { @class = "text-danger" })
-                        <div>
 
-                        </div>
                     </div>
 
 
@@ -62,21 +60,19 @@
                         @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-2" })
                         @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
                         @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
-                        <div>
-
-                        </div>
+                        <div> </div>
                     </div>
 
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope "></span></span>
 
-                        @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })*@
+
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                        <input id="Email" type="text" class="form-control" />
-                        <div>
-
-                        </div>
+                        @*<input id="Email" type="email" class="form-control" />*@
+                        
+                        <div ></div>
+                        
                     </div>
 
                     <div class="form-group col-md-12">
@@ -136,7 +132,7 @@
                     <div class="form-group col-md-12">
                         <div class="row mt-5 ">
                             @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <textarea id="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                            <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
                             @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
 
@@ -146,7 +142,7 @@
                             <div class="row mt-3">
                                 @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-2" })
 
-                                <textarea id="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                                <textarea id="Habit" name="Habit"style="resize:none" class="form-control " rows="8"> </textarea>
                                 @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
                                 @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
                             </div>
@@ -155,7 +151,7 @@
                         <div class="form-group col-md-12">
                             <div class="row">
                                 @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <textarea id="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                                <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
                                 @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
                                 @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @class = "text-danger" })
                             </div>
@@ -197,6 +193,7 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@*<script src="~/JS/jquery.validate.plus.js"></script>*@
 @section scripts{
     <script>
 
@@ -217,52 +214,50 @@
         });
 
 
-        //驗證:Email、memNick、Password
-        var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-        var flag = false;
+        //驗證:Email、Password
 
-        $('#login').submit(function () {
+        //var flag = false;
+        //var flag = false, check = false;
+        //var requiredText = "此為必填欄位";
 
-            if ($('#Email').val() == "") {
-                $('#Email').addClass("is-invalid");
-                $('#Email~div').addClass('invalid-feedback').text('請輸入Email!');
-                flag = false;
-            }
+        //$('#login').submit(function () {
+           
+        //    if ($('#Email').val() == "") {
+        //        $('#Email').addClass("is-invalid");
+        //        $('#Email~div').addClass('invalid-feedback').text('請輸入Email!');
+        //        flag = false;
+        //    }
 
+        //    if (!flag)
+        //        return false;
 
-            if ($('#memNick').val() == "") {
-                $('#memNick').addClass("is-invalid");
-                $('#memNick~div').addClass("invalid-feedback").text('請輸入暱稱!');
-                flag = false;
-            }
+        //    return true;
+        //});
 
-            if ($('#Password').val() == "") {
-                $('#Password').addClass("is-invalid");
-                $('#Password~div').addClass("invalid-feedback").text('請輸入Email!');
-                flag = false;
-            }
+        //$('#Email').keyup(function () {
+        // var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+        //    if (!rex.test($('#Email').val())) {
+        //        $('#Email').addClass("is-invalid");
+        //        $('#Email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
+        //        flag = false;
+        //    }
+        //    else {
+        //        clearErrText('#Email');
+        //    }
 
+        //});
 
-            if (!flag)
-                return false;
+        //$('#Email').keyup(function () {
+        //    if ($('#Email').val().length > 50) {
+        //        $('#Email').addClass("is-invalid");
+        //        $('#Email~div').addClass("invalid-feedback").text('最多50個字元!!');
+        //        flag = false;
+        //    }
+        //    else {
+        //        clearErrText('#Email');
+        //    }
 
-            return true;
-        });
-
-        $('#Email').keyup(function () {
-            if (!rex.test($('#Email').val())) {
-                $('#Email').addClass("is-invalid");
-                $('#Email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
-                flag = false;
-            }
-            else {
-                $('#Email').removeClass("is-invalid").addClass("is-valid");
-                $('#Email~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
-                flag = true;
-            }
-
-        });
-
+        //});
 
         $('#Password').keyup(function () {
             if ($('#Password').val().length < 8) {
@@ -271,25 +266,43 @@
                 flag = false;
             }
             else {
-                $('#Password').removeClass('is-invalid').addClass("is-valid");
-                $('#Password~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
-                flag = true;
-            }
-        });
-
-        $('#memNick').keyup(function () {
-            if ($('#memNick').val() >= 15) {
-                $('#memNick').addClass("is-invalid");
-                $('#memNick~div').addClass('invalid-feedback').text('最多15個字!');
-                flag = false;
-            }
-            else {
-                $('#memNick').remove('is-invalid').addClass('is-valid');
-                $('#memNick~div').remove('invalid-feedback').addClass('valid-feedback').text('ok');
-                flag = true;
+                clearErrText('#Password');
             }
 
         });
+
+
+
+        function clearErrText(id) {
+            $(id).removeClass('is-invalid').addClass('is-valid');
+            $(id + '~div').removeClass('invalid-feedback').addClass('valid-feedback').text('');
+            flag = true;
+        }
+
+                            $('#account').blur(function () {
+                                $.ajx({
+                                    type: "Get",
+                                    url: "http://localhost:54129/api/AccountAPI" ,
+                                    success: function (data) {
+                                        data.forEach(function (item) {
+                                            if (item.val().length() == $('#account').val().length())
+                                            {
+                                                $('#account~div').text('此帳戶已有人使用');
+                                                return false;
+                                            }
+                                            else
+                                            {
+                                                $(id + '~div').text('');
+
+                                            }
+
+                                        });
+
+                                    }
+
+                                });
+
+                            });
 
     </script>
 

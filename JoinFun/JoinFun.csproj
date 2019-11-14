@@ -129,6 +129,7 @@
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
     <Content Include="JS\FriendManage.js" />
+    <Content Include="JS\jquery.validate.plus.js" />
     <Content Include="JS\MemberEdit.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -582,6 +583,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountAPIController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\BlockMemberController.cs" />

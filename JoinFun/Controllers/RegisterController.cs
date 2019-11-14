@@ -52,9 +52,9 @@ namespace JoinFun.Controllers
         //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Member mem, string account, string password)
+        public ActionResult Register(Member mem, string account, string password, string Introduction, string Habit, string Dietary_Preference)
         {
-
+            
 
             //密碼雜湊 salt+hash
             string salt = Guid.NewGuid().ToString();
@@ -72,6 +72,7 @@ namespace JoinFun.Controllers
             acc.PasswordConfirm = hashString;
             mem.memCounty = Int16.Parse(Request["memCounty"]);
             mem.memDistrict = Int16.Parse(Request["memDistrict"]);
+         
 
             //型別vu/6w94轉換(string->char(1))
             string gender = Request["Sex"];
@@ -83,6 +84,9 @@ namespace JoinFun.Controllers
             //mem.Birthday = DateTime.Parse(Request["Birthday"]).ToString();           
             //mem.Birthday = Convert.ToString(mem.Birthday.ToDateTime("yyyy/MM/dd"));
 
+            mem.Introduction = Introduction;
+            mem.Habit =Habit;
+            mem.Dietary_Preference =Dietary_Preference;
             mem.Sex = gender;
             mem.timeReg = DateTime.Now;
             mem.memId = getmmId;
@@ -93,9 +97,7 @@ namespace JoinFun.Controllers
 
 
             return RedirectToAction("Index");
-            //ViewBag.Acc = account;
-            //    ViewBag.Pwd = password;
-            //    return View();
+           
         }
 
         //修改密碼
@@ -107,8 +109,7 @@ namespace JoinFun.Controllers
 
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost] 
         public ActionResult PwdEdit(string memId, string OldPassword, string NewPassword)
         {
             var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
@@ -118,7 +119,7 @@ namespace JoinFun.Controllers
 
             if (accPwd.Password == OldPassword)
             {
-
+                
 
                 //密碼雜湊 salt+hash
                 string salt = Guid.NewGuid().ToString();
