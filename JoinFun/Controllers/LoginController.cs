@@ -56,16 +56,23 @@ namespace JoinFun.Controllers
             if (reader.Read())
             {
                 
-                Session["account"] = reader["Account"].ToString();
+                Session["memid"] = reader["memId"].ToString();
                
                 
                 Conn.Close();
                 
-                return RedirectToAction("Home");
+                return RedirectToAction("Index","Activity");
             }
             Conn.Close();
             ViewBag.LoginERR = "您輸入的帳號或密碼錯誤";
+
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Activity");
         }
 
     }
