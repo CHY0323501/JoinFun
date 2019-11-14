@@ -152,8 +152,12 @@
     <Content Include="Photos\ClassIMG\活動.png" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
+    <Content Include="Photos\img.png" />
     <Content Include="Photos\male.png" />
+    <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\star.png" />
+    <Content Include="Photos\title.png" />
+    <Content Include="Photos\title2.png" />
     <Content Include="Photos\w-1.png" />
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />
@@ -580,6 +584,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
+    <Compile Include="Controllers\BlockMemberController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
     <Compile Include="Controllers\getDistrictController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -763,12 +768,9 @@
     <Content Include="Views\Member\History.cshtml" />
     <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Member\RemarkCreate.cshtml" />
-
     <Content Include="Views\Register\PwdEdit.cshtml" />
-
     <Content Include="Views\Member\FriendManagement.cshtml" />
     <Content Include="Views\Activity\Report.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

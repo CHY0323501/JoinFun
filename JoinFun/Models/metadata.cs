@@ -95,6 +95,9 @@ namespace JoinFun.Models
         [DisplayName("黑名單對象會員編號")]
         [Required(ErrorMessage = "請輸入黑名單對象會員編號")]
         public string memId { get; set; }
+        [JsonIgnore]
+        public virtual Member Member { get; set; }
+
     }
 
     public class MetaBudget_Restriction
@@ -225,6 +228,9 @@ namespace JoinFun.Models
         public string Dietary_Preference { get; set; }
         [JsonIgnore()]
         public virtual ICollection<Friendship> Friendship { get; set; }
+        [JsonIgnore()]
+        public virtual ICollection<Blacklist> Blacklist { get; set; }
+
     }
 
     public class MetaPayment_Restriction

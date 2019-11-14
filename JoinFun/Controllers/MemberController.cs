@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using JoinFun.Models;
 //using viewmodel
 using JoinFun.ViewModel;
+using JoinFun.Utilities;
 
 namespace JoinFun.Controllers
 {
@@ -35,6 +36,7 @@ namespace JoinFun.Controllers
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
+                    Blacklist = db.Blacklist.ToList(),
                     Bookmark_Details= db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
                     Friendship = db.Friendship.Where(m => m.memId == memID).ToList(),
                     vw_FansNew = db.vw_FansNew.Where(m => m.memId == memID).ToList(),
@@ -43,8 +45,16 @@ namespace JoinFun.Controllers
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
                     vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList()
-                    
                 };
+                //MessageCenter mes = new MessageCenter();
+                //List<string> mailList = new List<string>() {
+                //    "bowbow19@gmail.com","ych4101861@gmail.com"
+                //};
+                //for (int i = 0; i < 100; i++)
+                //{
+                //    mes.SendEmail(mailList, "JoinFun權益通知", "很抱歉，你再度被宏溢封鎖了");
+                //}
+
                 return View(Minfo);
             }
         }
