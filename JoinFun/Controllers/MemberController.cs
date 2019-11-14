@@ -22,7 +22,7 @@ namespace JoinFun.Controllers
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
 
-        public ActionResult Info(string memID="M000000003")
+        public ActionResult Info(string memID="M000000002")
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             //當會員編號不存在時執行
