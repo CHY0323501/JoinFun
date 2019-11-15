@@ -29,7 +29,8 @@
 
 
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
-                        <div></div>
+                        <div id="prompt"></div>
+                       
                     </div>
 
                     <div class="form-group col-md-12">
@@ -70,9 +71,9 @@
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         @*<input id="Email" type="email" class="form-control" />*@
-                        
-                        <div ></div>
-                        
+
+                        <div></div>
+
                     </div>
 
                     <div class="form-group col-md-12">
@@ -142,7 +143,7 @@
                             <div class="row mt-3">
                                 @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-2" })
 
-                                <textarea id="Habit" name="Habit"style="resize:none" class="form-control " rows="8"> </textarea>
+                                <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>
                                 @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
                                 @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
                             </div>
@@ -221,7 +222,7 @@
         //var requiredText = "此為必填欄位";
 
         //$('#login').submit(function () {
-           
+
         //    if ($('#Email').val() == "") {
         //        $('#Email').addClass("is-invalid");
         //        $('#Email~div').addClass('invalid-feedback').text('請輸入Email!');
@@ -279,30 +280,36 @@
             flag = true;
         }
 
-                            $('#account').blur(function () {
-                                $.ajx({
-                                    type: "Get",
-                                    url: "http://localhost:54129/api/AccountAPI" ,
-                                    success: function (data) {
-                                        data.forEach(function (item) {
-                                            if (item.val().length() == $('#account').val().length())
-                                            {
-                                                $('#account~div').text('此帳戶已有人使用');
-                                                return false;
-                                            }
-                                            else
-                                            {
-                                                $(id + '~div').text('');
+        $('#account').blur(function () {
+            $.ajax({
+                type: "Get",
+                url: "http://localhost:54129/api/AccountAPI",
+                success: function (data) {
+                    //console.log(data[0]);
+                    var str = $('#account').val();                    
+                    var i = 0;
+                    while (i < data.length) {
+                        var n = str.search(data[i]);
+                        if (n != -1) {
+                            console.log("帳號重複");
+                            $('#prompt').text("帳號重複").css("color","red");
+                            break;
+                        } else {
+                            i++;
+                            //document.getElementById("demo").innerHTML = n;
+                            console.log(i);
+                        }
 
-                                            }
 
-                                        });
+                    }
+                    if (i == data.length) {
+                        console.log("驗證成功");
+                        $('#prompt').text("此帳號可使用").css("color","green");
+                    }
+                }
 
-                                    }
-
-                                });
-
-                            });
+            });
+        });
 
     </script>
 
