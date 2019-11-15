@@ -176,6 +176,8 @@ namespace JoinFun.Models
         [StringLength(10)]
         [DisplayName("會員編號")]
         public string memId { get; set; }
+
+
         [Required(ErrorMessage = "暱稱為必填欄位")]
         [StringLength(15,ErrorMessage = "暱稱長度不可超過15字")]
         [DisplayName("暱稱")]
