@@ -299,19 +299,10 @@ namespace JoinFun.Controllers
             {
                 if (item.memId != FromMemID && item.memId != remarked)
                 {
-                    var members = db.Activity_Details.Where(m => m.actId == actID).ToList();
-                    //var member = db.Member.ToList();
-                    List<SelectListItem> list = new List<SelectListItem>();
-                    foreach (var item in members)
-                    {
-                        if (item.memId != FromMemID)
-                        {
-                            list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
-                        }
-                    }
-                    ViewBag.MemList = new SelectList(list, "Value", "Text");
+                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
                 }
             }
+            ViewBag.MemList = new SelectList(list, "Value", "Text");
         }
     }
 }
