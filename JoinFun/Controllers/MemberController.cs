@@ -188,15 +188,24 @@ namespace JoinFun.Controllers
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)
         {
+            var host = db.vw_Activities.Where(m => m.actId == actID).ToList();
             var members = db.Activity_Details.Where(m=>m.actId == actID).ToList();
+            string remarked = db.Member_Remarks.Where(m => m.ToMemId == FromMemID && m.actId == actID).FirstOrDefault().FromMemId;
             //var member = db.Member.ToList();
             List<SelectListItem> list = new List<SelectListItem>();
-            foreach(var item in members)
+            foreach (var item in host)
             {
-                if(item.memId != FromMemID)
+                if (item.hostId != FromMemID && item.hostId != remarked)
                 {
-                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick , Value = item.memId});
-                }                
+                    list.Add(new SelectListItem() { Text = item.hostId + " " + item.memNick, Value = item.hostId });
+                }
+            }
+            foreach (var item in members)
+            {
+                if (item.memId != FromMemID && item.memId != remarked)
+                {
+                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
+                }
             }
             ViewBag.MemList = new SelectList(list, "Value", "Text");
         }

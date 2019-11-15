@@ -92,7 +92,7 @@
                                                                 <div class="col-12 col-md-4 mb-2 mb-md-0" >
                                                                 </div>
                                                                 <div class="col-12 col-md-8 mb-2 mb-md-0">
-                                                                    <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId, FromMemID = Session["memid"] })" class="text-decoration-none btn btn-info">新增會員評價</a>
+                                                                    <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId, FromMemID = Session["memid"], hostID = i.hostId })" class="text-decoration-none btn btn-info">新增會員評價</a>
                                                                 </div>
                                                             </div>
                                                         </div>
