@@ -98,6 +98,7 @@ namespace JoinFun.Controllers
                 else
                 {
                     GetSelectList();
+                    ViewBag.Drop = GetDropList();
                     ViewBag.UploadError = "請選擇要上傳的圖片";
                     return View();
                 }
