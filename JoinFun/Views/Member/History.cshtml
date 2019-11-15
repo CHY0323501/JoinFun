@@ -163,9 +163,10 @@
                                             </div>
                                         </div>
                                     </a>
-                                    @if (!Session["memid"].ToString().IsEmpty())
+                                    @try
                                     {
-                                        if (Session["memid"].ToString() == i.memId)
+                                        var session = Session["memid"].ToString();
+                                        if (session == i.memId)
                                         {
                                             <div class="row  mt-md-3 ">
                                                 <div class="col-12 col-md-6 offset-md-6">
@@ -180,6 +181,11 @@
                                             </div>
                                         }
                                     }
+                                    catch
+                                    {
+                                        Response.Redirect("~/Activity/Index");
+                                    }
+
                                 </div>
                             </div>
                         </div>

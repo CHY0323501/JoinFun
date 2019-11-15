@@ -108,13 +108,10 @@ namespace JoinFun.Controllers
             return RedirectToAction("Info", new { memID= Session["memid"] });
         }
 
-       
-
-
-
+        //會員評價
         public ActionResult Remarks(string memID) {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
-            if (memID == null || member == null)
+            if (memID == null || member == null|| Session["memid"].ToString() != memID)
             {
                 return RedirectToAction("Index", "Activity");
             }
@@ -135,6 +132,7 @@ namespace JoinFun.Controllers
                 return View(MRemark);
             }
         }
+        //新增會員評價
         public ActionResult RemarkCreate(string actID, string FromMemID)
         {
             //取得被評價會員的清單
@@ -180,7 +178,7 @@ namespace JoinFun.Controllers
                 return View(History);
             }
         }
-
+        //好友管理
         public ActionResult FriendManagement(string memID="M000000005") {
             //好友相關資料
             FriendManagementVW FDvw = new FriendManagementVW()
@@ -192,6 +190,54 @@ namespace JoinFun.Controllers
             
             ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
             return View(FDvw);
+        }
+        //加入黑名單
+        public ActionResult Block(string BlockedMemID, string memID)
+        {
+            db.Database.ExecuteSqlCommand("exec sp_blockMember @BlockedMemID,@memID", new SqlParameter("@BlockedMemID", BlockedMemID), new SqlParameter("@memID", memID));
+
+            return RedirectToAction("Info", "Member", new { memID = BlockedMemID });
+        }
+        //黑名單清單
+        public ActionResult BlockManage(string memID) {
+            var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
+            if (memID == null || member == null)
+            {
+                return RedirectToAction("Index", "Activity");
+            }
+            else
+            {
+                try
+                {
+                    if (Session["memid"].ToString() == memID)
+                    {
+                        BlockMemberVM BlockList = new BlockMemberVM()
+                        {
+                            Blacklist = db.Blacklist.Where(m => m.memId == memID).ToList(),
+                            Member = db.Member.ToList(),
+                        };
+                        return View(BlockList);
+                    }
+                    //未登入時無法編輯並轉至首頁
+                    return RedirectToAction("Index", "Activity");
+                }
+                catch
+                {
+                    return RedirectToAction("Index", "Activity");
+                }
+            }
+        }
+        //解除黑名單
+        public ActionResult CancelBlock(string BlockedMemID, string memID) {
+            var Block1 = db.Blacklist.Where(m => m.memId == memID && m.blockedMemId == BlockedMemID).FirstOrDefault();
+            var Block2 = db.Blacklist.Where(m => m.memId == BlockedMemID && m.blockedMemId == memID).FirstOrDefault();
+            if (Block1 != null)
+                db.Blacklist.Remove(Block1);
+            if (Block2 != null)
+                db.Blacklist.Remove(Block2);
+
+            db.SaveChanges();
+            return RedirectToAction("BlockManage", "Member", new { memID = memID });
         }
 
 

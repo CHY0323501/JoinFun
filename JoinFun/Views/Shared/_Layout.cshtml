@@ -161,11 +161,9 @@
                                 <a class="dropdown-item" href="#">新增會員評價</a>
                                 <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})">好友管理</a>
 
-                                <a class="dropdown-item " href="#">黑名單管理</a>
+                                <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})">黑名單管理</a>
                                 <a class="dropdown-item" href="@Url.Action("Logout","Login")">登出</a>
 
-                                <a class="dropdown-item" href="#">黑名單管理</a>
-                                <a class="dropdown-item" href="#">登出</a>
 
 
                             </div>
