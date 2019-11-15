@@ -153,8 +153,12 @@
     <Content Include="Photos\ClassIMG\活動.png" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
+    <Content Include="Photos\img.png" />
     <Content Include="Photos\male.png" />
+    <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\star.png" />
+    <Content Include="Photos\title.png" />
+    <Content Include="Photos\title2.png" />
     <Content Include="Photos\w-1.png" />
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />
@@ -582,6 +586,7 @@
     <Compile Include="Controllers\AccountAPIController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
+    <Compile Include="Controllers\BlockMemberController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
     <Compile Include="Controllers\getDistrictController.cs" />
     <Compile Include="Controllers\LoginController.cs" />

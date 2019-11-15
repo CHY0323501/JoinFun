@@ -97,6 +97,9 @@ namespace JoinFun.Models
         [DisplayName("黑名單對象會員編號")]
         [Required(ErrorMessage = "請輸入黑名單對象會員編號")]
         public string memId { get; set; }
+        [JsonIgnore]
+        public virtual Member Member { get; set; }
+
     }
 
     public class MetaBudget_Restriction
@@ -175,18 +178,12 @@ namespace JoinFun.Models
         public string memId { get; set; }
 
 
-    
-
         [Required(ErrorMessage = "暱稱為必填欄位")]
         [StringLength(15,ErrorMessage = "暱稱長度不可超過15字")]
-
         [DisplayName("暱稱")]
         public string memNick { get; set; }
 
         [DisplayName("電子信箱")]
-
-   
-
         [Required(ErrorMessage ="信箱為必填欄位")]
         [StringLength(50, ErrorMessage = "信箱不可超過50字")]
 
@@ -235,6 +232,8 @@ namespace JoinFun.Models
         public string Dietary_Preference { get; set; }
         [JsonIgnore()]
         public virtual ICollection<Friendship> Friendship { get; set; }
+        [JsonIgnore()]
+        public virtual ICollection<Blacklist> Blacklist { get; set; }
         [JsonIgnore()]
         public virtual ICollection<Acc_Pass> Acc_Pass { get; set; }
     }
