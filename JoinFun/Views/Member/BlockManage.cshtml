@@ -1,0 +1,65 @@
+﻿@model JoinFun.ViewModel.BlockMemberVM
+@section memberRemarks{
+    <link href="~/CSS/Remarks.css" rel="stylesheet" />
+}
+@{
+    ViewBag.Title = "解除黑名單";
+}
+
+
+<div class="container containerMinH">
+    <h2 class="mt-5 text-center p-3 text-warning">解除黑名單</h2>
+    <div class="card text-center border-0 p-adjust">
+
+        <div class="card-body show active fade ">
+            @if (Model.Blacklist.Count() == 0)
+            {
+                <h2 class="text-center text-success ">目前無封鎖名單</h2>
+            }
+            else
+            {
+                foreach (var i in Model.Blacklist)
+                {
+                    foreach (var j in Model.Member.Where(m => m.memId == i.blockedMemId))
+                    {
+                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                            <div class="row mb-1 align-items-center ">
+                                <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
+                                    <img src="~/Photos/@(j.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-25 " />
+                                </div>
+                                <div class="col col-12 col-md-8 b-top ">
+                                    <div class="row text-center mt-3 ">
+                                        <div class="col-12 col-md-6 ">
+                                            <div class="row">
+                                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">會員編號</span></div>
+                                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.blockedMemId</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 ">
+                                            <div class="row">
+                                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">會員暱稱</span></div>
+                                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@j.memNick</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  mt-md-3 ">
+                                        <div class="col-12 col-md-6 offset-md-6">
+                                            <div class="row">
+                                                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                                </div>
+                                                <div class="col-12 col-md-8 mb-2 mb-md-0">
+                                                    <a href="@Url.Action("CancelBlock","Member",new { BlockedMemID=i.blockedMemId, memID=Session["memid"].ToString() })" class="text-decoration-none btn btn-outline-danger" onclick="return confirm('確定要解除封鎖嗎？')">解除封鎖</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+    </div>
+</div>

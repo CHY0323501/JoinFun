@@ -26,6 +26,8 @@ namespace JoinFun.Models
         [DisplayName("確認密碼")]
         [Compare("Password")]
         public string PasswordConfirm { get; set; }
+        [JsonIgnore()]
+        public virtual Member Member { get; set; }
     }
     public  class MetaActivity_Class
     {
@@ -95,6 +97,9 @@ namespace JoinFun.Models
         [DisplayName("黑名單對象會員編號")]
         [Required(ErrorMessage = "請輸入黑名單對象會員編號")]
         public string memId { get; set; }
+        [JsonIgnore]
+        public virtual Member Member { get; set; }
+
     }
 
     public class MetaBudget_Restriction
@@ -173,14 +178,17 @@ namespace JoinFun.Models
         [DisplayName("會員編號")]
         public string memId { get; set; }
 
-        [Required(ErrorMessage = " ")]
-        [StringLength(15,ErrorMessage = " ")]
+
+        [Required(ErrorMessage = "暱稱為必填欄位")]
+        [StringLength(15,ErrorMessage = "暱稱長度不可超過15字")]
         [DisplayName("暱稱")]
         public string memNick { get; set; }
 
         [DisplayName("電子信箱")]
-        [Required(ErrorMessage =" ")]
-        [StringLength(50, ErrorMessage = " ")]
+        [Required(ErrorMessage ="信箱為必填欄位")]
+        [StringLength(50, ErrorMessage = "信箱不可超過50字")]
+
+        [RegularExpression("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?", ErrorMessage = "Email格式有誤")]
         public string Email { get; set; }
 
         [StringLength(24, ErrorMessage = "手機不可超過24字")]
@@ -225,6 +233,10 @@ namespace JoinFun.Models
         public string Dietary_Preference { get; set; }
         [JsonIgnore()]
         public virtual ICollection<Friendship> Friendship { get; set; }
+        [JsonIgnore()]
+        public virtual ICollection<Blacklist> Blacklist { get; set; }
+        [JsonIgnore()]
+        public virtual ICollection<Acc_Pass> Acc_Pass { get; set; }
     }
 
     public class MetaPayment_Restriction

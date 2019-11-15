@@ -17,10 +17,6 @@ namespace JoinFun.Controllers
         //確認好友狀態
         public IHttpActionResult Get(string memID)
         {
-            //var friendShip = (from i in db.Friendship
-            //          where i.friendMemId == FriendID /*&& i.memId == HttpContext.Current.Session["memid"].ToString()*/
-            //          select i).FirstOrDefault();
-
             var friendship = db.Friendship.Where(m => m.memId == memID).ToList();
 
             return Ok(friendship);
@@ -165,5 +161,6 @@ namespace JoinFun.Controllers
 
             return Ok();
         }
+        
     }
 }
