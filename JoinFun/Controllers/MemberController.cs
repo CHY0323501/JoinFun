@@ -23,25 +23,26 @@ namespace JoinFun.Controllers
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
 
-        public ActionResult Info(string memID="M000000002")
+        public ActionResult Info(string memID = "M000000002")
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             //當會員編號不存在時執行
-            if (memID == null|| member==null)
+            if (memID == null || member == null)
             {
                 return RedirectToAction("Index", "Activity");
             }
-            else {
+            else
+            {
                 Session["memid"] = "M000000002";
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
                     Blacklist = db.Blacklist.ToList(),
-                    Bookmark_Details= db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
+                    Bookmark_Details = db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
                     Friendship = db.Friendship.Where(m => m.memId == memID).ToList(),
                     vw_FansNew = db.vw_FansNew.Where(m => m.memId == memID).ToList(),
                     vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
-                    vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID&&m.Approved==true).ToList(),
+                    vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID && m.Approved == true).ToList(),
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
                     vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList()
@@ -58,29 +59,32 @@ namespace JoinFun.Controllers
                 return View(Minfo);
             }
         }
-        public ActionResult Edit(string memID) {
+        public ActionResult Edit(string memID)
+        {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null)
             {
                 return RedirectToAction("Index", "Activity");
             }
-            else {
+            else
+            {
                 try
                 {
-                    if ( Session["memid"].ToString() == memID)
+                    if (Session["memid"].ToString() == memID)
                     {
-                            //下拉式選單用
-                            //ViewBag.county_drop = new SelectList(db.County, "CountyNo", "CountyName");
-                            //ViewBag.district_drop = new SelectList(db.District, "DistrictSerial", "DistrictName");
-                            ViewBag.county_drop = db.County.ToList();
-                            ViewBag.district_drop = db.District.ToList();
-                            return View(member);
+                        //下拉式選單用
+                        //ViewBag.county_drop = new SelectList(db.County, "CountyNo", "CountyName");
+                        //ViewBag.district_drop = new SelectList(db.District, "DistrictSerial", "DistrictName");
+                        ViewBag.county_drop = db.County.ToList();
+                        ViewBag.district_drop = db.District.ToList();
+                        return View(member);
 
                     }
                     //未登入時無法編輯並轉至首頁
                     return RedirectToAction("Index", "Activity");
                 }
-                catch {
+                catch
+                {
                     return RedirectToAction("Index", "Activity");
                 }
             }
@@ -89,8 +93,8 @@ namespace JoinFun.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string memId, DateTime Birthday, string Sex, string memNick, string Email, int memCounty, int memDistrict, string Introduction, string Habit, string Dietary_Preference)
         {
-            
-            if (ModelState.IsValid&&Session["memid"]!=null)
+
+            if (ModelState.IsValid && Session["memid"] != null)
             {
                 var mem = db.Member.Find(memId);
                 mem.Sex = Sex;
@@ -105,20 +109,22 @@ namespace JoinFun.Controllers
                 db.SaveChanges();
             }
             //編輯完畢時回到個人資訊頁
-            return RedirectToAction("Info", new { memID= Session["memid"] });
+            return RedirectToAction("Info", new { memID = Session["memid"] });
         }
 
-       
 
 
 
-        public ActionResult Remarks(string memID) {
+
+        public ActionResult Remarks(string memID)
+        {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null)
             {
                 return RedirectToAction("Index", "Activity");
             }
-            else {
+            else
+            {
                 MemRemarkViewModel MRemark = new MemRemarkViewModel()
                 {
                     //判斷是否為主辦人評價
@@ -135,22 +141,50 @@ namespace JoinFun.Controllers
                 return View(MRemark);
             }
         }
-        public ActionResult RemarkCreate(string actID, string FromMemID)
+        public ActionResult RemarkCreate(string actID, string FromMemID, bool ishost)
         {
-            //取得被評價會員的清單
-            GetMemList(actID, FromMemID);
-            return View();
+
+            var member = db.Member.Where(m => m.memId == FromMemID).FirstOrDefault();
+            if (FromMemID == null || member == null)
+            {
+                return RedirectToAction("Index", "Activity");
+            }
+
+            if (ishost == true)
+            {
+                ViewBag.actTop = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actTopic).FirstOrDefault();
+                ViewBag.actid = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actId).FirstOrDefault();
+                GetMemList(actID, FromMemID);
+                
+                return View();
+            }
+
+            else
+            {
+                ViewBag.actTop = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actTopic).FirstOrDefault();
+                ViewBag.actid = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actId).FirstOrDefault();
+
+
+                GetMemList(actID, FromMemID);
+
+                return View();
+
+            }
+
 
         }
         [HttpPost]
-        public ActionResult RemarkCreate(string remarkContent ,short remarkStar,DateTime remarkTime)
+        public ActionResult RemarkCreate(string remarkContent, short remarkStar, string FromMemId)
         {
             Member_Remarks aaa = new Member_Remarks();
 
+            string qq = db.Database.SqlQuery<string>("Select dbo.GetRemarkId").FirstOrDefault();
+
+            aaa.remarkSerial = qq;
+            aaa.FromMemId = FromMemId; //要更改成存入登入的會員ID
             aaa.remarkContent = remarkContent;
             aaa.remarkStar = remarkStar;
-            aaa.remarkTime = remarkTime;
-
+            aaa.remarkTime = DateTime.Now;
             db.Member_Remarks.Add(aaa);
             db.SaveChanges();
 
@@ -158,7 +192,8 @@ namespace JoinFun.Controllers
 
         }
         //揪團歷史
-        public ActionResult History(string memID) {
+        public ActionResult History(string memID)
+        {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null)
             {
@@ -171,7 +206,7 @@ namespace JoinFun.Controllers
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
                     vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList(),
                     Photos_of_Activities = db.Photos_of_Activities.ToList(),
-                    Activity_Class= db.Activity_Class.ToList()
+                    Activity_Class = db.Activity_Class.ToList()
                 };
 
                 ViewBag.ToMemNick = (from m in db.Member
@@ -181,7 +216,8 @@ namespace JoinFun.Controllers
             }
         }
 
-        public ActionResult FriendManagement(string memID="M000000005") {
+        public ActionResult FriendManagement(string memID = "M000000005")
+        {
             //好友相關資料
             FriendManagementVW FDvw = new FriendManagementVW()
             {
@@ -189,7 +225,7 @@ namespace JoinFun.Controllers
                 vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList()
             };
 
-            
+
             ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
             return View(FDvw);
         }
@@ -198,15 +234,15 @@ namespace JoinFun.Controllers
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)
         {
-            var members = db.Activity_Details.Where(m=>m.actId == actID).ToList();
+            var members = db.Activity_Details.Where(m => m.actId == actID).ToList();
             //var member = db.Member.ToList();
             List<SelectListItem> list = new List<SelectListItem>();
-            foreach(var item in members)
+            foreach (var item in members)
             {
-                if(item.memId != FromMemID)
+                if (item.memId != FromMemID)
                 {
-                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick , Value = item.memId});
-                }                
+                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
+                }
             }
             ViewBag.MemList = new SelectList(list, "Value", "Text");
         }
