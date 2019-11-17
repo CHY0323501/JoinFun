@@ -47,5 +47,8 @@ namespace JoinFun.Models
         public short CountyNo { get; set; }
         public short peoSerial { get; set; }
         public short paymentSerial { get; set; }
+        public short memCounty { get; set; }
+        public short memDistrict { get; set; }
+        public string Sex { get; set; }
     }
 }

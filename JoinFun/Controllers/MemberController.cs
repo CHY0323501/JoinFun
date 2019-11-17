@@ -53,7 +53,7 @@ namespace JoinFun.Controllers
                 //};
                 //for (int i = 0; i < 100; i++)
                 //{
-                //    mes.SendEmail(mailList, "JoinFun權益通知", "很抱歉，你再度被宏溢封鎖了");
+                //    mes.SendEmail(mailList, "JoinFun緊急公告", "會員：吳芳飴女士，您已危害到工程師生存，請立刻停止攻擊，否則不排除提告！JoinFun營運團隊");
                 //}
 
                 return View(Minfo);
@@ -189,6 +189,32 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
 
         }
+        //目前開團&參團清單
+        public ActionResult MyActivities(string memID)
+        {
+            var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
+            if (memID == null || member == null)
+            {
+                return RedirectToAction("Index", "Activity");
+            }
+            else
+            {
+                MyActivitiesVM MyActivity = new MyActivitiesVM()
+                {
+                    Host_Now = db.Host_Now.Where(m => m.hostId == memID).ToList(),
+                    Part_Now = db.Part_Now.Where(m => m.memId == memID).ToList(),
+                    Photos_of_Activities = db.Photos_of_Activities.ToList(),
+                    Activity_Class = db.Activity_Class.ToList()
+                };
+
+                ViewBag.ToMemNick = (from m in db.Member
+                                     where m.memId == memID
+                                     select m.memNick).FirstOrDefault();
+                return View(MyActivity);
+            }
+        }
+
+
         //揪團歷史
         public ActionResult History(string memID)
         {

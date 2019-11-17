@@ -1,0 +1,198 @@
+﻿@model JoinFun.ViewModel.MyActivitiesVM
+
+@section memberRemarks{
+    <link href="~/CSS/Remarks.css" rel="stylesheet" />
+}
+@{
+    ViewBag.Title = "目前進行中的揪團";
+}
+
+
+<div class="container containerMinH">
+    <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.ToMemNick)的揪團歷史</h2>
+    <div class="card text-center border-0 p-adjust">
+        <div class="card-header bg-transparent text-white ">
+            <div class="d-flex">
+                <ul class="nav nav-tabs card-header-tabs mx-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link active p-3 text-success" href="#tab1" data-toggle="tab"><strong>目前開團</strong></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>目前參團</strong></a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="tab-content">
+            <div class="card-body tab-pane show active fade " id="tab1">
+                @if (Model.Host_Now.Count == 0)
+                {
+                    <h2 class="text-center text-success ">無開團歷史</h2>
+                }
+                else
+                {
+                    foreach (var i in Model.vw_HostHistory)
+                    {
+
+                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                            <div class="row mb-1 align-items-center ">
+                                <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
+                                    @{var photo = Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault();
+
+                                        if (photo != null)
+                                        {
+                                            <img src="@Url.Content(photo.actPics)" class="img-fluid w-75 " style="height:190px" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@Url.Content(Model.Activity_Class.Where(m=>m.actClassId==i.actClassId).FirstOrDefault().Photos)" class="img-fluid w-75 " style="height:190px" />
+                                        }
+                                    }
+                                </div>
+
+                                <div class="col col-12 col-md-8 b-top ">
+                                    <a href="@Url.Action("Details", "Activity", new { actId = i.actId })" class="text-decoration-none changeCursor" title="點擊連結至活動資訊">
+                                        <div class="row text-center mt-3 ">
+                                            <div class="col-12 col-md-6 ">
+                                                <div class="row">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動編號</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actId</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 ">
+                                                <div class="row">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動主題</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actTopic</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row text-center mt-md-3">
+                                            <div class="col-12 col-md-6 ">
+                                                <div class="row">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動時間</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.actTime.ToString().Substring(0, 10).Replace("/", "-")</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6  ">
+                                                <div class="row ">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動地點</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.CountyName @i.DistrictName</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    @if (!Session["memid"].ToString().IsEmpty())
+                                    {
+                                        if (Session["memid"].ToString() == i.hostId)
+                                        {
+                                            <div class="row  mt-md-3 ">
+                                                <div class="col-12 col-md-6 offset-md-6">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                                        </div>
+                                                        <div class="col-12 col-md-8 mb-2 mb-md-0">
+                                                            <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId,FromMemID=Session["memid"].ToString(),ishost=true})" class="text-decoration-none btn btn-info ">新增會員評價</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="card-body tab-pane fade " id="tab2">
+                @if (Model.vw_PartHistory.Count == 0)
+                {
+                    <h2 class="text-center text-success ">無參團歷史</h2>
+                }
+                else
+                {
+                    foreach (var i in Model.vw_PartHistory)
+                    {
+
+                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                            <div class="row mb-1 align-items-center ">
+                                <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
+                                    @{var photo = Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault();
+
+                                        if (photo != null)
+                                        {
+                                            <img src="@Url.Content(photo.actPics)" class="img-fluid w-75 " style="height:190px" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@Url.Content(Model.Activity_Class.Where(m=>m.actClassId==i.actClassId).FirstOrDefault().Photos)" class="img-fluid w-75 " style="height:190px" />
+                                        }
+                                    }
+                                </div>
+
+                                <div class="col col-12 col-md-8 b-top ">
+                                    <a href="@Url.Action("Details", "Activity", new { actId = i.actId })" class="text-decoration-none changeCursor" title="點擊連結至活動資訊">
+                                        <div class="row text-center mt-3 ">
+                                            <div class="col-12 col-md-6 ">
+                                                <div class="row">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動編號</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actId</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 ">
+                                                <div class="row">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動主題</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.actTopic</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row text-center mt-md-3">
+                                            <div class="col-12 col-md-6 ">
+                                                <div class="row">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動時間</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.actTime.ToString().Substring(0, 10).Replace("/", "-")</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6  ">
+                                                <div class="row ">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="bg-success text-white p-1 rounded-pill">活動地點</span></div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.CountyName @i.DistrictName</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    @try
+                                    {
+                                        var session = Session["memid"].ToString();
+                                        if (session == i.memId)
+                                        {
+                                            <div class="row  mt-md-3 ">
+                                                <div class="col-12 col-md-6 offset-md-6">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                                        </div>
+                                                        <div class="col-12 col-md-8 mb-2 mb-md-0">
+                                                            <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId ,FromMemID=Session["memid"].ToString(),ishost=false})" class="text-decoration-none btn btn-info">新增會員評價</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        Response.Redirect("~/Activity/Index");
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

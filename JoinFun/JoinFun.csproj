@@ -644,6 +644,9 @@
     <Compile Include="Models\Gender_Restriction.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Host_Now.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\JoinfunNEW.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -673,6 +676,9 @@
     </Compile>
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\Notification.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Part_Now.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Payment_Restriction.cs">
@@ -734,6 +740,7 @@
     <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
+    <Compile Include="ViewModel\MyActivitiesVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -774,6 +781,7 @@
     <Content Include="Views\Member\FriendManagement.cshtml" />
     <Content Include="Views\Activity\Report.cshtml" />
     <Content Include="Views\Member\BlockManage.cshtml" />
+    <Content Include="Views\Member\MyActivities.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
