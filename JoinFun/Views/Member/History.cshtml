@@ -52,7 +52,7 @@
                                 </div>
 
                                 <div class="col col-12 col-md-8 b-top ">
-                                    <a href="@Url.Action("Details", "Activity", new { actId = i.actId })" class="text-decoration-none changeCursor" title="點擊連結至活動資訊">
+                                    <a href="@Url.Action("Details", "Activity", new { actId = i.actId })" class="text-decoration-none changeCursor" title="點擊連結至活動資訊"></a>
                                         <div class="row text-center mt-3 ">
                                             <div class="col-12 col-md-6 ">
                                                 <div class="row">
@@ -80,30 +80,48 @@
                                                     <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.CountyName @i.DistrictName</span></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                    @if (!Session["memid"].ToString().IsEmpty())
-                                    {
-                                        if (Session["memid"].ToString() == i.hostId)
-                                        {
-                                            <div class="row  mt-md-3 ">
-                                                <div class="col-12 col-md-6 offset-md-6">
-                                                    <div class="row">
-                                                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                
+                                            @if (!Session["memid"].ToString().IsEmpty())
+                                            {
+                                                if (Session["memid"].ToString() == i.hostId)
+                                                {
+                                                    <div class="row  mt-md-3 ">
+                                                        <div class="col-12 col-md-6 offset-md-6">
+                                                            <div class="row">
+                                                                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                                                </div>
+                                                                <div class="col-12 col-md-8 mb-2 mb-md-0">
+                                                                    <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId, FromMemID = Session["memid"], hostID = i.hostId })" class="text-decoration-none btn btn-info">新增會員評價</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-12 col-md-8 mb-2 mb-md-0">
-                                                            <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId,FromMemID=Session["memid"].ToString(),ishost=true})" class="text-decoration-none btn btn-info " >新增會員評價</a>
-                                                        </div>
+                                                        @if (!Session["memid"].ToString().IsEmpty())
+                                                        {
+                                                            if (Session["memid"].ToString() == i.hostId)
+                                                            {
+                                                                <div class="row  mt-md-3 ">
+                                                                    <div class="col-12 col-md-6 offset-md-6">
+                                                                        <div class="row">
+                                                                            <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                                                            </div>
+                                                                            <div class="col-12 col-md-8 mb-2 mb-md-0">
+                                                                                <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId,FromMemID=Session["memid"].ToString(),ishost=true})" class="text-decoration-none btn btn-info ">新增會員評價</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
                                                     </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    }
+                                                    }
+                                                }
+                                         </div>
+                                </div>
                                 </div>
                             </div>
-                        </div>
                     }
-                }
+                 }
+                
             </div>
             <div class="card-body tab-pane fade " id="tab2">
                 @if (Model.vw_PartHistory.Count == 0)

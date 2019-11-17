@@ -150,6 +150,7 @@ namespace JoinFun.Models
         public decimal maxBudget { get; set; }
         [DisplayName("縣/市")]
         public short actCounty { get; set; }
+        [Required(ErrorMessage = "必須輸入活動地址")]
         [DisplayName("鄉/鎮/市/區")]
         public short actDistrict { get; set; }
         [DisplayName("路名")]

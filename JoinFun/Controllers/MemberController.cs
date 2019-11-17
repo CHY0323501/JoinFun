@@ -116,7 +116,7 @@ namespace JoinFun.Controllers
         public ActionResult Remarks(string memID)
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
-            if (memID == null || member == null|| Session["memid"].ToString() != memID)
+            if (memID == null || member == null || Session["memid"].ToString() != memID)
             {
                 return RedirectToAction("Index", "Activity");
             }
@@ -153,7 +153,7 @@ namespace JoinFun.Controllers
                 ViewBag.actTop = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actTopic).FirstOrDefault();
                 ViewBag.actid = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actId).FirstOrDefault();
                 GetMemList(actID, FromMemID);
-                
+
                 return View();
             }
 
@@ -262,7 +262,8 @@ namespace JoinFun.Controllers
             return RedirectToAction("Info", "Member", new { memID = BlockedMemID });
         }
         //黑名單清單
-        public ActionResult BlockManage(string memID) {
+        public ActionResult BlockManage(string memID)
+        {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null)
             {
@@ -291,7 +292,8 @@ namespace JoinFun.Controllers
             }
         }
         //解除黑名單
-        public ActionResult CancelBlock(string BlockedMemID, string memID) {
+        public ActionResult CancelBlock(string BlockedMemID, string memID)
+        {
             var Block1 = db.Blacklist.Where(m => m.memId == memID && m.blockedMemId == BlockedMemID).FirstOrDefault();
             var Block2 = db.Blacklist.Where(m => m.memId == BlockedMemID && m.blockedMemId == memID).FirstOrDefault();
             if (Block1 != null)
@@ -307,12 +309,21 @@ namespace JoinFun.Controllers
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)
         {
+            var host = db.vw_Activities.Where(m => m.actId == actID).ToList();
             var members = db.Activity_Details.Where(m => m.actId == actID).ToList();
+            string remarked = db.Member_Remarks.Where(m => m.ToMemId == FromMemID && m.actId == actID).FirstOrDefault().FromMemId;
             //var member = db.Member.ToList();
             List<SelectListItem> list = new List<SelectListItem>();
+            foreach (var item in host)
+            {
+                if (item.hostId != FromMemID && item.hostId != remarked)
+                {
+                    list.Add(new SelectListItem() { Text = item.hostId + " " + item.memNick, Value = item.hostId });
+                }
+            }
             foreach (var item in members)
             {
-                if (item.memId != FromMemID)
+                if (item.memId != FromMemID && item.memId != remarked)
                 {
                     list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
                 }
