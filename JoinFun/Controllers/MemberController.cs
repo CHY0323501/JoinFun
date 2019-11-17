@@ -152,8 +152,8 @@ namespace JoinFun.Controllers
             {
                 ViewBag.actTop = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actTopic).FirstOrDefault();
                 ViewBag.actid = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actId).FirstOrDefault();
+                
                 GetMemList(actID, FromMemID);
-
                 return View();
             }
 
@@ -172,21 +172,27 @@ namespace JoinFun.Controllers
 
         }
         [HttpPost]
-        public ActionResult RemarkCreate(string remarkContent, short remarkStar, string FromMemId)
-        {
+        public ActionResult RemarkCreate(string ToMemId,string actid,string remarkContent, short remarkStar, string FromMemId)
+        {            
+            
+            //呼叫Sql系統函數GetActId()取得新增的活動ID
+
+            string getremarkSerial = db.Database.SqlQuery<string>("Select [dbo].[GetRemarkId]()").FirstOrDefault();
             Member_Remarks aaa = new Member_Remarks();
 
-            string qq = db.Database.SqlQuery<string>("Select dbo.GetRemarkId").FirstOrDefault();
 
-            aaa.remarkSerial = qq;
-            aaa.FromMemId = FromMemId; //要更改成存入登入的會員ID
+            aaa.actId = db.vw_HostHistory.Where(m => m.actId == actid).Select(m => m.actId).FirstOrDefault();
+            aaa.ToMemId = ToMemId;
+
+            aaa.remarkSerial = getremarkSerial;
+            aaa.FromMemId = FromMemId;
             aaa.remarkContent = remarkContent;
             aaa.remarkStar = remarkStar;
             aaa.remarkTime = DateTime.Now;
             db.Member_Remarks.Add(aaa);
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("History");
 
         }
         //目前開團&參團清單
