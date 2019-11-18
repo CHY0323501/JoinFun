@@ -116,7 +116,7 @@ namespace JoinFun.Controllers
         public ActionResult Remarks(string memID)
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
-            if (memID == null || member == null || Session["memid"].ToString() != memID)
+            if (memID == null || member == null )
             {
                 return RedirectToAction("Index", "Activity");
             }
@@ -206,10 +206,6 @@ namespace JoinFun.Controllers
                     Photos_of_Activities = db.Photos_of_Activities.ToList(),
                     Activity_Class = db.Activity_Class.ToList()
                 };
-
-                ViewBag.ToMemNick = (from m in db.Member
-                                     where m.memId == memID
-                                     select m.memNick).FirstOrDefault();
                 return View(MyActivity);
             }
         }
@@ -241,18 +237,38 @@ namespace JoinFun.Controllers
         }
         //好友管理
 
-        public ActionResult FriendManagement(string memID = "M000000005")
+        public ActionResult FriendManagement(string memID)
         {
-            //好友相關資料
-            FriendManagementVW FDvw = new FriendManagementVW()
+            var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
+            if (memID == null || member == null )
             {
-                Member = db.Member.Where(m => m.memId == memID).ToList(),
-                vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList()
-            };
+                return RedirectToAction("Index", "Activity");
+            }
+            else
+            {
+                try
+                {
+                    if (Session["memid"].ToString() == memID)
+                    {
+                        //好友相關資料
+                        FriendManagementVW FDvw = new FriendManagementVW()
+                        {
+                            Member = db.Member.Where(m => m.memId == memID).ToList(),
+                            vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList()
+                        };
 
-
-            ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
-            return View(FDvw);
+                        ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
+                        return View(FDvw);
+                    }
+                    else {
+                        return RedirectToAction("Index", "Activity");
+                    }
+                }
+                catch {
+                    return RedirectToAction("Index", "Activity");
+                }
+                
+            }
         }
         //加入黑名單
         public ActionResult Block(string BlockedMemID, string memID)
@@ -294,17 +310,27 @@ namespace JoinFun.Controllers
         //解除黑名單
         public ActionResult CancelBlock(string BlockedMemID, string memID)
         {
-            var Block1 = db.Blacklist.Where(m => m.memId == memID && m.blockedMemId == BlockedMemID).FirstOrDefault();
-            var Block2 = db.Blacklist.Where(m => m.memId == BlockedMemID && m.blockedMemId == memID).FirstOrDefault();
-            if (Block1 != null)
-                db.Blacklist.Remove(Block1);
-            if (Block2 != null)
-                db.Blacklist.Remove(Block2);
+            if (Session["memid"].ToString().Any()) {
+                var Block1 = db.Blacklist.Where(m => m.memId == memID && m.blockedMemId == BlockedMemID).FirstOrDefault();
+                var Block2 = db.Blacklist.Where(m => m.memId == BlockedMemID && m.blockedMemId == memID).FirstOrDefault();
+                if (Block1 != null)
+                    db.Blacklist.Remove(Block1);
+                if (Block2 != null)
+                    db.Blacklist.Remove(Block2);
 
-            db.SaveChanges();
-            return RedirectToAction("BlockManage", "Member", new { memID = memID });
+                db.SaveChanges();
+                return RedirectToAction("BlockManage", "Member", new { memID = memID });
+            }
+            return RedirectToAction("Index", "Activity");
         }
 
+        public ActionResult Search(string search) {
+            if (search != null) {
+                var SearchResult = db.Member.Where(m => m.memId== search).FirstOrDefault();
+
+            }
+            return View();
+        }
 
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)

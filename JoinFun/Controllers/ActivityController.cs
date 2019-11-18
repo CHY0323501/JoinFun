@@ -90,7 +90,7 @@ namespace JoinFun.Controllers
                         fileName = photo.PhotoSerial + photo.actId + ".jpg";
                         // 將檔案儲存到網站的Photos資料夾下
                         file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
-                        photo.actPics = "~/Photos//Activities/" + fileName;
+                        photo.actPics = "~/Photos/Activities/" + fileName;
                         db.Photos_of_Activities.Add(photo);
                         db.SaveChanges();
                     }

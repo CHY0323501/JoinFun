@@ -16,7 +16,6 @@
     {
         if (Model.Blacklist.Where(m => m.memId == session && m.blockedMemId == i.memId).Count() == 0 && Model.Blacklist.Where(m => m.memId == i.memId && m.blockedMemId == session).Count()==0)
         {
-            <span>@i.Blacklist.Where(m => m.memId == session && m.blockedMemId == i.memId)</span>
             //給好友新增、刪除使用
             <input id="FriendID" type="hidden" value="@i.memId" />
 
