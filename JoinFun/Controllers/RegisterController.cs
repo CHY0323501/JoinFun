@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using JoinFun.Models;
+using JoinFun.Utilities;
 
 namespace JoinFun.Controllers
 {
@@ -74,16 +75,13 @@ namespace JoinFun.Controllers
             mem.memDistrict = Int16.Parse(Request["memDistrict"]);
          
 
-            //型別vu/6w94轉換(string->char(1))
+            //型別轉換(string->char(1))
             string gender = Request["Sex"];
             if (gender == "男")
                 gender = "M";
             else
                 gender = "F";
-
-            //mem.Birthday = DateTime.Parse(Request["Birthday"]).ToString();           
-            //mem.Birthday = Convert.ToString(mem.Birthday.ToDateTime("yyyy/MM/dd"));
-
+            
             mem.Introduction = Introduction;
             mem.Habit =Habit;
             mem.Dietary_Preference =Dietary_Preference;
@@ -96,6 +94,13 @@ namespace JoinFun.Controllers
             db.SaveChanges();
 
 
+            
+            MessageCenter mes = new MessageCenter();
+            List<string> mailList = new List<string>() { "ych4101861@gmail.com" };
+            //mes.SendEmail(mailList, "JoinFun權益通知", "<a href='http://localhost:3210/Order/ActivePage?customerID=" + mem.email_ID + "&validataCode =" + validataCode + "'>点击这里</a></br>"");
+
+
+
             return RedirectToAction("Index");
            
         }
@@ -103,9 +108,12 @@ namespace JoinFun.Controllers
         //修改密碼
         public ActionResult PwdEdit(string memId)
         {
+            
             var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
-
-            return View(accPwd);
+            ViewBag.account= (from a in db.Acc_Pass
+                             where a.memId == memId
+                             select a.Account).FirstOrDefault();
+            return View( accPwd);
 
         }
 
@@ -113,13 +121,16 @@ namespace JoinFun.Controllers
         public ActionResult PwdEdit(string memId, string OldPassword, string NewPassword)
         {
             var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
+            ViewBag.account = (from a in db.Acc_Pass
+                               where a.memId == memId
+                               select a.Account).FirstOrDefault();
 
-           
+
 
 
             if (accPwd.Password == OldPassword)
             {
-                
+
 
                 //密碼雜湊 salt+hash
                 string salt = Guid.NewGuid().ToString();
@@ -131,14 +142,27 @@ namespace JoinFun.Controllers
                 accPwd.Password = hashString;
                 accPwd.PasswordConfirm = hashString;
                 db.SaveChanges();
+
+
+               
+
                 return RedirectToAction("Index");
+               
 
             }
+               
+                return View();
+           
 
-            return View();
+           
 
         }
+        private void Approved(string memId)
+        {
+            var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
 
+
+        }
 
 
 

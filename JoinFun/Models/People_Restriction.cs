@@ -13,8 +13,8 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(MetaPeople_Restriction))]
 
+    [MetadataType(typeof(MetaPeople_Restriction))]
     public partial class People_Restriction
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

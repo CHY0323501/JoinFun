@@ -13,8 +13,8 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(Metavw_Member_Remarks))]
 
+    [MetadataType(typeof(Metavw_Member_Remarks))]
     public partial class vw_Member_Remarks
     {
         public string remarkSerial { get; set; }
@@ -31,5 +31,21 @@ namespace JoinFun.Models
         public string CountyName { get; set; }
         public string DistrictName { get; set; }
         public string hostId { get; set; }
+        public System.DateTime actTime { get; set; }
+        public System.DateTime actDeadline { get; set; }
+        public string actDescription { get; set; }
+        public short ageRestrict { get; set; }
+        public short gender { get; set; }
+        public short maxNumPeople { get; set; }
+        public short maxBudget { get; set; }
+        public short actCounty { get; set; }
+        public short actDistrict { get; set; }
+        public string actRoad { get; set; }
+        public short paymentTerm { get; set; }
+        public int clickTimes { get; set; }
+        public bool keepAct { get; set; }
+        public string hashTag { get; set; }
+        public string Expr1 { get; set; }
+        public string actClassId { get; set; }
     }
 }
