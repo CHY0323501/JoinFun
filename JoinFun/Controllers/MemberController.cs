@@ -329,13 +329,23 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index", "Activity");
         }
-
+        //會員搜尋
         public ActionResult Search(string search) {
             if (search != null) {
-                var SearchResult = db.Member.Where(m => m.memId== search).FirstOrDefault();
+                DataSet ds = new DataSet();
+                //var SearchResult = db.Member.Where(m => m.memId== search).FirstOrDefault();
+                //sql查詢字串
+                string sql = "select * from member where memId=@search or memNick=@search";
+                //使用SqlDataAdapter物件來查詢
+                SqlDataAdapter adp = new SqlDataAdapter(sql, Conn);
+                adp.SelectCommand.Parameters.AddWithValue("@kwsearch", " % " + search + " % ");
+                
+                adp.Fill(ds);
 
+
+                return View(ds);
             }
-            return View();
+            return RedirectToAction("Index", "Activity");
         }
 
         //取得被評價會員的DropDownList清單方法
