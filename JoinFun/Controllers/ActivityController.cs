@@ -50,8 +50,7 @@ namespace JoinFun.Controllers
             //{
             //    return RedirectToAction("Index");
             //}
-
-            ViewBag.Drop = GetDropList();
+            //ViewBag.Drop = GetDropList();
             GetSelectList();
             return View();
         }
@@ -62,46 +61,46 @@ namespace JoinFun.Controllers
             //呼叫Sql系統函數GetActId()取得新增的活動ID
             string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
             act.actId = actId;
-            //將Dropdown List的值取回 ---start--- 
             act.hostId = "M000000003";//Session["memId"].ToString();
-            //act.ageRestrict = Int16.Parse(form["Age_Restriction"].ToString());
-            //act.gender = Int16.Parse(form["Gender_Restriction"].ToString());
-            //act.maxNumPeople = Int16.Parse(form["People_Restriction"].ToString());
-            //act.maxBudget = Int16.Parse(form["Budget_Restriction"].ToString());
-            //act.paymentTerm = Int16.Parse(form["Payment_Restriction"].ToString());
-            //act.actCounty = Int16.Parse(form["County"].ToString());
-            //act.actDistrict = Int16.Parse(form["District"].ToString());
-            act.acceptDrop = Convert.ToBoolean(form["Drop"].ToString());
-            //將Dropdown List的值取回 ---end--- 
             act.keepAct = true;
             db.Join_Fun_Activities.Add(act);
             db.SaveChanges();
             string fileName = "";
-            for (int i = 0; i < picture.Length; i++)
+            if (picture[0] != null)
             {
-                HttpPostedFileBase file = picture[i];
+                for (int i = 0; i < picture.Length; i++)
+                {
+                    HttpPostedFileBase file = picture[i];
+                    Photos_of_Activities photo = new Photos_of_Activities();
+                    photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                    photo.actId = actId;
+                    fileName = photo.PhotoSerial + photo.actId + ".jpg";
+                    // 將檔案儲存到網站的Photos資料夾下
+                    file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
+                    photo.actPics = "~/Photos/Activities/" + fileName;
+                    db.Photos_of_Activities.Add(photo);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
                 Photos_of_Activities photo = new Photos_of_Activities();
-                if (file != null)
+                photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                photo.actId = actId;
+                switch (act.actClassId)
                 {
-                    if (file.ContentLength > 0)
-                    {
-                        photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-                        photo.actId = actId;
-                        fileName = photo.PhotoSerial + photo.actId + ".jpg";
-                        // 將檔案儲存到網站的Photos資料夾下
-                        file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
-                        photo.actPics = "~/Photos/Activities/" + fileName;
-                        db.Photos_of_Activities.Add(photo);
-                        db.SaveChanges();
-                    }
+                    case "cls001":
+                        photo.actPics = "~/Photos/ClassIMG/活動.jpg";
+                        break;
+                    case "cls002":
+                        photo.actPics = "~/Photos/ClassIMG/休閒.jpg";
+                        break;
+                    case "cls003":
+                        photo.actPics = "~/Photos/ClassIMG/商務.jpg";
+                        break;
                 }
-                else
-                {
-                    GetSelectList();
-                    ViewBag.Drop = GetDropList();
-                    ViewBag.UploadError = "請選擇要上傳的圖片";
-                    return View();
-                }
+                db.Photos_of_Activities.Add(photo);
+                db.SaveChanges();
             }
 
             return RedirectToAction("Index");
@@ -119,7 +118,7 @@ namespace JoinFun.Controllers
                 return HttpNotFound();
             }
             GetSelectList(actId);
-            ViewBag.Drop = GetDropList();
+            //ViewBag.Drop = GetDropList();
             ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
             return View(act);
@@ -190,15 +189,15 @@ namespace JoinFun.Controllers
         }
 
         //建立"acceptDrop"的Dropdow list
-        private List<SelectListItem> GetDropList()
-        {
-            List<SelectListItem> list = new List<SelectListItem>();
-            list.AddRange(new[] {
-                new SelectListItem() { Text = "是", Value = "True", Selected = true },
-                new SelectListItem() { Text = "否", Value = "False", Selected = false },
-            });
-            return list;
-        }
+        //private List<SelectListItem> GetDropList()
+        //{
+        //    List<SelectListItem> list = new List<SelectListItem>();
+        //    list.AddRange(new[] {
+        //        new SelectListItem() { Text = "是", Value = "True", Selected = true },
+        //        new SelectListItem() { Text = "否", Value = "False", Selected = false },
+        //    });
+        //    return list;
+        //}
 
         //傳回活動ID取得圖片,給model無法直接關聯Photo_of_Activities使用
         public FileContentResult GetActPhoto(string actId)

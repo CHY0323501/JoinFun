@@ -343,21 +343,28 @@ namespace JoinFun.Controllers
         {
             var host = db.vw_Activities.Where(m => m.actId == actID).ToList();
             var members = db.Activity_Details.Where(m => m.actId == actID).ToList();
-            string remarked = db.Member_Remarks.Where(m => m.ToMemId == FromMemID && m.actId == actID).FirstOrDefault().FromMemId;
+            var remarked = db.Member_Remarks.Where(m => m.ToMemId == FromMemID && m.actId == actID).ToList();
             //var member = db.Member.ToList();
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var item in host)
             {
-                if (item.hostId != FromMemID && item.hostId != remarked)
+                foreach(var i in remarked)
                 {
-                    list.Add(new SelectListItem() { Text = item.hostId + " " + item.memNick, Value = item.hostId });
+                    if (item.hostId != FromMemID && item.hostId != i.FromMemId)
+                    {
+                        list.Add(new SelectListItem() { Text = item.hostId + " " + item.memNick, Value = item.hostId });
+                    }
                 }
+                
             }
             foreach (var item in members)
             {
-                if (item.memId != FromMemID && item.memId != remarked)
+                foreach (var i in remarked)
                 {
-                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
+                    if (item.memId != FromMemID && item.memId != i.FromMemId)
+                    {
+                        list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
+                    }
                 }
             }
             ViewBag.MemList = new SelectList(list, "Value", "Text");
