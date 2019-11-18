@@ -13,8 +13,8 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(MetaSocial_Net_ID))]
 
+    [MetadataType(typeof(MetaSocial_Net_ID))]
     public partial class Social_Net_ID
     {
         public string socialSerial { get; set; }

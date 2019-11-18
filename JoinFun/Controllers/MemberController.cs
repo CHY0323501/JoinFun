@@ -148,27 +148,13 @@ namespace JoinFun.Controllers
                 return RedirectToAction("Index", "Activity");
             }
 
-            if (ishost == true)
-            {
-                ViewBag.actTop = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actTopic).FirstOrDefault();
-                ViewBag.actid = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actId).FirstOrDefault();
-                
-                GetMemList(actID, FromMemID);
-                return View();
-            }
-
-            else
-            {
-                ViewBag.actTop = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actTopic).FirstOrDefault();
-                ViewBag.actid = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actId).FirstOrDefault();
+            ViewBag.actTop = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actTopic).FirstOrDefault();
+            ViewBag.actid = db.vw_HostHistory.Where(m => m.actId == actID).Select(m => m.actId).FirstOrDefault();
 
 
-                GetMemList(actID, FromMemID);
+            GetMemList(actID, FromMemID);
 
-                return View();
-
-            }
-
+            return View();
 
         }
         [HttpPost]
@@ -353,21 +339,27 @@ namespace JoinFun.Controllers
         {
             var host = db.vw_Activities.Where(m => m.actId == actID).ToList();
             var members = db.Activity_Details.Where(m => m.actId == actID).ToList();
-            string remarked = db.Member_Remarks.Where(m => m.ToMemId == FromMemID && m.actId == actID).FirstOrDefault().FromMemId;
+            var remarked = db.Member_Remarks.Where(m => m.FromMemId == FromMemID && m.actId == actID).ToList();
             //var member = db.Member.ToList();
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var item in host)
             {
-                if (item.hostId != FromMemID && item.hostId != remarked)
+                if(!remarked.Any(m => m.ToMemId == item.hostId))
                 {
-                    list.Add(new SelectListItem() { Text = item.hostId + " " + item.memNick, Value = item.hostId });
+                    if (item.hostId != FromMemID)
+                    {
+                        list.Add(new SelectListItem() { Text = item.hostId + " " + item.memNick, Value = item.hostId });
+                    }
                 }
             }
             foreach (var item in members)
             {
-                if (item.memId != FromMemID && item.memId != remarked)
+                if (!remarked.Any(m => m.ToMemId == item.memId))
                 {
-                    list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
+                    if (item.memId != FromMemID)
+                    {
+                        list.Add(new SelectListItem() { Text = item.memId + " " + item.Member.memNick, Value = item.memId });
+                    }
                 }
             }
             ViewBag.MemList = new SelectList(list, "Value", "Text");
