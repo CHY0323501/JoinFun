@@ -11,8 +11,8 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-
-    public partial class vw_PartHistory
+    
+    public partial class Host_Now
     {
         public string actId { get; set; }
         public string actClassId { get; set; }
@@ -35,7 +35,5 @@ namespace JoinFun.Models
         public string hashTag { get; set; }
         public string CountyName { get; set; }
         public string DistrictName { get; set; }
-        public string memId { get; set; }
-        public string memNick { get; set; }
     }
 }

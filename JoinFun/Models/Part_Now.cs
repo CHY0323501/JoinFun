@@ -11,8 +11,8 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-
-    public partial class vw_PartHistory
+    
+    public partial class Part_Now
     {
         public string actId { get; set; }
         public string actClassId { get; set; }
