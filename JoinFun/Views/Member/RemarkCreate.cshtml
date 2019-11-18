@@ -39,7 +39,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ToMemId, "ToMemId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ToMemId, "請選擇選單內會員進行評論", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
               @Html.DropDownListFor(model=>model.ToMemId, ViewBag.MemList as SelectList, htmlAttributes: new { @class = "form-control" })
                @*@Html.DropDownList("MemList", null, htmlAttributes: new { @class = "form-control" })*@
@@ -60,8 +60,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.remarkStar, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.remarkStar, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.remarkStar, "", new { @class = "text-danger" })
+                <select id="remarkStar" name="remarkStar">
+                    <option value="1">1分</option>
+                    <option value="2">2分</option>
+                    <option value="3">3分</option>
+                    <option value="4">4分</option>
+                    <option value="5">5分</option>
+                </select>
             </div>
         </div>
 
