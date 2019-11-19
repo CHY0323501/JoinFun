@@ -1,0 +1,17 @@
+﻿@using System.Data
+@model DataSet
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+@foreach (DataRow row in Model.Tables[0].Rows)
+{
+    <tr>
+        <td>@row["CustomerId"]</td>
+        <td>@row["Name"]</td>
+        <td>@row["Country"]</td>
+    </tr>
+}
+
+
