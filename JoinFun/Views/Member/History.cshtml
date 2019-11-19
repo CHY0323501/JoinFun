@@ -83,29 +83,33 @@
 
 
                                     </div>
-                                    @try
-                                    {
-                                        var session = Session["memid"].ToString();
-                                        if (session == i.hostId)
-                                        {
-                                            <div class="row  mt-md-3 ">
-                                                <div class="col-12 col-md-6 offset-md-6">
-                                                    <div class="row">
-                                                        <div class="col-12 col-md-4 mb-2 mb-md-0">
-                                                        </div>
-                                                        <div class="col-12 col-md-8 mb-2 mb-md-0">
-                                                            <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId ,FromMemID=session,ishost=true})" class="text-decoration-none btn btn-info">新增會員評價</a>
-                                                        </div>
-                                                    </div>
+                                    <div class="row  mt-md-3 ">
+                                        <div class="col-12 col-md-6 offset-md-6">
+                                            <div class="row">
+                                                <div class="col-12 col-md-4 mb-2 mb-md-0">
+                                                </div>
+                                                <div class="col-12 col-md-8 mb-2 mb-md-0">
+
+                                                    @try
+                                                    {
+                                                        var session = Session["memid"].ToString();
+                                                        if (session == i.hostId && Model.Activity_Details.Where(m => m.actId == i.actId).Any())
+                                                        {
+                                                            <a href="@Url.Action("RemarkCreate", "Member", new { actID = i.actId, FromMemID = session, ishost = true })" class="text-decoration-none btn btn-info">新增會員評價</a>
+                                                        }
+                                                        else
+                                                        {
+
+                                                        }
+                                                    }
+                                                    catch
+                                                    {
+                                                        Response.Redirect("~/Activity/Index");
+                                                    }
                                                 </div>
                                             </div>
-                                        }
-                                    }
-                                    catch
-                                    {
-                                        Response.Redirect("~/Activity/Index");
-                                    }
-
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

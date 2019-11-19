@@ -155,8 +155,11 @@
     <Content Include="Photos\ClassIMG\活動.png" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
+    <Content Include="Photos\gplaypattern.png" />
     <Content Include="Photos\img.png" />
+    <Content Include="Photos\leaves.png" />
     <Content Include="Photos\male.png" />
+    <Content Include="Photos\memphis-colorful.png" />
     <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\star.png" />
     <Content Include="Photos\title.png" />

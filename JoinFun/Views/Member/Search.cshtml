@@ -1,17 +1,38 @@
-﻿@using System.Data
-@model DataSet
+﻿@model IEnumerable<JoinFun.Models.Member>
 @{
-    ViewBag.Title = "Search";
+    ViewBag.Title = "會員搜尋結果";
 }
+<style>
+    .card-bg-search {
+        background-image: url('../../Photos/leaves.png');
+    }
+</style>
+<div class="container">
+    <div class="row mt-5">
+        @if (!Model.Any())
+        {
+        <div class="col-12">
+            <h1 class="text-center ">
+                Sorry！No results found！<br />
+                Please confirm that the search content is incorrect.
+            </h1>
+        </div>
+        }
+        else
+        {
+            foreach (var i in Model)
+            {
+                <div class="col col-12 col-md-3">
+                    <div class="card border-warning ">
+                        <div class="card-header text-center card-bg-search">
+                            <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-25 " />
+                        </div>
+                        <div class="card-body">
 
-<h2>Search</h2>
-@foreach (DataRow row in Model.Tables[0].Rows)
-{
-    <tr>
-        <td>@row["CustomerId"]</td>
-        <td>@row["Name"]</td>
-        <td>@row["Country"]</td>
-    </tr>
-}
-
-
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
