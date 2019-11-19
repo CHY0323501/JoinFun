@@ -190,7 +190,7 @@
           <Property Name="Introduction" Type="nvarchar(max)" />
           <Property Name="Habit" Type="nvarchar(max)" />
           <Property Name="Dietary_Preference" Type="nvarchar(max)" />
-          <Property Name="email_ID" Type="uniqueidentifier" />
+          <Property Name="email_ID" Type="char" MaxLength="32" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>
@@ -1803,7 +1803,7 @@
           <NavigationProperty Name="Notification" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Member" ToRole="Notification" />
           <NavigationProperty Name="Social_Net_ID" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Member" ToRole="Social_Net_ID" />
           <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Member" ToRole="Violation" />
-          <Property Name="email_ID" Type="Guid" />
+          <Property Name="email_ID" Type="String" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>

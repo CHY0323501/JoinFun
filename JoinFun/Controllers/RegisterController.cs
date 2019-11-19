@@ -66,6 +66,8 @@ namespace JoinFun.Controllers
 
 
             string getmmId = db.Database.SqlQuery<string>("select [dbo].[GetMemId]()").FirstOrDefault();
+            //Guid emailId = new Guid();
+            //emailId = db.Database.SqlQuery<string>("select [dbo].[newid]()").FirstOrDefault();
             Acc_Pass acc = new Acc_Pass();
             acc.memId = getmmId;
             acc.Account = account;
@@ -73,7 +75,8 @@ namespace JoinFun.Controllers
             acc.PasswordConfirm = hashString;
             mem.memCounty = Int16.Parse(Request["memCounty"]);
             mem.memDistrict = Int16.Parse(Request["memDistrict"]);
-         
+            //mem.email_ID = emailId;
+
 
             //型別轉換(string->char(1))
             string gender = Request["Sex"];
@@ -81,7 +84,8 @@ namespace JoinFun.Controllers
                 gender = "M";
             else
                 gender = "F";
-            
+
+           
             mem.Introduction = Introduction;
             mem.Habit =Habit;
             mem.Dietary_Preference =Dietary_Preference;
@@ -94,11 +98,12 @@ namespace JoinFun.Controllers
             db.SaveChanges();
 
 
-            
+
             MessageCenter mes = new MessageCenter();
             List<string> mailList = new List<string>() { "ych4101861@gmail.com" };
-            //mes.SendEmail(mailList, "JoinFun權益通知", "<a href='http://localhost:3210/Order/ActivePage?customerID=" + mem.email_ID + "&validataCode =" + validataCode + "'>点击这里</a></br>"");
+            //mes.SendEmail(mailList, "JoinFun權益通知", "<a href='http://localhost:54129/Register/Approved?email_ID=" + mem.email_ID + "'>link</a></br>");
 
+            
 
 
             return RedirectToAction("Index");
@@ -157,10 +162,11 @@ namespace JoinFun.Controllers
            
 
         }
-        private void Approved(string memId)
+        public ActionResult Approved()
         {
-            var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
+            //var accPwd = db.Member.Where(m => m.email_ID = email_ID).FirstOrDefault();
 
+            return View();
 
         }
 
