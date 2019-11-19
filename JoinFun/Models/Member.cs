@@ -51,7 +51,7 @@ namespace JoinFun.Models
         public string Introduction { get; set; }
         public string Habit { get; set; }
         public string Dietary_Preference { get; set; }
-        public Nullable<System.Guid> email_ID { get; set; }
+        public string email_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acc_Pass> Acc_Pass { get; set; }
