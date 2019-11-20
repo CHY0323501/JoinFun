@@ -164,6 +164,24 @@
                                 </div>
                             </div>
                         </div>
+                        @*<div class="modal fade" id="myModal">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">注意事項:</h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>稍後請務必至註冊所填Email完成驗證帳號,方可使用此帳號!</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" class="btn btn-danger">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
                     </div>
                 </div>
 
@@ -215,50 +233,12 @@
         });
 
 
-        //驗證:Email、Password
-
-        //var flag = false;
-        //var flag = false, check = false;
-        //var requiredText = "此為必填欄位";
-
-        //$('#login').submit(function () {
-
-        //    if ($('#Email').val() == "") {
-        //        $('#Email').addClass("is-invalid");
-        //        $('#Email~div').addClass('invalid-feedback').text('請輸入Email!');
-        //        flag = false;
-        //    }
-
-        //    if (!flag)
-        //        return false;
-
-        //    return true;
+        //$('#Email').blur(function () {
+        //    $('#myModal').modal('toggle');
         //});
 
-        //$('#Email').keyup(function () {
-        // var rex = /^\w+((-\w+)|(\.\w+))*\[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-        //    if (!rex.test($('#Email').val())) {
-        //        $('#Email').addClass("is-invalid");
-        //        $('#Email~div').addClass("invalid-feedback").text('E-mail格式錯誤!!');
-        //        flag = false;
-        //    }
-        //    else {
-        //        clearErrText('#Email');
-        //    }
+        //驗證:Password
 
-        //});
-
-        //$('#Email').keyup(function () {
-        //    if ($('#Email').val().length > 50) {
-        //        $('#Email').addClass("is-invalid");
-        //        $('#Email~div').addClass("invalid-feedback").text('最多50個字元!!');
-        //        flag = false;
-        //    }
-        //    else {
-        //        clearErrText('#Email');
-        //    }
-
-        //});
 
         $('#Password').keyup(function () {
             if ($('#Password').val().length < 8) {
@@ -310,6 +290,8 @@
 
             });
         });
+
+        //$('[data-toggle="popover"]').popover();
 
     </script>
 

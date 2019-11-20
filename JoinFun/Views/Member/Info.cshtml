@@ -48,7 +48,7 @@
                             @Html.DisplayNameFor(model => i.memId)
                         </div>
                         <div class="col-md-8 text-secondary">
-                            @Html.DisplayFor(m => i.memId)
+                            @Html.DisplayFor(m => i.memId)　@if (session!=i.memId) {<a href="@Url.Action("Report","Activity")"></a><i class="fas fa-exclamation-triangle text-danger" style="cursor:pointer" title="檢舉該會員" data-toggle="tooltip" data-placement="top"></i> }
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -84,7 +84,7 @@
                             @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
                             @{ if (session == i.memId)
                                 {
-                                    <a href="@Url.Action("Edit", new { memID = i.memId })"class = "btn btn-outline-info" style = "width:inherit"><i class='fas fa-edit'>　編輯個人資訊</i></a>
+                                    <a href="@Url.Action("Edit", new { memID = i.memId })" class="btn btn-outline-info" style="width:inherit"><i class='fas fa-edit'>　編輯個人資訊</i></a>
                                 }
                                 else if (!session.IsEmpty())
                                 {
@@ -336,73 +336,79 @@
         }
     }
 </div>
-<script>
-    //觸發追蹤、粉絲、好友的彈出視窗
-    $('#follow').click(function () {
-        $('#Modal1').modal('toggle');
-    });
-    $('#fans').click(function () {
-        $('#Modal2').modal('toggle');
-    });
-    $('#friend').click(function () {
-        $('#Modal3').modal('toggle');
-    });
-    //新增會員評價、揪團歷史按鈕的hover效果
-    $('#remark').mouseover(function () {
-        $('#remark div').removeClass('text-dark').addClass('text-white');
-    });
-    $('#remark').mouseout(function () {
-        $('#remark div').removeClass('text-white').addClass('text-dark');
-    });
-    $('#history').mouseover(function () {
-        $('#history div').removeClass('text-dark').addClass('text-white');
-    });
-    $('#history').mouseout(function () {
-        $('#history div').removeClass('text-white').addClass('text-dark');
-    });
-    //WebAPI
-    //判斷好友狀態
-    function CheckFriendShip() {
-        $.ajax({
-            type: "Get",
-            url: "http://localhost:54129/api/MemAPI?memID=" + $('#FriendID').val(),
-            success: function (d) {
-                if (d.length == 0) {
-                    $('#FriendBtn').html('<i class="fas fa-user-plus">　加好友</i>');
-                } else if (d[0].Approved == false) {
-                    $('#FriendBtn').html('<i class="fas fa-user-times">　好友審核中</i>');
-                } else {
-                    $('#FriendBtn').html('<i class="fas fa-user-minus">　刪除好友</i>');
-                }
-            }
+@section scripts{
+    <script>
+        //檢舉按鈕使用(tooltip)
+        $('[data-toggle="tooltip"]').tooltip();
+        //觸發追蹤、粉絲、好友的彈出視窗
+        $('#follow').click(function () {
+            $('#Modal1').modal('toggle');
         });
-    }
-    $('#FriendBtn').click(function () {
-        if ($('#FriendBtn').text().includes('加好友')) {
+        $('#fans').click(function () {
+            $('#Modal2').modal('toggle');
+        });
+        $('#friend').click(function () {
+            $('#Modal3').modal('toggle');
+        });
+        //新增會員評價、揪團歷史按鈕的hover效果
+        $('#remark').mouseover(function () {
+            $('#remark div').removeClass('text-dark').addClass('text-white');
+        });
+        $('#remark').mouseout(function () {
+            $('#remark div').removeClass('text-white').addClass('text-dark');
+        });
+        $('#history').mouseover(function () {
+            $('#history div').removeClass('text-dark').addClass('text-white');
+        });
+        $('#history').mouseout(function () {
+            $('#history div').removeClass('text-white').addClass('text-dark');
+        });
+        //WebAPI
+        //判斷好友狀態
+        function CheckFriendShip() {
             $.ajax({
-                type: "Post",
-                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
-                success: function () {
-                    CheckFriendShip();
-                }
-            });
-        } else if ($('#FriendBtn').text().includes('好友審核中')) {
-            $.ajax({
-                type: "Delete",
-                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
-                success: function () {
-                    CheckFriendShip();
-                }
-            });
-        } else {
-            $.ajax({
-                type: "Delete",
-                url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
-                success: function () {
-                    CheckFriendShip();
+                type: "Get",
+                url: "http://localhost:54129/api/MemAPI?memID=" + $('#FriendID').val(),
+                success: function (d) {
+                    if (d.length == 0) {
+                        $('#FriendBtn').html('<i class="fas fa-user-plus">　加好友</i>');
+                    } else if (d[0].Approved == false) {
+                        $('#FriendBtn').html('<i class="fas fa-user-times">　好友審核中</i>');
+                    } else {
+                        $('#FriendBtn').html('<i class="fas fa-user-minus">　刪除好友</i>');
+                    }
                 }
             });
         }
+        $('#FriendBtn').click(function () {
+            if ($('#FriendBtn').text().includes('加好友')) {
+                $.ajax({
+                    type: "Post",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+                    success: function () {
+                        CheckFriendShip();
+                    }
+                });
+            } else if ($('#FriendBtn').text().includes('好友審核中')) {
+                $.ajax({
+                    type: "Delete",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
+                    success: function () {
+                        CheckFriendShip();
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "Delete",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
+                    success: function () {
+                        CheckFriendShip();
+                    }
+                });
+            }
 
-    })
-</script>
+        })
+
+    </script>
+
+}
