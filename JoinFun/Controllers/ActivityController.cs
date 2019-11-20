@@ -147,26 +147,41 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Report(string id)
+        public ActionResult Report(string id, string reporterID)
         {
             //ViewBag.Type = new SelectList(db.Type_of_Violate, "typeId", "vioClass");
             if (db.Member.Any(m => m.memId == id))
             {
                 ViewBag.Type = "會員";
+                ViewBag.TypeID = "vcls0001";
             }
             else if (db.Join_Fun_Activities.Any(m => m.actId == id))
             {
                 ViewBag.Type = "揪團活動";
+                ViewBag.TypeID = "vcls0002";
             }
             else if (db.Member_Remarks.Any(m => m.remarkSerial == id))
             {
                 ViewBag.Type = "會員評價";
+                ViewBag.TypeID = "vcls0003";
             }
             else
             {
                 ViewBag.Type = "留言板";
+                ViewBag.TypeID = "vcls0004";
             }
+
             ViewBag.ID = id;
+            if (reporterID.StartsWith("M"))
+            {
+                ViewBag.MemID = reporterID;
+            }
+            else
+            {
+                ViewBag.AdmID = reporterID;
+            }
+
+
             return View();
         }
 
@@ -219,13 +234,16 @@ namespace JoinFun.Controllers
         //傳回活動ID取得圖片,給model無法直接關聯Photo_of_Activities使用
         public FileContentResult GetActPhoto(string actId)
         {
-            string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
-            if (photo != null)
+            if (db.Photos_of_Activities.Any(m => m.actId == actId))
             {
-                //將圖片轉成byte[] 傳給View
-                string path = Server.MapPath(photo);
-                byte[] image = System.IO.File.ReadAllBytes(path);
-                return base.File(image, "image/jpeg");
+                string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
+                if (photo != null)
+                {
+                    //將圖片轉成byte[] 傳給View
+                    string path = Server.MapPath(photo);
+                    byte[] image = System.IO.File.ReadAllBytes(path);
+                    return base.File(image, "image/jpeg");
+                }
             }
             return null;
         }

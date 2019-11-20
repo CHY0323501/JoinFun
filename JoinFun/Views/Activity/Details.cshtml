@@ -24,6 +24,13 @@
                 @*@Html.ActionLink("刪除", "Delete", new { id = item.actId }, new { @class = "btn btn-danger", onclick = "return confirm('確認刪除嗎??')" })*@
                 <a class="nav-link text-light btn btn-danger" href="@Url.Action("Delete", new { actId = Model.FirstOrDefault().actId })" onclick="return confirm('確認刪除嗎??')">刪除</a>
             </li>
+            @if (Session["memid"] != null)
+            {
+                <li>
+                    <a class="nav-link text-light btn btn-link" href="@Url.Action("Report", new { id = Model.FirstOrDefault().actId, reporterID = Session["memid"].ToString() })">檢舉</a>
+                </li>
+            }
+
         </ul>
 
     </nav>
