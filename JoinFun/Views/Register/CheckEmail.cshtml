@@ -1,0 +1,24 @@
+﻿@model JoinFun.Models.Acc_Pass
+
+@{
+    ViewBag.Title = "CheckEmail";
+}
+
+<h2>CheckEmail</h2>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h2 >親愛的 @ViewBag.account 您好:</h2>
+            <h2>
+                感謝您註冊JoinFun會員,稍後請務必至您註冊時所填寫的信箱完成啟用動作,方可使用本網站所提供之服務!
+            </h2>
+            <h2>!信箱認證注意事項:</h2>
+            <h2>請勿直接按回復郵件,該動作無法協助您進行帳號啟用!</h2>
+        </div>
+    </div>
+
+    <div class="btn btn-primary">
+        @Html.ActionLink("Index", "Activity")
+    </div>
+</div>
+
