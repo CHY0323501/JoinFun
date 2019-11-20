@@ -147,9 +147,26 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Report()
+        public ActionResult Report(string id)
         {
-            ViewBag.Type = new SelectList(db.Type_of_Violate, "typeId", "vioClass");
+            //ViewBag.Type = new SelectList(db.Type_of_Violate, "typeId", "vioClass");
+            if (db.Member.Any(m => m.memId == id))
+            {
+                ViewBag.Type = "會員";
+            }
+            else if (db.Join_Fun_Activities.Any(m => m.actId == id))
+            {
+                ViewBag.Type = "揪團活動";
+            }
+            else if (db.Member_Remarks.Any(m => m.remarkSerial == id))
+            {
+                ViewBag.Type = "會員評價";
+            }
+            else
+            {
+                ViewBag.Type = "留言板";
+            }
+            ViewBag.ID = id;
             return View();
         }
 

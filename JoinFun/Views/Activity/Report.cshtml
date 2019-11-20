@@ -17,7 +17,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.typeId, "typeId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.typeId, ViewBag.Type as SelectList, htmlAttributes: new { @class = "form-control" })
+                @*@Html.DropDownListFor(m => m.typeId, ViewBag.Type as SelectList, htmlAttributes: new { @class = "form-control" })*@
+                @Html.EditorFor(model => model.typeId, new { htmlAttributes = new { @class = "form-control bg-white border-0", @Value = ViewBag.Type, @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.typeId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -25,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CorrespondingEventID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CorrespondingEventID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.CorrespondingEventID, new { htmlAttributes = new { @class = "form-control bg-white border-0", @Value = ViewBag.ID, @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.CorrespondingEventID, "", new { @class = "text-danger" })
             </div>
         </div>
