@@ -48,7 +48,7 @@
                             @Html.DisplayNameFor(model => i.memId)
                         </div>
                         <div class="col-md-8 text-secondary">
-                            @Html.DisplayFor(m => i.memId)　@if (session!=i.memId) {<a href="@Url.Action("Report","Activity",new { id=i.memId})"><i class="fas fa-exclamation-triangle text-danger" style="cursor:pointer" title="檢舉該會員" data-toggle="tooltip" data-placement="top"></i></a> }
+                            @Html.DisplayFor(m => i.memId)　@if (session!=i.memId) { }
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -88,30 +88,34 @@
                                 }
                                 else if (!session.IsEmpty())
                                 {
-                                    <div class="row">
-                                        <div class="col-md">
-                                            <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit"><i class="fas fa-child"></i>　追蹤他</button>
-                                        </div>
-                                        <div class="col-md">
-                                            <button id="FriendBtn" class="btn btn-outline-info mb-1 " style="width:inherit">
-                                                @if (Model.Friendship.ToList().FirstOrDefault() == null)
-                                                {
-                                                    <i class="fas fa-user-plus "></i>@:　加好友
-                                                }
-                                                else if (Model.Friendship.ToList()[0].Approved == false)
-                                                {
-                                                    <i class="fas fa-user-times"></i>@:　好友審核中
-                                                }
-                                                else
-                                                {
-                                                    <i class="fas fa-user-minus"></i>@:　刪除好友
-                                                }
-                                            </button>
-                                        </div>
-                                        <div class="col-md">
-                                            <a href="@Url.Action("Block","Member",new { BlockedMemID = i.memId, memID = session })" class="btn btn-outline-info mb-1" style="width:inherit;" onclick="return confirm('確定要封鎖該會員嗎？')"><i class='fas fa-ban' ></i>　封鎖他</a>
-                                        </div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit"><i class="fas fa-child"></i>　追蹤他</button>
+                            </div>
+                            <div class="col-md">
+                                <button id="FriendBtn" class="btn btn-outline-info mb-1 " style="width:inherit">
+                                    @if (Model.Friendship.ToList().FirstOrDefault() == null)
+                                    {
+                                        <i class="fas fa-user-plus "></i>@:　加好友
+                                    }
+                                    else if (Model.Friendship.ToList()[0].Approved == false)
+                                    {
+                                        <i class="fas fa-user-times"></i>@:　取消申請
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-user-minus"></i>@:　刪除好友
+                                    }
+                                </button>
+                            </div>
+                            <div class="col-md">
+                                <a href="@Url.Action("Block","Member",new { BlockedMemID = i.memId, memID = session })" class="btn btn-outline-info mb-1" style="width:inherit;" onclick="return confirm('確定要封鎖該會員嗎？')"><i class='fas fa-ban'></i>　封鎖他</a>
+                            </div>
+                            <div class="col-md">
+                                <a href="@Url.Action("Report","Activity",new { id=i.memId,reporterID=session})" class="btn btn-outline-danger mb-1" style="width:inherit;"><i class="fas fa-exclamation-triangle"></i>　檢舉他</a>
+                            </div>
+                            
+                        </div>
                                 }
                             }
                         </div>
@@ -373,7 +377,7 @@
                     if (d.length == 0) {
                         $('#FriendBtn').html('<i class="fas fa-user-plus "></i>　加好友');
                     } else if (d[0].Approved == false) {
-                        $('#FriendBtn').html('<i class="fas fa-user-times"></i>　好友審核中');
+                        $('#FriendBtn').html('<i class="fas fa-user-times"></i>　取消申請');
                     } else {
                         $('#FriendBtn').html('<i class="fas fa-user-minus"></i>　刪除好友');
                     }
@@ -389,7 +393,7 @@
                         CheckFriendShip();
                     }
                 });
-            } else if ($('#FriendBtn').text().includes('好友審核中')) {
+            } else if ($('#FriendBtn').text().includes('取消申請')) {
                 $.ajax({
                     type: "Delete",
                     url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
