@@ -8,13 +8,13 @@
 }
 
 <div class="container containerMinH">
-    @{ 
+    @{
         var session = Session["memid"].ToString();
     }
 
     @foreach (var i in Model.Member)
     {
-        if (Model.Blacklist.Where(m => m.memId == session && m.blockedMemId == i.memId).Count() == 0 && Model.Blacklist.Where(m => m.memId == i.memId && m.blockedMemId == session).Count()==0)
+        if (Model.Blacklist.Where(m => m.memId == session && m.blockedMemId == i.memId).Count() == 0 && Model.Blacklist.Where(m => m.memId == i.memId && m.blockedMemId == session).Count() == 0)
         {
             //給好友新增、刪除使用
             <input id="FriendID" type="hidden" value="@i.memId" />
@@ -109,7 +109,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md">
-                                            @Html.ActionLink("封鎖他","Block","Member",new { BlockedMemID=i.memId, memID=session},new { @class="btn btn-outline-info mb-1",style="width:inherit", onclick="return confirm('確定要封鎖該會員嗎？')"})
+                                            @Html.ActionLink("封鎖他", "Block", "Member", new { BlockedMemID = i.memId, memID = session }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit", onclick = "return confirm('確定要封鎖該會員嗎？')" })
                                         </div>
                                     </div>
                                 }
@@ -331,7 +331,7 @@
         }
         else
         {
-            <img src="~/Photos/sorry.gif" class="img-fluid mt-5"/>
+            <img src="~/Photos/sorry.gif" class="img-fluid mt-5" />
             <h1 class="text-center text-danger mt-5">很抱歉，您無法查看此會員資訊</h1>
         }
     }
