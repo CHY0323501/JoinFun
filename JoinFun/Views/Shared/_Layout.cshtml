@@ -30,6 +30,7 @@
         body {
             font-family: 微軟正黑體;
             margin-bottom: 0;
+            padding-bottom:0;
         }
 
         .navbar-light a {
@@ -129,10 +130,11 @@
 
 
 </head>
-<body >
+<body>
     <div id="a" class="navbar navbar-expand-lg fixed-top navbar-light justify-content-end nav-bg">
 
         <div class="container ">
+
                 <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/img.png" style="width:130px" />    JoinFun</a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -176,21 +178,64 @@
 
                     </ul>
                 </div>
+
+            <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/img.png" style="width:130px" />    JoinFun</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
+                    <li class="nav-item ">
+                        <div class="form-group form-inline mb-0">
+                            <form action="@Url.Action("Search","Member")" method="get" class="form-inline">
+                                <input id="search" name="search" type="text" placeholder="搜尋會員編號或暱稱" class="form-control  ml-auto" />
+                                <button type="submit" id="postSearch" class="btn btn-info mr-auto material-icons" style="color:white!important">search</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item text-center">
+                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login","Login")">登入</a>
+                    </li>
+                    <li class="nav-item text-center">
+                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")">我要揪團</a>
+                    </li>
+                    <li class="nav-item dropdown text-center">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            會員中心
+                        </a>
+                        <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })">我的資訊</a>
+                            <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })">我的揪團</a>
+                            <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})">好友管理</a>
+                            <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})">黑名單管理</a>
+                            <a class="dropdown-item" href="@Url.Action("Logout","Login")">登出</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+
+                    </li>
+
+                </ul>
+            </div>
+
         </div>
     </div>
 
     <div class="container body-content">
         @RenderBody()
     </div>
-    <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 mt-3 mb-0 foot-bg">
-        <p class="text-center">
-            <img src="~/Photos/title2.png" style="width:260px" />&copy; @DateTime.Now.Year - JF Ltd.
-        </p>
+    <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 mt-3 mb-0 foot-bg border-danger">
+        <div class="text-center">
+            <img src="~/Photos/title2.png" style="width:200px" />&copy; @DateTime.Now.Year - JF Ltd.
+        </div>
     </footer>
     @*<footer class="footer-content bg-dark mb-0">
-        <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>
-    </footer>*@
+            <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>
+        </footer>*@
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

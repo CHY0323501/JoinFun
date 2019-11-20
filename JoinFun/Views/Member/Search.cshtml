@@ -1,17 +1,60 @@
-﻿@using System.Data
-@model DataSet
+﻿@model IEnumerable<JoinFun.Models.Member>
 @{
-    ViewBag.Title = "Search";
+    ViewBag.Title = "會員搜尋結果";
 }
+<style>
+    .card-bg-search {
+        background-image: url('../../Photos/leaves.png');
+    }
+</style>
+<div class="container" style="min-height:1000px">
 
-<h2>Search</h2>
-@foreach (DataRow row in Model.Tables[0].Rows)
-{
-    <tr>
-        <td>@row["CustomerId"]</td>
-        <td>@row["Name"]</td>
-        <td>@row["Country"]</td>
-    </tr>
-}
-
-
+    @if (!Model.Any())
+    {
+        <h1 class="text-center ">
+            <img src="~/Photos/no_results_found.png" class="img-fluid" />
+        </h1>
+    }
+    else
+    {
+        <h1 class="mt-5 mb-5 text-center text-secondary">以下為<strong class="text-info">@(ViewBag.SearchContent)</strong>的搜尋結果</h1>
+        <div class="row">
+            @foreach (var i in Model)
+            {
+            <div class="col col-12 col-sm-6 col-md-4 mb-5 animated slideInUp">
+                <a href="@Url.Action("Info","Member",new { memID=i.memId})" style="cursor:pointer" class="text-decoration-none "title="點擊連結至會員資訊">
+                    <div class="card border-warning  ">
+                        <div class="card-header text-center card-bg-search">
+                            <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-25 " />
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="row">
+                                        <div class="col-5 text-success">
+                                            會員編號
+                                        </div>
+                                        <div class="col-7 text-secondary">
+                                            @i.memId
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-12">
+                                    <div class="row">
+                                        <div class="col-5 text-success">
+                                            會員暱稱
+                                        </div>
+                                        <div class="col-7 text-warning">
+                                            @i.memNick
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            }
+        </div>
+    }
+</div>

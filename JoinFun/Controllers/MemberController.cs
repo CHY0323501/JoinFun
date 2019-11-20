@@ -139,7 +139,7 @@ namespace JoinFun.Controllers
             }
         }
         //新增會員評價
-        public ActionResult RemarkCreate(string actID, string FromMemID, bool ishost)
+        public ActionResult RemarkCreate(string actID, string FromMemID)
         {
 
             var member = db.Member.Where(m => m.memId == FromMemID).FirstOrDefault();
@@ -161,7 +161,7 @@ namespace JoinFun.Controllers
         public ActionResult RemarkCreate(string ToMemId,string actid,string remarkContent, short remarkStar, string FromMemId)
         {            
             
-            //呼叫Sql系統函數GetActId()取得新增的活動ID
+            //呼叫Sql函數GetActId()取得新增的活動ID
 
             string getremarkSerial = db.Database.SqlQuery<string>("Select [dbo].[GetRemarkId]()").FirstOrDefault();
             Member_Remarks aaa = new Member_Remarks();
@@ -218,7 +218,9 @@ namespace JoinFun.Controllers
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
                     vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList(),
                     Photos_of_Activities = db.Photos_of_Activities.ToList(),
-                    Activity_Class = db.Activity_Class.ToList()
+                    Activity_Class = db.Activity_Class.ToList(),
+                    Activity_Details = db.Activity_Details.ToList(),
+                    Member_Remarks = db.Member_Remarks.Where(m=>m.FromMemId== memID).ToList()
                 };
 
                 ViewBag.ToMemNick = (from m in db.Member
@@ -317,19 +319,12 @@ namespace JoinFun.Controllers
         }
         //會員搜尋
         public ActionResult Search(string search) {
-            if (search != null) {
-                DataSet ds = new DataSet();
-                //var SearchResult = db.Member.Where(m => m.memId== search).FirstOrDefault();
-                //sql查詢字串
-                string sql = "select * from member where memId=@search or memNick=@search";
-                //使用SqlDataAdapter物件來查詢
-                SqlDataAdapter adp = new SqlDataAdapter(sql, Conn);
-                adp.SelectCommand.Parameters.AddWithValue("@kwsearch", " % " + search + " % ");
-                
-                adp.Fill(ds);
-
-
-                return View(ds);
+            if (!String.IsNullOrEmpty(search)) {
+                var SearchResult = from mem in db.Member
+                                   where mem.memId == search || mem.memNick.Contains(search)
+                                   select mem;
+                ViewBag.SearchContent = search;
+                return View(SearchResult);
             }
             return RedirectToAction("Index", "Activity");
         }
