@@ -160,6 +160,7 @@
     <Content Include="Photos\leaves.png" />
     <Content Include="Photos\male.png" />
     <Content Include="Photos\memphis-colorful.png" />
+    <Content Include="Photos\no_results_found.png" />
     <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\star.png" />
     <Content Include="Photos\title.png" />
@@ -788,11 +789,8 @@
     <Content Include="Views\Activity\Report.cshtml" />
     <Content Include="Views\Member\BlockManage.cshtml" />
     <Content Include="Views\Member\MyActivities.cshtml" />
-
     <Content Include="Views\Register\Approved.cshtml" />
-
     <Content Include="Views\Member\Search.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

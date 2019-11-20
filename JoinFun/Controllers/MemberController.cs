@@ -320,11 +320,10 @@ namespace JoinFun.Controllers
         //會員搜尋
         public ActionResult Search(string search="變態") {
             if (!String.IsNullOrEmpty(search)) {
-                //var SearchResult = db.Member.Where(m => m.memId == search || m.memNick.StartsWith(search)).ToList();
                 var SearchResult = from mem in db.Member
                                    where mem.memId == search || mem.memNick.Contains(search)
                                    select mem;
-
+                ViewBag.SearchContent = search;
                 return View(SearchResult);
             }
             return RedirectToAction("Index", "Activity");
