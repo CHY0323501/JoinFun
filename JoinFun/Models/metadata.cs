@@ -663,7 +663,6 @@ namespace JoinFun.Models
 
 
         [DisplayName("違規處置時間")]
-        [Required(ErrorMessage = "請輸入處置時間")]
         [DataType(DataType.DateTime, ErrorMessage = "輸入時間有誤")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> vioProcessTime { get; set; }
