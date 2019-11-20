@@ -318,7 +318,7 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index", "Activity");
         }
         //會員搜尋
-        public ActionResult Search(string search="變態") {
+        public ActionResult Search(string search) {
             if (!String.IsNullOrEmpty(search)) {
                 var SearchResult = from mem in db.Member
                                    where mem.memId == search || mem.memNick.Contains(search)

@@ -30,6 +30,7 @@
         body {
             font-family: 微軟正黑體;
             margin-bottom: 0;
+            padding-bottom:0;
         }
 
         .navbar-light a {
@@ -179,10 +180,10 @@
     <div class="container body-content">
         @RenderBody()
     </div>
-    <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 mt-3 mb-0 foot-bg">
-        <p class="text-center">
-            <img src="~/Photos/title2.png" style="width:260px" />&copy; @DateTime.Now.Year - JF Ltd.
-        </p>
+    <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 mt-3 mb-0 foot-bg border-danger">
+        <div class="text-center">
+            <img src="~/Photos/title2.png" style="width:200px" />&copy; @DateTime.Now.Year - JF Ltd.
+        </div>
     </footer>
     @*<footer class="footer-content bg-dark mb-0">
         <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>

@@ -84,32 +84,32 @@
                             @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
                             @{ if (session == i.memId)
                                 {
-                                    @Html.ActionLink("編輯個人資訊", "Edit", new { memID = i.memId }, new { @class = "btn btn-outline-info", style = "width:inherit" })
+                                    <a href="@Url.Action("Edit", new { memID = i.memId })"class = "btn btn-outline-info" style = "width:inherit"><i class='fas fa-edit'>　編輯個人資訊</i></a>
                                 }
                                 else if (!session.IsEmpty())
                                 {
                                     <div class="row">
                                         <div class="col-md">
-                                            <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit">追蹤他</button>
+                                            <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit"><i class="fas fa-child"></i>　追蹤他</button>
                                         </div>
                                         <div class="col-md">
-                                            <button id="FriendBtn" class="btn btn-outline-info mb-1" style="width:inherit">
+                                            <button id="FriendBtn" class="btn btn-outline-info mb-1 " style="width:inherit">
                                                 @if (Model.Friendship.ToList().FirstOrDefault() == null)
                                                 {
-                                                    @:加好友
+                                                    <i class="fas fa-user-plus ">　加好友</i>
                                                 }
                                                 else if (Model.Friendship.ToList()[0].Approved == false)
                                                 {
-                                                    @:好友審核中
+                                                    <i class="fas fa-user-times">　好友審核中</i>
                                                 }
                                                 else
                                                 {
-                                                    @:刪除好友
+                                                    <i class="fas fa-user-minus">　刪除好友</i>
                                                 }
                                             </button>
                                         </div>
                                         <div class="col-md">
-                                            @Html.ActionLink("封鎖他", "Block", "Member", new { BlockedMemID = i.memId, memID = session }, new { @class = "btn btn-outline-info mb-1", style = "width:inherit", onclick = "return confirm('確定要封鎖該會員嗎？')" })
+                                            <a href="@Url.Action("Block","Member",new { BlockedMemID = i.memId, memID = session })" class="btn btn-outline-info mb-1" style="width:inherit" onclick="return confirm('確定要封鎖該會員嗎？')"><i class='fas fa-ban'></i>　封鎖他</a>
                                         </div>
                                     </div>
                                 }
@@ -368,11 +368,11 @@
             url: "http://localhost:54129/api/MemAPI?memID=" + $('#FriendID').val(),
             success: function (d) {
                 if (d.length == 0) {
-                    $('#FriendBtn').text('加好友');
+                    $('#FriendBtn').html('<i class="fas fa-user-plus">　加好友</i>');
                 } else if (d[0].Approved == false) {
-                    $('#FriendBtn').text('好友審核中');
+                    $('#FriendBtn').html('<i class="fas fa-user-times">　好友審核中</i>');
                 } else {
-                    $('#FriendBtn').text('刪除好友');
+                    $('#FriendBtn').html('<i class="fas fa-user-minus">　刪除好友</i>');
                 }
             }
         });
