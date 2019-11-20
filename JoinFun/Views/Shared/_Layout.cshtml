@@ -126,6 +126,11 @@
             height: 60px;
             line-height: 60px;
         }
+
+        .form-control::-webkit-input-placeholder {
+            color: rgb(23, 162, 184);
+            text-align:center;
+        }
     </style>
 
 
@@ -143,29 +148,29 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
                     <li class="nav-item ">
-                        <div class="form-group form-inline mb-0">
+                        <div class="form-group  mb-0">
                             <form action="@Url.Action("Search","Member")" method="get" class="form-inline">
-                                <input id="search" name="search" type="text" placeholder="搜尋會員編號或暱稱" class="form-control  ml-auto" />
+                                <input id="search" name="search" type="text" placeholder="搜尋會員編號或暱稱" class="form-control ml-auto" />
                                 <button type="submit" id="postSearch" class="btn btn-info mr-auto material-icons" style="color:white!important">search</button>
                             </form>
                         </div>
                     </li>
-                    <li class="nav-item text-center">
-                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login","Login")">登入</a>
+                    <li class="nav-item text-center ml-2">
+                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login","Login")"><i class="fas fa-sign-in-alt"></i> 登入</a>
                     </li>
-                    <li class="nav-item text-center">
-                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")">我要揪團</a>
+                    <li class="nav-item text-center ml-2">
+                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")"><i class="fas fa-plus"></i> 我要揪團</a>
                     </li>
-                    <li class="nav-item dropdown text-center">
+                    <li class="nav-item dropdown text-center ml-2">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            會員中心
+                            <i class="fas fa-user-cog"></i> 會員中心
                         </a>
                         <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })">我的資訊</a>
-                            <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })">我的揪團</a>
-                            <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})">好友管理</a>
-                            <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})">黑名單管理</a>
-                            <a class="dropdown-item" href="@Url.Action("Logout","Login")">登出</a>
+                            <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　 我的資訊</a>
+                            <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })"><i class="fas fa-glass-cheers"></i>　 我的揪團</a>
+                            <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})"><i class="fas fa-user-friends"></i>　 好友管理</a>
+                            <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})"><i class="fas fa-user-lock"></i>　黑名單管理</a>
+                            <a class="dropdown-item" href="@Url.Action("Logout","Login")"><i class="fas fa-sign-out-alt"></i>　登出</a>
                         </div>
                     </li>
                     <li class="nav-item">
