@@ -144,7 +144,7 @@
     <Content Include="CSS\Newcard\style8.css" />
     <Content Include="CSS\Newcard\style9.css" />
     <Content Include="CSS\Newcard\style_common.css" />
-    <Content Include="CSS\Remarks.css" />
+    <Content Include="CSS\Remark.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
     <Content Include="CSS\time\timeTo.css" />
@@ -201,6 +201,7 @@
     <Content Include="Photos\index\photo4.jpg" />
     <Content Include="Photos\index\photo5.png" />
     <Content Include="Photos\index\photo6.png" />
+    <Content Include="Photos\InfoBG.jpg" />
     <Content Include="Photos\male.png" />
     <Content Include="Photos\oops.jpg" />
     <Content Include="Photos\oops.png" />
@@ -857,10 +858,8 @@
     <Content Include="Views\Register\Approved.cshtml" />
     <Content Include="Views\Member\Search.cshtml" />
     <Content Include="Views\Register\CheckEmail.cshtml" />
-
     <Content Include="Views\Register\ForgetPwd.cshtml" />
     <Content Include="Views\Register\RemakePwd.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

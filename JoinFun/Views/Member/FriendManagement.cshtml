@@ -6,16 +6,16 @@
 
 
 @section memberRemarks{
-    <link href="~/CSS/Remarks.css" rel="stylesheet" />
+    <link href="~/CSS/Remark.css" rel="stylesheet" />
 }
 
 
 <div class="container containerMinH">
     <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.FdManagementMemNick)－好友管理</h2>
-    <div class="card text-center border-0 p-adjust">
+    <div class="card text-center border-0 p-adjust bg-transparent" >
         <div class="card-header bg-transparent text-white ">
             <div class="d-flex">
-                <ul class="nav nav-tabs card-header-tabs mx-auto">
+                <ul class="nav nav-tabs card-header-tabs mx-auto ">
                     <li class="nav-item ">
                         <a class="nav-link active p-3 text-success" href="#tab1" data-toggle="tab"><strong>待審好友清單</strong></a>
                     </li>
@@ -30,7 +30,7 @@
             <div class="card-body tab-pane show active fade " id="tab1">
                 @if (Model.vw_FriendShip.Where(m => m.Approved == false).ToList().Count == 0)
                 {
-                    <h2 class="text-center text-success ">無未審核資料</h2>
+                    <h2 class="text-center text-success bg-transparent">無未審核資料</h2>
                 }
                 else
                 {
@@ -41,7 +41,7 @@
                         if (!i.Approved)
                         {
 
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp" id="@count">
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@count">
                                 <input type="hidden" id="f@(+count)" value="@i.friendMemId"  />
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
@@ -88,7 +88,7 @@
             <div class="card-body tab-pane fade " id="tab2">
                 @if (Model.vw_FriendShip.Where(m => m.Approved == true).Count() == 0)
                 {
-                    <h2 class="text-center text-success ">目前尚無好友</h2>
+                    <h2 class="text-center text-success bg-transparent">目前尚無好友</h2>
                 }
                 else
                 {
