@@ -13,8 +13,6 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-
-
     [MetadataType(typeof(MetaChat_Records))]
     public partial class Chat_Records
     {

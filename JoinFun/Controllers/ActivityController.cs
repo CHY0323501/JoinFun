@@ -61,12 +61,13 @@ namespace JoinFun.Controllers
 
         }
 
-        public ActionResult Details(string actId, string memID= "M000000001", string actClassId="cls001")
+        public ActionResult Details(string actId, string memID, string actClassId)
         {
             if (actId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.memID = memID;
             ViewBag.actClassId = actClassId;
             ViewBag.actId = actId;
             //ViewBag.memID = memID;
@@ -75,15 +76,33 @@ namespace JoinFun.Controllers
             {
                 vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
                 ActivityList = db.Join_Fun_Activities.ToList(),
-                MemberList = db.Member.Where(m=>m.memId==memID).ToList()
+                MemberList = db.Member.Where(m=>m.memId==memID).ToList(),
+                MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
 
-        };
-            //var act = db.vw_Activities.Where(m => m.actId == actId).ToList();
+            };
            
             ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
             ViewBag.allpic = db.Photos_of_Activities.ToList();
             ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
             return View(ACT);
+        }
+
+        //留言action
+        [HttpPost]
+        public ActionResult AddComment(string id, string memID, string comment)
+        {
+            Message_Board board = new Message_Board();
+            string serial = db.Database.SqlQuery<string>("Select dbo.GetMBoardSerial()").FirstOrDefault();
+            board.actId = id;
+            board.mboardSerial = serial;
+            board.memId = memID;
+            board.boardMessage = comment;
+            board.messageTime = DateTime.Now;
+            board.keepMboard = true;
+            db.Message_Board.Add(board);
+            db.SaveChanges();
+
+            return Json(new { mid = serial }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -170,12 +189,15 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Join_Fun_Activities act, FormCollection form, HttpPostedFileBase[] picture)
+        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase[] picture)
         {
             //呼叫Sql系統函數GetActId()取得新增的活動ID
             string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
             act.actId = actId;
             act.hostId = "M000000003";//Session["memId"].ToString();
+            //將Dropdown List的值取回 ---start--- 
+            //act.acceptDrop = Convert.ToBoolean(form["Drop"].ToString());
+            //將Dropdown List的值取回 ---end--- 
             act.keepAct = true;
             db.Join_Fun_Activities.Add(act);
             db.SaveChanges();
@@ -186,14 +208,23 @@ namespace JoinFun.Controllers
                 {
                     HttpPostedFileBase file = picture[i];
                     Photos_of_Activities photo = new Photos_of_Activities();
-                    photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-                    photo.actId = actId;
-                    fileName = photo.PhotoSerial + photo.actId + ".jpg";
-                    // 將檔案儲存到網站的Photos資料夾下
-                    file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
-                    photo.actPics = "~/Photos/Activities/" + fileName;
-                    db.Photos_of_Activities.Add(photo);
-                    db.SaveChanges();
+                    if (file != null)
+                    {
+                        photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                        photo.actId = actId;
+                        fileName = photo.PhotoSerial + photo.actId + ".jpg";
+                        // 將檔案儲存到網站的Photos資料夾下
+                        file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
+                        photo.actPics = "~/Photos/Activities/" + fileName;
+                        db.Photos_of_Activities.Add(photo);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        GetSelectList();
+                        ViewBag.UploadError = "請選擇要上傳的圖片";
+                        return View();
+                    }
                 }
             }
             else
@@ -305,6 +336,58 @@ namespace JoinFun.Controllers
             db.Violation.Add(violate);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Messages(string memID)
+        {
+            var message = db.Notification.Where(m => m.ToMemId == memID).ToList();
+            return View(message);
+        }
+
+        [HttpPost]
+        public ActionResult GetMStatus(string id)
+        {
+            int count = db.Notification.Count(m => m.ToMemId == id && m.readYet == false);
+            return Json(count, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateRStatus(string serial, bool isRead)
+        {
+            var message = db.Notification.Find(serial);
+            message.readYet = isRead;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveMessage(string serial, bool keep)
+        {
+            var message = db.Notification.Find(serial);
+            message.keepNotice = keep;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMessage(string serial)
+        {
+            var message = db.Notification.Find(serial);
+            db.Notification.Remove(message);
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult MContent(string serial)
+        {
+            var message = db.Notification.Find(serial);
+            message.readYet = true;
+            db.SaveChanges();
+            return View(message);
         }
 
         //建立"新增"或"編輯"有對應資料表Dropdown list

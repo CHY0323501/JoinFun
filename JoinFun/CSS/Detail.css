@@ -38,13 +38,11 @@
 
 #tag>a{
     color:cornflowerblue;
-
-
 }
 
 #act_content {
     
-    height: 300px;
+    /*height: 300px;*/
     border-top: 3px solid;
     border-bottom: 3px solid;
     border-top-color: #c73030;
@@ -55,14 +53,29 @@
     padding-right:45px;
 }
 
+#act_content1 {
+    height: 200px;
+    border-top: 3px solid;
+    border-bottom: 3px solid;
+    border-top-color: #c73030;
+    border-bottom-color: #c73030;
+    color: #514949;
+    overflow: auto;
+    text-align: center;
+    padding-right: 45px;
+}
+
 .subtitle {
     font-family: 'Microsoft YaHei UI';
-    color: #505050;
+    color: #630e0e;
     font-size: 25px;
+    background-color:rgba(230, 156, 65, 0.85);
+    border-radius:10px;
+   
 }
 
 #act_info {
-    height: 300px;
+    /*height: 300px;*/
     border-top: 3px solid;
     border-bottom: 3px solid;
     border-top-color: #c73030;

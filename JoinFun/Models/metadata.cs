@@ -135,7 +135,8 @@ namespace JoinFun.Models
         public string actTopic { get; set; }
         [DisplayName("活動舉辦時間")]
         [Required(ErrorMessage = "請輸入活動時間")]
-        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         public System.DateTime actTime { get; set; }
         [DisplayName("活動說明")]
         [Required(ErrorMessage = "請輸入活動說明")]
@@ -164,7 +165,9 @@ namespace JoinFun.Models
         [DisplayName("點閱次數")]
         public int clickTimes { get; set; }
         [DisplayName("報名截止時間")]
-        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "請輸入截止時間")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         public System.DateTime actDeadline { get; set; }
         [DisplayName("活動類別編號")]
         public string actClassId { get; set; }
@@ -523,13 +526,21 @@ namespace JoinFun.Models
     {
         [DisplayName("通知編號")]
         public string NotiSerial { get; set; }
+        [DisplayName("類型編號")]
+        public string InstanceId { get; set; }
         [DisplayName("接收通知者會員編號")]
         public string ToMemId { get; set; }
-        [DisplayName("通知內容")]
+        [DisplayName("訊息主旨")]
+        public string NotiTitle { get; set; }
+        [DisplayName("訊息內容")]
         [Required(ErrorMessage = "必填")]
         public string NotifContent { get; set; }
+        [DisplayName("收到時間")]
+        public System.DateTime timeReceived { get; set; }
         [DisplayName("是否已讀")]
         public bool readYet { get; set; }
+        [DisplayName("是否保留")]
+        public bool keepNotice { get; set; }
 
     }
 

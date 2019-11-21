@@ -13,7 +13,6 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-
     [MetadataType(typeof(MetaType_of_Violate))]
     public partial class Type_of_Violate
     {

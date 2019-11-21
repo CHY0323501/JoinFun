@@ -75,32 +75,7 @@
                     {
                         <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
                     }
-                    @*@if (pic.Count() != 0)
-                        {
-                            <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
-                        }
-                        else
-                        {
-                            foreach (var i in pic)
-                            {
-                                <img src="@Url.Content(i.actPics)" class="carousel-item active bg_carousel" />
-                            }
-                        }*@
 
-
-
-                    @*@foreach (var i in pic)
-                        {
-                            if (i.actPics.Count() == 0)
-                            {
-                                <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
-                            }
-                            else
-                            {
-
-                                <img src="@Url.Content(i.actPics)" class="carousel-item active bg_carousel" />
-                            }
-                        }*@
 
                 </div>
 
@@ -136,7 +111,7 @@
 
                 <div>
 
-                    @if (/*Session["memid"].ToString()*/ item.hostId == "M000000017")
+                    @if (item.hostId == ViewBag.memID)
                     {
                         @Html.ActionLink("編輯活動", "Edit", new { actId = item.actId }, new { @class = "btn btn-warning btn-block" })
 
@@ -159,25 +134,15 @@
 
     <div class="row">
         <div class="col-md-6 ">
-            <h2 class="subtitle">活動內容</h2>
+            <span class="subtitle">活動內容</span>
             <div class="w-100">
-                <pre id="act_content">
-                            
-
-    @*｜甜W室小學堂-萬聖節限定｜﻿
-    ﻿
-    免烤箱x免電磁爐x免開火﻿
-    ﻿
-    推薦給怕燒掉廚房的新手﻿
-    推薦給要帶小朋友的媽媽們﻿
-    推薦給不想準備一堆材料的你﻿*@
+                <pre id="act_content1"> 
 
 @foreach(var item in Model.vwActivityList){
     
     @item.actDescription
 
 }
-
                  </pre>
             </div>
 
@@ -185,11 +150,10 @@
             <div id="notice">
                 @*<div class="row">*@
                 @*<div class="col-md-6">*@
-                <h2 class="subtitle">注意事項</h2>
+                <span class="subtitle">留言板</span>
 
-                <div id="act_content" class="w-100">
-                    由於場地須預約，因此參加了不可以退出喔!!
-                    請參加前考慮清楚。
+                <div id="act_content1" class="w-100">
+                    <h1>留言板區</h1>
                 </div>
 
                 @*</div>*@
@@ -197,7 +161,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h2 class="subtitle">活動資訊</h2>
+            <span class="subtitle">活動資訊</span>
             <div id="act_info" class="w-100">
                 <ul>
                     @foreach (var item in Model.vwActivityList)
@@ -224,12 +188,12 @@
             </div>
 
             @*<div class="col-md-6">*@
-            <h2 class="subtitle">關於揪團主</h2>
+            <span class="subtitle">關於揪團主</span>
             <div id="act_info" class="w-100">
                 @foreach (var item in Model.vwActivityList)
                 {
                     <img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />
-                    <p>@item.memNick</p>
+                    <p>@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, null)</p>
 
 
                 }
@@ -251,7 +215,50 @@
     @*-------------------------------------------------------------------*@
 
 </div>
+<div class="container">
+    <h2 class="alert alert-info text-center col-md-5">留言板</h2>
+    <div id="commentBoard">
+        @foreach (var item in Model.MBoard)
+        {
+            <div class="mb-4">
+                <a href="@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a>
+                <label id="@item.memId">@Model.MemberList.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
+                <span>(@item.messageTime)</span>
+                @if (Session["memid"] != null)
+                {
+                    if (Session["memid"].ToString() != item.memId)
+                    {
+                        <a class="ml-auto fa fas fa-file-signature text-danger" href="@Url.Action("Report", "Activity", new { id = item.mboardSerial, reporterID = Session["memid"].ToString()})"></a>
+                    }
+                }
+                @if (item.boardMessage.StartsWith("@"))
+                {
+                    <div class="mt-2 ml-3 onFocus">
+                        @item.boardMessage
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-2 ml-3">
+                        @item.boardMessage
+                    </div>
+                }
+            </div>
+        }
+    </div>
 
+    @Html.TextBoxFor(m => m.ActivityList.FirstOrDefault().actId, new { type = "hidden", @id = "actID" })
+    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memId, new { type = "hidden", @id = "member" })
+    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memNick, new { type = "hidden", id = "nick" })
+    <div class="highlighter"><span></span></div>
+    @Html.TextBoxFor(m => m.MBoard.FirstOrDefault().boardMessage, new { Value = "", @id = "comments" })
+
+    <input id="commentBtn" type="button" value="送出" class="btn btn-info" />
+
+    <div class="d-sm-flex justify-content-center mt-5" style="width:600px">
+        @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-warning btn-block" })
+    </div>
+</div>
 
 
 
@@ -263,6 +270,9 @@
 
 <p id="gendercompare">@Model.MemberList.FirstOrDefault().Sex</p>
 
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+}
 
 @section work{
     <script>
@@ -386,6 +396,57 @@
             };
         };
 
-         //$("#join").attr("disabled", "disabled");
+        //$("#join").attr("disabled", "disabled");
+    </script>
+}
+
+@section scripts{
+    <script>
+
+    $('#commentBtn').click(function () {
+        $.ajax({
+            url: "@Url.Action("AddComment", "Activity")",
+            method: "post",
+            traditional: true,
+            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val() },
+            success: function (data) {
+                alert("留言新增成功");
+                $.ajax({
+                    type: "Get",
+                    url: "http://localhost:54130/api/getComment?id=" + data.mid,
+                    success: function (d) {
+                        $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
+                           + $('#nick').val() + '</label>' + '<span>' + '  (' + d[0] + ')' + '</span><div class="mt-2 ml-3 onFocus">' + d[1] + '</div></div>');
+                    },
+                });
+                $('#comments').val("");
+                $('.highlighter span').text("");
+            },
+            error: function () {
+                alert('請先登入後留言');
+            }
+        });
+    });
+
+    $('#commentBoard label').click(function () {
+        var timer;
+        $('#commentBoard label').on("mousedown", function () {
+            if ($('#member').val() != $(this).attr("id")) {
+                var target = "@@" + $(this).text() + " ";
+                timer = setTimeout(function () {
+                    $('#comments').val(target);
+                    $('.highlighter span').text(target);
+                }, 800);
+            }
+        }).on("mouseup", function () {
+                clearTimeout(timer);
+        });
+    });
+
+
+    $('#comments').keyup(function () {
+        if ($(this).val().length <= $('.highlighter span').text().length)
+            $('.highlighter span').text("");
+    });
     </script>
 }
