@@ -117,24 +117,28 @@ namespace JoinFun.Controllers
         //修改密碼
         public ActionResult PwdEdit(string memId)
         {
-
-            var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
-            ViewBag.account = (from a in db.Acc_Pass
-                               where a.memId == memId
-                               select a.Account).FirstOrDefault();
-            return View(accPwd);
+            if (Session["memid"].ToString() == memId)
+            {
+                var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
+                ViewBag.account = (from a in db.Acc_Pass
+                                   where a.memId == memId
+                                   select a.Account).FirstOrDefault();
+            }
+            return View();
 
         }
 
         [HttpPost]
         public ActionResult PwdEdit(string memId, string OldPassword, string NewPassword)
         {
+
             var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
             var oldsalt = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault().Salt;
 
             //ViewBag.account = (from a in db.Acc_Pass
             //                   where a.memId == memId
             //                   select a.Account).FirstOrDefault();
+
 
             byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(OldPassword + oldsalt);
             byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
@@ -161,6 +165,7 @@ namespace JoinFun.Controllers
 
             }
 
+
             return View();
         }
 
@@ -174,27 +179,28 @@ namespace JoinFun.Controllers
         public ActionResult ForgetPwd(string account, string email)
         {
             var acc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
-            
-            var memEmail = db.Member.Where(m => m.Email== email).FirstOrDefault();
 
-            if (acc.Account == account)
+            var memEmail = db.Member.Where(m => m.Email == email).FirstOrDefault();
+            if (acc != null)
             {
-                if (memEmail.Email == email)
+                if (acc.Account == account)
                 {
-                    MessageCenter mes = new MessageCenter();
-                    List<string> mailList = new List<string>() { memEmail.Email };
-                    mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的" + memEmail.memNick + "會員:</h3></br><h3>請點擊下面連結來重置您的密碼!</h3></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + memEmail.email_ID + "'>重置密碼請點擊</a></br>");
+                    if (memEmail.Email == email)
+                    {
+                        MessageCenter mes = new MessageCenter();
+                        List<string> mailList = new List<string>() { memEmail.Email };
+                        mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的" + memEmail.memNick + "會員:</h3></br><h3>請點擊下面連結來重置您的密碼!</h3></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + memEmail.email_ID + "'>重置密碼請點擊</a></br>");
 
+                    }
+                    return View();
                 }
-                return View();
             }
-            
-               
-                return View();
-           
-            
-                
-            
+
+            return View();
+
+
+
+
 
 
         }
@@ -217,9 +223,9 @@ namespace JoinFun.Controllers
         public ActionResult RemakePwd(string email_ID, string NewPwd)
         {
             var memid = db.Member.Where(m => m.email_ID == email_ID).FirstOrDefault().memId;
-            
+
             var accPwd = db.Acc_Pass.Where(m => m.memId == memid).FirstOrDefault();
-            
+
 
             string salt = Guid.NewGuid().ToString();
             byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(NewPwd + salt);
@@ -227,8 +233,8 @@ namespace JoinFun.Controllers
             string hashString = Convert.ToBase64String(hashBytes);
 
             accPwd.Salt = salt;
-            accPwd.Password = hashString; 
-            accPwd.PasswordConfirm =hashString;
+            accPwd.Password = hashString;
+            accPwd.PasswordConfirm = hashString;
             db.SaveChanges();
 
             return RedirectToAction("Login", "Login");
