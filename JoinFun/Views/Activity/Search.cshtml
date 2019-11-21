@@ -1,0 +1,163 @@
+﻿
+@model JoinFun.ViewModel.Finalchoose
+
+@{
+    //var host = (IEnumerable < Test.Models.Member >)ViewBag.host;
+    ViewBag.Title = "揪團活動列表";
+    //var agelist = (IEnumerable<JoinFun.Models.Age_Restriction>)ViewBag.age;
+}
+
+@section indexcss {
+
+    <link href="~/CSS/index_fun.css" rel="stylesheet" />
+    <link href="~/CSS/Newcard/demo.css" rel="stylesheet" />
+    <link href="~/CSS/Newcard/reset.css" rel="stylesheet" />
+    <link href="~/CSS/Newcard/style_common.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+}
+
+<div class="container">
+    <!--輪播圖-->
+    <header class="container-fluid">
+
+
+        <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active bg_carousel" style="background-image:url('../../Photos/banner/Join Fun.png')">
+
+                </div>
+                <div class="carousel-item bg_carousel" style="background-image:url('../../Photos/banner/Join Fun (1).png')">
+
+                </div>
+                <div class="carousel-item bg_carousel" style="background-image:url('../../Photos/index/carousel4.jpg')">
+
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </header>
+    <span class="fa fa-search" id="search"></span>
+    <div id="finalchoose">
+        @using (Html.BeginForm("FinalChoose", "Activity", FormMethod.Get))
+        {
+            <label class="choice">類別</label>
+            @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().actClassId, ViewBag.Activity_Class as SelectList, htmlAttributes: new { @class = "form-control-sm" })
+            <label class="choice">年齡限制</label>
+            @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().ageRestrict, ViewBag.Age_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm" })
+            <label class="choice">性別限制</label>
+            @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().gender, ViewBag.Gender_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm" })
+            <label class="choice">人數上限</label>
+            @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxNumPeople, ViewBag.People_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm" })
+            <label class="choice">預算上限</label>
+            @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm" })
+            <label class="choice">付款方式</label>
+            @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().paymentTerm, ViewBag.Payment_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm" })
+            <label class="choice">縣/市</label>
+            @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().actCounty, ViewBag.County as SelectList, htmlAttributes: new { @id = "county", @class = "form-control-sm" })
+
+            <input id="finalchoose" type="submit" value="進行篩選" class="btn btn-warning btn-sm ml-3" />
+
+        }
+
+    </div>
+    <div>
+        <h2 id="index_title" class="mx-5 pl-2 mt-1">揪團活動</h2>
+        <form class="form-inline form-row mt-2 " method="get" action="/Activity/Search">
+
+            <input class="form-control col-auto ml-auto " type="search" placeholder="查詢活動關鍵字" name="keyword">
+            <button class="btn btn-outline-secondary col-auto ml-1" type="submit">Search</button>
+
+        </form>
+    </div>
+    <article class="main row">
+        @*@if (ViewBag.flag)
+            {
+
+                <img src="~/Photos/oops.jpg" />
+                <p id="nodata">Sorry,No Data!!</p>
+            }*@
+
+
+        @foreach (var item in Model.vwActList)
+        {
+            var address = @item.CountyName + item.DistrictName;
+
+            <div class="col-md-4 flex-column justify-content-around" style="width:18rem">
+
+                <div class="view view-first ">
+
+
+                    @if (item.actId != null)
+                    {
+                        <a href="@Url.Action("Details", new { actId = item.actId ,actTopic = item.actTopic,actDescription = item.actDescription,memID=Session["memid"] })"><img src="@Url.Action("GetIndexPhoto", "Activity", new { actId = item.actId, actClassId=item.actClassId })" style="height:200px" /></a>
+                    }
+                    <div class="mask">
+
+                        <h2>@Html.ActionLink(item.actTopic, "Details", new { actId = item.actId, actClassId = ViewBag.actClassId })</h2>
+                        <pre class="sub">活動時間：@Html.DisplayFor(modelItem => item.actTime)</pre>
+                        <pre class="sub">截止時間：@Html.DisplayFor(modelItem => item.actDeadline)</pre>
+                        <pre class="sub">地點：@address</pre>
+
+                        @*<div class="card-footer bg-warning text-center">*@
+
+                        @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = item.actClassId }, new { @class = "btn btn-secondary" })
+
+
+                        @*<a href="http://www.htmleaf.com/" class="info">Read More</a>*@
+                        @*</div>*@
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+        @*@while (true)
+            {
+                if (Model.joinfunlist.Any(m => m.actDeadline == DateTime.Now))
+                {
+
+
+
+
+                }
+
+
+            }*@
+
+
+
+    </article>
+
+
+
+</div>
+
+
+@Session indexscript{
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+}
+
+
+
+
+
+

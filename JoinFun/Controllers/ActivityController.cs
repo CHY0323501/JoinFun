@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Data;
+using System.Data.Entity.Core.EntityClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -12,25 +15,53 @@ namespace JoinFun.Controllers
     public class ActivityController : Controller
     {
         JoinFunEntities db = new JoinFunEntities();
-        // GET: Activity
-        public ActionResult Index(string hostId, string actId, string actClassId = "cls001")
+        Activity_Details m = new Activity_Details();
+        
+    
+        // GET: Activity (原)
+        //public ActionResult Index(string hostId, string actId, string actClassId = "cls001")
+        //{
+        //    if (actClassId == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ViewBag.actClassName = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().actClassName;
+        //    ViewBag.actClassId = actClassId;
+        //    ViewBag.actId = actId;
+        //    ActClass classList = new ActClass()
+        //    {
+        //        vwActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId && m.keepAct == true).ToList(),
+        //        ClassList = db.Activity_Class.ToList()
+        //    };
+        //    return View(classList);
+        //}
+
+        public ActionResult Index()
         {
-            if (actClassId == null)
+            ViewBag.age = db.Age_Restriction.ToList();
+            //ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
+            Finalchoose fc = new Finalchoose()
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ViewBag.actClassName = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().actClassName;
-            ViewBag.actClassId = actClassId;
-            ViewBag.actId = actId;
-            ActClass classList = new ActClass()
-            {
-                vwActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId && m.keepAct == true).ToList(),
-                ClassList = db.Activity_Class.ToList()
+                vwActList = db.vw_Activities.Where(m => m.actDeadline != DateTime.Now).ToList(),
+                joinfunlist = db.Join_Fun_Activities.ToList()
+                
             };
-            return View(classList);
+            GetSelectList();
+            //var vwAct = fc;
+            return View(fc);
         }
 
-        public ActionResult Details(string actId, string actClassId)
+        public void changeKeep()
+        {
+            var deadtime=db.Join_Fun_Activities.Where(m => m.actDeadline == DateTime.Now).ToList();
+            foreach(var time in deadtime)
+            {
+                time.keepAct = false;
+            }
+
+        }
+
+        public ActionResult Details(string actId, string memID= "M000000001", string actClassId="cls001")
         {
             if (actId == null)
             {
@@ -38,11 +69,94 @@ namespace JoinFun.Controllers
             }
             ViewBag.actClassId = actClassId;
             ViewBag.actId = actId;
+            //ViewBag.memID = memID;
+            ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
+            ActClass ACT = new ActClass()
+            {
+                vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
+                ActivityList = db.Join_Fun_Activities.ToList(),
+                MemberList = db.Member.Where(m=>m.memId==memID).ToList()
 
-            var act = db.vw_Activities.Where(m => m.actId == actId).ToList();
+        };
+            //var act = db.vw_Activities.Where(m => m.actId == actId).ToList();
+           
             ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
-            return View(act);
+            ViewBag.allpic = db.Photos_of_Activities.ToList();
+            ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
+            return View(ACT);
         }
+
+
+        public ActionResult FinalChoose(string actClassId,int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudge, int? paymentTerm, int? actCounty)
+        {
+            GetSelectList();
+            //var vwActivities = fc1.vwActList.Where(m => m.keepAct == true).ToList();
+            var vwActivities = db.vw_Activities.Where(m => m.keepAct == true).ToList();
+
+            if (actClassId != null)
+            {
+                vwActivities = vwActivities.Where(m => m.actClassId == actClassId).ToList();
+            }
+            if (ageRestrict != null)
+            {
+                vwActivities = vwActivities.Where(m => m.ageRestrict == ageRestrict).ToList();
+            }
+            if (gender != null)
+            {
+                vwActivities = vwActivities.Where(m => m.genderSerial == gender).ToList();
+            }
+            if (maxNumPeople != null)
+            {
+                vwActivities = vwActivities.Where(m => m.peoSerial == maxNumPeople).ToList();
+            }
+            if (maxBudge != null)
+            {
+                vwActivities = vwActivities.Where(m => m.BudgetNo == maxBudge).ToList();
+            }
+            if (paymentTerm != null)
+            {
+                vwActivities = vwActivities.Where(m => m.paymentSerial == paymentTerm).ToList();
+            }
+            if (actCounty != null)
+            {
+                vwActivities = vwActivities.Where(m => m.CountyNo == actCounty).ToList();
+            }
+          
+           
+            Finalchoose fc1 = new Finalchoose()
+            {
+                vwActList = vwActivities.ToList(),
+                joinfunlist = db.Join_Fun_Activities.ToList()
+            };
+          
+            return View(fc1);
+
+
+        }
+
+        //關鍵字搜尋
+        public ActionResult Search(string keyword)
+        {
+            GetSelectList();
+            if (keyword == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+          
+            var searchResult = db.vw_Activities.Where(m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword)).ToList();
+            Finalchoose fc2 = new Finalchoose()
+            {
+                vwActList = searchResult.ToList(),
+                joinfunlist = db.Join_Fun_Activities.ToList()
+            };
+
+
+            return View(fc2);
+        }
+
+
+
 
         public ActionResult Create()
         {
@@ -146,10 +260,8 @@ namespace JoinFun.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         public ActionResult Report(string id, string reporterID)
-        {
-            //ViewBag.Type = new SelectList(db.Type_of_Violate, "typeId", "vioClass");
+        { 
             if (db.Member.Any(m => m.memId == id))
             {
                 ViewBag.Type = "會員";
@@ -198,7 +310,7 @@ namespace JoinFun.Controllers
         //建立"新增"或"編輯"有對應資料表Dropdown list
         private void GetSelectList()
         {
-            //ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName");
+            ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName");
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age");
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender");
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction");
@@ -206,6 +318,7 @@ namespace JoinFun.Controllers
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment");
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName");
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName");
+            ViewBag.ActClass = new SelectList(db.Activity_Class, "actClassId", "actClassName");
         }
         private void GetSelectList(string actId)
         {
@@ -235,6 +348,7 @@ namespace JoinFun.Controllers
         public FileContentResult GetActPhoto(string actId)
         {
             if (db.Photos_of_Activities.Any(m => m.actId == actId))
+
             {
                 string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
                 if (photo != null)
@@ -244,8 +358,28 @@ namespace JoinFun.Controllers
                     byte[] image = System.IO.File.ReadAllBytes(path);
                     return base.File(image, "image/jpeg");
                 }
+
             }
             return null;
+        }
+
+        //傳預設類別圖片
+        public FileContentResult GetIndexPhoto(string actId, string actClassId)
+        {
+            bool flag = true;
+            int count = 0;
+            bool IsSameactId = db.Photos_of_Activities.Any(m => m.actId == actId);
+            if (IsSameactId)
+            {
+                string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
+                string path = Server.MapPath(photo);
+                byte[] image = System.IO.File.ReadAllBytes(path);
+                return base.File(image, "image/jpeg");
+            }
+            string classphoto = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
+                string path2 = Server.MapPath(classphoto);
+                byte[] image2 = System.IO.File.ReadAllBytes(path2);
+                return base.File(image2, "image2/jpg");
         }
 
 
