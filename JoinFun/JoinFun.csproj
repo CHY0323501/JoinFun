@@ -226,6 +226,7 @@
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />
     <Content Include="Photos\w2.png" />
+    <Content Include="Scripts\ActivityScripts.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -852,6 +853,8 @@
     <Content Include="Views\Register\CheckEmail.cshtml" />
     <Content Include="Views\Register\ForgetPwd.cshtml" />
     <Content Include="Views\Register\RemakePwd.cshtml" />
+    <Content Include="Views\Activity\Messages.cshtml" />
+    <Content Include="Views\Activity\MContent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
