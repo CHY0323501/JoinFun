@@ -219,7 +219,7 @@
                         @Html.ActionLink("登出", "Logout", "Login", "", new { @class = "btn btn-dark d-block" })
                     </div>
                     <div class="col-3 offset-2">
-                        @Html.ActionLink("修改密碼", "PwdEdit", "Register", "", new { @class = "btn btn-dark d-block" })
+                        @Html.ActionLink("修改密碼", "PwdEdit", "Register", new { memID = i.memId }, new { @class = "btn btn-dark d-block" })
                     </div>
                 </div>
             }
