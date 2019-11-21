@@ -842,10 +842,8 @@
     <Content Include="Views\Activity\AddPhoto.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
     <Content Include="Views\Member\Remarks.cshtml" />
-    <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Member\History.cshtml" />
-    <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Member\RemarkCreate.cshtml" />
     <Content Include="Views\Register\PwdEdit.cshtml" />
     <Content Include="Views\Member\FriendManagement.cshtml" />
@@ -857,10 +855,8 @@
     <Content Include="Views\Register\Approved.cshtml" />
     <Content Include="Views\Member\Search.cshtml" />
     <Content Include="Views\Register\CheckEmail.cshtml" />
-
     <Content Include="Views\Register\ForgetPwd.cshtml" />
     <Content Include="Views\Register\RemakePwd.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
