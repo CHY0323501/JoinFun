@@ -131,14 +131,21 @@
             height: 60px;
             line-height: 60px;
         }
-
-        #search::-webkit-input-placeholder {
+        /*navbar調整*/
+        #a a {
+            font-size:1rem;
+        }
+        #memsearch::-webkit-input-placeholder {
             color: rgb(23, 162, 184);
             text-align:center;
             font-size:1rem!important;
         }
-        #search {
+        #memsearch {
             font-size:1rem!important;
+            display:initial;
+        }
+        #joinfunbrand {
+        font-size:1.5rem!important;
         }
     </style>
 
@@ -147,7 +154,7 @@
 <body>
     <div id="a" class="navbar navbar-expand-lg fixed-top navbar-light justify-content-end nav-bg">
         <div class="container ">
-            <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/img.png" style="width:130px" />    JoinFun</a>
+            <a id="joinfunbrand" href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/img.png" style="width:130px" />    JoinFun</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
@@ -158,7 +165,7 @@
                     <li class="nav-item ">
                         <div class="form-group  mb-0">
                             <form action="@Url.Action("Search","Member")" method="get" class="form-inline">
-                                <input id="search" name="search" type="text" placeholder="搜尋會員編號或暱稱" class="form-control ml-auto" />
+                                <input id="memsearch" name="search" type="text" placeholder="搜尋會員編號或暱稱" class="form-control ml-auto" />
                                 <button type="submit" id="postSearch" class="btn btn-info mr-auto material-icons" style="color:white!important">search</button>
                             </form>
                         </div>
@@ -191,7 +198,7 @@
         </div>
     </div>
 
-    <div class="container body-content">
+    <div class="container body-content pt-5">
         @RenderBody()
     </div>
     <footer style="position:relative;bottom:0;height:60px;line-height:60px" class="w-100 mt-3 mb-0 foot-bg border-danger">
@@ -200,7 +207,6 @@
         </div>
     </footer>
 
-    <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     @RenderSection("work", required: false)
