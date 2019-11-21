@@ -86,14 +86,7 @@
         </form>
     </div>
     <article class="main row">
-        @*@if (ViewBag.flag)
-        {
-           
-            <img src="~/Photos/oops.jpg" />
-            <p id="nodata">Sorry,No Data!!</p>
-        }*@
-
-
+     
         @foreach (var item in Model.vwActList)
         {
             var address = @item.CountyName + item.DistrictName;
@@ -105,18 +98,18 @@
 
                     @if (item.actId != null)
                     {
-                        <a href="@Url.Action("Details", new { actId = item.actId ,actTopic = item.actTopic,actDescription = item.actDescription,memID=Session["memid"] })"><img src="@Url.Action("GetIndexPhoto", "Activity", new { actId = item.actId, actClassId=item.actClassId })" style="height:200px" /></a>
+                        <a href="@Url.Action("Details", new { actId = item.actId , actClassId = item.actClassId,memID=Session["memid"] })"><img src="@Url.Action("GetIndexPhoto", "Activity", new { actId = item.actId, actClassId=item.actClassId })" style="height:200px" /></a>
                     }
                     <div class="mask">
 
-                        <h2>@Html.ActionLink(item.actTopic, "Details", new { actId = item.actId, actClassId = ViewBag.actClassId })</h2>
+                        <h2>@Html.ActionLink(item.actTopic, "Details", new { actId = item.actId, actClassId = item.actClassId,memID=Session["memid"] })</h2>
                         <pre class="sub">活動時間：@Html.DisplayFor(modelItem => item.actTime)</pre>
                         <pre class="sub">截止時間：@Html.DisplayFor(modelItem => item.actDeadline)</pre>
                         <pre class="sub">地點：@address</pre>
 
                         @*<div class="card-footer bg-warning text-center">*@
 
-                        @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = item.actClassId }, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = item.actClassId ,memID=Session["memid"]}, new { @class = "btn btn-secondary" })
 
 
                         @*<a href="http://www.htmleaf.com/" class="info">Read More</a>*@
@@ -150,7 +143,7 @@
 </div>
 
 
-@Session indexscript{
+@section indexscript{
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -61,12 +61,13 @@ namespace JoinFun.Controllers
 
         }
 
-        public ActionResult Details(string actId, string memID= "M000000001", string actClassId="cls001")
+        public ActionResult Details(string actId, string memID, string actClassId)
         {
             if (actId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.memID = memID;
             ViewBag.actClassId = actClassId;
             ViewBag.actId = actId;
             //ViewBag.memID = memID;
