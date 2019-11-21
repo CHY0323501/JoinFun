@@ -188,8 +188,6 @@
     <Content Include="Photos\detail\makecake3.jpg" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Content Include="Photos\index\card1.jpg" />
     <Content Include="Photos\index\card2.jpg" />
     <Content Include="Photos\index\card3.jpg" />
@@ -206,7 +204,6 @@
     <Content Include="Photos\male.png" />
     <Content Include="Photos\oops.jpg" />
     <Content Include="Photos\oops.png" />
-=======
     <Content Include="Photos\gplaypattern.png" />
     <Content Include="Photos\img.png" />
     <Content Include="Photos\leaves.png" />
@@ -214,8 +211,6 @@
     <Content Include="Photos\memphis-colorful.png" />
     <Content Include="Photos\no_results_found.png" />
     <Content Include="Photos\sorry.gif" />
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
-=======
     <Content Include="Photos\gplaypattern.png" />
     <Content Include="Photos\img.png" />
     <Content Include="Photos\leaves.png" />
@@ -223,7 +218,6 @@
     <Content Include="Photos\memphis-colorful.png" />
     <Content Include="Photos\no_results_found.png" />
     <Content Include="Photos\sorry.gif" />
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
     <Content Include="Photos\star.png" />
     <Content Include="Photos\title.png" />
     <Content Include="Photos\title2.png" />
@@ -652,15 +646,8 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-<<<<<<< HEAD
-<<<<<<< HEAD
+    <Compile Include="Controllers\AccountAPIController.cs" />
     <Compile Include="Controllers\ActAPIController.cs" />
-=======
-    <Compile Include="Controllers\AccountAPIController.cs" />
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
-=======
-    <Compile Include="Controllers\AccountAPIController.cs" />
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
@@ -863,22 +850,13 @@
     <Content Include="Views\Register\PwdEdit.cshtml" />
     <Content Include="Views\Member\FriendManagement.cshtml" />
     <Content Include="Views\Activity\Report.cshtml" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Content Include="Views\Activity\FinalChoose.cshtml" />
     <Content Include="Views\Activity\Search.cshtml" />
-=======
-=======
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
     <Content Include="Views\Member\BlockManage.cshtml" />
     <Content Include="Views\Member\MyActivities.cshtml" />
     <Content Include="Views\Register\Approved.cshtml" />
     <Content Include="Views\Member\Search.cshtml" />
-
     <Content Include="Views\Register\CheckEmail.cshtml" />
-
-
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

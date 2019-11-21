@@ -27,7 +27,6 @@
 @*輪播圖*@
 
 <div class="container">
-<<<<<<< HEAD
     <div class="row">
         <div class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -122,47 +121,6 @@
 
 
             @foreach (var item in Model.vwActivityList)
-=======
-    <h2 class="mt-4 text-primary">揪團活動</h2>
-    <hr />
-    @*if (Session["memId"] != null)
-        {
-        if (Session["memId"] != null && (Session["memId"]).ToString() == item.hostId)
-        {*@
-    <nav class="navbar navbar-expand-sm bg-secondary navbar-light mb-2">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                @*@Html.ActionLink("編輯", "Edit", new { id = item.actId }, new { @class = "btn btn-primary" })*@
-                <a class="nav-link text-light btn btn-primary" href="@Url.Action("Edit", new { actId = Model.FirstOrDefault().actId })">編輯</a>
-            </li>
-            <li class="nav-item ml-1">
-                @*@Html.ActionLink("刪除", "Delete", new { id = item.actId }, new { @class = "btn btn-danger", onclick = "return confirm('確認刪除嗎??')" })*@
-                <a class="nav-link text-light btn btn-danger" href="@Url.Action("Delete", new { actId = Model.FirstOrDefault().actId })" onclick="return confirm('確認刪除嗎??')">刪除</a>
-            </li>
-            @if (Session["memid"] != null)
-            {
-                <li>
-                    <a class="nav-link text-light btn btn-link" href="@Url.Action("Report", new { id = Model.FirstOrDefault().actId, reporterID = Session["memid"].ToString() })">檢舉</a>
-                </li>
-            }
-
-        </ul>
-
-    </nav>
-    @*}
-        }*@
-    @foreach (var item in pic)
-    {
-        if (item.actId != null)
-        {
-            @*<img src="@Url.Action("GetPhoto", "Activity", new {item.actPics })" style="width:600px;height:auto" class="rounded" />*@
-            <img src="@Url.Content(item.actPics)" style="width:600px;height:auto" class="rounded img-fluid" />
-        }
-    }
-    <table class="table mt-2" style="width:600px;border:thin">
-        <tbody>
-            @foreach (var item in Model)
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
             {
                 <input id="JoinId" type="hidden" value="@item.actId" />
 
@@ -188,7 +146,7 @@
 
                         <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block d-block  ml-5 " />
                         <input id="remark" type="button" value="收藏" class="btn btn-danger btn-block   ml-5 " />
-                        
+
                     }
                     <p>@item.hashTag</p>
 
@@ -199,11 +157,11 @@
     </div>
     @*-------------------------------------------------------------------*@
 
-<div class="row">
-    <div class="col-md-6 ">
-        <h2 class="subtitle">活動內容</h2>
-        <div class="w-100">
-            <pre id="act_content">
+    <div class="row">
+        <div class="col-md-6 ">
+            <h2 class="subtitle">活動內容</h2>
+            <div class="w-100">
+                <pre id="act_content">
                             
 
     @*｜甜W室小學堂-萬聖節限定｜﻿
@@ -221,22 +179,22 @@
 }
 
                  </pre>
-        </div>
-
-
-        <div id="notice">
-            @*<div class="row">*@
-            @*<div class="col-md-6">*@
-            <h2 class="subtitle">注意事項</h2>
-
-            <div id="act_content" class="w-100">
-                由於場地須預約，因此參加了不可以退出喔!!
-                請參加前考慮清楚。
             </div>
 
-            @*</div>*@
 
-        </div>
+            <div id="notice">
+                @*<div class="row">*@
+                @*<div class="col-md-6">*@
+                <h2 class="subtitle">注意事項</h2>
+
+                <div id="act_content" class="w-100">
+                    由於場地須預約，因此參加了不可以退出喔!!
+                    請參加前考慮清楚。
+                </div>
+
+                @*</div>*@
+
+            </div>
         </div>
         <div class="col-md-6">
             <h2 class="subtitle">活動資訊</h2>
@@ -314,8 +272,8 @@
         var hour = document.querySelector('#hour');
         var minute = document.querySelector('#minute');
         var second = document.querySelector('#second');
-        var d,h,m,s;
-        
+        var d, h, m, s;
+
 
         var inputTime = new Date(time);
         //alert(inputTime);
@@ -328,16 +286,16 @@
             var nowTime = +new Date();
             var times = (inputTime - nowTime) / 1000;
 
-             d = parseInt(times / 60 / 60 / 24);
+            d = parseInt(times / 60 / 60 / 24);
             d = d < 10 ? '0' + d : d;
             day.innerHTML = d;
-             h = parseInt(times / 60 / 60 % 24);
+            h = parseInt(times / 60 / 60 % 24);
             h = h < 10 ? '0' + h : h;
             hour.innerHTML = h;
-             m = parseInt(times / 60 % 60);
+            m = parseInt(times / 60 % 60);
             m = m < 10 ? '0' + m : m;
             minute.innerHTML = m;
-             s = parseInt(times % 60);
+            s = parseInt(times % 60);
             s = s < 10 ? '0' + s : s;
             second.innerHTML = s;
         }
@@ -408,10 +366,10 @@
         });
         console.log($("#remainpeo").text());
         console.log($("#gender").text());
-         console.log($("#gendercompare").text());
+        console.log($("#gendercompare").text());
 
 
-        if ($("#remainpeo").text()== "0") {
+        if ($("#remainpeo").text() == "0") {
             $("#join").attr("disabled", "disabled");
             $("#remark").attr("disabled", "disabled");
         };
@@ -428,6 +386,6 @@
             };
         };
 
-     //$("#join").attr("disabled", "disabled");
+         //$("#join").attr("disabled", "disabled");
     </script>
 }

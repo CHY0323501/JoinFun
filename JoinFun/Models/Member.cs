@@ -51,10 +51,7 @@ namespace JoinFun.Models
         public bool Approved { get; set; }
         public string Introduction { get; set; }
         public string Habit { get; set; }
-        public string Dietary_Preference { get; set; }
-
-
-        public Nullable<System.Guid> email_ID { get; set; }
+        public string Dietary_Preference { get; set; }   
         public string email_ID { get; set; }
 
 
