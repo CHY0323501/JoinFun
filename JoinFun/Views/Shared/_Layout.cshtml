@@ -166,6 +166,13 @@
                     <li class="nav-item text-center ml-2">
                         <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login","Login")"><i class="fas fa-sign-in-alt"></i> 登入</a>
                     </li>
+                    @if (Session["memid"] != null)
+                    {
+                        <li class="nav-item text-center">
+                            <input id="mid" type="hidden" value="@Session["memid"].ToString()" />
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages","Activity",new { memID=Session["memid"] })">我的訊息<span class="badge badge-light number"></span></a>
+                        </li>
+                    }
                     <li class="nav-item text-center ml-2">
                         <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")"><i class="fas fa-plus"></i> 我要揪團</a>
                     </li>
@@ -206,5 +213,22 @@
     @RenderSection("work", required: false)
     @RenderSection("scripts", required: false)
     @RenderSection("indexscript", required: false)
+    <script>
+        //取得未讀訊息數量
+        $(document).ready(function () {
+                $.ajax({
+                    url: "@Url.Action("GetMStatus","Activity")",
+                    method: "post",
+                    traditional: true,
+                    data: { id: $('#mid').val() },
+                    success: function (count) {
+                        if (count == 0)
+                            $('.number').text("");
+                        else
+                            $('.number').text(count);
+                    }
+              });
+        });
+    </script>
 </body>
 </html>
