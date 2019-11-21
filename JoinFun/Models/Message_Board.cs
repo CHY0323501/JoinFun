@@ -11,9 +11,7 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-  
     using System.ComponentModel.DataAnnotations;
-
 
     [MetadataType(typeof(MetaMessage_Board))]
     public partial class Message_Board

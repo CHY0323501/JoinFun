@@ -11,10 +11,7 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-
     using System.ComponentModel.DataAnnotations;
-
-
 
     [MetadataType(typeof(MetaFollowUp))]
     public partial class FollowUp

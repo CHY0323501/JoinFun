@@ -10,10 +10,8 @@
 namespace JoinFun.Models
 {
     using System;
-    using System.Collections.Generic; 
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
-
 
     [MetadataType(typeof(MetaMember))]
     public partial class Member
@@ -32,9 +30,9 @@ namespace JoinFun.Models
             this.Friendship = new HashSet<Friendship>();
             this.Member_Remarks = new HashSet<Member_Remarks>();
             this.Message_Board = new HashSet<Message_Board>();
-            this.Notification = new HashSet<Notification>();
             this.Social_Net_ID = new HashSet<Social_Net_ID>();
             this.Violation = new HashSet<Violation>();
+            this.Notification = new HashSet<Notification>();
         }
     
         public string memId { get; set; }
@@ -51,10 +49,8 @@ namespace JoinFun.Models
         public bool Approved { get; set; }
         public string Introduction { get; set; }
         public string Habit { get; set; }
-        public string Dietary_Preference { get; set; }   
+        public string Dietary_Preference { get; set; }
         public string email_ID { get; set; }
-
-
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acc_Pass> Acc_Pass { get; set; }
@@ -81,10 +77,10 @@ namespace JoinFun.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message_Board> Message_Board { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Notification> Notification { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Social_Net_ID> Social_Net_ID { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Violation> Violation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notification> Notification { get; set; }
     }
 }

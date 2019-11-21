@@ -338,6 +338,58 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult Messages(string memID)
+        {
+            var message = db.Notification.Where(m => m.ToMemId == memID).ToList();
+            return View(message);
+        }
+
+        [HttpPost]
+        public ActionResult GetMStatus(string id)
+        {
+            int count = db.Notification.Count(m => m.ToMemId == id && m.readYet == false);
+            return Json(count, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateRStatus(string serial, bool isRead)
+        {
+            var message = db.Notification.Find(serial);
+            message.readYet = isRead;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveMessage(string serial, bool keep)
+        {
+            var message = db.Notification.Find(serial);
+            message.keepNotice = keep;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMessage(string serial)
+        {
+            var message = db.Notification.Find(serial);
+            db.Notification.Remove(message);
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult MContent(string serial)
+        {
+            var message = db.Notification.Find(serial);
+            message.readYet = true;
+            db.SaveChanges();
+            return View(message);
+        }
+
         //建立"新增"或"編輯"有對應資料表Dropdown list
         private void GetSelectList()
         {
