@@ -19,10 +19,11 @@ namespace JoinFun.Controllers
         {
             //var acc= db.Acc_Pass.ToList();
             List<string> acc = new List<string>();
-            foreach (var i in db.Acc_Pass) {
+            foreach (var i in db.Acc_Pass)
+            {
                 acc.Add(i.Account);
             }
-                       
+
             return Ok(acc);
         }
 

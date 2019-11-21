@@ -14,6 +14,7 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
 
+
     [MetadataType(typeof(MetaBlacklist))]
     public partial class Blacklist
     {

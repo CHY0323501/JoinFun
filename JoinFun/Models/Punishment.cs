@@ -14,6 +14,7 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
 
+
     [MetadataType(typeof(MetaPunishment))]
     public partial class Punishment
     {
