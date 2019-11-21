@@ -1,0 +1,97 @@
+﻿*{
+    list-style-type:none;
+}
+
+.title{
+    color:#505050;
+    font-size:40px;
+    font-weight:600;
+    font-family:'Microsoft YaHei UI';
+    text-align:center;
+}
+
+.btn-subject {
+    color: #630e0e;
+    background-color:#ffd87a;
+    border: none;
+}
+
+#sub {
+    color: #4e5b22;
+    font-size:20px;
+}
+
+
+#sub_square{
+    width:100%;
+    height:200px;
+    border:1px dotted pink;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.bg_carousel{
+    height:400px;
+    width:100%;
+    background-position:center center;
+}
+
+#tag>a{
+    color:cornflowerblue;
+
+
+}
+
+#act_content {
+    
+    height: 300px;
+    border-top: 3px solid;
+    border-bottom: 3px solid;
+    border-top-color: #c73030;
+    border-bottom-color: #c73030;
+    color:#514949;
+    overflow:auto;
+    text-align:center;
+    padding-right:45px;
+}
+
+.subtitle {
+    font-family: 'Microsoft YaHei UI';
+    color: #505050;
+    font-size: 25px;
+}
+
+#act_info {
+    height: 300px;
+    border-top: 3px solid;
+    border-bottom: 3px solid;
+    border-top-color: #c73030;
+    border-bottom-color: #c73030;
+    color: #514949;
+    
+}
+
+
+.detail_info{
+    font-weight:700;
+}
+
+/*計時器*/
+
+#cutdown {
+    margin: 30px;
+    text-align:center;
+}
+
+.time {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    background-color:#73a4e0;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    line-height: 70px;
+    border-radius:20px;
+    opacity:0.5;
+}

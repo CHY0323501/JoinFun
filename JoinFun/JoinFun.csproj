@@ -125,8 +125,29 @@
     <Content Include="Content\MyStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CSS\ADM_login.css" />
+    <Content Include="CSS\card\bootstrap-grid.min.css" />
+    <Content Include="CSS\card\htmleaf-demo.css" />
+    <Content Include="CSS\card\style.css" />
+    <Content Include="CSS\Detail.css" />
+    <Content Include="CSS\index_fun.css" />
     <Content Include="CSS\MemberInfo.css" />
+    <Content Include="CSS\Newcard\demo.css" />
+    <Content Include="CSS\Newcard\reset.css" />
+    <Content Include="CSS\Newcard\style1.css" />
+    <Content Include="CSS\Newcard\style10.css" />
+    <Content Include="CSS\Newcard\style2.css" />
+    <Content Include="CSS\Newcard\style3.css" />
+    <Content Include="CSS\Newcard\style4.css" />
+    <Content Include="CSS\Newcard\style5.css" />
+    <Content Include="CSS\Newcard\style6.css" />
+    <Content Include="CSS\Newcard\style7.css" />
+    <Content Include="CSS\Newcard\style8.css" />
+    <Content Include="CSS\Newcard\style9.css" />
+    <Content Include="CSS\Newcard\style_common.css" />
     <Content Include="CSS\Remarks.css" />
+    <Content Include="CSS\time\htmleaf-demo.css" />
+    <Content Include="CSS\time\normalize.css" />
+    <Content Include="CSS\time\timeTo.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
@@ -147,14 +168,49 @@
     <Content Include="Photos\Activities\P000000003A000000013.jpg" />
     <Content Include="Photos\Activities\P000000004A000000014.jpg" />
     <Content Include="Photos\Activities\枕頭山.jpg" />
+    <Content Include="Photos\banner\bg.png" />
+    <Content Include="Photos\banner\Join Fun %281%29.png" />
+    <Content Include="Photos\banner\Join Fun.png" />
+    <Content Include="Photos\banner\Just Do It.png" />
+    <Content Include="Photos\card\img-1.jpg" />
+    <Content Include="Photos\card\img-2.jpg" />
+    <Content Include="Photos\card\img-3.jpg" />
+    <Content Include="Photos\card\img-4.jpg" />
     <Content Include="Photos\ClassIMG\休閒.jpg" />
     <Content Include="Photos\ClassIMG\休閒.png" />
     <Content Include="Photos\ClassIMG\商務.jpg" />
     <Content Include="Photos\ClassIMG\商務.png" />
     <Content Include="Photos\ClassIMG\活動.jpg" />
     <Content Include="Photos\ClassIMG\活動.png" />
+    <Content Include="Photos\detail\bg1.jpg" />
+    <Content Include="Photos\detail\makecake1.jpg" />
+    <Content Include="Photos\detail\makecake2.jpg" />
+    <Content Include="Photos\detail\makecake3.jpg" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
+    <Content Include="Photos\index\card1.jpg" />
+    <Content Include="Photos\index\card2.jpg" />
+    <Content Include="Photos\index\card3.jpg" />
+    <Content Include="Photos\index\carousel1.jpg" />
+    <Content Include="Photos\index\carousel2.jpg" />
+    <Content Include="Photos\index\carousel3.jpg" />
+    <Content Include="Photos\index\carousel4.jpg" />
+    <Content Include="Photos\index\photo1.jpg" />
+    <Content Include="Photos\index\photo2.jpg" />
+    <Content Include="Photos\index\photo3.jpg" />
+    <Content Include="Photos\index\photo4.jpg" />
+    <Content Include="Photos\index\photo5.png" />
+    <Content Include="Photos\index\photo6.png" />
+    <Content Include="Photos\male.png" />
+    <Content Include="Photos\oops.jpg" />
+    <Content Include="Photos\oops.png" />
+    <Content Include="Photos\gplaypattern.png" />
+    <Content Include="Photos\img.png" />
+    <Content Include="Photos\leaves.png" />
+    <Content Include="Photos\male.png" />
+    <Content Include="Photos\memphis-colorful.png" />
+    <Content Include="Photos\no_results_found.png" />
+    <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\gplaypattern.png" />
     <Content Include="Photos\img.png" />
     <Content Include="Photos\leaves.png" />
@@ -591,6 +647,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountAPIController.cs" />
+    <Compile Include="Controllers\ActAPIController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
@@ -730,7 +787,13 @@
     <Compile Include="Models\vw_Host_Remarks.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_Member_Join.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Member_Remarks.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_MemJoinDetail.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_PartHistory.cs">
@@ -787,13 +850,16 @@
     <Content Include="Views\Register\PwdEdit.cshtml" />
     <Content Include="Views\Member\FriendManagement.cshtml" />
     <Content Include="Views\Activity\Report.cshtml" />
+    <Content Include="Views\Activity\FinalChoose.cshtml" />
+    <Content Include="Views\Activity\Search.cshtml" />
     <Content Include="Views\Member\BlockManage.cshtml" />
     <Content Include="Views\Member\MyActivities.cshtml" />
     <Content Include="Views\Register\Approved.cshtml" />
     <Content Include="Views\Member\Search.cshtml" />
-
     <Content Include="Views\Register\CheckEmail.cshtml" />
 
+    <Content Include="Views\Register\ForgetPwd.cshtml" />
+    <Content Include="Views\Register\RemakePwd.cshtml" />
 
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

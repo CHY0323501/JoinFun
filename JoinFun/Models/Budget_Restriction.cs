@@ -14,6 +14,7 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
 
+
     [MetadataType(typeof(MetaBudget_Restriction))]
     public partial class Budget_Restriction
     {
