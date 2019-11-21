@@ -4,16 +4,14 @@
     ViewBag.Title = "ForgetPwd";
 }
 
-<h2>ForgetPwd</h2>
-<div class="container">
+
+<div class="container" style="width:700px ;height:770px">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
-
-
         <div class="form-horizontal">
-            <h3>忘記密碼</h3>
+            <h3 class="mt-5">忘記密碼</h3>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @*@Html.HiddenFor(model => model.memId)*@
@@ -33,7 +31,9 @@
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <div class="col-md-12 ">
+                <h5 class="text-danger">@ViewBag.ForgetPwd@ViewBag.ForgetPwdErr</h5>
+            </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="繼續" class="btn btn-primary" />

@@ -183,17 +183,23 @@ namespace JoinFun.Controllers
             var memEmail = db.Member.Where(m => m.Email == email).FirstOrDefault();
             if (acc != null)
             {
-                if (acc.Account == account)
+                if (acc.Account == account && memEmail.Email == email)
                 {
-                    if (memEmail.Email == email)
-                    {
+                   
                         MessageCenter mes = new MessageCenter();
                         List<string> mailList = new List<string>() { memEmail.Email };
                         mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的" + memEmail.memNick + "會員:</h3></br><h3>請點擊下面連結來重置您的密碼!</h3></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + memEmail.email_ID + "'>重置密碼請點擊</a></br>");
 
-                    }
+                    ViewBag.ForgetPwdSend= "信件已發送";
+
                     return View();
                 }
+                
+            }
+            else
+            {
+                ViewBag.ForgetPwdErr = "您輸入的帳號或信箱錯誤";
+                return View();
             }
 
             return View();
@@ -207,10 +213,7 @@ namespace JoinFun.Controllers
         //重置密碼
         public ActionResult RemakePwd(string email_ID)
         {
-            //var acc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
-            //string getacc = acc.Account;
-            //ViewBag.account = getacc;
-
+            ViewBag.emailid = email_ID;
             var mem = db.Member.Where(m => m.email_ID == email_ID).FirstOrDefault();
 
             string e = mem.email_ID;
@@ -220,7 +223,7 @@ namespace JoinFun.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RemakePwd(string email_ID, string NewPwd)
+        public ActionResult RemakePwd(string email_ID, string Password)
         {
             var memid = db.Member.Where(m => m.email_ID == email_ID).FirstOrDefault().memId;
 
@@ -228,7 +231,7 @@ namespace JoinFun.Controllers
 
 
             string salt = Guid.NewGuid().ToString();
-            byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(NewPwd + salt);
+            byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(Password + salt);
             byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
             string hashString = Convert.ToBase64String(hashBytes);
 
@@ -243,6 +246,6 @@ namespace JoinFun.Controllers
 
 
 
-
+        
     }
 }
