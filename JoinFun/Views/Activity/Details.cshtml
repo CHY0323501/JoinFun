@@ -75,32 +75,7 @@
                     {
                         <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
                     }
-                    @*@if (pic.Count() != 0)
-                        {
-                            <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
-                        }
-                        else
-                        {
-                            foreach (var i in pic)
-                            {
-                                <img src="@Url.Content(i.actPics)" class="carousel-item active bg_carousel" />
-                            }
-                        }*@
-
-
-
-                    @*@foreach (var i in pic)
-                        {
-                            if (i.actPics.Count() == 0)
-                            {
-                                <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
-                            }
-                            else
-                            {
-
-                                <img src="@Url.Content(i.actPics)" class="carousel-item active bg_carousel" />
-                            }
-                        }*@
+                 
 
                 </div>
 
@@ -136,7 +111,7 @@
 
                 <div>
 
-                    @if (/*Session["memid"].ToString()*/ item.hostId == "M000000017")
+                    @if ( item.hostId ==  ViewBag.memID)
                     {
                         @Html.ActionLink("編輯活動", "Edit", new { actId = item.actId }, new { @class = "btn btn-warning btn-block" })
 
@@ -159,25 +134,15 @@
 
     <div class="row">
         <div class="col-md-6 ">
-            <h2 class="subtitle">活動內容</h2>
+            <span class="subtitle">活動內容</span>
             <div class="w-100">
-                <pre id="act_content">
-                            
-
-    @*｜甜W室小學堂-萬聖節限定｜﻿
-    ﻿
-    免烤箱x免電磁爐x免開火﻿
-    ﻿
-    推薦給怕燒掉廚房的新手﻿
-    推薦給要帶小朋友的媽媽們﻿
-    推薦給不想準備一堆材料的你﻿*@
+                <pre id="act_content1"> 
 
 @foreach(var item in Model.vwActivityList){
     
     @item.actDescription
 
 }
-
                  </pre>
             </div>
 
@@ -185,9 +150,9 @@
             <div id="notice">
                 @*<div class="row">*@
                 @*<div class="col-md-6">*@
-                <h2 class="subtitle">注意事項</h2>
+                <span class="subtitle">注意事項</span>
 
-                <div id="act_content" class="w-100">
+                <div id="act_content1" class="w-100">
                     由於場地須預約，因此參加了不可以退出喔!!
                     請參加前考慮清楚。
                 </div>
@@ -197,7 +162,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <h2 class="subtitle">活動資訊</h2>
+            <span class="subtitle">活動資訊</span>
             <div id="act_info" class="w-100">
                 <ul>
                     @foreach (var item in Model.vwActivityList)
@@ -224,12 +189,12 @@
             </div>
 
             @*<div class="col-md-6">*@
-            <h2 class="subtitle">關於揪團主</h2>
+            <span class="subtitle">關於揪團主</span>
             <div id="act_info" class="w-100">
                 @foreach (var item in Model.vwActivityList)
                 {
                     <img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />
-                    <p>@item.memNick</p>
+                    <p>@Html.ActionLink("@item.memNick","Info",new { memID=item.hostId })</p>
 
 
                 }

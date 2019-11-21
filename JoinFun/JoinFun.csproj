@@ -651,6 +651,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
+    <Compile Include="Controllers\getCommentController.cs" />
     <Compile Include="Controllers\getDistrictController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemAPIController.cs" />

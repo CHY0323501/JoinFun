@@ -135,7 +135,8 @@ namespace JoinFun.Models
         public string actTopic { get; set; }
         [DisplayName("活動舉辦時間")]
         [Required(ErrorMessage = "請輸入活動時間")]
-        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         public System.DateTime actTime { get; set; }
         [DisplayName("活動說明")]
         [Required(ErrorMessage = "請輸入活動說明")]
@@ -164,7 +165,9 @@ namespace JoinFun.Models
         [DisplayName("點閱次數")]
         public int clickTimes { get; set; }
         [DisplayName("報名截止時間")]
-        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "請輸入截止時間")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         public System.DateTime actDeadline { get; set; }
         [DisplayName("活動類別編號")]
         public string actClassId { get; set; }

@@ -146,59 +146,7 @@
 </head>
 <body>
     <div id="a" class="navbar navbar-expand-lg fixed-top navbar-light justify-content-end nav-bg">
-
         <div class="container ">
-
-
-                <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/img.png" style="width:130px" />    JoinFun</a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
-                        <li class="nav-item ">
-                            <div class="form-group form-inline mb-0">
-                                <input id="Search" type="text" placeholder="搜尋會員編號或暱稱" class="form-control  ml-auto" />
-                                <a href="#" class="btn btn-info  mr-auto material-icons" style="color:white!important">search</a>
-                            </div>
-                        </li>
-                        @if (Session["memid"] == null)
-                        {
-                            <li class="nav-item text-center">
-                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login","Login")">登入</a>
-
-                            </li>
-                        }
-
-                        <li class="nav-item text-center">
-                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")">我要揪團</a>
-                        </li>
-                        <li class="nav-item dropdown text-center">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                會員中心
-                            </a>
-                            <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })">我的資訊</a>
-                                <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })">我的揪團</a>
-                                <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})">好友管理</a>
-                                <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})">黑名單管理</a>
-                                @if (Session["memid"] != null)
-                                {
-                                    <a class="dropdown-item" href="@Url.Action("Logout","Login")">登出</a>
-                                }
-                                    
-                            </div>
-                        </li>
-                        <li class="nav-item">
-
-                        </li>
-
-                    </ul>
-                </div>
-
-
             <a href="@Url.Action("Index","Activity")" class="navbar-brand hvr-underline-from-center font-weight-bold"><img src="~/Photos/img.png" style="width:130px" />    JoinFun</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -218,6 +166,13 @@
                     <li class="nav-item text-center ml-2">
                         <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login","Login")"><i class="fas fa-sign-in-alt"></i> 登入</a>
                     </li>
+                    @if (Session["memid"] != null)
+                    {
+                        <li class="nav-item text-center">
+                            <input id="mid" type="hidden" value="@Session["memid"].ToString()" />
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages","Activity",new { memID=Session["memid"] })">我的訊息<span class="badge badge-light number"></span></a>
+                        </li>
+                    }
                     <li class="nav-item text-center ml-2">
                         <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")"><i class="fas fa-plus"></i> 我要揪團</a>
                     </li>
@@ -258,5 +213,22 @@
     @RenderSection("work", required: false)
     @RenderSection("scripts", required: false)
     @RenderSection("indexscript", required: false)
+    <script>
+        //取得未讀訊息數量
+        $(document).ready(function () {
+                $.ajax({
+                    url: "@Url.Action("GetMStatus","Activity")",
+                    method: "post",
+                    traditional: true,
+                    data: { id: $('#mid').val() },
+                    success: function (count) {
+                        if (count == 0)
+                            $('.number').text("");
+                        else
+                            $('.number').text(count);
+                    }
+              });
+        });
+    </script>
 </body>
 </html>
