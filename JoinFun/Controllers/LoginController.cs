@@ -22,19 +22,29 @@ namespace JoinFun.Controllers
         //登入
         public ActionResult Login()
         {
+            if (Session["memid"] == null)
             return View();
+            return RedirectToAction("Index", "Activity");
         }
 
         [HttpPost]
         public ActionResult Login(string account, string pass)
         {
-            //使用Linq查詢取得帳號(加密用)
+
+
+            //使用Linq查詢取得帳號(加密)
             var getAcc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
+            
+            
+
             if (getAcc == null)
             {
                 ViewBag.LoginERR = "您輸入的帳號或密碼錯誤";
                 return View();
             }
+            var a = db.Member.Find(getAcc.memId);
+
+
             //查詢會員帳號及密碼
             string sql = "select * from Acc_Pass where Account=@acc and Password=@pass";
             SqlCommand cmd = new SqlCommand(sql, Conn);
@@ -47,25 +57,43 @@ namespace JoinFun.Controllers
             cmd.Parameters.AddWithValue("@acc", account);
             cmd.Parameters.AddWithValue("@pass", HashString);
             SqlDataReader reader;
-      
+
 
             Conn.Open();
             reader = cmd.ExecuteReader();
 
-            
+
+
             if (reader.Read())
             {
-                
-                Session["account"] = reader["Account"].ToString();
-               
-                
-                Conn.Close();
-                
-                return RedirectToAction("Home");
+                if (a.Approved == true)
+                {
+
+                    Session["memid"] = reader["memId"].ToString();
+
+
+
+                    return RedirectToAction("Index", "Activity");
+                }
+                else
+                {
+                    ViewBag.LoginERR = "帳號未啟用";
+                    return View();
+                }
+
             }
+
             Conn.Close();
             ViewBag.LoginERR = "您輸入的帳號或密碼錯誤";
+
             return View();
+
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index", "Activity");
         }
 
     }

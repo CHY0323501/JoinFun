@@ -13,6 +13,7 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+
     [MetadataType(typeof(MetaPayment_Restriction))]
 
     public partial class Payment_Restriction

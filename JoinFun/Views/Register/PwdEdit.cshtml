@@ -7,65 +7,69 @@
 <h2>修改密碼</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(new { id="pwdEdit"}))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Acc_Pass</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @*@Html.HiddenFor(model => model.Account)*@
+    <div class="form-horizontal">
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.memId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input id="memId" name="memId" type="text" class="form-control" value="@Model.memId" readonly />
-            @*@Html.EditorFor(model => model.memId, new { htmlAttributes = new { @class = "form-control" } }*@)
-            @Html.ValidationMessageFor(model => model.memId, "", new { @class = "text-danger" })
+        <hr />
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        @*@Html.HiddenFor(model => model.Account)*@
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.memId, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class = "control-label col-md-2" >會員編號</label>
+            <div class="col-md-10">
+                @*<input id="memId" name="memId" type="text" class="form-control" value="@Model.memId" readonly />*@
+                @Html.EditorFor(model => model.memId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.memId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"} })
+                @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">舊密碼:</label>
+            <div class="col-md-10">
+                <input id="OldPassword" name="OldPassword" type="password" class="form-control" />
+                <div></div>
+            </div>
+        </div>
+
+     
+
+        <div class="form-group">
+            <label class="control-label col-md-2">新密碼:</label>
+            <div class="col-md-10">
+                <input id="NewPassword" name="NewPassword" type="password" class="form-control" />
+                <div></div>
+            </div>
+
+           
+            <div class="form-group">
+                <label class="control-label col-md-2">確認新密碼:</label>
+                <div class="col-md-10">
+                    <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control" />
+                    <div></div>
+                </div>
+            </div>
+
+        
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-        <label class="control-label ">舊密碼:</label>
-        <div class="col-md-10">
-            <input id="OldPassword" name="OldPassword" type="text" class="form-control" />
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -75,3 +79,64 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section scripts{
+    <script>
+        var flag = false;
+
+        $('#pwdEdit').submit(function () {
+
+            if ($('#OldPassword').val() == "") {
+                $('#OldPassword').addClass("is-invalid");
+                $('#OldPassword~div').addClass("invalid-feedback").text('請輸新密碼!');
+                flag = false;
+            }
+            if ($('#NewPassword').val() == "") {
+                $('#NewPassword').addClass("is-invalid");
+                $('#NewPassword~div').addClass("invalid-feedback").text('請輸入新密碼!');
+                flag = false;
+            }
+
+            if ($('#PasswordConfirm').val() == "") {
+                $('#PasswordConfirm').addClass("is-invalid");
+                $('#PasswordConfirm~div').addClass("invalid-feedback").text('請再次確認密碼');
+                flag = false;
+            }
+
+            if (!flag)
+                return false;
+
+            return true;
+        });
+
+
+        //$('#OldPassword').keyup(function () {
+        //    if ($('#OldPassword').val().length < 8) {
+        //        $('#OldPassword').addClass("is-invalid");
+        //        $('#OldPassword~div').addClass("invalid-feedback").text('至少8個字元!!');
+        //        flag = false;
+        //    }
+        //    else {
+        //        $('#OldPassword').removeClass('is-invalid').addClass("is-valid");
+        //        $('#OldPassword~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+        //        flag = true;
+        //    }
+        //});
+
+        $('#NewPassword').keyup(function () {
+            if ($('#NewPassword').val().length < 8) {
+                $('#NewPassword').addClass("is-invalid");
+                $('#NewPassword~div').addClass("invalid-feedback").text('至少8個字元!!');
+                flag = false;
+            }
+            else {
+                $('#NewPassword').removeClass('is-invalid').addClass("is-valid");
+                $('#NewPassword~div').removeClass("invalid-feedback").addClass("valid-feedback").text('OK');
+                flag = true;
+            }
+        });
+
+
+    </script>
+
+
+}

@@ -1,0 +1,88 @@
+﻿body {
+    font-family: 微軟正黑體;
+}
+h5 {
+    font-family: 微軟正黑體;
+    color: dodgerblue;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+label{
+    color:#fa9426;
+    font-size:15pt;
+}
+
+input[type="text"] {
+    font-size: 15pt;
+}
+
+.formLi{
+    width:350px;
+    font-size: 14pt;
+    text-align:center;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+}
+
+.formLi:hover{
+    font-size:1.5rem;
+}
+
+.editLi {
+    width: 350px;
+    font-size: 14pt;
+    text-align: center;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+}
+
+.mTitle{
+    font-size:30pt;
+    margin:auto;
+}
+
+.mCenter{
+    font-size:20px;
+}
+
+.messageLi{
+    font-size:14pt;
+}
+
+.messageTr{
+    line-height:25px;
+}
+
+.messageLabel{
+    line-height:18px;
+}
+
+.messageSpan {
+    line-height: 18px;
+    margin-left: 25px;
+    color: #fa9426;
+    font-size: 14pt;
+}
+
+.messageTd{
+    width:200px;
+    text-align:left;
+}
+
+.activeTable{
+    border:none;
+}
+
+    .activeTable th {
+        border: none;
+    }
+
+    .activeTable td {
+        border: none;
+    }

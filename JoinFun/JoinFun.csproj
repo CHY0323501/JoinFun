@@ -119,16 +119,40 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ButtonStyle.css" />
     <Content Include="Content\hover-min.css" />
     <Content Include="Content\hover.css" />
+    <Content Include="Content\MyStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CSS\ADM_login.css" />
+    <Content Include="CSS\card\bootstrap-grid.min.css" />
+    <Content Include="CSS\card\htmleaf-demo.css" />
+    <Content Include="CSS\card\style.css" />
+    <Content Include="CSS\Detail.css" />
+    <Content Include="CSS\index_fun.css" />
     <Content Include="CSS\MemberInfo.css" />
+    <Content Include="CSS\Newcard\demo.css" />
+    <Content Include="CSS\Newcard\reset.css" />
+    <Content Include="CSS\Newcard\style1.css" />
+    <Content Include="CSS\Newcard\style10.css" />
+    <Content Include="CSS\Newcard\style2.css" />
+    <Content Include="CSS\Newcard\style3.css" />
+    <Content Include="CSS\Newcard\style4.css" />
+    <Content Include="CSS\Newcard\style5.css" />
+    <Content Include="CSS\Newcard\style6.css" />
+    <Content Include="CSS\Newcard\style7.css" />
+    <Content Include="CSS\Newcard\style8.css" />
+    <Content Include="CSS\Newcard\style9.css" />
+    <Content Include="CSS\Newcard\style_common.css" />
     <Content Include="CSS\Remarks.css" />
+    <Content Include="CSS\time\htmleaf-demo.css" />
+    <Content Include="CSS\time\normalize.css" />
+    <Content Include="CSS\time\timeTo.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
     <Content Include="JS\FriendManage.js" />
+    <Content Include="JS\jquery.validate.plus.js" />
     <Content Include="JS\MemberEdit.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -144,16 +168,66 @@
     <Content Include="Photos\Activities\P000000003A000000013.jpg" />
     <Content Include="Photos\Activities\P000000004A000000014.jpg" />
     <Content Include="Photos\Activities\枕頭山.jpg" />
+    <Content Include="Photos\banner\bg.png" />
+    <Content Include="Photos\banner\Join Fun %281%29.png" />
+    <Content Include="Photos\banner\Join Fun.png" />
+    <Content Include="Photos\banner\Just Do It.png" />
+    <Content Include="Photos\card\img-1.jpg" />
+    <Content Include="Photos\card\img-2.jpg" />
+    <Content Include="Photos\card\img-3.jpg" />
+    <Content Include="Photos\card\img-4.jpg" />
     <Content Include="Photos\ClassIMG\休閒.jpg" />
     <Content Include="Photos\ClassIMG\休閒.png" />
     <Content Include="Photos\ClassIMG\商務.jpg" />
     <Content Include="Photos\ClassIMG\商務.png" />
     <Content Include="Photos\ClassIMG\活動.jpg" />
     <Content Include="Photos\ClassIMG\活動.png" />
+    <Content Include="Photos\detail\bg1.jpg" />
+    <Content Include="Photos\detail\makecake1.jpg" />
+    <Content Include="Photos\detail\makecake2.jpg" />
+    <Content Include="Photos\detail\makecake3.jpg" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <Content Include="Photos\index\card1.jpg" />
+    <Content Include="Photos\index\card2.jpg" />
+    <Content Include="Photos\index\card3.jpg" />
+    <Content Include="Photos\index\carousel1.jpg" />
+    <Content Include="Photos\index\carousel2.jpg" />
+    <Content Include="Photos\index\carousel3.jpg" />
+    <Content Include="Photos\index\carousel4.jpg" />
+    <Content Include="Photos\index\photo1.jpg" />
+    <Content Include="Photos\index\photo2.jpg" />
+    <Content Include="Photos\index\photo3.jpg" />
+    <Content Include="Photos\index\photo4.jpg" />
+    <Content Include="Photos\index\photo5.png" />
+    <Content Include="Photos\index\photo6.png" />
     <Content Include="Photos\male.png" />
+    <Content Include="Photos\oops.jpg" />
+    <Content Include="Photos\oops.png" />
+=======
+    <Content Include="Photos\gplaypattern.png" />
+    <Content Include="Photos\img.png" />
+    <Content Include="Photos\leaves.png" />
+    <Content Include="Photos\male.png" />
+    <Content Include="Photos\memphis-colorful.png" />
+    <Content Include="Photos\no_results_found.png" />
+    <Content Include="Photos\sorry.gif" />
+>>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
+=======
+    <Content Include="Photos\gplaypattern.png" />
+    <Content Include="Photos\img.png" />
+    <Content Include="Photos\leaves.png" />
+    <Content Include="Photos\male.png" />
+    <Content Include="Photos\memphis-colorful.png" />
+    <Content Include="Photos\no_results_found.png" />
+    <Content Include="Photos\sorry.gif" />
+>>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
     <Content Include="Photos\star.png" />
+    <Content Include="Photos\title.png" />
+    <Content Include="Photos\title2.png" />
+    <Content Include="Photos\user_icon.png" />
     <Content Include="Photos\w-1.png" />
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />
@@ -578,6 +652,15 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <Compile Include="Controllers\ActAPIController.cs" />
+=======
+    <Compile Include="Controllers\AccountAPIController.cs" />
+>>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
+=======
+    <Compile Include="Controllers\AccountAPIController.cs" />
+>>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
@@ -638,6 +721,9 @@
     <Compile Include="Models\Gender_Restriction.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Host_Now.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\JoinfunNEW.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -667,6 +753,9 @@
     </Compile>
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\Notification.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Part_Now.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Payment_Restriction.cs">
@@ -711,7 +800,13 @@
     <Compile Include="Models\vw_Host_Remarks.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_Member_Join.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Member_Remarks.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_MemJoinDetail.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_PartHistory.cs">
@@ -723,10 +818,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\MessageCenter.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
+    <Compile Include="ViewModel\BlockMemberVM.cs" />
     <Compile Include="ViewModel\FriendManagementVW.cs" />
     <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
+    <Compile Include="ViewModel\MyActivitiesVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -763,12 +860,25 @@
     <Content Include="Views\Member\History.cshtml" />
     <Content Include="Views\Login\Home.cshtml" />
     <Content Include="Views\Member\RemarkCreate.cshtml" />
-
     <Content Include="Views\Register\PwdEdit.cshtml" />
-
     <Content Include="Views\Member\FriendManagement.cshtml" />
     <Content Include="Views\Activity\Report.cshtml" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <Content Include="Views\Activity\FinalChoose.cshtml" />
+    <Content Include="Views\Activity\Search.cshtml" />
+=======
+=======
+>>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
+    <Content Include="Views\Member\BlockManage.cshtml" />
+    <Content Include="Views\Member\MyActivities.cshtml" />
+    <Content Include="Views\Register\Approved.cshtml" />
+    <Content Include="Views\Member\Search.cshtml" />
 
+    <Content Include="Views\Register\CheckEmail.cshtml" />
+
+
+>>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

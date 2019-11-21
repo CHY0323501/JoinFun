@@ -13,6 +13,7 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+
     [MetadataType(typeof(MetaPhotos_of_Activities))]
 
     public partial class Photos_of_Activities

@@ -13,6 +13,7 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+
     [MetadataType(typeof(Metavw_Host_Remarks))]
 
     public partial class vw_Host_Remarks
