@@ -15,7 +15,6 @@ namespace JoinFun.Models
 
 
     [MetadataType(typeof(Metavw_FollowUp))]
-
     public partial class vw_FollowUp
     {
         public string FoMemId { get; set; }

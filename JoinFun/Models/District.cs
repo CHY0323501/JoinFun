@@ -16,7 +16,6 @@ namespace JoinFun.Models
 
 
     [MetadataType(typeof(MetaDistrict))]
-
     public partial class District
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

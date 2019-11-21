@@ -17,24 +17,15 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <script src="~/Scripts/bootstrap.min.js"></script>
     @RenderSection("memberinfo", required: false)
     @RenderSection("memberRemarks", required: false)
     @RenderSection("Detail", required: false)
     @RenderSection("indexcss", required: false)
-=======
-=======
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
+
     <link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">
-    @RenderSection("memberinfo", required: false)
-    @RenderSection("memberRemarks", required: false)
     @RenderSection("topCSS", required:false)
-<<<<<<< HEAD
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
-=======
->>>>>>> 9f3c7c2aa0352176555512b12b3ff710fc3d578a
+
     <style>
         .dropdown-item.active, .dropdown-item:active {
             text-decoration: none;
@@ -205,17 +196,12 @@
             <img src="~/Photos/title2.png" style="width:200px" />&copy; @DateTime.Now.Year - JF Ltd.
         </div>
     </footer>
-    @RenderSection("work",required:false)
-    @*<footer class="footer-content bg-dark mb-0">
-        <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>
-    </footer>*@
-   
-     <p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>
-        @*</footer>*@
+
+    @*<p class="text-center text-white mb-0">Copyright © <span id="y"></span> KPPTR WDA</p>*@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-
+    @RenderSection("work", required: false)
     @RenderSection("scripts", required: false)
-    @RenderSection("indexscript",required:false)
+    @RenderSection("indexscript", required: false)
 </body>
 </html>

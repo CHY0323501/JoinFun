@@ -15,7 +15,6 @@ namespace JoinFun.Models
 
 
     [MetadataType(typeof(Metavw_FriendShip))]
-
     public partial class vw_FriendShip
     {
         public string friendMemId { get; set; }

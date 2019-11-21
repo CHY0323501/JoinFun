@@ -15,7 +15,6 @@ namespace JoinFun.Models
 
 
     [MetadataType(typeof(MetaCounty))]
-
     public partial class County
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

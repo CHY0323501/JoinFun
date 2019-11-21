@@ -15,7 +15,6 @@ namespace JoinFun.Models
 
 
     [MetadataType(typeof(MetaPost))]
-
     public partial class Post
     {
         public string postSerial { get; set; }

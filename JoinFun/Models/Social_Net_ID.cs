@@ -15,7 +15,6 @@ namespace JoinFun.Models
 
 
     [MetadataType(typeof(MetaSocial_Net_ID))]
-
     public partial class Social_Net_ID
     {
         public string socialSerial { get; set; }

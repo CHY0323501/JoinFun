@@ -15,7 +15,6 @@ namespace JoinFun.Models
 
 
     [MetadataType(typeof(MetaComment))]
-
     public partial class Comment
     {
         public string commentId { get; set; }

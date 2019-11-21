@@ -260,12 +260,8 @@ namespace JoinFun.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-
         public ActionResult Report(string id, string reporterID)
-
-        {
-            //ViewBag.Type = new SelectList(db.Type_of_Violate, "typeId", "vioClass");
+        { 
             if (db.Member.Any(m => m.memId == id))
             {
                 ViewBag.Type = "會員";
@@ -352,6 +348,7 @@ namespace JoinFun.Controllers
         public FileContentResult GetActPhoto(string actId)
         {
             if (db.Photos_of_Activities.Any(m => m.actId == actId))
+
             {
                 string photo = db.Photos_of_Activities.Where(m => m.actId == actId).FirstOrDefault().actPics;
                 if (photo != null)
@@ -366,7 +363,7 @@ namespace JoinFun.Controllers
             return null;
         }
 
-
+        //傳預設類別圖片
         public FileContentResult GetIndexPhoto(string actId, string actClassId)
         {
             bool flag = true;
@@ -378,9 +375,7 @@ namespace JoinFun.Controllers
                 string path = Server.MapPath(photo);
                 byte[] image = System.IO.File.ReadAllBytes(path);
                 return base.File(image, "image/jpeg");
-
             }
-
             string classphoto = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
                 string path2 = Server.MapPath(classphoto);
                 byte[] image2 = System.IO.File.ReadAllBytes(path2);

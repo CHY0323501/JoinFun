@@ -19,7 +19,6 @@ namespace JoinFun.Models
 
     [MetadataType(typeof(MetaAcc_Pass))]
 
-
     public partial class Acc_Pass
     {
         public string Account { get; set; }

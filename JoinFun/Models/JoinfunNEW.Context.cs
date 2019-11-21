@@ -70,8 +70,5 @@ namespace JoinFun.Models
         public virtual DbSet<Host_Now> Host_Now { get; set; }
         public virtual DbSet<Part_Now> Part_Now { get; set; }
 
-        public virtual DbSet<Host_Now> Host_Now { get; set; }
-        public virtual DbSet<Part_Now> Part_Now { get; set; }
-
     }
 }

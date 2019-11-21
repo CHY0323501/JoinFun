@@ -14,6 +14,7 @@ namespace JoinFun.Models
 
     using System.ComponentModel.DataAnnotations;
 
+
     [MetadataType(typeof(MetaAge_Restriction))]
     public partial class Age_Restriction
     {
