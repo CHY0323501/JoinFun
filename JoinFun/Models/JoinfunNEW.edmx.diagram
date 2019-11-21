@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b1e83ab3912747c6a2085d556015b58a" Name="Diagram1">
+      <Diagram DiagramId="b1e83ab3912747c6a2085d556015b58a" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="JoinFunModel.Acc_Pass" Width="1.5" PointX="10.5" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Activity_Class" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Activity_Details" Width="1.5" PointX="13.5" PointY="23.25" IsExpanded="true" />
@@ -25,7 +25,6 @@
         <EntityTypeShape EntityType="JoinFunModel.Member" Width="1.5" PointX="8.25" PointY="20.875" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Member_Remarks" Width="1.5" PointX="13.5" PointY="18.875" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Message_Board" Width="1.5" PointX="13.5" PointY="27" IsExpanded="true" />
-        <EntityTypeShape EntityType="JoinFunModel.Notification" Width="1.5" PointX="10.5" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Payment_Restriction" Width="1.5" PointX="3" PointY="31.125" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.People_Restriction" Width="1.5" PointX="3" PointY="33.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Photos_of_Activities" Width="1.5" PointX="7.5" PointY="35.75" IsExpanded="true" />
@@ -68,7 +67,6 @@
         <AssociationConnector Association="JoinFunModel.FK__Photos_of__actId__7A672E12" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Member_Re__ToMem__5614BF03" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Message_B__memId__74AE54BC" ManuallyRouted="false" />
-        <AssociationConnector Association="JoinFunModel.FK__Notificat__ToMem__72C60C4A" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Social_Ne__memId__6754599E" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Violation__FromM__6A30C649" ManuallyRouted="false" />
         <AssociationConnector Association="JoinFunModel.FK__Violation__punis__01142BA1" ManuallyRouted="false" />
@@ -80,6 +78,8 @@
         <EntityTypeShape EntityType="JoinFunModel.vw_PartHistory" Width="1.5" PointX="5.375" PointY="8.75" />
         <EntityTypeShape EntityType="JoinFunModel.Host_Now" Width="1.5" PointX="8.375" PointY="6.75" />
         <EntityTypeShape EntityType="JoinFunModel.Part_Now" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JoinFunModel.Notification" Width="1.5" PointX="7.5" PointY="32" />
+        <AssociationConnector Association="JoinFunModel.FK__Notificat__ToMem__72C60C4A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,0 +1,288 @@
+﻿@model IEnumerable<JoinFun.Models.Notification>
+
+@{
+    ViewBag.Title = "通知中心";
+}
+
+<div class="bg-secondary w-75 mTitle mt-5">
+    <h2 class="text-white text-center pt-3 pb-3">通知中心</h2>
+</div>
+
+<div class="container w-75 mCenter pl-0 pr-0 pt-0 bg-light " id="mCenter" style="min-height:700px;">
+    <div class="container">
+        <ul class="nav nav-tabs nav-fill" id="mList">
+            <li class="nav-item font-weight-bold" id="messages"><a href="#activeOne" class="nav-link active" data-toggle="tab">訊息</a></li>
+            @*<li class="nav-item"><a href="#" class="nav-link">留言板</a></li>*@
+            <li class="nav-item" id="recycle"><a href="#recycleOne" class="nav-link" data-toggle="tab">資源回收桶</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="activeOne">
+            @*<nav class="navbar navbar-light bg-transparent navbar-expand-md">*@
+            <ul class="messageLi mt-2 mb-0 pl-0" id="mStatus">
+                <li class="fa" id="done"><a href="#" class="nav-link"><i class="fas fa-envelope text-warning"><span>標為已讀</span></i></a></li>
+                <li class="fa" id="unread"><a href="#" class="nav-link"><i class="fas fa-envelope-open text-warning"><span>標為未讀</span></i></a></li>
+                <li class="fa" id="removeBtn"><a href="#" class="nav-link"><i class="fas fa-trash-alt text-warning"><span>刪除</span></i></a></li>
+            </ul>
+            @*</nav>*@
+            <table class="table table-hover activeTable">
+                <thead>
+                    <tr class="messageTr">
+                        <th class="text-center" style="width:110px">
+                            <label class="checkLabel">
+                                全選
+                                <input id="clickAll" name="clickAll" type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="width:20px"></th>
+                        <th style="width:300px">
+                            <label class="messageLabel">@Html.DisplayNameFor(model => model.FirstOrDefault().NotiTitle)</label>
+                        </th>
+                        <th class="text-center" style="width:180px">
+                            <label class="messageLabel">訊息類型</label>
+                        </th>
+                        <th>
+                            <label class="messageLabel">@Html.DisplayNameFor(model => model.FirstOrDefault().timeReceived)</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="activeTbody">
+                    @foreach (var item in Model.Where(m => m.keepNotice == true))
+                    {
+                        <tr class="@item.NotiSerial ">
+                            <td class="text-center">
+                                @*<input id="clickOne" type="checkbox" name="clickOne" class="regular-checkbox" serial=@item.NotiSerial value=@item.NotiSerial/>*@
+                                <label class="checkLabel">
+                                    @if (item.readYet == true)
+                                    {
+                                        <span class="fa fas fa-envelope-open ml-2" id="@item.NotiSerial"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fa fas fa-envelope ml-2" id="@item.NotiSerial"></span>
+                                    }
+                                    @Html.CheckBox("clickOne", false, new { @serial = item.NotiSerial, Value = item.NotiSerial })
+                                    <span class="checkmark">&emsp;&emsp;</span>
+                                </label>
+                            </td>
+                            <td></td>
+                            <td>
+                                <a href="@Url.Action("MContent", "Activity", new { @serial = item.NotiSerial})" class="text-dark text-left">@Html.DisplayFor(modelItem => item.NotiTitle)</a>
+                            </td>
+                            <td class="text-center">
+                                @if (item.InstanceId.StartsWith("N"))
+                                {
+                                    <span>站內訊息</span>
+                                }
+                                else if (item.InstanceId.StartsWith("pst"))
+                                {
+                                    <span>系統公告</span>
+                                }
+                                else
+                                {
+                                    <span>留言板</span>
+                                }
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.timeReceived)
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="recycleOne">
+            @*<nav class="navbar navbar-light bg-transparent navbar-expand-md">*@
+            <ul class="messageLi mt-2 mb-0 pl-0" id="delStatus">
+                <li class="fa" id="restoreBtn"><a href="#" class="nav-link"><i class="fas fa-trash-restore text-warning"><span>還原</span></i></a></li>
+                <li class="fa" id="delBtn"><a href="#" class="nav-link"><i class="fas fa-trash-alt text-warning"><span>永久刪除</span></i></a></li>
+            </ul>
+            @*</nav>*@
+            <table class="table table-hover activeTable">
+                <thead>
+                    <tr class="messageTr">
+                        <th class="text-center" style="width:110px">
+                            <label class="checkLabel">
+                                全選
+                                <input id="delClkAll" name="delClkAll" type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <th style="width:20px"></th>
+                        <th style="width:300px">
+                            <label class="messageLabel">@Html.DisplayNameFor(model => model.FirstOrDefault().NotiTitle)</label>
+                        </th>
+                        <th class="text-center" style="width:180px">
+                            <label class="messageLabel">訊息類型</label>
+                        </th>
+                        <th>
+                            <label class="messageLabel">@Html.DisplayNameFor(model => model.FirstOrDefault().timeReceived)</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="delTbody">
+                    @foreach (var item in Model.Where(m => m.keepNotice == false))
+                    {
+                        <tr class="@item.NotiSerial ">
+                            <td class="text-center">
+                                <label class="checkLabel">
+                                    @if (item.readYet == true)
+                                    {
+                                        <span class="fa fas fa-envelope-open ml-2" id="@item.NotiSerial"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fa fas fa-envelope ml-2" id="@item.NotiSerial"></span>
+                                    }
+                                    @Html.CheckBox("clickOne", false, new { @serial = item.NotiSerial, Value = item.NotiSerial })
+                                    <span class="checkmark">&emsp;&emsp;</span>
+                                </label>
+                            </td>
+                            <td></td>
+                            <td>
+                                <a href="@Url.Action("MContent", "Activity", new { @serial = item.NotiSerial})" class="text-dark text-left">@Html.DisplayFor(modelItem => item.NotiTitle)</a>
+                            </td>
+                            <td class="text-center">
+                                @if (item.InstanceId.StartsWith("N"))
+                                {
+                                    <span>站內訊息</span>
+                                }
+                                else if (item.InstanceId.StartsWith("pst"))
+                                {
+                                    <span>系統公告</span>
+                                }
+                                else
+                                {
+                                    <span>留言板</span>
+                                }
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.timeReceived)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div class="text-center">
+    @Html.ActionLink("返回首頁", "Index", new { memID = Session["memid"] })
+</div>
+
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+    <link href="~/Content/ButtonStyle.css" rel="stylesheet" />
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/ActivityScripts.js"></script>
+
+@section scripts{
+    <script>
+        //將郵件讀取狀態變更為已讀或未讀
+        $('#mStatus>li').click(function () {
+            var rid = [];
+            switch ($(this).attr("id")) {
+                case "done":
+                    $('input[name="clickOne"]:checked').each(function () {
+                        rid.push($(this).val());
+                        $.ajax({
+                            url: "@Url.Action("UpdateRStatus","Activity")",
+                            method: "post",
+                            traditional: true,
+                            data: { serial: $(this).val(), isRead: true }
+                        });
+                    });
+                    for (i = 0; i < $('input[name="clickOne"]:checked').length; i++) {
+                        $('#' + rid[i]).removeClass().addClass("fas fa-envelope-open ml-2");
+                    }
+                    $("input[name='clickOne']").prop("checked", false)
+                    $("input[name='clickAll']").prop("checked", false)
+                    break;
+                case "unread":
+                    $('input[name="clickOne"]:checked').each(function () {
+                        rid.push($(this).val());
+                        $.ajax({
+                            url: "@Url.Action("UpdateRStatus","Activity")",
+                            method: "post",
+                            traditional: true,
+                            data: { serial: $(this).val(), isRead: false }
+                        });
+                    });
+                    for (i = 0; i < $('input[name="clickOne"]:checked').length; i++) {
+                        $('#' + rid[i]).removeClass().addClass("fas fa-envelope ml-2");
+                    }
+                    $("input[name='clickOne']").prop("checked", false)
+                    $("input[name='clickAll']").prop("checked", false)
+                    break;
+                case "removeBtn":
+                    $('input[name="clickOne"]:checked').each(function () {
+                        let mid = $(this).val();
+                        $.ajax({
+                            url: "@Url.Action("RemoveMessage","Activity")",
+                            method: "post",
+                            traditional: true,
+                            data: { serial: $(this).val(), keep: false },
+                            success: function () {
+                                $('#delTbody').append($('.' + mid));
+                            }
+                        });
+                    });
+                    alert("訊息已移至資源回收桶!!")
+                    $("input[name='clickOne']").prop("checked", false)
+                    $("input[name='clickAll']").prop("checked", false)
+                    break;
+                }
+            });
+        //復原資源回收桶的訊息到收件匣
+        $('#delStatus>li').click(function () {
+            switch ($(this).attr("id")) {
+                case "restoreBtn":
+                    $('input[name="clickOne"]:checked').each(function () {
+                        let mid = $(this).val();
+                        $.ajax({
+                            url: "@Url.Action("RemoveMessage","Activity")",
+                            method: "post",
+                            traditional: true,
+                            data: { serial: $(this).val(), keep: true },
+                            success: function () {
+                                $('#activeTbody').append($('.' + mid));
+                            }
+                        });
+                    });
+                    alert("訊息已還原!!")
+                    $("input[name='clickOne']").prop("checked", false)
+                    $("input[name='delClkAll']").prop("checked", false)
+                    break;
+                case "delBtn":
+                    $('input[name="clickOne"]:checked').each(function () {
+                        let mid = $(this).val();
+                        $.ajax({
+                            url: "@Url.Action("DeleteMessage","Activity")",
+                            method: "post",
+                            dataType: "text",
+                            traditional: true,
+                            data: { serial: $(this).val() },
+                            success: function () {
+                                alert("訊息已成功從系統內刪除!!")
+                                $('.' + mid).remove();
+                            },
+                            error: function () {
+                                alert('訊息刪除失敗!');
+                            }
+                        });
+                    });
+                    break;
+            }
+        });
+    </script>
+
+}

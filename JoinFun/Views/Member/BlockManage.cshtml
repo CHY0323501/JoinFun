@@ -1,6 +1,6 @@
 ﻿@model JoinFun.ViewModel.BlockMemberVM
 @section memberRemarks{
-    <link href="~/CSS/Remarks.css" rel="stylesheet" />
+    <link href="~/CSS/Remark.css" rel="stylesheet" />
 }
 @{
     ViewBag.Title = "黑名單管理";
@@ -9,12 +9,12 @@
 
 <div class="container containerMinH">
     <h2 class="mt-5 text-center p-3 text-warning border-bottom">黑名單管理</h2>
-    <div class="card text-center border-0 p-adjust">
+    <div class="card text-center border-0 p-adjust bg-transparent">
 
         <div class="card-body show active fade ">
             @if (Model.Blacklist.Count() == 0)
             {
-                <h2 class="text-center text-success ">目前無封鎖名單</h2>
+                <h2 class="text-center text-success">目前無封鎖名單</h2>
             }
             else
             {

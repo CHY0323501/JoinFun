@@ -109,7 +109,7 @@
 
                         @*<div class="card-footer bg-warning text-center">*@
 
-                        @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = item.actClassId ,memID=Session["memid"]}, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("詳情", "Details", new { actId = item.actId, actClassId = item.actClassId ,memID=@*Session["memid"]*@"M000000002"}, new { @class = "btn btn-secondary" })
 
 
                         @*<a href="http://www.htmleaf.com/" class="info">Read More</a>*@

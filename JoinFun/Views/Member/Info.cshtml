@@ -211,6 +211,7 @@
                 </div>
             </div>
             <div class="row" style="min-height:500px"></div>
+
             @*確認是否登入、當使用揪團系統帳號登入才可修改密碼*@
             if (session == i.memId && i.Acc_Pass.FirstOrDefault() != null)
             {
@@ -231,6 +232,7 @@
                     </div>
                 </div>
             }
+
 
             //彈出視窗
             <div class="modal " id="Modal1">

@@ -75,7 +75,7 @@
                     {
                         <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
                     }
-                 
+
 
                 </div>
 
@@ -111,7 +111,7 @@
 
                 <div>
 
-                    @if ( item.hostId ==  ViewBag.memID)
+                    @if (item.hostId == ViewBag.memID)
                     {
                         @Html.ActionLink("編輯活動", "Edit", new { actId = item.actId }, new { @class = "btn btn-warning btn-block" })
 
@@ -150,11 +150,10 @@
             <div id="notice">
                 @*<div class="row">*@
                 @*<div class="col-md-6">*@
-                <span class="subtitle">注意事項</span>
+                <span class="subtitle">留言板</span>
 
                 <div id="act_content1" class="w-100">
-                    由於場地須預約，因此參加了不可以退出喔!!
-                    請參加前考慮清楚。
+                    <h1>留言板區</h1>
                 </div>
 
                 @*</div>*@
@@ -194,7 +193,7 @@
                 @foreach (var item in Model.vwActivityList)
                 {
                     <img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />
-                    <p>@Html.ActionLink("@item.memNick","Info",new { memID=item.hostId })</p>
+                    <p>@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, null)</p>
 
 
                 }
@@ -216,7 +215,50 @@
     @*-------------------------------------------------------------------*@
 
 </div>
+<div class="container">
+    <h2 class="alert alert-info text-center col-md-5">留言板</h2>
+    <div id="commentBoard">
+        @foreach (var item in Model.MBoard)
+        {
+            <div class="mb-4">
+                <a href="@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a>
+                <label id="@item.memId">@Model.MemberList.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
+                <span>(@item.messageTime)</span>
+                @if (Session["memid"] != null)
+                {
+                    if (Session["memid"].ToString() != item.memId)
+                    {
+                        <a class="ml-auto fa fas fa-file-signature text-danger" href="@Url.Action("Report", "Activity", new { id = item.mboardSerial, reporterID = Session["memid"].ToString()})"></a>
+                    }
+                }
+                @if (item.boardMessage.StartsWith("@"))
+                {
+                    <div class="mt-2 ml-3 onFocus">
+                        @item.boardMessage
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-2 ml-3">
+                        @item.boardMessage
+                    </div>
+                }
+            </div>
+        }
+    </div>
 
+    @Html.TextBoxFor(m => m.ActivityList.FirstOrDefault().actId, new { type = "hidden", @id = "actID" })
+    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memId, new { type = "hidden", @id = "member" })
+    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memNick, new { type = "hidden", id = "nick" })
+    <div class="highlighter"><span></span></div>
+    @Html.TextBoxFor(m => m.MBoard.FirstOrDefault().boardMessage, new { Value = "", @id = "comments" })
+
+    <input id="commentBtn" type="button" value="送出" class="btn btn-info" />
+
+    <div class="d-sm-flex justify-content-center mt-5" style="width:600px">
+        @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-warning btn-block" })
+    </div>
+</div>
 
 
 
@@ -228,6 +270,9 @@
 
 <p id="gendercompare">@Model.MemberList.FirstOrDefault().Sex</p>
 
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+}
 
 @section work{
     <script>
@@ -351,6 +396,57 @@
             };
         };
 
-         //$("#join").attr("disabled", "disabled");
+        //$("#join").attr("disabled", "disabled");
+    </script>
+}
+
+@section scripts{
+    <script>
+
+    $('#commentBtn').click(function () {
+        $.ajax({
+            url: "@Url.Action("AddComment", "Activity")",
+            method: "post",
+            traditional: true,
+            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val() },
+            success: function (data) {
+                alert("留言新增成功");
+                $.ajax({
+                    type: "Get",
+                    url: "http://localhost:54130/api/getComment?id=" + data.mid,
+                    success: function (d) {
+                        $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
+                           + $('#nick').val() + '</label>' + '<span>' + '  (' + d[0] + ')' + '</span><div class="mt-2 ml-3 onFocus">' + d[1] + '</div></div>');
+                    },
+                });
+                $('#comments').val("");
+                $('.highlighter span').text("");
+            },
+            error: function () {
+                alert('請先登入後留言');
+            }
+        });
+    });
+
+    $('#commentBoard label').click(function () {
+        var timer;
+        $('#commentBoard label').on("mousedown", function () {
+            if ($('#member').val() != $(this).attr("id")) {
+                var target = "@@" + $(this).text() + " ";
+                timer = setTimeout(function () {
+                    $('#comments').val(target);
+                    $('.highlighter span').text(target);
+                }, 800);
+            }
+        }).on("mouseup", function () {
+                clearTimeout(timer);
+        });
+    });
+
+
+    $('#comments').keyup(function () {
+        if ($(this).val().length <= $('.highlighter span').text().length)
+            $('.highlighter span').text("");
+    });
     </script>
 }

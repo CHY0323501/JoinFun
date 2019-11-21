@@ -13,7 +13,6 @@ namespace JoinFun.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-
     [MetadataType(typeof(MetaComment))]
     public partial class Comment
     {
