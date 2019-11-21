@@ -651,6 +651,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
+    <Compile Include="Controllers\getCommentController.cs" />
     <Compile Include="Controllers\getDistrictController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemAPIController.cs" />
@@ -857,6 +858,8 @@
     <Content Include="Views\Register\Approved.cshtml" />
     <Content Include="Views\Member\Search.cshtml" />
     <Content Include="Views\Register\CheckEmail.cshtml" />
+    <Content Include="Views\Register\ForgetPwd.cshtml" />
+    <Content Include="Views\Register\RemakePwd.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

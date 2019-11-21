@@ -15,9 +15,9 @@ namespace JoinFun.Controllers
     {
         JoinFunEntities db = new JoinFunEntities();
         //確認好友狀態
-        public IHttpActionResult Get(string memID)
+        public IHttpActionResult Get(string memID,string FriendID)
         {
-            var friendship = db.Friendship.Where(m => m.memId == memID).ToList();
+            var friendship = db.Friendship.Where(m => m.memId == memID&&m.friendMemId== FriendID).ToList();
 
             return Ok(friendship);
         }
@@ -44,17 +44,28 @@ namespace JoinFun.Controllers
             //確認好友
             if (checkFD) {
                 //新增資料至friendship資料表
-                Friendship friend1 = new Friendship();
-                friend1.memId = memID;
-                friend1.friendMemId = FriendID;
-                db.Friendship.Add(friend1);
-                db.SaveChanges();
                 var FDdata1 = db.Friendship.Where(m => m.memId == memID && m.friendMemId == FriendID).FirstOrDefault();
                 var FDdata2 = db.Friendship.Where(m => m.memId == FriendID && m.friendMemId == memID).FirstOrDefault();
-                //修改FriendShip資料表中的approved欄位
-                FDdata1.Approved = true;
-                FDdata2.Approved = true;
+                if (FDdata1==null) {
+                    Friendship friend1 = new Friendship();
+                    friend1.memId = memID;
+                    friend1.friendMemId = FriendID;
+                    db.Friendship.Add(friend1);
+                    db.SaveChanges();
+                }
+                if (FDdata2 == null) {
+                    Friendship friend2 = new Friendship();
+                    friend2.memId = FriendID;
+                    friend2.friendMemId = memID;
+                    db.Friendship.Add(friend2);
+                    db.SaveChanges();
+                }
 
+                //修改FriendShip資料表中的approved欄位
+                var editFD1= db.Friendship.Where(m => m.memId == memID && m.friendMemId == FriendID).FirstOrDefault();
+                var editFD2= db.Friendship.Where(m => m.memId == FriendID && m.friendMemId == memID).FirstOrDefault();
+                editFD1.Approved = true;
+                editFD2.Approved = true;
                 //若成為好友前尚未為粉絲或追蹤關係時，新增粉絲及追蹤關係
                 Fans fan = new Fans();
                 FollowUp follow = new FollowUp();

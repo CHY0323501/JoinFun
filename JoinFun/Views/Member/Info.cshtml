@@ -48,7 +48,7 @@
                             @Html.DisplayNameFor(model => i.memId)
                         </div>
                         <div class="col-md-8 text-secondary">
-                            @Html.DisplayFor(m => i.memId)　@if (session!=i.memId) { }
+                            @Html.DisplayFor(m => i.memId)
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -94,13 +94,13 @@
                             </div>
                             <div class="col-md">
                                 <button id="FriendBtn" class="btn btn-outline-info mb-1 " style="width:inherit">
-                                    @if (Model.Friendship.ToList().FirstOrDefault() == null)
+                                    @if (Model.Friendship.Where(m=>m.friendMemId==session).Count() == 0)
                                     {
                                         <i class="fas fa-user-plus "></i>@:　加好友
                                     }
-                                    else if (Model.Friendship.ToList()[0].Approved == false)
+                                    else if (Model.Friendship.FirstOrDefault().Approved == false)
                                     {
-                                        <i class="fas fa-user-times"></i>@:　取消申請
+                                        <i class="fas fa-user-times"></i>@:　拒絕申請
                                     }
                                     else
                                     {
@@ -372,12 +372,12 @@
         function CheckFriendShip() {
             $.ajax({
                 type: "Get",
-                url: "http://localhost:54129/api/MemAPI?memID=" + $('#FriendID').val(),
+                url: "http://localhost:54129/api/MemAPI?memID=" + $('#FriendID').val()+"&FriendID=@session",
                 success: function (d) {
                     if (d.length == 0) {
                         $('#FriendBtn').html('<i class="fas fa-user-plus "></i>　加好友');
                     } else if (d[0].Approved == false) {
-                        $('#FriendBtn').html('<i class="fas fa-user-times"></i>　取消申請');
+                        $('#FriendBtn').html('<i class="fas fa-user-times"></i>　拒絕申請');
                     } else {
                         $('#FriendBtn').html('<i class="fas fa-user-minus"></i>　刪除好友');
                     }
@@ -393,7 +393,7 @@
                         CheckFriendShip();
                     }
                 });
-            } else if ($('#FriendBtn').text().includes('取消申請')) {
+            } else if ($('#FriendBtn').text().includes('拒絕申請')) {
                 $.ajax({
                     type: "Delete",
                     url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
@@ -402,17 +402,17 @@
                     }
                 });
             } else {
-                $.ajax({
-                    type: "Delete",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
-                    success: function () {
-                        CheckFriendShip();
-                    }
-                });
+                if (confirm("您確定要刪除嗎？")) {
+                    $.ajax({
+                        type: "Delete",
+                        url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
+                        success: function () {
+                            CheckFriendShip();
+                        }
+                    });
+                }
             }
-
         })
-
     </script>
 
 }
