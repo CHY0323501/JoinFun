@@ -150,11 +150,10 @@
             <div id="notice">
                 @*<div class="row">*@
                 @*<div class="col-md-6">*@
-                <span class="subtitle">注意事項</span>
+                <span class="subtitle">留言板</span>
 
                 <div id="act_content1" class="w-100">
-                    由於場地須預約，因此參加了不可以退出喔!!
-                    請參加前考慮清楚。
+                 <h1>留言板區</h1>
                 </div>
 
                 @*</div>*@
@@ -194,7 +193,7 @@
                 @foreach (var item in Model.vwActivityList)
                 {
                     <img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />
-                    <p>@Html.ActionLink("@item.memNick","Info",new { memID=item.hostId })</p>
+                    <p>@Html.ActionLink(@item.memNick,"Info","Member",new { memID=item.hostId },null)</p>
 
 
                 }
