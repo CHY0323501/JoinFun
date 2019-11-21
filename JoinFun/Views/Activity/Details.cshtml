@@ -154,11 +154,53 @@
 
                 <div id="act_content1" class="w-100">
                     <h1>留言板區</h1>
+                    <div id="commentBoard">
+                        @foreach (var item in Model.MBoard)
+                        {
+                            <div class="mb-4">
+                                <a href="@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a>
+                                <label id="@item.memId">@Model.MemberList.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
+                                <span>(@item.messageTime)</span>
+                                @if (Session["memid"] != null)
+                                {
+                                    if (Session["memid"].ToString() != item.memId)
+                                    {
+                                        <a class="ml-auto fa fas fa-file-signature text-danger" href="@Url.Action("Report", "Activity", new { id = item.mboardSerial, reporterID = Session["memid"].ToString()})"></a>
+                                    }
+                                }
+                                @if (item.boardMessage.StartsWith("@"))
+                                {
+                                    <div class="mt-2 ml-3 onFocus">
+                                        @item.boardMessage
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="mt-2 ml-3">
+                                        @item.boardMessage
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    @Html.TextBoxFor(m => m.ActivityList.FirstOrDefault().actId, new { type = "hidden", @id = "actID" })
+                    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memId, new { type = "hidden", @id = "member" })
+                    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memNick, new { type = "hidden", id = "nick" })
+                    <div class="highlighter"><span></span></div>
+                    @Html.TextBoxFor(m => m.MBoard.FirstOrDefault().boardMessage, new { Value = "", @id = "comments" })
+
+                    <input id="commentBtn" type="button" value="送出" class="btn btn-info" />
                 </div>
 
-                @*</div>*@
+                </div>
+                
 
-            </div>
+                @*</div>*@
+                @*<div class="container">
+                   
+
+            </div>*@
         </div>
         <div class="col-md-6">
             <span class="subtitle">活動資訊</span>
@@ -215,50 +257,7 @@
     @*-------------------------------------------------------------------*@
 
 </div>
-<div class="container">
-    <h2 class="alert alert-info text-center col-md-5">留言板</h2>
-    <div id="commentBoard">
-        @foreach (var item in Model.MBoard)
-        {
-            <div class="mb-4">
-                <a href="@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a>
-                <label id="@item.memId">@Model.MemberList.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
-                <span>(@item.messageTime)</span>
-                @if (Session["memid"] != null)
-                {
-                    if (Session["memid"].ToString() != item.memId)
-                    {
-                        <a class="ml-auto fa fas fa-file-signature text-danger" href="@Url.Action("Report", "Activity", new { id = item.mboardSerial, reporterID = Session["memid"].ToString()})"></a>
-                    }
-                }
-                @if (item.boardMessage.StartsWith("@"))
-                {
-                    <div class="mt-2 ml-3 onFocus">
-                        @item.boardMessage
-                    </div>
-                }
-                else
-                {
-                    <div class="mt-2 ml-3">
-                        @item.boardMessage
-                    </div>
-                }
-            </div>
-        }
-    </div>
 
-    @Html.TextBoxFor(m => m.ActivityList.FirstOrDefault().actId, new { type = "hidden", @id = "actID" })
-    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memId, new { type = "hidden", @id = "member" })
-    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memNick, new { type = "hidden", id = "nick" })
-    <div class="highlighter"><span></span></div>
-    @Html.TextBoxFor(m => m.MBoard.FirstOrDefault().boardMessage, new { Value = "", @id = "comments" })
-
-    <input id="commentBtn" type="button" value="送出" class="btn btn-info" />
-
-    <div class="d-sm-flex justify-content-center mt-5" style="width:600px">
-        @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-warning btn-block" })
-    </div>
-</div>
 
 
 
