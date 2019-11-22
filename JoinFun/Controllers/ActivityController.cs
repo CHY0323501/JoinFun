@@ -75,8 +75,9 @@ namespace JoinFun.Controllers
             ActClass ACT = new ActClass()
             {
                 vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
-                ActivityList = db.Join_Fun_Activities.ToList(),
-                MemberList = db.Member.Where(m=>m.memId==memID).ToList(),
+                ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
+                //MemberList = db.Member.Where(m=>m.memId==memID).ToList(),
+                members = db.Member.ToList(),
                 MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
 
             };

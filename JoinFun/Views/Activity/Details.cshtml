@@ -159,7 +159,7 @@
                         {
                             <div class="mb-4">
                                 <a href="@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a>
-                                <label id="@item.memId">@Model.MemberList.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
+                                <label id="@item.memId">@Model.members.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
                                 <span id="messageTime">(@item.messageTime)</span>
                                 @if (Session["memid"] != null)
                                 {
@@ -171,13 +171,13 @@
                                 @if (item.boardMessage.StartsWith("@"))
                                 {
                                     <div class="mt-2 ml-3 onFocus">
-                                        @item.boardMessage
+                                        @Html.Raw(@item.boardMessage.Replace("\n", "<br/>"))
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="mt-2 ml-3">
-                                        @item.boardMessage
+                                        @Html.Raw(@item.boardMessage.Replace("\n", "<br/>"))
                                     </div>
                                 }
                             </div>
@@ -185,8 +185,8 @@
                     </div>
 
                     @Html.TextBoxFor(m => m.ActivityList.FirstOrDefault().actId, new { type = "hidden", @id = "actID" })
-                    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memId, new { type = "hidden", @id = "member" })
-                    @Html.TextBoxFor(m => m.MemberList.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memNick, new { type = "hidden", id = "nick" })
+                    @Html.TextBoxFor(m => m.members.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memId, new { type = "hidden", @id = "member" })
+                    @Html.TextBoxFor(m => m.members.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memNick, new { type = "hidden", id = "nick" })
                     <div class="highlighter"><span></span></div>
                     @*@Html.TextBoxFor(m => m.MBoard.FirstOrDefault().boardMessage, new { Value = "", @id = "comments" })
 
@@ -271,8 +271,8 @@
 }
 
 
-<p id="gendercompare">@Model.MemberList.FirstOrDefault().Sex</p>
-
+@*<p id="gendercompare">@Model.MemberList.FirstOrDefault().Sex</p>*@
+<p id="gendercompare">@Model.members.Find(m=>m.memId==Model.vwActivityList.ToList().FirstOrDefault().hostId).Sex</p>
 @section topCSS{
     <link href="~/Content/MyStyle.css" rel="stylesheet" />
 }
