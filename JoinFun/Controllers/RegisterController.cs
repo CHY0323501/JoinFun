@@ -125,7 +125,7 @@ namespace JoinFun.Controllers
                                    select a.Account).FirstOrDefault();
                 return View();
             }
-            return RedirectToAction("Login", "Login",new { check = true});
+            return RedirectToAction("Login", "Login");
 
         }
 
