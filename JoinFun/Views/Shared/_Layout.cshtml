@@ -174,7 +174,7 @@
                     @if (Session["memid"] == null)
                     {
                     <li class="nav-item text-center ml-2">
-                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login")"><i class="fas fa-sign-in-alt"></i> 登入</a>
+                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { check=true})"><i class="fas fa-sign-in-alt"></i> 登入</a>
                     </li>
                     }
                     <li class="nav-item text-center ml-2">
@@ -199,7 +199,7 @@
                             <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})"><i class="fas fa-user-lock"></i>　封鎖管理</a>
                             @if (Session["memid"] != null)
                             {
-                            <a class="dropdown-item" href="@Url.Action("PwdEdit","Register")"><i class="fas fa-key"></i>　修改密碼</a>
+                            <a class="dropdown-item" href="@Url.Action("PwdEdit","Register",new {memId= Session["memid"]})"><i class="fas fa-key"></i>　修改密碼</a>
                             <a class="dropdown-item" href="@Url.Action("Logout","Login")"><i class="fas fa-sign-out-alt"></i>　登出帳號</a>
                             }
 

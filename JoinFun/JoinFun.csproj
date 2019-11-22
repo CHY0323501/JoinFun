@@ -144,6 +144,7 @@
     <Content Include="CSS\Newcard\style8.css" />
     <Content Include="CSS\Newcard\style9.css" />
     <Content Include="CSS\Newcard\style_common.css" />
+    <Content Include="CSS\Register.css" />
     <Content Include="CSS\Remark.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
@@ -854,10 +855,8 @@
     <Content Include="Views\Register\CheckEmail.cshtml" />
     <Content Include="Views\Register\ForgetPwd.cshtml" />
     <Content Include="Views\Register\RemakePwd.cshtml" />
-
     <Content Include="Views\Activity\Messages.cshtml" />
     <Content Include="Views\Activity\MContent.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
