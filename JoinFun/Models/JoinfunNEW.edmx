@@ -221,9 +221,13 @@
             <PropertyRef Name="NotiSerial" />
           </Key>
           <Property Name="NotiSerial" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="InstanceId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="ToMemId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="NotiTitle" Type="nchar" MaxLength="30" Nullable="false" />
           <Property Name="NotifContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="timeReceived" Type="datetime" Nullable="false" />
           <Property Name="readYet" Type="bit" Nullable="false" />
+          <Property Name="keepNotice" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Payment_Restriction">
           <Key>
@@ -1800,10 +1804,10 @@
           <NavigationProperty Name="Friendship" Relationship="Self.FK__Friendshi__memId__75A278F5" FromRole="Member" ToRole="Friendship" />
           <NavigationProperty Name="Member_Remarks" Relationship="Self.FK__Member_Re__ToMem__5614BF03" FromRole="Member" ToRole="Member_Remarks" />
           <NavigationProperty Name="Message_Board" Relationship="Self.FK__Message_B__memId__74AE54BC" FromRole="Member" ToRole="Message_Board" />
-          <NavigationProperty Name="Notification" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Member" ToRole="Notification" />
           <NavigationProperty Name="Social_Net_ID" Relationship="Self.FK__Social_Ne__memId__6754599E" FromRole="Member" ToRole="Social_Net_ID" />
           <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__FromM__6A30C649" FromRole="Member" ToRole="Violation" />
-          <Property Name="email_ID" Type="String" />
+          <Property Name="email_ID" Type="String" MaxLength="32" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Notification" Relationship="JoinFunModel.FK__Notificat__ToMem__72C60C4A" FromRole="Member" ToRole="Notification" />
         </EntityType>
         <EntityType Name="Member_Remarks">
           <Key>
@@ -1832,16 +1836,6 @@
           <Property Name="keepMboard" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Join_Fun_Activities" Relationship="Self.FK__Message_B__actId__787EE5A0" FromRole="Message_Board" ToRole="Join_Fun_Activities" />
           <NavigationProperty Name="Member" Relationship="Self.FK__Message_B__memId__74AE54BC" FromRole="Message_Board" ToRole="Member" />
-        </EntityType>
-        <EntityType Name="Notification">
-          <Key>
-            <PropertyRef Name="NotiSerial" />
-          </Key>
-          <Property Name="NotiSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ToMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="NotifContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="readYet" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="Self.FK__Notificat__ToMem__72C60C4A" FromRole="Notification" ToRole="Member" />
         </EntityType>
         <EntityType Name="Payment_Restriction">
           <Key>
@@ -2392,18 +2386,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Notificat__ToMem__72C60C4A">
-          <End Role="Member" Type="Self.Member" Multiplicity="1" />
-          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="memId" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="ToMemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Social_Ne__memId__6754599E">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
           <End Role="Social_Net_ID" Type="Self.Social_Net_ID" Multiplicity="*" />
@@ -2473,7 +2455,6 @@
           <EntitySet Name="Member" EntityType="Self.Member" />
           <EntitySet Name="Member_Remarks" EntityType="Self.Member_Remarks" />
           <EntitySet Name="Message_Board" EntityType="Self.Message_Board" />
-          <EntitySet Name="Notification" EntityType="Self.Notification" />
           <EntitySet Name="Payment_Restriction" EntityType="Self.Payment_Restriction" />
           <EntitySet Name="People_Restriction" EntityType="Self.People_Restriction" />
           <EntitySet Name="Photos_of_Activities" EntityType="Self.Photos_of_Activities" />
@@ -2606,10 +2587,6 @@
             <End Role="Member" EntitySet="Member" />
             <End Role="Message_Board" EntitySet="Message_Board" />
           </AssociationSet>
-          <AssociationSet Name="FK__Notificat__ToMem__72C60C4A" Association="Self.FK__Notificat__ToMem__72C60C4A">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Notification" EntitySet="Notification" />
-          </AssociationSet>
           <AssociationSet Name="FK__Social_Ne__memId__6754599E" Association="Self.FK__Social_Ne__memId__6754599E">
             <End Role="Member" EntitySet="Member" />
             <End Role="Social_Net_ID" EntitySet="Social_Net_ID" />
@@ -2633,6 +2610,11 @@
           <EntitySet Name="vw_PartHistory" EntityType="JoinFunModel.vw_PartHistory" />
           <EntitySet Name="Host_Now" EntityType="JoinFunModel.Host_Now" />
           <EntitySet Name="Part_Now" EntityType="JoinFunModel.Part_Now" />
+          <EntitySet Name="Notification" EntityType="JoinFunModel.Notification" />
+          <AssociationSet Name="FK__Notificat__ToMem__72C60C4A" Association="JoinFunModel.FK__Notificat__ToMem__72C60C4A">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="vw_Host_Remarks">
           <Key>
@@ -2941,6 +2923,32 @@
           <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotiSerial" />
+          </Key>
+          <Property Name="NotiSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="InstanceId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="NotiTitle" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="NotifContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="timeReceived" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="readYet" Type="Boolean" Nullable="false" />
+          <Property Name="keepNotice" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="JoinFunModel.FK__Notificat__ToMem__72C60C4A" FromRole="Notification" ToRole="Member" />
+        </EntityType>
+        <Association Name="FK__Notificat__ToMem__72C60C4A">
+          <End Type="JoinFunModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="JoinFunModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="memId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="ToMemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3169,16 +3177,6 @@
                 <ScalarProperty Name="boardMessage" ColumnName="boardMessage" />
                 <ScalarProperty Name="messageTime" ColumnName="messageTime" />
                 <ScalarProperty Name="keepMboard" ColumnName="keepMboard" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notification">
-            <EntityTypeMapping TypeName="JoinFunModel.Notification">
-              <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="NotiSerial" ColumnName="NotiSerial" />
-                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
-                <ScalarProperty Name="NotifContent" ColumnName="NotifContent" />
-                <ScalarProperty Name="readYet" ColumnName="readYet" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3517,6 +3515,20 @@
                 <ScalarProperty Name="hostId" ColumnName="hostId" />
                 <ScalarProperty Name="actClassId" ColumnName="actClassId" />
                 <ScalarProperty Name="actId" ColumnName="actId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notification">
+            <EntityTypeMapping TypeName="JoinFunModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="keepNotice" ColumnName="keepNotice" />
+                <ScalarProperty Name="readYet" ColumnName="readYet" />
+                <ScalarProperty Name="timeReceived" ColumnName="timeReceived" />
+                <ScalarProperty Name="NotifContent" ColumnName="NotifContent" />
+                <ScalarProperty Name="NotiTitle" ColumnName="NotiTitle" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="InstanceId" ColumnName="InstanceId" />
+                <ScalarProperty Name="NotiSerial" ColumnName="NotiSerial" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,51 @@
+﻿@model JoinFun.Models.Notification
+
+@{
+    ViewBag.Title = "私人訊息";
+}
+
+@*<h2>訊息</h2>*@
+
+<div class="container w-75 letter">
+    <div class="container-fluid pt-5">
+        <div class="w-50 mContent border-bottom ">
+            <label>
+                <span>主旨：</span>
+                @Html.DisplayFor(model => model.NotiTitle)
+            </label>
+        </div>
+
+        <div class="w-50 mContent border-bottom">
+            <label>
+                <span>來源：</span>
+                @if (Model.InstanceId.StartsWith("N"))
+                {
+                    <span>站內訊息</span>
+                }
+                else if (Model.InstanceId.StartsWith("pst"))
+                {
+                    <span>系統公告</span>
+                }
+                else
+                {
+                    <span>會員留言</span>
+                }
+
+            </label>
+            <span class="mTime ml-2">(@Html.DisplayFor(model => model.timeReceived))</span>
+        </div>
+
+        <div class="w-50 mContent border-bottom mt-5">
+            @Html.Raw(@Model.NotifContent.Replace("\\n", "<br/>"))
+        </div>
+
+    </div>
+
+</div>
+<div class="w-75 m-auto">
+    @Html.ActionLink("返回通知中心", "Messages", new { memID = Session["memid"] })
+</div>
+
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+}

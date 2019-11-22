@@ -139,7 +139,26 @@ namespace JoinFun.Controllers
             db.Message_Board.Add(board);
             db.SaveChanges();
 
-            return Json(new { mid = serial }, JsonRequestBehavior.AllowGet);
+            //發出通知訊息給被標記的會員
+            var member = db.Member.ToList();
+            foreach (var item in member)
+            {
+                if (comment.StartsWith("@" + item.memNick))
+                {
+                    Notification message = new Notification();
+                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                    message.InstanceId = serial;
+                    message.ToMemId = item.memId;
+                    message.NotiTitle = "留言板訊息";
+                    message.NotifContent = comment;
+                    message.timeReceived = DateTime.Now;
+                    message.keepNotice = true;
+                    db.Notification.Add(message);
+                    db.SaveChanges();
+                }
+            }
+            //new { mid = serial }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -300,7 +319,15 @@ namespace JoinFun.Controllers
                 return HttpNotFound();
             }
             GetSelectList(actId);
-            //ViewBag.Drop = GetDropList();
+            if(act.acceptDrop == true)
+            {
+                ViewBag.Drop = "是";
+            }
+            else
+            {
+                ViewBag.Drop = "否";
+            }
+
             ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
             return View(act);
@@ -373,6 +400,62 @@ namespace JoinFun.Controllers
             db.Violation.Add(violate);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Messages(string memID)
+        {
+            var message = db.Notification.Where(m => m.ToMemId == memID).ToList();
+            return View(message);
+        }
+
+        [HttpPost]
+        public ActionResult GetMStatus(string id)
+        {
+            int count = db.Notification.Count(m => m.ToMemId == id && m.readYet == false);
+            return Json(count, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateRStatus(string serial, bool isRead)
+        {
+            var message = db.Notification.Find(serial);
+            message.readYet = isRead;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveMessage(string serial, bool keep)
+        {
+            var message = db.Notification.Find(serial);
+            message.keepNotice = keep;
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMessage(string serial)
+        {
+            var message = db.Notification.Find(serial);
+            db.Notification.Remove(message);
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult MContent(string serial)
+        {
+            if (serial != null && Session["memid"] != null)
+            {
+                var message = db.Notification.Find(serial);
+                message.readYet = true;
+                db.SaveChanges();
+                return View(message);
+            }
+            return RedirectToAction("Messages");
         }
 
         //建立"新增"或"編輯"有對應資料表Dropdown list

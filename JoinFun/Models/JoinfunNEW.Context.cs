@@ -45,7 +45,6 @@ namespace JoinFun.Models
         public virtual DbSet<Member> Member { get; set; }
         public virtual DbSet<Member_Remarks> Member_Remarks { get; set; }
         public virtual DbSet<Message_Board> Message_Board { get; set; }
-        public virtual DbSet<Notification> Notification { get; set; }
         public virtual DbSet<Payment_Restriction> Payment_Restriction { get; set; }
         public virtual DbSet<People_Restriction> People_Restriction { get; set; }
         public virtual DbSet<Photos_of_Activities> Photos_of_Activities { get; set; }
@@ -65,5 +64,8 @@ namespace JoinFun.Models
         public virtual DbSet<vw_PartHistory> vw_PartHistory { get; set; }
         public virtual DbSet<Host_Now> Host_Now { get; set; }
         public virtual DbSet<Part_Now> Part_Now { get; set; }
+
+        public virtual DbSet<Notification> Notification { get; set; }
+
     }
 }

@@ -11,7 +11,10 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(MetaMember_Remarks))]
+
     public partial class Member_Remarks
     {
         public string remarkSerial { get; set; }

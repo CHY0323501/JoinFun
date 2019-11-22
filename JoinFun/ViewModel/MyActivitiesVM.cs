@@ -12,5 +12,6 @@ namespace JoinFun.ViewModel
         public List<Part_Now> Part_Now { get; set; }
         public List<Photos_of_Activities> Photos_of_Activities { get; set; }
         public List<Activity_Class> Activity_Class { get; set; }
+        public List<Activity_Details> Activity_Details { get; set; }
     }
 }

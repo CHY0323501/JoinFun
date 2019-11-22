@@ -1,7 +1,7 @@
 ﻿@model JoinFun.ViewModel.MyActivitiesVM
 
 @section memberRemarks{
-    <link href="~/CSS/Remarks.css" rel="stylesheet" />
+    <link href="~/CSS/Remark.css" rel="stylesheet" />
 }
 @{
     ViewBag.Title = "我的揪團";
@@ -10,7 +10,7 @@
 
 <div class="container containerMinH">
     <h2 class="mt-5 text-center p-3 text-warning">我的揪團</h2>
-    <div class="card text-center border-0 p-adjust">
+    <div class="card text-center border-0 p-adjust bg-transparent">
         <div class="card-header bg-transparent text-white ">
             <div class="d-flex">
                 <ul class="nav nav-tabs card-header-tabs mx-auto">
@@ -25,7 +25,7 @@
 
         </div>
         <div class="tab-content">
-            <div class="card-body tab-pane show active fade " id="tab1">
+            <div class="card-body tab-pane show active fade bg-transparent" id="tab1">
                 @if (Model.Host_Now.Count == 0)
                 {
                     <h2 class="text-center text-success ">無開團資料</h2>

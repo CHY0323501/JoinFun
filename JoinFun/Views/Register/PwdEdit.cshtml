@@ -4,77 +4,107 @@
     ViewBag.Title = "修改密碼";
 }
 
-<h2>修改密碼</h2>
+
+    <div class="container mt-5">
+        <h2 class="text-center">修改密碼</h2>
+        <div style="height:800px" class="row justify-content-center">
 
 
-    @using (Html.BeginForm(new { id = "pwdEdit" }))
-    {
-        @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+            @using (Html.BeginForm(new { id = "pwdEdit" }))
+            {
+                @Html.AntiForgeryToken()
 
-            <hr />
-            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-            @*@Html.HiddenFor(model => model.Account)*@
+            <div class="form-horizontal" style="min-height:750px">
 
-            <div class="form-group">
-                @*@Html.LabelFor(model => model.memId, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                <label class="control-label col-md-2">會員編號</label>
-                <div class="col-md-10">
-                    @*<input id="memId" name="memId" type="text" class="form-control" value="@Model.memId" readonly />*@
-                    @Html.EditorFor(model => model.memId, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.memId, "", new { @class = "text-danger" })
+
+                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                @*@Html.HiddenFor(model => model.Account)*@
+                <div class="row mt-3">
+                    <div class=" col col-md-12 ">
+                        <div class=" form-inline ">
+
+                            @*@Html.LabelFor(model => model.memId, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            <span class="control-label  ml-auto mr-2 ">會員編號</span>
+                            @*<input id="memId" name="memId" type="text" class="form-control" value="@Model.memId" readonly />*@
+                            @Html.EditorFor(model => model.memId, new { htmlAttributes = new { @class = "form-control mr-auto ", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.memId, "", new { @class = "text-danger" })
+
+
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="row mt-3">
+                    <div class=" col col-md-12 ">
+                        <div class=" form-inline ">
+                            @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label  ml-auto mr-2" })
+                            @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control  mr-auto", @readonly = "readonly", @Value = @ViewBag.account } })
+                            @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-2">舊密碼:</label>
-                <div class="col-md-10">
-                    <input id="OldPassword" name="OldPassword" type="password" class="form-control" />
-                    <div></div>
-                </div>
-            </div>
-
-
-
-            <div class="form-group">
-                <label class="control-label col-md-2">新密碼:</label>
-                <div class="col-md-10">
-                    <input id="NewPassword" name="NewPassword" type="password" class="form-control" />
-                    <div></div>
+                        </div>
+                    </div>
                 </div>
 
+                <div class="row mt-3">
+                    <div class=" col col-md-12 ">
+                        <div class=" form-inline ">
 
-                <div class="form-group">
-                    <label class="control-label col-md-2">確認新密碼:</label>
-                    <div class="col-md-10">
-                        <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control" />
-                        <div></div>
+                            <span class="control-label  ml-auto mr-2">舊密碼&nbsp;&nbsp;&nbsp;</span>
+
+                            <input id="OldPassword" name="OldPassword" type="password" class="form-control mr-auto" />
+                            <div></div>
+                        </div>
                     </div>
                 </div>
 
 
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                <div class="row mt-3">
+                    <div class=" col col-md-12 ">
+                        <div class=" form-inline ">
+                            <span class="control-label  ml-auto mr-2">新密碼&nbsp;&nbsp;&nbsp;</span>
+
+                            <input id="NewPassword" name="NewPassword" type="password" class="form-control mr-auto" />
+                            <div></div>
+
+                        </div>
                     </div>
                 </div>
+
+
+
+                <div class="row  mt-3 ">
+                    <div class=" col col-md-12 ">
+                        <div class=" form-inline ">
+                            <span class="control-label  ml-auto mr-2 ">確認密碼</span>
+
+                            <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control mr-auto " />
+                            <div></div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row  mt-3 ">
+                    <div class=" col col-md-11 offset-3">
+
+
+                        <input type="submit" value="儲存" class="btn btn-success  w-75 " />
+                                     
+                        @Html.ActionLink("返回我的資訊", "Info", "Member", new { @class = "btn btn-outline-info  w-75 mt-3" })
+                    </div>
+
+
+                </div>
             </div>
+
+            }
+
         </div>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
+
 
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>

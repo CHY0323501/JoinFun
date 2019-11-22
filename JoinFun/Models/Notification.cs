@@ -11,13 +11,22 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(MetaNotification))]
+
+
     public partial class Notification
     {
         public string NotiSerial { get; set; }
+        public string InstanceId { get; set; }
         public string ToMemId { get; set; }
+        public string NotiTitle { get; set; }
         public string NotifContent { get; set; }
+        public System.DateTime timeReceived { get; set; }
         public bool readYet { get; set; }
+        public bool keepNotice { get; set; }
     
         public virtual Member Member { get; set; }
     }

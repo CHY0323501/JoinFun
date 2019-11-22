@@ -11,7 +11,10 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(Metavw_FollowUp))]
+
     public partial class vw_FollowUp
     {
         public string FoMemId { get; set; }

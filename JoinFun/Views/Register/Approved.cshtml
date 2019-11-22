@@ -2,15 +2,18 @@
 @{
     ViewBag.Title = "Approved";
 }
+@section memberinfo{
+    <link href="~/CSS/Register.css" rel="stylesheet" />
+}
+<div class="container mt-5 " style="height:750px ;width:800px">
 
-    <div  class="container mt-5" style="height:750px">
-        <div class="row justify-content-center ">
-            <div class="col-12">
-                <h1 class="text-success">帳號驗證成功</h1>
-                <div>
-                    @Html.ActionLink("返回會員登入", "Login", "Login")
-                </div>
+    <div class="row bg-morandi rounded " style="height:350px">
+        <div class="col-md-12 offset-md-4 ">
+            <h1 class="text-success mt-5">帳號驗證成功</h1>
+            <div class="mt-5 ">
+                @Html.ActionLink("返回會員登入", "Login", "Login" ,new { @class = "btn btn-warning w-25 ml-1"})
             </div>
         </div>
     </div>
+</div>
 

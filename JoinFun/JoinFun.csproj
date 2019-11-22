@@ -144,10 +144,12 @@
     <Content Include="CSS\Newcard\style8.css" />
     <Content Include="CSS\Newcard\style9.css" />
     <Content Include="CSS\Newcard\style_common.css" />
-    <Content Include="CSS\Remarks.css" />
+    <Content Include="CSS\Register.css" />
+    <Content Include="CSS\Remark.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
     <Content Include="CSS\time\timeTo.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
@@ -172,6 +174,7 @@
     <Content Include="Photos\banner\Join Fun %281%29.png" />
     <Content Include="Photos\banner\Join Fun.png" />
     <Content Include="Photos\banner\Just Do It.png" />
+    <Content Include="Photos\blank letter.jpg" />
     <Content Include="Photos\card\img-1.jpg" />
     <Content Include="Photos\card\img-2.jpg" />
     <Content Include="Photos\card\img-3.jpg" />
@@ -188,6 +191,7 @@
     <Content Include="Photos\detail\makecake3.jpg" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
+    <Content Include="Photos\glass-cheers.ico" />
     <Content Include="Photos\index\card1.jpg" />
     <Content Include="Photos\index\card2.jpg" />
     <Content Include="Photos\index\card3.jpg" />
@@ -201,6 +205,7 @@
     <Content Include="Photos\index\photo4.jpg" />
     <Content Include="Photos\index\photo5.png" />
     <Content Include="Photos\index\photo6.png" />
+    <Content Include="Photos\InfoBG.jpg" />
     <Content Include="Photos\male.png" />
     <Content Include="Photos\oops.jpg" />
     <Content Include="Photos\oops.png" />
@@ -226,6 +231,7 @@
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />
     <Content Include="Photos\w2.png" />
+    <Content Include="Scripts\ActivityScripts.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -798,6 +804,7 @@
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\MessageCenter.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
     <Compile Include="ViewModel\BlockMemberVM.cs" />
@@ -852,6 +859,8 @@
     <Content Include="Views\Register\CheckEmail.cshtml" />
     <Content Include="Views\Register\ForgetPwd.cshtml" />
     <Content Include="Views\Register\RemakePwd.cshtml" />
+    <Content Include="Views\Activity\Messages.cshtml" />
+    <Content Include="Views\Activity\MContent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -860,6 +869,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

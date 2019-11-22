@@ -536,13 +536,21 @@ namespace JoinFun.Models
     {
         [DisplayName("通知編號")]
         public string NotiSerial { get; set; }
+        [DisplayName("類型編號")]
+        public string InstanceId { get; set; }
         [DisplayName("接收通知者會員編號")]
         public string ToMemId { get; set; }
-        [DisplayName("通知內容")]
+        [DisplayName("訊息主旨")]
+        public string NotiTitle { get; set; }
+        [DisplayName("訊息內容")]
         [Required(ErrorMessage = "必填")]
         public string NotifContent { get; set; }
+        [DisplayName("收到時間")]
+        public System.DateTime timeReceived { get; set; }
         [DisplayName("是否已讀")]
         public bool readYet { get; set; }
+        [DisplayName("是否保留")]
+        public bool keepNotice { get; set; }
 
     }
 

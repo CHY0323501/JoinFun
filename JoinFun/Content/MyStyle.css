@@ -1,6 +1,13 @@
 ﻿body {
     font-family: 微軟正黑體;
+    background-color: whitesmoke;
 }
+
+#container {
+    /*margin:20px 0 0 0;*/
+    position: relative;
+}
+
 h5 {
     font-family: 微軟正黑體;
     color: dodgerblue;
@@ -11,27 +18,27 @@ img {
     max-height: 100%;
 }
 
-label{
-    color:#fa9426;
-    font-size:15pt;
+label {
+    color: #fa9426;
+    font-size: 15pt;
 }
 
 input[type="text"] {
     font-size: 15pt;
 }
 
-.formLi{
-    width:350px;
+.formLi {
+    width: 350px;
     font-size: 14pt;
-    text-align:center;
+    text-align: center;
     font-weight: bold;
     height: 30px;
     line-height: 30px;
 }
 
-.formLi:hover{
-    font-size:1.5rem;
-}
+    .formLi:hover {
+        font-size: 1.5rem;
+    }
 
 .editLi {
     width: 350px;
@@ -42,25 +49,26 @@ input[type="text"] {
     line-height: 30px;
 }
 
-.mTitle{
-    font-size:30pt;
-    margin:auto;
+/*For message center*/
+.mTitle {
+    font-size: 30pt;
+    margin: auto;
 }
 
-.mCenter{
-    font-size:20px;
+.mCenter {
+    font-size: 20px;
 }
 
-.messageLi{
-    font-size:14pt;
+.messageLi {
+    font-size: 14pt;
 }
 
-.messageTr{
-    line-height:25px;
+.messageTr {
+    line-height: 25px;
 }
 
-.messageLabel{
-    line-height:18px;
+.messageLabel {
+    line-height: 18px;
 }
 
 .messageSpan {
@@ -70,13 +78,13 @@ input[type="text"] {
     font-size: 14pt;
 }
 
-.messageTd{
-    width:200px;
-    text-align:left;
+.messageTd {
+    width: 200px;
+    text-align: left;
 }
 
-.activeTable{
-    border:none;
+.activeTable {
+    border: none;
 }
 
     .activeTable th {
@@ -86,3 +94,56 @@ input[type="text"] {
     .activeTable td {
         border: none;
     }
+
+.letter {
+    background-image: url('../Photos/blank letter.jpg');
+    background-repeat: round;
+    margin: auto;
+    position: relative;
+    /*height: 0;*/
+    background-size: cover;
+    padding-bottom: 30%;
+}
+
+.mContent {
+    margin: auto;
+}
+
+.mTime {
+    font-size: 10pt;
+}
+
+/*for comment board in Details.cshtml*/
+/*.highlighter, #comments {
+    width:400px;
+    height: 38px;
+    font-size: 12pt;
+    font-family: 微軟正黑體;
+}
+
+.highlighter {
+    position: absolute;
+    padding: 7px 0 0 12px;
+    margin-left: 1px;
+    color: red;
+    font-weight:bold;
+}
+
+.highlighter span{
+    color:red;
+}*/
+
+.onFocus {
+    color: blue;
+    font-weight: bolder;
+}
+
+#comments {
+    position: relative;
+    margin: auto;
+}
+
+/*For Report.cshtml*/
+.reportInput:focus {
+    outline: none !important;
+}

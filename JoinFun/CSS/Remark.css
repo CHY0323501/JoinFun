@@ -1,4 +1,9 @@
-﻿.p-adjust {
+﻿body {
+    background-image: url('../Photos/InfoBG.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+.p-adjust {
     padding-left: 10%;
     padding-right: 10%;
 }
