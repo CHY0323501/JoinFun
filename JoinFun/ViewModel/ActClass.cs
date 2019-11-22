@@ -14,7 +14,7 @@ namespace JoinFun.ViewModel
         public List<Member> MemberList { get; set; }
         public List<Member> members { get; set; }
         public List<Message_Board> MBoard { get; set; }
-
+        public List<Activity_Details> ActDetails { get; set; }
         public List<Photos_of_Activities> PhotoList { get; set; }
     }
 

@@ -103,10 +103,10 @@
 
 
                 <div id="cutdown">
-                    <span id="day" class="time">0</span>
-                    <span id="hour" class="time">1</span>
-                    <span id="minute" class="time">2</span>
-                    <span id="second" class="time">3</span>
+                    <span id="day" class="time">00</span>
+                    <span id="hour" class="time">00</span>
+                    <span id="minute" class="time">00</span>
+                    <span id="second" class="time">00</span>
                 </div>
 
                 <div>
@@ -118,9 +118,29 @@
                     }
                     else
                     {
+                        @*<button id="join" class="btn btn-warning btn-block d-block  ml-5 ">*@
+                        if (Model.ActDetails.Count() == 0)
+                        {
+                            <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block d-block  ml-5 " />
+                        }
+                        @*</button>*@
+                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == false)
+                        {
+                            <input id="join" type="button" value="取消審核" class="btn btn-warning btn-block d-block  ml-5 " />
+                        }
+                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == true)
+                        {
+                            <input id="join" type="button" value="退出揪團" class="btn btn-warning btn-block d-block  ml-5 " />
+                        }
+                        @*else
+                        {
+                            <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block d-block  ml-5 " />
+                        }*@
+
 
                         <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block d-block  ml-5 " />
                         @*<input id="remark" type="button" value="收藏" class="btn btn-danger btn-block   ml-5 " />*@
+
 
                     }
                     <p>@item.hashTag</p>
@@ -238,11 +258,20 @@
             <div id="act_info" class="w-100">
                 @foreach (var item in Model.vwActivityList)
                 {
+
+
+                    <a href="@Url.Action("Info","Member", new { memID = item.hostId })"><img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" /></a>
+                    @*<img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />*@
+                    <span id="hostId">@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, null)</span>
+
                     <img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />
                     <p>@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, null)</p>
 
 
+
                 }
+                <br/>
+                <br/>
                 <input id="Button1" type="button" value="加好友" class="btn btn-outline-warning" />
 
                 <input id="Button1" type="button" value="追蹤他" class="btn btn-outline-warning" />
@@ -320,12 +349,32 @@
         }
 
         //var memid = Session["memid"];
-        memid = "M000000017";
+        //memid = "M000000017";
+        //function CheckMemJoin() {
+        //    $.ajax({
+        //        type: "Get",
+        //        //url: "http://localhost:54129/api/ActAPI?memID=" + Session["memid"] + "&actId=" + $('#JoinId').val(),
+        //        url: "http://localhost:54129/api/ActAPI?memID=" +Session["memid"] + "&actId=" + $('#JoinId').val(),
+        //        success: function (data) {
+        //            if (data.length == 0) {
+        //                $('#join').val("立即參加");
+        //            } else if (data[0].appvStatus = false) {
+        //                $('#join').val("取消審核");
+        //            } else {
+        //                $('#join').val("退出揪團");
+        //            }
+
+        //        }
+
+        //    })
+        //}
+
         function CheckMemJoin() {
             $.ajax({
-                type: "Get",
-                //url: "http://localhost:54129/api/ActAPI?memID=" + Session["memid"] + "&actId=" + $('#JoinId').val(),
-                url: "http://localhost:54129/api/ActAPI?memID=" + memid + "&actId=" + $('#JoinId').val(),
+
+                url:"@Url.Action("GetActdetail", "Activity")",
+                method: "Get",
+                data: { memID: Session["memid"], actId: $('#JoinId').val()} ,
                 success: function (data) {
                     if (data.length == 0) {
                         $('#join').val("立即參加");
@@ -344,39 +393,85 @@
 
 
         $("#join").click(function () {
-            if ($(this).val().includes('立即參加')) {
+            if ($(this).val() == "立即參加") {
 
                 $.ajax({
-                    type: "Post",
-                    //url: "http://localhost:54129/api/ActAPI?actId=" + $('#JoinId').val() + "&memId=" + Session["memid"],
-                    url: "http://localhost:54129/api/ActAPI?memID=" + memid + "&actId=" + $('#JoinId').val(),
-                    success: function () {
+                    url: "@Url.Action("AddActdetail","Activity")",
+                    method: "post",
+                    traditional: true,
+                    data: { memID: Session["memid"], actId: $('#JoinId').val() },
+                    success: function (data) {
                         CheckMemJoin();
+                        alert("恭喜報名成功，靜待主辦人審核");
                     }
-                })
+                }
+                );
 
-
-            } else if ($(this).val().includes('取消審核')) {
-                $.ajax({
-                    type: "Delete",
-                    url: "http://localhost:54129/api/ActAPI?actId=" + $('#JoinId').val() + "&memId=" + memid,
-                    success: function () {
-                        CheckMemJoin();
-                    }
-                })
-            } else {
+            } else if ($(this).val() == "取消審核") {
 
                 $.ajax({
-                    type: "Delete",
-                    url: "http://localhost:54129/api/ActAPI?actId=" + $('#JoinId').val() + "&memId=" + memid,
-                    success: function () {
+                    url: "@Url.Action("Delete","Activity")",
+                    method: "Delete",
+                    traditional: true,
+                    data: { memID: Session["memid"], actId: $('#JoinId').val()},
+                    success: function (data) {
                         CheckMemJoin();
+                        alert("已成功取消");
                     }
-                })
-
+                }
+                );
             }
 
-        });
+        
+
+        @*$(document).ready(function () {
+            $.ajax({
+                url: "@Url.Action("AddActdetail","Activity")",
+                method: "post",
+                traditional: true,
+                data: { memID: Session["memid"], actId: $('#JoinId').val() },
+                success: function (data) {
+                    CheckMemJoin();
+                    alert(message: "已成功報名，靜待主板人審核");
+                }
+            })
+        })*@
+
+
+        //$("#join").click(function () {
+        //    if ($(this).val().includes('立即參加')) {
+
+        //        $.ajax({
+        //            type: "Post",
+        //            //url: "http://localhost:54129/api/ActAPI?actId=" + $('#JoinId').val() + "&memId=" + Session["memid"],
+        //            url: "http://localhost:54129/api/ActAPI?memID=" + memid + "&actId=" + $('#JoinId').val(),
+        //            success: function () {
+        //                CheckMemJoin();
+        //            }
+        //        })
+
+
+        //    } else if ($(this).val().includes('取消審核')) {
+        //        $.ajax({
+        //            type: "Delete",
+        //            url: "http://localhost:54129/api/ActAPI?actId=" + $('#JoinId').val() + "&memId=" + memid,
+        //            success: function () {
+        //                CheckMemJoin();
+        //            }
+        //        })
+        //    } else {
+
+        //        $.ajax({
+        //            type: "Delete",
+        //            url: "http://localhost:54129/api/ActAPI?actId=" + $('#JoinId').val() + "&memId=" + memid,
+        //            success: function () {
+        //                CheckMemJoin();
+        //            }
+        //        })
+
+        //    }
+
+        //});
         console.log($("#remainpeo").text());
         console.log($("#gender").text());
         console.log($("#gendercompare").text());
