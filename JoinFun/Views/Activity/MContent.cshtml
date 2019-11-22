@@ -10,13 +10,14 @@
     <div class="container-fluid pt-5">
         <div class="w-50 mContent border-bottom ">
             <label>
-                <span>主旨:</span>
+                <span>主旨：</span>
                 @Html.DisplayFor(model => model.NotiTitle)
             </label>
         </div>
 
         <div class="w-50 mContent border-bottom">
             <label>
+                <span>來源：</span>
                 @if (Model.InstanceId.StartsWith("N"))
                 {
                     <span>站內訊息</span>
@@ -27,23 +28,16 @@
                 }
                 else
                 {
-                    <span>留言板</span>
+                    <span>會員留言</span>
                 }
-                @Html.DisplayFor(model => model.timeReceived)
+
             </label>
+            <span class="mTime ml-2">(@Html.DisplayFor(model => model.timeReceived))</span>
         </div>
 
         <div class="w-50 mContent border-bottom mt-5">
-            @Html.DisplayFor(model => model.NotifContent)
+            @Html.Raw(@Model.NotifContent.Replace("\\n", "<br/>"))
         </div>
-        @*<dt>
-                @Html.DisplayNameFor(model => model.timeReceived)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.timeReceived)
-            </dd>*@
-
 
     </div>
 

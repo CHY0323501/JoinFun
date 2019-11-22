@@ -19,6 +19,7 @@ namespace JoinFun.Controllers
 {
     public class MemberController : Controller
     {
+        
         JoinFunEntities db = new JoinFunEntities();
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
@@ -55,7 +56,7 @@ namespace JoinFun.Controllers
                 //{
                 //    mes.SendEmail(mailList, "JoinFun緊急公告", "會員：吳芳飴女士，您已危害到工程師生存，請立刻停止攻擊，否則不排除提告！JoinFun營運團隊");
                 //}
-
+                
                 return View(Minfo);
             }
         }
@@ -134,6 +135,9 @@ namespace JoinFun.Controllers
                 ViewBag.ToMemNick = (from m in db.Member
                                      where m.memId == memID
                                      select m.memNick).FirstOrDefault();
+                //取得平均星等
+                ViewBag.avgStar = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).Count()+ db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Count();
+
 
                 return View(MRemark);
             }
@@ -328,6 +332,12 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index", "Activity");
         }
+
+        //新手幫助
+        public ActionResult Help() {
+            return View();
+        }
+
 
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)
