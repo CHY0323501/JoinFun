@@ -144,6 +144,7 @@
     <Content Include="CSS\Newcard\style8.css" />
     <Content Include="CSS\Newcard\style9.css" />
     <Content Include="CSS\Newcard\style_common.css" />
+    <Content Include="CSS\Register.css" />
     <Content Include="CSS\Remark.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
@@ -173,6 +174,7 @@
     <Content Include="Photos\banner\Join Fun %281%29.png" />
     <Content Include="Photos\banner\Join Fun.png" />
     <Content Include="Photos\banner\Just Do It.png" />
+    <Content Include="Photos\blank letter.jpg" />
     <Content Include="Photos\card\img-1.jpg" />
     <Content Include="Photos\card\img-2.jpg" />
     <Content Include="Photos\card\img-3.jpg" />
