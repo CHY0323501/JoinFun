@@ -4,8 +4,8 @@
 }
 
 #container {
-    margin: 20px 0 70px 0;
-    position: absolute;
+    /*margin:20px 0 0 0;*/
+    position: relative;
 }
 
 h5 {
@@ -19,11 +19,6 @@ img {
 }
 
 label {
-    color: #fa9426;
-    font-size: 15pt;
-}
-
-.rLabel {
     color: #fa9426;
     font-size: 15pt;
 }
@@ -114,24 +109,29 @@ input[type="text"] {
     margin: auto;
 }
 
+.mTime {
+    font-size: 10pt;
+}
+
 /*for comment board in Details.cshtml*/
-.highlighter, #comments {
-    width: 200px;
-    height: 30px;
+/*.highlighter, #comments {
+    width:400px;
+    height: 38px;
     font-size: 12pt;
     font-family: 微軟正黑體;
 }
 
 .highlighter {
     position: absolute;
-    padding: 5px 0 0 0px;
+    padding: 7px 0 0 12px;
     margin-left: 1px;
     color: red;
+    font-weight:bold;
 }
 
-    .highlighter span {
-        color: red;
-    }
+.highlighter span{
+    color:red;
+}*/
 
 .onFocus {
     color: blue;
@@ -140,6 +140,10 @@ input[type="text"] {
 
 #comments {
     position: relative;
-    background-color: transparent;
-    color: black;
+    margin: auto;
+}
+
+/*For Report.cshtml*/
+.reportInput:focus {
+    outline: none !important;
 }

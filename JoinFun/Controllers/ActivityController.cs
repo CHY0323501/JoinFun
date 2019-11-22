@@ -102,7 +102,26 @@ namespace JoinFun.Controllers
             db.Message_Board.Add(board);
             db.SaveChanges();
 
-            return Json(new { mid = serial }, JsonRequestBehavior.AllowGet);
+            //發出通知訊息給被標記的會員
+            var member = db.Member.ToList();
+            foreach (var item in member)
+            {
+                if (comment.StartsWith("@" + item.memNick))
+                {
+                    Notification message = new Notification();
+                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                    message.InstanceId = serial;
+                    message.ToMemId = item.memId;
+                    message.NotiTitle = "留言板訊息";
+                    message.NotifContent = comment;
+                    message.timeReceived = DateTime.Now;
+                    message.keepNotice = true;
+                    db.Notification.Add(message);
+                    db.SaveChanges();
+                }
+            }
+            //new { mid = serial }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -384,10 +403,14 @@ namespace JoinFun.Controllers
 
         public ActionResult MContent(string serial)
         {
-            var message = db.Notification.Find(serial);
-            message.readYet = true;
-            db.SaveChanges();
-            return View(message);
+            if (serial != null && Session["memid"] != null)
+            {
+                var message = db.Notification.Find(serial);
+                message.readYet = true;
+                db.SaveChanges();
+                return View(message);
+            }
+            return RedirectToAction("Messages");
         }
 
         //建立"新增"或"編輯"有對應資料表Dropdown list
