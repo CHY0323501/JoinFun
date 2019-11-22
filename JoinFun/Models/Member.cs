@@ -10,12 +10,8 @@
 namespace JoinFun.Models
 {
     using System;
-    using System.Collections.Generic; 
-    using System.ComponentModel.DataAnnotations;
-
-
-
-    [MetadataType(typeof(MetaMember))]
+    using System.Collections.Generic;
+    
     public partial class Member
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -51,10 +47,8 @@ namespace JoinFun.Models
         public bool Approved { get; set; }
         public string Introduction { get; set; }
         public string Habit { get; set; }
-        public string Dietary_Preference { get; set; }   
+        public string Dietary_Preference { get; set; }
         public string email_ID { get; set; }
-
-
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Acc_Pass> Acc_Pass { get; set; }

@@ -11,14 +11,7 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-
     
-
-    using System.ComponentModel.DataAnnotations;
-
-
-    [MetadataType(typeof(MetaAcc_Pass))]
-
     public partial class Acc_Pass
     {
         public string Account { get; set; }

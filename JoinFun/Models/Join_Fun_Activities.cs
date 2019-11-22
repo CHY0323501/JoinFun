@@ -11,10 +11,7 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-
-    [MetadataType(typeof(MetaJoin_Fun_Activities))]
+    
     public partial class Join_Fun_Activities
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

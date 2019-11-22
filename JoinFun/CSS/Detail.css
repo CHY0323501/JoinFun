@@ -108,3 +108,11 @@
     border-radius:20px;
     opacity:0.5;
 }
+
+#hostId{
+    font-size:25px;
+    color:rgba(48, 109, 160, 0.90);
+    font-weight:600;
+    text-decoration:none;
+   
+}

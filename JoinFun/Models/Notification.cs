@@ -10,12 +10,8 @@
 namespace JoinFun.Models
 {
     using System;
-    using System.Collections.Generic;  
-    using System.ComponentModel.DataAnnotations;
-
-
-
-    [MetadataType(typeof(MetaNotification))]
+    using System.Collections.Generic;
+    
     public partial class Notification
     {
         public string NotiSerial { get; set; }

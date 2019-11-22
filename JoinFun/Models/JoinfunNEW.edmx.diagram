@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b1e83ab3912747c6a2085d556015b58a" Name="Diagram1">
+      <Diagram DiagramId="b1e83ab3912747c6a2085d556015b58a" Name="Diagram1" ZoomLevel="97">
         <EntityTypeShape EntityType="JoinFunModel.Acc_Pass" Width="1.5" PointX="10.5" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Activity_Class" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
         <EntityTypeShape EntityType="JoinFunModel.Activity_Details" Width="1.5" PointX="13.5" PointY="23.25" IsExpanded="true" />

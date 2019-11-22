@@ -59,6 +59,11 @@ namespace JoinFun.Models
         public bool appvStatus { get; set; }
         [DisplayName("審核日期")]
         public Nullable<System.DateTime> appvDate { get; set; }
+        [JsonIgnore()]
+        public virtual Join_Fun_Activities Join_Fun_Activities { get; set; }
+        [JsonIgnore()]
+        public virtual Member Member { get; set; }
+
     }
     public  class MetaAdministrator
     {
@@ -171,6 +176,9 @@ namespace JoinFun.Models
         public System.DateTime actDeadline { get; set; }
         [DisplayName("活動類別編號")]
         public string actClassId { get; set; }
+        [JsonIgnore()]
+        public virtual ICollection<Activity_Details> Activity_Details { get; set; }
+
     }
 
 
@@ -240,6 +248,8 @@ namespace JoinFun.Models
         public virtual ICollection<Blacklist> Blacklist { get; set; }
         [JsonIgnore()]
         public virtual ICollection<Acc_Pass> Acc_Pass { get; set; }
+        [JsonIgnore()]
+        public virtual ICollection<Activity_Details> Activity_Details { get; set; }
     }
 
     public class MetaPayment_Restriction
