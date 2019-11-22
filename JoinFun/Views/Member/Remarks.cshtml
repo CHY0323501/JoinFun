@@ -5,10 +5,15 @@
 }
 @{
     ViewBag.Title = "會員評價";
+    int totalCount = Model.vw_Host_Remarks.Count + Model.vw_Participant_Remarks.Count;
 }
 
 <div class="container containerMinH">
     <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.ToMemNick)的所有評價</h2>
+    @if (totalCount != 0)
+    {
+        <h4 class="mt-1 text-center p-3 text-warning">共@(totalCount)則評價，平均星等為@(ViewBag.avgStar)分</h4>
+    }
     <div class="card text-center border-0 p-adjust bg-transparent">
         <div class="card-header bg-transparent text-white ">
             <div class="d-flex">

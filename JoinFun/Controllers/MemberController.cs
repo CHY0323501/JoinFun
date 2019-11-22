@@ -135,6 +135,9 @@ namespace JoinFun.Controllers
                 ViewBag.ToMemNick = (from m in db.Member
                                      where m.memId == memID
                                      select m.memNick).FirstOrDefault();
+                //取得平均星等
+                ViewBag.avgStar = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).Count()+ db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Count();
+
 
                 return View(MRemark);
             }
@@ -329,6 +332,12 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index", "Activity");
         }
+
+        //新手幫助
+        public ActionResult Help() {
+            return View();
+        }
+
 
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)
