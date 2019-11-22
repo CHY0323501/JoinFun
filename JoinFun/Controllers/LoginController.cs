@@ -20,10 +20,12 @@ namespace JoinFun.Controllers
             return View();
         }
         //登入
-        public ActionResult Login()
+        public ActionResult Login(bool check)
         {
             if (Session["memid"] == null)
-            return View();
+                return View();
+            if (check)
+                return View();
             return RedirectToAction("Index", "Activity");
         }
 

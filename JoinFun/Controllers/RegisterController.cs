@@ -123,8 +123,9 @@ namespace JoinFun.Controllers
                 ViewBag.account = (from a in db.Acc_Pass
                                    where a.memId == memId
                                    select a.Account).FirstOrDefault();
+                return View();
             }
-            return View();
+            return RedirectToAction("Login", "Login",new { check = true});
 
         }
 
@@ -185,16 +186,18 @@ namespace JoinFun.Controllers
             {
                 if (acc.Account == account && memEmail.Email == email)
                 {
-                   
-                        MessageCenter mes = new MessageCenter();
+                    
+                    MessageCenter mes = new MessageCenter();
                         List<string> mailList = new List<string>() { memEmail.Email };
                         mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的" + memEmail.memNick + "會員:</h3></br><h3>請點擊下面連結來重置您的密碼!</h3></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + memEmail.email_ID + "'>重置密碼請點擊</a></br>");
 
-                    ViewBag.ForgetPwdSend= "信件已發送";
-
+                    ViewBag.ForgetPwd = "信件已發送";
                     return View();
+                    
                 }
+
                 
+
             }
             else
             {

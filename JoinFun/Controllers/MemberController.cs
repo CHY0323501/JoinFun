@@ -19,6 +19,7 @@ namespace JoinFun.Controllers
 {
     public class MemberController : Controller
     {
+        
         JoinFunEntities db = new JoinFunEntities();
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
@@ -55,7 +56,7 @@ namespace JoinFun.Controllers
                 //{
                 //    mes.SendEmail(mailList, "JoinFun緊急公告", "會員：吳芳飴女士，您已危害到工程師生存，請立刻停止攻擊，否則不排除提告！JoinFun營運團隊");
                 //}
-
+                
                 return View(Minfo);
             }
         }

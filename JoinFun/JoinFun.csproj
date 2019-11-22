@@ -144,10 +144,12 @@
     <Content Include="CSS\Newcard\style8.css" />
     <Content Include="CSS\Newcard\style9.css" />
     <Content Include="CSS\Newcard\style_common.css" />
+    <Content Include="CSS\Register.css" />
     <Content Include="CSS\Remark.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
     <Content Include="CSS\time\timeTo.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="JS\ADM_Login.js" />
     <Content Include="Fonts\Dosis-VariableFont_wght.ttf" />
@@ -189,6 +191,7 @@
     <Content Include="Photos\detail\makecake3.jpg" />
     <Content Include="Photos\dog-face.png" />
     <Content Include="Photos\female.png" />
+    <Content Include="Photos\glass-cheers.ico" />
     <Content Include="Photos\index\card1.jpg" />
     <Content Include="Photos\index\card2.jpg" />
     <Content Include="Photos\index\card3.jpg" />
@@ -801,6 +804,7 @@
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\MessageCenter.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
     <Compile Include="ViewModel\BlockMemberVM.cs" />
@@ -865,6 +869,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
