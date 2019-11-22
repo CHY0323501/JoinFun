@@ -8,11 +8,13 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using JoinFun.Models;
+using JoinFun.Utilities;
 
 namespace JoinFun.Controllers
 {
     public class MemAPIController : ApiController
     {
+        
         JoinFunEntities db = new JoinFunEntities();
         //確認好友狀態
         public IHttpActionResult Get(string memID,string FriendID)
@@ -128,6 +130,12 @@ namespace JoinFun.Controllers
                     follow5.memId = memID;
                     db.FollowUp.Add(follow5);
                 }
+                //確認好友後寄送通知
+                Common com = new Common();
+                var M1 = db.Member.Find(FriendID).memNick;
+                var M2 = db.Member.Find(memID).memNick;
+                com.CreateNoti(true,"",memID,"您以和"+ M1 + "成為好友", "恭喜您和<a href = '/Member/Info?memID="+memID+"'>"+M1 +"</a>成為好友</br>Join Fun營運團隊");
+                com.CreateNoti(true,"", FriendID, "您以和"+ M2 + "成為好友", "恭喜您和<a href = '/Member/Info?memID=" + memID + "'>" + M2 + "</a>成為好友</br>Join Fun營運團隊");
             }
             //已為好友關係，僅修改好友暱稱
             else {

@@ -22,10 +22,10 @@
     @RenderSection("memberRemarks", required: false)
     @RenderSection("Detail", required: false)
     @RenderSection("indexcss", required: false)
-
-    <link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">
+    @*<link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">*@
     @RenderSection("topCSS", required: false)
-
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    
     <style>
         .dropdown-item.active, .dropdown-item:active {
             text-decoration: none;
@@ -133,8 +133,9 @@
         }
         /*navbar調整*/
         #a a {
-            font-size:1rem;
+            font-size: 1rem;
         }
+
         #memsearch::-webkit-input-placeholder {
             color: rgb(23, 162, 184);
             text-align: center;
@@ -142,9 +143,10 @@
         }
 
         #memsearch {
-            font-size:1rem!important;
-            display:initial;
+            font-size: 1rem !important;
+            display: initial;
         }
+
         #joinfunbrand {
             font-size: 1.5rem !important;
         }
@@ -160,7 +162,6 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
                     <li class="nav-item ">
