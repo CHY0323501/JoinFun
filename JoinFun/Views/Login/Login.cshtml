@@ -8,8 +8,8 @@
 }
 
 <div class="container " style="height:820px;width:400px">
-    <div class="bg-morandi rounded" style="height:500px;width:400px">
-        <h2 class="mt-5 text-center  ">登入</h2>
+    <div class="bg-morandi rounded" style="height:500px;width:400px">       
+        <h2 class="mt-5 text-center pt-5 ">登入</h2>
         <form id="login" class=" ml-5  " method="post" action="@Url.Action("Login")">
             @*<div class="row justify-content-center  ">
                     <div class="form-group ">
@@ -61,7 +61,7 @@
                 </div>*@
 
             <div class="row justify-content-center">
-                <div class="col-md-12 ml-1">
+                <div class="col-md-12 ml-4">
                     <label class=" col-form-label   pr-1" for="account">帳號:</label>
                     <div class=" pl-0">
                         <input id="account" name="account" type="text" class="form-control  " required placeholder="Enter Your Account...." />
@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 ml-1">
+                <div class="col-md-12 ml-4">
                     <label class=" col-form-label   pr-1" for="pass">密碼:</label>
                     <div class=" pl-0">
                         <input id="pass" name="pass" type="password" class="form-control  " required />
@@ -79,15 +79,15 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 ">
-                    <div class="mt-3 mr-4 ml-1">
-                        <input id="Submit1" type="submit" value="登入" class="btn btn-primary btn-block" />
+                <div class="col-md-12  ml-4 mt-3">
+                    <div class="col-form-label   pr-1 ml-3">
+                        <input id="Submit1" type="submit" value="登入" class="btn btn-primary btn-block w-75" />
                     </div>
-                    <div class="mt-3 mr-4 ml-1">
-                        <input id="Reset1" type="reset" value="重設" class="btn btn-light btn-block  " />
+                    <div class="col-form-label   pr-1 ml-3">
+                        <input id="Reset1" type="reset" value="重設" class="btn btn-light btn-block  w-75" />
                     </div>
-                    <div class="mt-3 mr-5 ml-1">
-                        @Html.ActionLink("註冊", "Register", "Register", "", new { @class = "btn btn-warning btn-block w-80 " })
+                    <div class="col-form-label   pr-1 ml-3">
+                        @Html.ActionLink("註冊", "Register", "Register", "", new { @class = "btn btn-warning btn-block w-75 " })
                     </div>
                 </div>
 

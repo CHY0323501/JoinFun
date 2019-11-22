@@ -133,8 +133,9 @@
         }
         /*navbar調整*/
         #a a {
-            font-size:1rem;
+            font-size: 1rem;
         }
+
         #memsearch::-webkit-input-placeholder {
             color: rgb(23, 162, 184);
             text-align: center;
@@ -142,9 +143,10 @@
         }
 
         #memsearch {
-            font-size:1rem!important;
-            display:initial;
+            font-size: 1rem !important;
+            display: initial;
         }
+
         #joinfunbrand {
             font-size: 1.5rem !important;
         }
@@ -173,42 +175,45 @@
                     </li>
                     @if (Session["memid"] == null)
                     {
-                    <li class="nav-item text-center ml-2">
-                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { check=true})"><i class="fas fa-sign-in-alt"></i> 登入</a>
-                    </li>
+                        <li class="nav-item text-center ml-2">
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { check=true})"><i class="fas fa-sign-in-alt"></i> 登入</a>
+                        </li>
                     }
-                    <li class="nav-item text-center ml-2">
-                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")"><i class="fas fa-plus"></i> 我要揪團</a>
-                    </li>
                     @if (Session["memid"] != null)
                     {
-                    <li class="nav-item text-center">
-                        <input id="mid" type="hidden" value="@Session["memid"].ToString()" />
-                        <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages","Activity",new { memID=Session["memid"] })"><i class="far fa-bell"></i> 通知中心<span class="badge badge-light number"></span></a>
-                    </li>
+                        <li class="nav-item text-center ml-2">
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")"><i class="fas fa-plus"></i> 我要揪團</a>
+                        </li>
+
+                        <li class="nav-item text-center">
+                            <input id="mid" type="hidden" value="@Session["memid"].ToString()" />
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages","Activity",new { memID=Session["memid"] })"><i class="far fa-bell"></i> 通知中心<span class="badge badge-light number"></span></a>
+                        </li>
+
+
+                        <li class="nav-item dropdown text-center ml-2">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-users"></i> 會員中心
+                            </a>
+
+                            <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
+
+                                <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　我的資訊</a>
+                                <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })"><i class="fas fa-glass-cheers"></i>　我的揪團</a>
+                                <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})"><i class="fas fa-user-friends"></i>　好友管理</a>
+                                <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})"><i class="fas fa-user-lock"></i>　封鎖管理</a>
+
+                                <a class="dropdown-item" href="@Url.Action("PwdEdit","Register",new {memId= Session["memid"]})"><i class="fas fa-key"></i>　修改密碼</a>
+                                <a class="dropdown-item" href="@Url.Action("Logout","Login")"><i class="fas fa-sign-out-alt"></i>　登出帳號</a>
+
+
+                            </div>
+
+                        </li>
+                        <li class="nav-item">
+
+                        </li>
                     }
-
-                    <li class="nav-item dropdown text-center ml-2">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-users"></i> 會員中心
-                        </a>
-                        <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　我的資訊</a>
-                            <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })"><i class="fas fa-glass-cheers"></i>　我的揪團</a>
-                            <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})"><i class="fas fa-user-friends"></i>　好友管理</a>
-                            <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})"><i class="fas fa-user-lock"></i>　封鎖管理</a>
-                            @if (Session["memid"] != null)
-                            {
-                            <a class="dropdown-item" href="@Url.Action("PwdEdit","Register",new {memId= Session["memid"]})"><i class="fas fa-key"></i>　修改密碼</a>
-                            <a class="dropdown-item" href="@Url.Action("Logout","Login")"><i class="fas fa-sign-out-alt"></i>　登出帳號</a>
-                            }
-
-                        </div>
-                    </li>
-                    <li class="nav-item">
-
-                    </li>
-
                 </ul>
             </div>
 
