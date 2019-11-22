@@ -12,184 +12,191 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>編輯活動</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.hostId)
+<div class="form-horizontal">
+    <h4>編輯活動</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.hostId)
 
-        <div class="carousel col col-12 pl-0">
-            @Html.LabelFor(model => model.Photos_of_Activities.FirstOrDefault().actPics, "活動照片", htmlAttributes: new { @class = "control-label col-md-2 pl-0" })
-            <div class="carousel-inner">
-                <div class="bg-white w-75">
+    <div class="carousel col col-12 pl-0">
+        @Html.LabelFor(model => model.Photos_of_Activities.FirstOrDefault().actPics, "活動照片", htmlAttributes: new { @class = "control-label col-md-2 pl-0" })
+        <div class="carousel-inner">
+            <div class="bg-white w-75">
 
-                    @if (Model.Photos_of_Activities.FirstOrDefault() != null)
-                    {
-                        <img src="@Url.Content(Model.Photos_of_Activities.FirstOrDefault().actPics)" class="img-fluid mx-auto d-block"/>
-                    }
-                    else
-                    {
-                        <img src="@Url.Content(Model.Activity_Class.Photos)" class="img-fluid mx-auto d-block"/>
-                    }
-
-                </div>
-                <input style="display:none" type="file" name="picture" id="picture" />
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Activity_Class.actClassDescrip, "活動類別說明", htmlAttributes: new { @class = "col-lg-6 col-xs-6 control-label pl-0" })
-            <div class="col-md-12 col-xs-12 pl-0">
-                @*<input id="classDescrip" type="text" readonly="readonly" value=@ViewBag.Descrip class="form-control col col-md-10 col-xs-10" />*@
-                @Html.EditorFor(model => model.Activity_Class.actClassDescrip, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-6 col-xs-6 control-label pl-0">
-                請選擇活動類別 <span class="text-danger">*</span>
-            </label>
-            <div class="col-md-12 col-xs-12 pl-0" id="test">
-                <nav class="navbar navbar-expand-sm navbar-light justify-content-md-start pl-0">
-                    <ul class="nav navbar-nav" id="classUl">
-                        <li class="nav-item text-center mr-5 mb-2 rounded-pill bg-light" id="cls001" style="width:200px">活動</li>
-                        <li class="nav-item text-center mr-5 mb-2 rounded-pill bg-light" id="cls002" style="width:200px">休閒</li>
-                        <li class="nav-item text-center mr-5 mb-2 rounded-pill bg-light" id="cls003" style="width:200px">商務</li>
-                        @Html.EditorFor(model => model.actClassId, new { htmlAttributes = new { @class = "form-control", @type = "Hidden", @id = "classId" } })
-                    </ul>
-                </nav>
-            </div>
-        </div>
-
-        <div class="col col-md-12 col-sm-11 col-xs-11 pl-0">
-            @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control mt-3 col col-md-10 col-xs-10", @readonly = "readonly", placeholder = "請輸入揪團主題" } })
-            @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger" })
-        </div>
-
-        <ul class="mt-3 col col-12 pl-0 pr-0">
-            <li class="fa col col-md-11 col-xs-11 pl-0">
-                <label class="col col-md col-xs-12 pl-0">
-                    <label class="mr-1"><i class="fa fa-edit">活動描述</i></label>
-                    @Html.EditorFor(model => model.actDescription, new { htmlAttributes = new { @class = "form-control col col-md-11", @id = "content" } })
-                    @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
-                </label>
-            </li>
-            <li class="fa col col-md-12 col-sm-12 col-xs-12 pl-0">
-                <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fas fa-calendar-alt">活動日期</i></label>
-                    @Html.TextBoxFor(model => model.actTime, new { @id = "actDate", @class = "form-control", @type = "date" })
-                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
-                </label>
-
-                <label class="col col-md-2 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fas fa-clock">活動時間</i></label>
-                    @Html.TextBoxFor(model => model.actTime, new { @id = "actTime", @class = "form-control", @type = "time" })
-                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
-                </label>
-
-                <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fas fa-calendar-check">截止日期</i></label>
-                    @Html.TextBoxFor(model => model.actDeadline, new { @id = "actDeadDate", @class = "form-control", @type = "date" })
-                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
-                </label>
-
-                <label class="col col-md-2 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fas fa-stopwatch">截止時間</i></label>
-                    @Html.TextBoxFor(model => model.actDeadline, new { @id = "actDeadTime", @class = "form-control", @type = "time" })
-                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
-                </label>
-            </li>
-            <li class="fa col col-md-12 col-sm-12 col-xs-12 pl-0">
-                <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fa fa-plus">年齡限制</i></label>
-                    @Html.DropDownListFor(m => m.ageRestrict, ViewBag.Age_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
-                </label>
-
-                <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fa fa-venus-mars">性別限制</i></label>
-                    @Html.DropDownListFor(m => m.gender, ViewBag.Gender_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
-                </label>
-
-                <label class="col col-md-4 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fas fa-user-plus">人數上限</i></label>
-                    @Html.DropDownListFor(m => m.maxNumPeople, ViewBag.People_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
-                </label>
-            </li>
-            <li class="fa col col-md-12 col-xs-12 pl-0">
-                <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
-                    <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
-                    @Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
-                </label>
-                <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fas fa-dollar-sign">付款方式</i></label>
-                    @Html.DropDownListFor(m => m.paymentTerm, ViewBag.Payment_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.paymentTerm, "", new { @class = "text-danger" })
-                </label>
-
-
-                <label class="col col-md-4 col-sm-12 col-xs-12 pl-0">
-                    <label><i class="fas fa-reply">是否可退出</i></label>
-                    @Html.DropDownList("Drop", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.acceptDrop, "", new { @class = "text-danger" })
-                </label>
-            </li>
-            <li class="fa col col-md-12 col-xs-12 pl-0">
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label class="mr-4"><i class="fas fa-university">縣/市</i></label>
-                    @Html.DropDownListFor(m => m.actCounty, ViewBag.County as SelectList, htmlAttributes: new { @id = "county", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
-                </label>
-
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-street-view">鄉/鎮/市/區</i></label>
-                    @Html.DropDownListFor(m => m.actDistrict, ViewBag.District as SelectList, htmlAttributes: new { @id = "district", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
-                </label>
-
-                <label class="col col-md-4 col-sx-12 pl-0">
-                    <label class="pl-0"><i class="fas fa-home">地址</i></label>
-                    @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control col col-md-12" } })
-                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
-                </label>
-            </li>
-        </ul>
-
-        <div class="row col col-md-12">
-            @*<label class="font-weight-bold col col-md-12 pl-0">選擇照片(上限3張)</label>*@
-            <div id="uploadPics" class="border-dark col col-md-12 pl-0">
-                @foreach (var item in photo)
+                @if (Model.Photos_of_Activities.FirstOrDefault() != null)
                 {
-                    if (item.actPics != null)
-                    {
-                        <img src="@Url.Action("GetPhoto", "Activity", new { actPics = item.actPics})" class="img-fluid bg-secondary col col-md-3 mr-1 mb-1" style="width:150px;height:auto" />
-                    }
+                    <img src="@Url.Content(Model.Photos_of_Activities.FirstOrDefault().actPics)" class="img-fluid mx-auto d-block" />
                 }
-                @*<input id="contentPic" type="file" name="picture" class="form-control" style="display:none" />*@
-            </div>
-        </div>
+                else
+                {
+                    <img src="@Url.Content(Model.Activity_Class.Photos)" class="img-fluid mx-auto d-block" />
+                }
 
-        <div class="form-group mt-3">
-            @Html.LabelFor(model => model.hashTag, "加入Hash Tag", htmlAttributes: new { @class = "control-label col-md-2 pl-0 font-weight-bold" })
-            <div class="col-md-12 pl-0">
-                @Html.EditorFor(model => model.hashTag, new { htmlAttributes = new { @class = "form-control col-md-9 col-sm-9 col-xs-9" } })
-                @Html.ValidationMessageFor(model => model.hashTag, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="儲存" class="btn btn-primary" />
-            </div>
+            <input style="display:none" type="file" name="picture" id="picture" />
         </div>
     </div>
+    <div class="form-group col col-md-12 col-xs-6 pl-0 mt-3">
+        @Html.LabelFor(model => model.Activity_Class.actClassDescrip, "活動類別說明", htmlAttributes: new { @class = "col-lg-6 col-xs-6 control-label pl-0" })
+        <div class="col-md-12 col-xs-12 pl-0">
+            @Html.EditorFor(model => model.Activity_Class.actClassDescrip, new { htmlAttributes = new { @class = "form-control col col-md-10 col-xs-10", @readonly = "readonly" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-6 col-xs-6 control-label pl-0">
+            請選擇活動類別 <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-10 col-xs-12 pl-0" id="test">
+            <nav class="navbar navbar-expand-sm navbar-light justify-content-center pl-0">
+                <ul class="nav navbar-nav" id="classUl">
+                    <li class="nav-item mr-3 mb-2 rounded-pill bg-light editLi" id="cls001">活動</li>
+                    <li class="nav-item mr-3 mb-2 rounded-pill bg-light editLi" id="cls002">休閒</li>
+                    <li class="nav-item mr-3 mb-2 rounded-pill bg-light editLi" id="cls003">商務</li>
+                    @Html.EditorFor(model => model.actClassId, new { htmlAttributes = new { @class = "form-control", @type = "Hidden", @id = "classId" } })
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="col col-md-12 col-sm-11 col-xs-11 pl-0">
+        @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control mt-3 col col-md-10 col-xs-10", @readonly = "readonly", placeholder = "請輸入揪團主題" } })
+        @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger" })
+    </div>
+
+    <ul class="mt-3 col col-12 pl-0 pr-0">
+        <li class="fa col col-md-12 col-sm-12 col-xs-12 pl-0">
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fas fa-calendar-alt">活動日期</i></label>
+                @Html.TextBoxFor(model => model.actTime, new { @id = "actDate", @class = "form-control", @type = "date", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+            </label>
+
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fas fa-clock">活動時間</i></label>
+                @Html.TextBoxFor(model => model.actTime, new { @id = "actTime", @class = "form-control", @type = "time", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+            </label>
+        </li>
+        <li class="fa col col-md-12 col-sm-12 col-xs-12 pl-0">
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fas fa-calendar-check">截止日期</i></label>
+                @Html.TextBoxFor(model => model.actDeadline, new { @id = "actDeadDate", @class = "form-control", @type = "date", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+            </label>
+
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fas fa-stopwatch">截止時間</i></label>
+                @Html.TextBoxFor(model => model.actDeadline, new { @id = "actDeadTime", @class = "form-control", @type = "time", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+            </label>
+        </li>
+        <li class="fa col col-md-12 col-sm-12 col-xs-12 pl-0">
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fa fa-plus">年齡限制</i></label>
+                @*@Html.DropDownListFor(m => m.ageRestrict, ViewBag.Age_Restriction as SelectList, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })*@
+                @Html.EditorFor(m => m.Age_Restriction.age, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"} })
+                @Html.ValidationMessageFor(model => model.ageRestrict, "", new { @class = "text-danger" })
+            </label>
+
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fa fa-venus-mars">性別限制</i></label>
+                @Html.DropDownListFor(m => m.gender, ViewBag.Gender_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+            </label>
+
+            <label class="col col-md-4 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fas fa-user-plus">人數上限</i></label>
+                @Html.DropDownListFor(m => m.maxNumPeople, ViewBag.People_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.maxNumPeople, "", new { @class = "text-danger" })
+            </label>
+        </li>
+        <li class="fa col col-md-12 col-xs-12 pl-0">
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
+                @Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
+            </label>
+            <label class="col col-md-3 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fas fa-dollar-sign">付款方式</i></label>
+                @Html.DropDownListFor(m => m.paymentTerm, ViewBag.Payment_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.paymentTerm, "", new { @class = "text-danger" })
+            </label>
+
+
+            <label class="col col-md-4 col-sm-12 col-xs-12 pl-0">
+                <label><i class="fas fa-reply">是否可退出</i></label>
+                @*@Html.DropDownList("Drop", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.TextBoxFor(m => m.acceptDrop, new { @Value = ViewBag.Drop, @readonly = "readonly", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.acceptDrop, "", new { @class = "text-danger" })
+            </label>
+        </li>
+        <li class="fa col col-md-12 col-xs-12 pl-0">
+            <label class="col col-md-3 col-xs-12 pl-0">
+                <label class="mr-4"><i class="fas fa-university">縣/市</i></label>
+                @*@Html.DropDownListFor(m => m.actCounty, ViewBag.County as SelectList, htmlAttributes: new { @id = "county", @class = "form-control" })*@
+                @Html.TextBoxFor(m => m.County.CountyName, new { @Value = ViewBag.Drop, @readonly = "readonly", @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.actCounty, "", new { @class = "text-danger" })
+            </label>
+
+            <label class="col col-md-3 col-xs-12 pl-0">
+                <label><i class="fas fa-street-view">鄉/鎮/市/區</i></label>
+                @*@Html.DropDownListFor(m => m.actDistrict, ViewBag.District as SelectList, htmlAttributes: new { @id = "district", @class = "form-control" })*@
+                @Html.TextBoxFor(m => m.District.DistrictName, new { @Value = ViewBag.Drop, @readonly = "readonly", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.actDistrict, "", new { @class = "text-danger" })
+            </label>
+
+            <label class="col col-md-4 col-sx-12 pl-0">
+                <label class="pl-0"><i class="fas fa-home">地址</i></label>
+                @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control col col-md-12", @readonly="readonly" } })
+                @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
+            </label>
+        </li>
+    </ul>
+
+    <div class="row col col-md-12">
+        @*<label class="font-weight-bold col col-md-12 pl-0">選擇照片(上限3張)</label>*@
+        <div id="uploadPics" class="border-dark col col-md-12 pl-0">
+            @foreach (var item in photo)
+            {
+                if (item.actPics != null)
+                {
+                    <img src="@Url.Action("GetPhoto", "Activity", new { actPics = item.actPics})" class="img-fluid bg-secondary col col-md-3 mr-1 mb-1" style="width:150px;height:auto" />
+                }
+            }
+            @*<input id="contentPic" type="file" name="picture" class="form-control" style="display:none" />*@
+        </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <label class="col col-md-6 col-xs-6 pl-0">
+            <label class="mr-1"><i class="fa fa-edit">活動描述</i></label>
+            @Html.TextAreaFor(model => model.actDescription, new { id = "content", @class = "form-control col col-md-11", placeholder = "請說明活動內容", rows = "10", @style = "resize:none" })
+            @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
+        </label>
+    </div>
+    <div class="form-group mt-3">
+        <label class="col col-md-6 pl-0">
+            <label class="mr-1"><i class="fas fa-hashtag">Hash Tag</i></label>
+            @Html.EditorFor(model => model.hashTag, new { htmlAttributes = new { @class = "form-control col col-md-11" } })
+            @Html.ValidationMessageFor(model => model.hashTag, "", new { @class = "text-danger" })
+        </label>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="儲存" class="btn btn-warning btn-block" style="margin:auto" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
     @Html.ActionLink("返回活動頁面", "Index")
 </div>
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+}
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

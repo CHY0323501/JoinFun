@@ -282,7 +282,15 @@ namespace JoinFun.Controllers
                 return HttpNotFound();
             }
             GetSelectList(actId);
-            //ViewBag.Drop = GetDropList();
+            if(act.acceptDrop == true)
+            {
+                ViewBag.Drop = "是";
+            }
+            else
+            {
+                ViewBag.Drop = "否";
+            }
+
             ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
             return View(act);
