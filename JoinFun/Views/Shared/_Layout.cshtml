@@ -175,7 +175,10 @@
                     @if (Session["memid"] == null)
                     {
                         <li class="nav-item text-center ml-2">
-                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { check=true})"><i class="fas fa-sign-in-alt"></i> 登入</a>
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { c=1})"><i class="fas fa-sign-in-alt"></i> 登入</a>
+                        </li>
+                        <li class="nav-item text-center ml-2">
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Register", "Register")"><i class="fas fa-sign-in-alt"></i> 註冊</a>
                         </li>
                     }
                     @if (Session["memid"] != null)

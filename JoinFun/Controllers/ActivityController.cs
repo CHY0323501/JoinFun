@@ -51,15 +51,50 @@ namespace JoinFun.Controllers
             return View(fc);
         }
 
-        public void changeKeep()
+      
+        //
+        public ActionResult GetActdetail(string actId, string MemID)
         {
-            var deadtime=db.Join_Fun_Activities.Where(m => m.actDeadline == DateTime.Now).ToList();
-            foreach(var time in deadtime)
-            {
-                time.keepAct = false;
-            }
+            var onlyDetail=db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault();
+            return Json(onlyDetail);
+        }
+
+
+        public ActionResult AddActdetail(string actId,string MemID)
+        {
+            m.actId = actId;
+            m.memId = MemID;
+            m.appvDate = DateTime.Now;
+            db.Activity_Details.Add(m);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        public void ChangeAppv(string actId, string MemID)
+        {
+            GetActdetail(actId, MemID);
+
 
         }
+
+        public ActionResult Delete(string actId, string MemID)
+        {
+            m.actId = actId;
+            m.memId = MemID;
+            db.Activity_Details.Remove(m);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //public void ChangeKeep(string actId, string MemID)
+        //{
+        //    var deadtime = db.Join_Fun_Activities.Where(m => m.actDeadline == DateTime.Now).ToList();
+        //    foreach (var time in deadtime)
+        //    {
+        //        time.keepAct = false;
+        //    }
+
+        //}
 
         public ActionResult Details(string actId, string memID, string actClassId)
         {
@@ -75,9 +110,11 @@ namespace JoinFun.Controllers
             ActClass ACT = new ActClass()
             {
                 vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
-                ActivityList = db.Join_Fun_Activities.ToList(),
-                MemberList = db.Member.Where(m=>m.memId==memID).ToList(),
+                ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
+                //MemberList = db.Member.Where(m=>m.memId==memID).ToList(),
+                members = db.Member.ToList(),
                 MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
+                ActDetails=db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
 
             };
            
@@ -87,6 +124,7 @@ namespace JoinFun.Controllers
             return View(ACT);
         }
 
+      
         //留言action
         [HttpPost]
         public ActionResult AddComment(string id, string memID, string comment)
@@ -282,7 +320,15 @@ namespace JoinFun.Controllers
                 return HttpNotFound();
             }
             GetSelectList(actId);
-            //ViewBag.Drop = GetDropList();
+            if(act.acceptDrop == true)
+            {
+                ViewBag.Drop = "是";
+            }
+            else
+            {
+                ViewBag.Drop = "否";
+            }
+
             ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
             return View(act);

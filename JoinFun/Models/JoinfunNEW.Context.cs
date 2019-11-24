@@ -64,6 +64,8 @@ namespace JoinFun.Models
         public virtual DbSet<vw_PartHistory> vw_PartHistory { get; set; }
         public virtual DbSet<Host_Now> Host_Now { get; set; }
         public virtual DbSet<Part_Now> Part_Now { get; set; }
+
         public virtual DbSet<Notification> Notification { get; set; }
+
     }
 }

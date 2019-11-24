@@ -16,7 +16,7 @@
         <div class="carousel pl-0">
             @Html.LabelFor(model => model.Photos_of_Activities.FirstOrDefault().actId, "活動照片", htmlAttributes: new { @class = "control-label col-md-2 pl-0 font-weight-bold" })
             <div class="carousel-inner">
-                <div class="bg-white">
+                <div class="bg-transparent">
                     <img id="uploadMain" src="~/Assets/pages/images/main.jpg" class="img-fluid" />
                 </div>
                 <input style="display:none" type="file" name="picture" id="picture" />
@@ -173,13 +173,13 @@
             </label>
         </div>
 
-        <div class="col col-md-10 text-center pl-0">
-            <input type="submit" value="開團" class="btn btn-primary" id="buildUp" />
+        <div class="col-md-12 align-content-center pl-0 mt-5">
+            <input type="submit" value="開團" class="btn btn-warning btn-block" id="buildUp" style="margin:auto"/>
         </div>
     </div>
 }
 
-<div>
+<div class="mt-5">
     @Html.ActionLink("返回活動頁面", "Index")
 </div>
 @section topCSS{
