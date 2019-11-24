@@ -172,7 +172,7 @@
                             </form>
                         </div>
                     </li>
-                    @if (Session["memid"] == null)
+                    @if (Session["memid"].ToString().IsEmpty())
                     {
                         <li class="nav-item text-center ml-2">
                             <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { c=1})"><i class="fas fa-sign-in-alt"></i> 登入</a>
@@ -181,7 +181,7 @@
                             <a class="nav-link hvr-underline-from-center" href="@Url.Action("Register", "Register")"><i class="fas fa-sign-in-alt"></i> 註冊</a>
                         </li>
                     }
-                    @if (Session["memid"] != null)
+                    @if (!Session["memid"].ToString().IsEmpty())
                     {
                         <li class="nav-item text-center ml-2">
                             <a class="nav-link hvr-underline-from-center" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="fas fa-user"></i> @Session["nick"]</a>

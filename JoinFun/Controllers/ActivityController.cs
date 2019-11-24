@@ -38,6 +38,9 @@ namespace JoinFun.Controllers
 
         public ActionResult Index()
         {
+            if (Session["memid"] == null) {
+                Session["memid"] = "";
+            }
             ViewBag.age = db.Age_Restriction.ToList();
             //ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
             Finalchoose fc = new Finalchoose()
