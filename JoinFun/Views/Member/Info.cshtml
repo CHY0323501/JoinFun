@@ -100,7 +100,7 @@
                                     }
                                     else if (Model.Friendship.FirstOrDefault().Approved == false)
                                     {
-                                        <i class="fas fa-user-times"></i>@:　拒絕申請
+                                        <i class="fas fa-user-times"></i>@:　取消申請
                                     }
                                     else
                                     {
@@ -211,28 +211,6 @@
                 </div>
             </div>
             <div class="row" style="min-height:500px"></div>
-
-            @*確認是否登入、當使用揪團系統帳號登入才可修改密碼*@
-            if (session == i.memId && i.Acc_Pass.FirstOrDefault() != null)
-            {
-                <div class="row ">
-                    <div class="col-3 offset-2 ">
-                        @Html.ActionLink("登出", "Logout", "Login", "", new { @class = "btn btn-dark d-block" })
-                    </div>
-                    <div class="col-3 offset-2">
-                        @Html.ActionLink("修改密碼", "PwdEdit", "Register", new { memID = i.memId }, new { @class = "btn btn-dark d-block" })
-                    </div>
-                </div>
-            }
-            else if (session == i.memId && i.Social_Net_ID.FirstOrDefault() != null)
-            {
-                <div class="row ">
-                    <div class="col-12 col-md-6 offset-md-3">
-                        @Html.ActionLink("登出", "Logout", "Login", "", new { @class = "btn btn-dark d-block" })
-                    </div>
-                </div>
-            }
-
 
             //彈出視窗
             <div class="modal " id="Modal1">
@@ -379,7 +357,7 @@
                     if (d.length == 0) {
                         $('#FriendBtn').html('<i class="fas fa-user-plus "></i>　加好友');
                     } else if (d[0].Approved == false) {
-                        $('#FriendBtn').html('<i class="fas fa-user-times"></i>　拒絕申請');
+                        $('#FriendBtn').html('<i class="fas fa-user-times"></i>　取消申請');
                     } else {
                         $('#FriendBtn').html('<i class="fas fa-user-minus"></i>　刪除好友');
                     }
@@ -395,7 +373,7 @@
                         CheckFriendShip();
                     }
                 });
-            } else if ($('#FriendBtn').text().includes('拒絕申請')) {
+            } else if ($('#FriendBtn').text().includes('取消申請')) {
                 $.ajax({
                     type: "Delete",
                     url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",

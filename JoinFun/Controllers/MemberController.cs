@@ -182,7 +182,7 @@ namespace JoinFun.Controllers
             db.Member_Remarks.Add(aaa);
             db.SaveChanges();
 
-            return RedirectToAction("History");
+            return RedirectToAction("History",new { memID=Session["memid"]});
 
         }
         //目前開團&參團清單
