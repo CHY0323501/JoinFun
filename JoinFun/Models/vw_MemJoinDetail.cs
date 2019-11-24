@@ -11,40 +11,32 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
-    [MetadataType(typeof(Metavw_Member_Remarks))]
-    public partial class vw_Member_Remarks
+    public partial class vw_MemJoinDetail
     {
-        public string remarkSerial { get; set; }
+        public string memId { get; set; }
         public string actId { get; set; }
-        public string FromMemId { get; set; }
-        public string ToMemId { get; set; }
-        public bool keepRemark { get; set; }
-        public short remarkStar { get; set; }
-        public string remarkContent { get; set; }
-        public System.DateTime remarkTime { get; set; }
         public string memNick { get; set; }
         public string Sex { get; set; }
-        public string actTopic { get; set; }
+        public string age { get; set; }
+        public decimal Budget { get; set; }
+        public string actClassName { get; set; }
         public string CountyName { get; set; }
         public string DistrictName { get; set; }
-        public string hostId { get; set; }
-        public System.DateTime actTime { get; set; }
+        public string gender { get; set; }
+        public bool acceptDrop { get; set; }
+        public string actClassId { get; set; }
+        public short actCounty { get; set; }
         public System.DateTime actDeadline { get; set; }
         public string actDescription { get; set; }
-        public short ageRestrict { get; set; }
-        public short gender { get; set; }
-        public short maxNumPeople { get; set; }
-        public short maxBudget { get; set; }
-        public short actCounty { get; set; }
         public short actDistrict { get; set; }
         public string actRoad { get; set; }
-        public short paymentTerm { get; set; }
+        public System.DateTime actTime { get; set; }
+        public string actTopic { get; set; }
         public int clickTimes { get; set; }
-        public bool keepAct { get; set; }
+        public string hostId { get; set; }
         public string hashTag { get; set; }
-        public string Expr1 { get; set; }
-        public string actClassId { get; set; }
+        public int PeoRestriction { get; set; }
+        public string payment { get; set; }
     }
 }

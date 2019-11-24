@@ -816,4 +816,17 @@ namespace JoinFun.Models
         public string DistrictName { get; set; }
         public string hostId { get; set; }
     }
+    public  class Metavw_Member_Join
+    {
+        [DisplayName("活動編號")]
+        public string actId { get; set; }
+        [DisplayName("會員編號")]
+        public string memId { get; set; }
+        [DisplayName("會員暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("性別")]
+        public string Sex { get; set; }
+        [DisplayName("審核狀態")]
+        public bool appvStatus { get; set; }
+    }
 }
