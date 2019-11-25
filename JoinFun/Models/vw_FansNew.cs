@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(Metavw_FansNew))]
-
     public partial class vw_FansNew
     {
         public string fanMemId { get; set; }

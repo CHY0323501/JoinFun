@@ -82,6 +82,8 @@
         <EntityTypeShape EntityType="JoinFunModel.Part_Now" Width="1.5" PointX="10.375" PointY="0.75" />
         <EntityTypeShape EntityType="JoinFunModel.Notification" Width="1.5" PointX="7.5" PointY="32" />
         <AssociationConnector Association="JoinFunModel.FK__Notificat__ToMem__72C60C4A" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_Member_Join" Width="1.5" PointX="10.375" PointY="6.75" />
+        <EntityTypeShape EntityType="JoinFunModel.vw_MemJoinDetail" Width="1.5" PointX="12.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

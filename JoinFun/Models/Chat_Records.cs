@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaChat_Records))]
-
     public partial class Chat_Records
     {
         public string chatSerial { get; set; }
