@@ -1,9 +1,49 @@
-﻿/*6510*/
+﻿body {
+    background-image: url('../Photos/index/carousel1.jpg');
+    /*background-image: url('../Photos/photo-1532117364815-720cd35ff6e3.jpg');*/
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+
+
+
+/*6510*/
 .bg-morandi {
     background-color: #eee5f8;
 }
 
+
+
+
 /*7852*/
 .w-85 {
     width: 80% !important;
+}
+
+.login-box {
+    width: 400px;
+    min-height: 600px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    top: 80%;
+    left: 50%;
+    bottom: auto;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    box-shadow: 5px 5px 12px 4px rgba(20%,20%,40%,0.5);
+    border-radius: 10px;
+}
+.login-portrait {
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    position:absolute;
+    top:-50px;
+    left:calc(38%);
 }

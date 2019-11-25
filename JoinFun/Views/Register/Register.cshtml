@@ -7,7 +7,7 @@
 }
 
 @section memberinfo{
-    <link href="~/CSS/Register.css" rel="stylesheet" />   
+    <link href="~/CSS/Register.css" rel="stylesheet" />
 }
 
 <div class="container bg-morandi rounded">
@@ -243,38 +243,48 @@
             flag = true;
         }
 
+
         $('#account').blur(function () {
-            $.ajax({
-                type: "Get",
-                url: "http://localhost:54129/api/AccountAPI",
-                success: function (data) {
-                    //console.log(data[0]);
-                    var str = $('#account').val();
-                    var i = 0;
-                    while (i < data.length) {
-                        var n = str.search(data[i]);
-                        if (n != -1) {
-                            console.log("帳號重複");
-                            $('#prompt').text("帳號重複").css("color", "red");
-                            break;
-                        } else {
-                            i++;
-                            //document.getElementById("demo").innerHTML = n;
-                            console.log(i);
+            if ($('#account').val() != null) {
+                $.ajax({
+                    type: "Get",
+                    url: "http://localhost:54129/api/AccountAPI",
+                    success: function (data) {
+                        //console.log(data[0]);
+                        var str = $('#account').val();
+                        var i = 0;
+                        while (i < data.length) {
+                            var n = str.search(data[i]);
+                            if (n != -1) {
+                                console.log("帳號重複");
+                                $('#prompt').text("帳號重複").css("color", "red");
+                                break;
+                            } else {
+                                i++;
+                                //document.getElementById("demo").innerHTML = n;
+                                console.log(i);
+                            }
+
+
                         }
 
+                        if (i == data.length) {
+                            console.log("驗證成功");
+                            $('#prompt').text("此帳號可使用").css("color", "green");
+                        }
 
                     }
-                    if (i == data.length) {
-                        console.log("驗證成功");
-                        $('#prompt').text("此帳號可使用").css("color", "green");
-                    }
-                }
 
-            });
+                });
+            }
+            else
+            {
+                 $('#account~div').text('請輸入帳號!!');
+            }
         });
 
-                            //$('[data-toggle="popover"]').popover();
+
+                                        //$('[data-toggle="popover"]').popover();
 
     </script>
 
