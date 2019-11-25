@@ -79,7 +79,7 @@ namespace JoinFun.Controllers
 
             MessageCenter mes = new MessageCenter();
             List<string> mailList = new List<string>() { mem.Email };
-            mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的" + acc.Account + "會員:</h3></br><h3>您在JoinFun的帳號已建立,請點擊下面信箱驗證請連結完成啟用操作!</h3></br><a href='http://localhost:54129/Register/Approved?email_ID=" + mem.email_ID + "'>信箱驗證請連結</a></br>");
+            mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的" + acc.Account + "會員:</h3></br><h3>您在JoinFun的帳號已建立,請點擊下方連結以完成帳號啟用!</h3></br><a href='http://localhost:54129/Register/Approved?email_ID=" + mem.email_ID + "'>信箱驗證請連結</a></br>");
 
 
             return RedirectToAction("CheckEmail", "Register", new { account = account });

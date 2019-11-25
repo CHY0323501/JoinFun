@@ -862,6 +862,7 @@
     <Content Include="Views\Register\RemakePwd.cshtml" />
     <Content Include="Views\Activity\Messages.cshtml" />
     <Content Include="Views\Activity\MContent.cshtml" />
+    <Content Include="Views\Login\FBRegister.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
