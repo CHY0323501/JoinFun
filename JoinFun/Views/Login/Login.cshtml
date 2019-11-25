@@ -3,9 +3,55 @@
 @{
     ViewBag.Title = "登入";
 }
-@section memberinfo{
+
+@section Register{
     <link href="~/CSS/Register.css" rel="stylesheet" />
-}
+    }
+    
+
+
+<div class="container "   >
+
+        <div style="height:800px" class="row justify-content-center">
+            @*<div class="bg-morandi rounded" style="height:500px;width:400px">*@
+                <div class="login-box" >
+                    <img src="~/Photos/iconfinder_1041_boy_c_2400506.png" class="login-portrait"/>
+                    <h2 class=" text-center pt-5 ">登入</h2>
+                    <form id="login" class=" ml-5  " method="post" action="@Url.Action("Login")">
+
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 ml-4">
+                                <label class=" col-form-label   pr-1" for="account">帳號:</label>
+                                <div class=" pl-0">
+                                    <input id="account" name="account" type="text" class="form-control  " required placeholder="Enter Your Account...." />
+                                </div>
+                                <div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 ml-4">
+                                <label class=" col-form-label   pr-1" for="pass">密碼:</label>
+                                <div class=" pl-0">
+                                    <input id="pass" name="pass" type="password" class="form-control  " required />
+                                    <h6 class="form-text  "><a href="@Url.Action("ForgetPwd","Register")" class="text-white ">忘記密碼</a></h6>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mr-4">
+                                <h5 class="text-danger">@ViewBag.LoginErr</h5>
+                            </div>
+
+                            <div class="col-md-12  ml-4 mt-3">
+                                <div class="col-form-label   pr-1 ml-3">
+                                    <input id="Submit1" type="submit" value="登入" class="btn btn-primary btn-block w-75" />
+                                </div>
+                                <div class="col-form-label   pr-1 ml-3">
+                                    <input id="Reset1" type="reset" value="重設" class="btn btn-light btn-block  w-75" />
+                                </div>
+                                <div class="col-form-label   pr-1 ml-3">
+                                    @Html.ActionLink("註冊", "Register", "Register", "", new { @class = "btn btn-warning btn-block w-75 " })
+                                </div>
+                            </div>
 
 <div class="container ">
     <div  class="row justify-content-center align-content-center" style="height:80vh">
@@ -69,8 +115,14 @@
                         </div>
                         <div>
 
+
                         </div>
-                    </div>
+
+
+
+                    </form>
+                </div>
+            </div>
 
                     <div class="col-md-12 ml-4 ch-font">
                         <label class=" col-form-label   pr-1" for="pass">密碼:</label>
@@ -109,10 +161,15 @@
 
             </form>
         </div>
+
     </div>
-</div>
 
 
+
+    @*<div>
+            @Html.ActionLink("Back to Home", "Index")
+        </div>*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 
 @section scripts{
@@ -185,4 +242,5 @@
     }
     </script>
 }
+
 

@@ -38,7 +38,7 @@
                     <div class=" col col-md-12 ">
                         <div class=" form-inline ">
                             @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label  ml-auto mr-2" })
-                            @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control  mr-auto", @readonly = "readonly", @Value = @ViewBag.account } })
+                            @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control  mr-auto", @readonly = "readonly"} })
                             @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
 
                         </div>
@@ -65,7 +65,7 @@
                             <span class="control-label  ml-auto mr-2">新密碼&nbsp;&nbsp;&nbsp;</span>
 
                             <input id="NewPassword" name="NewPassword" type="password" class="form-control mr-auto" />
-                            <div></div>
+                            <div class="text-center"></div>
 
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
 
-
+                <h5 class="text-danger">@ViewBag.PwdEditErr</h5>
 
                 <div class="row  mt-3 ">
                     <div class=" col col-md-11 offset-3">
