@@ -147,15 +147,11 @@
                     checkIsMember(id,email);
                 });
             }
-
             //登入 FB, 未偵測到加入會員
             else if (response.status === "not_authorized") {
-                //target.innerHTML = "已登入 FB，但未加入 JoinFun 應用程式";
             }
-
             // 未登入 FB
             else {
-                //target.innerHTML = "未登入 FB";
             }
         }
 
@@ -164,29 +160,6 @@
                 //statusChangeCallback(response);
                 console.log(response);
             });
-        }
-        function fblogout() {     // facebook 登出
-            FB.getLoginStatus(
-                function (response) {
-                    if (response.status === 'connected') {
-                        FB.logout(function (response) {    //使用者已成功登出
-                            alert("成功登出。");
-                            localStorage.clear();
-                            //再 refresh 一次，讓登入登出按鈕能正常顯示
-                            //statusChangeCallback(response);
-                            location.replace("http://localhost:54129/Activity");
-                        });
-                    } else if (response.status === 'not_authorized') {
-                        // 使用者已登入 Facebook，但是在你的app是無效的
-                        FB.logout(function (response) {     // 使用者已登出
-                            alert("請重新登入！");
-                            //statusChangeCallback(response);
-                        });
-                    } else {    // 使用者沒有登入 Facebook
-                        alert("請重新登入！");
-                        //statusChangeCallback(response);
-                    }
-                });
         }
         // 載入 FB SDK
         (function (d, s, id) {
@@ -206,8 +179,9 @@
                 scope: 'public_profile,email'
             });
         });
+        //判斷fb登入的使用者是否已完成註冊
     function checkIsMember(sid,email) {
-        window.location.href = "http://localhost:54129/Login/FbLogin?ID=" + sid+"&email="+email;
+        window.location.href = "@Url.Action("FbLogin","Login")" +"?ID="+ sid + "&email=" + email;
     }
     </script>
 }

@@ -164,7 +164,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-break">
-                                    @if (i.Introduction != null && !i.Introduction.IsEmpty())
+                                    @if (!i.Introduction.IsEmpty())
                                     {
 
                                         @(Html.Raw(i.Introduction.Replace("\r\n", "<br />")))
@@ -182,7 +182,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-break">
-                                    @if (i.Habit != null && !i.Habit.IsEmpty())
+                                    @if (!i.Habit.IsEmpty())
                                     {
                                         @(Html.Raw(i.Habit.Replace("\r\n", "<br />")))
                                     }
@@ -201,7 +201,7 @@
                             </div>
                             <div class="row ">
                                 <div class="col-12 text-break">
-                                    @if (i.Dietary_Preference != null && !i.Dietary_Preference.IsEmpty())
+                                    @if (!i.Dietary_Preference.IsEmpty())
                                     {
                                         @(Html.Raw(i.Dietary_Preference.Replace("\r\n", "<br />")))
                                     }

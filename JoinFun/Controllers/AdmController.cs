@@ -11,9 +11,10 @@ namespace JoinFun.Controllers
 {
     public class AdmController : Controller
     {
-        SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["dbJoinFun"].ConnectionString);
+        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
         
+        //管理員登入
         public ActionResult Login() {
             return View();
         }
@@ -61,6 +62,21 @@ namespace JoinFun.Controllers
             ViewBag.admLoginERR = "您輸入的帳號或密碼錯誤";
             return View();
         }
-        
+        public ActionResult Index() {
+
+            return View();
+        }
+
+        //查看公告
+        public ActionResult Post() {
+
+            return View();
+        }
+        [ChildActionOnly]
+        public PartialViewResult _Post() {
+            var post = db.Post.OrderByDescending(m=>m.postTime).ToList();
+
+            return PartialView(post);
+        }
     }
 }

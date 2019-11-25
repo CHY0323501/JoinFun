@@ -224,6 +224,7 @@
     <Content Include="Photos\no_results_found.png" />
     <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\star.png" />
+    <Content Include="Photos\system.png" />
     <Content Include="Photos\title.png" />
     <Content Include="Photos\title2.png" />
     <Content Include="Photos\user.png" />
@@ -869,6 +870,8 @@
     <Content Include="Views\Activity\Messages.cshtml" />
     <Content Include="Views\Activity\MContent.cshtml" />
     <Content Include="Views\Login\FBRegister.cshtml" />
+    <Content Include="Views\Adm\Post.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
