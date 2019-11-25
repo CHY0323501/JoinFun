@@ -25,6 +25,7 @@
     width: 80% !important;
 }
 
+
 .login-box {
     width: 400px;
     min-height: 600px;
@@ -47,3 +48,11 @@
     top:-50px;
     left:calc(38%);
 }
+
+.ch-font {
+    font-family:微軟正黑體;
+}
+.fb-bg {
+    background-color: #3b5998;
+}
+

@@ -34,7 +34,7 @@
         }
 
         body {
-            font-family: 微軟正黑體;
+            font-family: 微軟正黑體!important;
             margin-bottom: 0;
             padding-bottom: 0;
         }
@@ -173,7 +173,7 @@
                             </form>
                         </div>
                     </li>
-                    @if (Session["memid"] == null)
+                    @if (Session["memid"].ToString().IsEmpty())
                     {
                         <li class="nav-item text-center ml-2">
                             <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { c=1})"><i class="fas fa-sign-in-alt"></i> 登入</a>
@@ -181,9 +181,13 @@
                         <li class="nav-item text-center ml-2">
                             <a class="nav-link hvr-underline-from-center" href="@Url.Action("Register", "Register")"><i class="fas fa-sign-in-alt"></i> 註冊</a>
                         </li>
+                        
                     }
-                    @if (Session["memid"] != null)
+                    @if (!Session["memid"].ToString().IsEmpty())
                     {
+                        <li class="nav-item text-center ml-2">
+                            <a class="nav-link hvr-underline-from-center" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="fas fa-user"></i> @Session["nick"]</a>
+                        </li>
                         <li class="nav-item text-center ml-2">
                             <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create","Activity")"><i class="fas fa-plus"></i> 我要揪團</a>
                         </li>
@@ -198,23 +202,17 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-users"></i> 會員中心
                             </a>
-
                             <div class="dropdown-menu nav-bg border-0 text-center" aria-labelledby="navbarDropdownMenuLink">
 
-                                <a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　我的資訊</a>
+                                @*<a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　我的資訊</a>*@
                                 <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })"><i class="fas fa-glass-cheers"></i>　我的揪團</a>
                                 <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})"><i class="fas fa-user-friends"></i>　好友管理</a>
                                 <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})"><i class="fas fa-user-lock"></i>　封鎖管理</a>
-
                                 <a class="dropdown-item" href="@Url.Action("PwdEdit","Register",new {memId= Session["memid"]})"><i class="fas fa-key"></i>　修改密碼</a>
                                 <a class="dropdown-item" href="@Url.Action("Logout","Login")"><i class="fas fa-sign-out-alt"></i>　登出帳號</a>
-
-
                             </div>
-
                         </li>
                         <li class="nav-item">
-
                         </li>
                     }
                 </ul>

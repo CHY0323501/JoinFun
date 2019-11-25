@@ -23,8 +23,9 @@ namespace JoinFun.Controllers
         JoinFunEntities db = new JoinFunEntities();
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
+        Common comm = new Common();
 
-        public ActionResult Info(string memID = "M000000002")
+        public ActionResult Info(string memID)
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             //當會員編號不存在時執行
@@ -34,7 +35,7 @@ namespace JoinFun.Controllers
             }
             else
             {
-                Session["memid"] = "M000000002";
+                //Session["memid"] = "M000000004";
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
@@ -182,7 +183,11 @@ namespace JoinFun.Controllers
             db.Member_Remarks.Add(aaa);
             db.SaveChanges();
 
-            return RedirectToAction("History");
+            //傳送新評價通知
+            var nick = db.Member.Find(ToMemId).memNick;
+            comm.CreateNoti(true,"", ToMemId,"您有一則新評價","您有一則來自<strong>"+ nick+ "</strong>的新評價<br /><a href='/Member/Remarks?memID=" + ToMemId + "'>點擊查看新評價Go</a><br />Join Fun營運團隊");
+
+            return RedirectToAction("History",new { memID=Session["memid"]});
 
         }
         //目前開團&參團清單

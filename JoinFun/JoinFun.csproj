@@ -227,6 +227,7 @@
     <Content Include="Photos\star.png" />
     <Content Include="Photos\title.png" />
     <Content Include="Photos\title2.png" />
+    <Content Include="Photos\user.png" />
     <Content Include="Photos\user_icon.png" />
     <Content Include="Photos\w-1.png" />
     <Content Include="Photos\w-2.png" />
@@ -795,7 +796,13 @@
     <Compile Include="Models\vw_Host_Remarks.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_Member_Join.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Member_Remarks.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_MemJoinDetail.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_PartHistory.cs">
@@ -862,6 +869,7 @@
     <Content Include="Views\Register\RemakePwd.cshtml" />
     <Content Include="Views\Activity\Messages.cshtml" />
     <Content Include="Views\Activity\MContent.cshtml" />
+    <Content Include="Views\Login\FBRegister.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

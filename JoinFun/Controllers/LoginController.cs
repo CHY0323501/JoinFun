@@ -22,8 +22,7 @@ namespace JoinFun.Controllers
         //登入
         public ActionResult Login(int? c)
         {
-           
-                if (Session["memid"] == null)
+                if (String.IsNullOrEmpty(Session["memid"].ToString()))
                     return View();
                 if (c==null)
                     return View();
@@ -74,7 +73,7 @@ namespace JoinFun.Controllers
                 {
 
                     Session["memid"] = reader["memId"].ToString();
-
+                    Session["nick"] = a.memNick;
 
 
                     return RedirectToAction("Index", "Activity");
@@ -99,6 +98,76 @@ namespace JoinFun.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Activity");
         }
+        
+        public ActionResult FbLogin(string ID,string email) {
+            var Smember=db.Social_Net_ID.Where(m => m.socialId == ID).FirstOrDefault();
+            
+            if (Smember == null) {
+                
+                Session["SocialID"] = ID;
+                Session["email"] = email;
+                return RedirectToAction("FBRegister");
+            }
+            else {
+                var mem = db.Member.Where(m => m.memId == Smember.memId).FirstOrDefault();
+                if (mem.Suspend == false)
+                {
 
+                    Session["memid"] = Smember.memId;
+                    Session["nick"] = mem.memNick;
+
+
+                    return RedirectToAction("Index", "Activity");
+                }
+            }
+            return RedirectToAction("Login",new { c=1});
+        }
+        public ActionResult FBRegister()
+        {
+
+            ViewBag.County = db.County.ToList();
+            ViewBag.District = db.District.ToList();
+
+            return View();
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FBRegister(Member mem, string Introduction, string Habit, string Dietary_Preference,string SocialID)
+        {
+            string getmmId = db.Database.SqlQuery<string>("select [dbo].[GetMemId]()").FirstOrDefault();
+
+            mem.memCounty = Int16.Parse(Request["memCounty"]);
+            mem.memDistrict = Int16.Parse(Request["memDistrict"]);
+
+
+            //型別轉換(string->char(1))
+            string gender = Request["Sex"];
+            if (gender == "男")
+                gender = "M";
+            else
+                gender = "F";
+
+
+            mem.Introduction = Introduction;
+            mem.Habit = Habit;
+            mem.Dietary_Preference = Dietary_Preference;
+            mem.Sex = gender;
+            mem.timeReg = DateTime.Now;
+            mem.memId = getmmId;
+            db.Member.Add(mem);
+            db.SaveChanges();
+
+            Social_Net_ID social = new Social_Net_ID();
+            string getSoId = db.Database.SqlQuery<string>("select [dbo].[GetSocialId]()").FirstOrDefault();
+            social.socialSerial = getSoId;
+            social.memId = getmmId;
+            social.socialId = SocialID;
+            db.Social_Net_ID.Add(social);
+            db.SaveChanges();
+
+            return RedirectToAction("FbLogin",new { ID= SocialID,email=mem.Email });
+
+        }
     }
 }

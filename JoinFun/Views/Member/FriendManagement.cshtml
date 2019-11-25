@@ -41,7 +41,7 @@
                         if (!i.Approved)
                         {
 
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@count">
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@count">
                                 <input type="hidden" id="f@(+count)" value="@i.friendMemId"  />
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
@@ -99,7 +99,7 @@
                         if (i.Approved)
                         {
                             <input type="hidden" id="d@(+count)" value="@i.friendMemId" />
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@("c"+count)">
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@("c"+count)">
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
                                         <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
