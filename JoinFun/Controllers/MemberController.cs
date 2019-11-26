@@ -224,13 +224,13 @@ namespace JoinFun.Controllers
                 
                     MyActivitiesVM MyActCheck = new MyActivitiesVM()
                     {
-                        Member = db.Member.Where(m => m.memId == memid).ToList(),
-                        Activity_Details = db.Activity_Details.Where(m => m.memId == memid).ToList(),
+                        Member = db.Member.Where(m => m.memId == FromMemID).ToList(),
+                        Activity_Details = db.Activity_Details.Where(m => m.actId == actid).ToList(),
                     };
 
                     ViewBag.actTop = db.Join_Fun_Activities.Where(m => m.actId == actid).Select(m => m.actTopic).FirstOrDefault();
-                    ViewBag.MemNick = db.Member.Where(m => m.memId == memid).ToList();
-                    ViewBag.sex = db.Member.Where(m => m.memId == memid).ToList();
+                    ViewBag.memNick = db.Member.Where(m => m.memId == memid).Select(m=>m.memNick).FirstOrDefault();
+                    //ViewBag.sex = db.Member.Where(m => m.memId == memid).;
 
 
                     return View(MyActCheck);
@@ -240,7 +240,7 @@ namespace JoinFun.Controllers
         
 
         [HttpPost]
-        public ActionResult ActCheck(bool appvStatus)
+        public ActionResult ActCheck(string memid)
         {
 
 

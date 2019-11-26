@@ -2,11 +2,11 @@
 
 
 @{
-    var sex = (IEnumerable<JoinFun.Models.Member>)ViewBag.sex;
-    var MemNick = (IEnumerable<JoinFun.Models.Member>)ViewBag.MemNick;
     ViewBag.Title = "參團會員管理";
 }
-
+@section memberRemarks{
+    <link href="~/CSS/Remark.css" rel="stylesheet" />
+}
 
 <div class="container containerMinH">
     <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.actTop)活動參團會員管理</h2>
@@ -38,14 +38,14 @@
                         if (!i.appvStatus)
                         {
 
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@count">
-                                <input type="hidden" id="f@(+count)" value="@i.memId" />
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1">
+                                <input type="hidden" value="@i.memId" />
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
 
                                         <a href="@Url.Action("Info", "Member", new { memID = i.memId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
 
-                                            @*<img src="~/Photos/@(ViewBag.sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />*@
+                                            <img src="~/Photos/@(i.Member.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />
                                         </a>
                                     </div>
 
@@ -54,14 +54,22 @@
                                             <div class="row text-center mt-3 ">
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill ">會員編號</span></div>
-                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.memId</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-success text-success p-1 rounded-pill ">會員編號</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.memId</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-success text-success p-1 rounded-pill">會員暱稱</span></div>
-                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@(ViewBag.MemNick)</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-success text-success p-1 rounded-pill">會員暱稱</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.Member.memNick</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,8 +90,8 @@
                     }
                 }
             </div>
-            @*<div class="card-body tab-pane fade " id="tab2">
-                @if (Model.vw_FriendShip.Where(m => m.Approved == true).Count() == 0)
+            <div class="card-body tab-pane fade " id="tab2">
+                @if (Model.Activity_Details.Where(m => m.appvStatus == true).Count() == 0)
                 {
                     <h2 class="text-center text-success bg-transparent">目前尚無好友</h2>
                 }
@@ -91,33 +99,41 @@
                 {
                     <input type="hidden" id="memID2" value="@Model.Member.ToList()[0].memId" />
                     int count = 0;
-                    foreach (var i in Model.vw_FriendShip)
+                    foreach (var i in Model.Activity_Details)
                     {
-                        if (i.Approved)
+                        if (i.appvStatus)
                         {
-                            <input type="hidden" id="d@(+count)" value="@i.friendMemId" />
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@("c"+count)">
+                            <input type="hidden" id="d@(+count)" value="@i.memId" />
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@("c" + count)">
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
-                                        <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.memId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
 
-                                            <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />
+                                            <img src="~/Photos/@(i.Member.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />
                                         </a>
                                     </div>
 
                                     <div class="col col-12 col-md-8 b-top ">
-                                        <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.memId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
                                             <div class="row text-center mt-3 ">
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill ">會員編號</span></div>
-                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.friendMemId</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-info text-info p-1 rounded-pill ">會員編號</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.memId</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6 ">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill">會員暱稱</span></div>
-                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.memNick</span></div>
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-info text-info p-1 rounded-pill">會員暱稱</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.Member.memNick</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,36 +143,34 @@
 
                                                 <div class="col-12 col-md-6 mt-3">
                                                     <div class="row">
-                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="border border-info text-info p-1 rounded-pill ">修改暱稱</span></div>
-                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
-                                                            @@Html.EditorFor(model => i.newNick, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-100" } })<div></div>*@*
-            @*@Html.TextBoxFor(model => i.newNick, new { id = "newNick" + @count, @class = "form-control mx-auto text-center w-100 newNick" })
-                                                                <div></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-md-6  mt-3 ">
-                                                        <input type="button" id="changeNick@(+count)" value="確認修改" class="btn btn-outline-info changeNick" />
-                                                        <input type="button" id="deleteFD@(+count)" value="刪除好友" class="btn btn-outline-danger ml-5 deleteFD" />
-                                                    </div>
 
+
+                                                    </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                                <div class="col-12 col-md-6  mt-3 ">
+                                                    <input type="button" value="退出揪團" class="btn btn-outline-danger ml-5 " new{ onclick="return confirm(您確定要刪除嗎?)" } />
+                                                </div>
+
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            }
-                            count++;
-
+                            </div>
                         }
+                        count++;
+
                     }
-                </div>*@
+                }
+            </div>
         </div>
     </div>
-
-
-
-
-
 </div>
-
+@section scripts{
+    
+    
+    
+    
+    
+    
+    
+    }
