@@ -104,9 +104,9 @@ namespace JoinFun.Controllers
             
             if (Smember == null) {
                 
-                Session["SocialID"] = ID;
-                Session["email"] = email;
-                return RedirectToAction("FBRegister");
+                //Session["SocialID"] = ID;
+                //Session["email"] = email;
+                return RedirectToAction("FBRegister",new { SocialID = ID , email = email });
             }
             else {
                 var mem = db.Member.Where(m => m.memId == Smember.memId).FirstOrDefault();
@@ -122,11 +122,13 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Login",new { c=1});
         }
-        public ActionResult FBRegister()
+        public ActionResult FBRegister(string SocialID,string email)
         {
 
             ViewBag.County = db.County.ToList();
             ViewBag.District = db.District.ToList();
+            ViewBag.SocialID = SocialID;
+            ViewBag.email = email;
 
             return View();
 

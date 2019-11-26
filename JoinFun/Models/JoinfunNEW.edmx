@@ -261,6 +261,7 @@
           <Property Name="postContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="postTime" Type="datetime" Nullable="false" />
           <Property Name="postPics" Type="nvarchar(max)" />
+          <Property Name="ShowInCarousel" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Punishment">
           <Key>
@@ -1978,6 +1979,7 @@
           <Property Name="postTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="postPics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Administrator" Relationship="Self.FK__Post__admId__7F2BE32F" FromRole="Post" ToRole="Administrator" />
+          <Property Name="ShowInCarousel" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Punishment">
           <Key>
@@ -3379,6 +3381,7 @@
           <EntitySetMapping Name="Post">
             <EntityTypeMapping TypeName="JoinFunModel.Post">
               <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="ShowInCarousel" ColumnName="ShowInCarousel" />
                 <ScalarProperty Name="postSerial" ColumnName="postSerial" />
                 <ScalarProperty Name="admId" ColumnName="admId" />
                 <ScalarProperty Name="postTitle" ColumnName="postTitle" />

@@ -1,0 +1,78 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc;
+@using X.PagedList.Mvc.Common;
+@using X.PagedList.Mvc.Bootstrap4;
+@model X.PagedList.PagedList<JoinFun.Models.Post>
+@section CSS{
+    <style>
+        .table-hover tbody tr:hover {
+            color: #212529;
+            background-color: rgba(252, 185, 243, 0.69);
+        }
+    </style>
+}
+
+
+@if (ViewBag.PostCount > 0)
+{
+    if (ViewBag.PostCount == 1)
+    {
+        //瀏覽詳細公告
+        foreach (var i in Model)
+        {
+            <div class="row">
+                <div class="col col-12">
+                    <div class="w-100 border-top border-bottom border-dangerfont-weight-bold">
+                        <div class="row">
+                            <div class="col col-6 text-wrap text-left">
+                                @i.postTitle
+                            </div>
+                            <div class="col col-6 text-right">
+                                @i.postTime.ToShortDateString().Replace("/", "-")
+                            </div>
+                        </div>
+                    </div>
+                    <img src="~/Photos/Posts/@i.postPics" class="img-fluid w-25" />
+                    <div>
+                        @Html.Raw(i.postContent.Replace("\n", "<br>"))
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        //查看指定筆數公告
+        <div class="table-responsive">
+            <table class="table table-warning table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">編號</th>
+                        <th scope="col">標題</th>
+                        <th scope="col">日期</th>
+                        <th scope="col">管理</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td scope="row">@i.postSerial</td>
+                            <td>@i.postTitle</td>
+                            <td>@i.postTime.ToShortDateString().Replace("/", "-")</td>
+                            <td><span class="btn btn-outline-info"><i class="fas fa-search"></i></span><span class="btn btn-outline-info"><i class="fas fa-edit"></i></span><span class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></span></td>
+                        </tr>
+                    }
+                    @*<tr class="text-center">
+                            <td colspan="4" class="text-danger font-weight-bold"></td>
+                        </tr>*@
+                </tbody>
+            </table>
+        </div>
+        <p>@Html.PagedListPager(Model, page => Url.Action("Post", new { page }),Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)</p>
+    }
+}
+else
+{
+    <h1 class="border-top border-bottom border-danger">目前無最新公告</h1>
+}

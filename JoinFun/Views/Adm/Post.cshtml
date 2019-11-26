@@ -1,7 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "公告管理";
+    ViewBag.Title = "JoinFun公告";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
 <h2>Post</h2>
 
+@Html.Action("_Post", "Adm", new { PostNo = ViewBag.PostNo })

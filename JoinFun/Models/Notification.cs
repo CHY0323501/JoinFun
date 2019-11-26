@@ -14,6 +14,7 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaNotification))]
+
     public partial class Notification
     {
         public string NotiSerial { get; set; }

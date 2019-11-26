@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using JoinFun.Models;
+using X.PagedList;
 
 namespace JoinFun.Controllers
 {
@@ -13,7 +15,7 @@ namespace JoinFun.Controllers
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
-        
+        int pagesize = 1;
         //管理員登入
         public ActionResult Login() {
             return View();
@@ -66,17 +68,45 @@ namespace JoinFun.Controllers
 
             return View();
         }
-
         //查看公告
-        public ActionResult Post() {
+        public ActionResult Post(string PostNo, int page = 1)
+        {
+            if (!String.IsNullOrEmpty(PostNo))
+                ViewBag.PostNo = PostNo;
+            ////判斷url的page有無輸入正確頁數
+            //int TotalCount = db.Post.ToList().Count();
+            //if (TotalCount > 0)
+            //{
+            //    if (page > getTotalPages(TotalCount))
+            //        return RedirectToRoute(new { page = 1 });
+            //}
 
             return View();
         }
+        //公告partial view
+        //用於前台首頁Carousel連結、後台瀏覽所有公告、後台查看個別公告
         [ChildActionOnly]
-        public PartialViewResult _Post() {
-            var post = db.Post.OrderByDescending(m=>m.postTime).ToList();
+        public PartialViewResult _Post(string PostNo,int page=1)
+        {
+            List<Post> post = db.Post.OrderByDescending(m => m.postSerial).ToList();
+            ViewBag.PostCount = post.Count();
+            if (!String.IsNullOrEmpty(PostNo))
+            {
+                var p = post.Where(m => m.postSerial == PostNo).ToList();
+                ViewBag.PostCount = 1;
+                return PartialView(p);
+            }
+            //公告分頁
+            
+            int pagecurrent = page < 1 ? 1 : page;
+            var pagedlist = post.ToPagedList(pagecurrent, pagesize);
 
-            return PartialView(post);
+            return PartialView(pagedlist);
+        }
+        //計算總頁數
+        private decimal getTotalPages(int TotalCount) {
+            decimal TotalPages = TotalCount / pagesize;
+            return Math.Ceiling(TotalPages);
         }
     }
 }

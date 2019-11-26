@@ -166,7 +166,7 @@
             $('.Accept').click(function () {
                 //取得目前id
                 var btnid = $(this).attr("id").slice(6);
-
+                 
                 //確認交友邀請
                 $.ajax({
                     type: "Put",
@@ -174,7 +174,7 @@
                     success: function () {
                         console.log("成功");
                         //移除未審資料
-                        $("div").find("div[id='" + btnid + "']").remove();
+                       $("div").find("div[id='" + btnid + "']").remove();
                     },
                     error: function () {
                         console.log("失敗");
