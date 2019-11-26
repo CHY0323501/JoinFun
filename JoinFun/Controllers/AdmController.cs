@@ -15,7 +15,7 @@ namespace JoinFun.Controllers
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
-        int pagesize = 1;
+        int pagesize = 10;
         //管理員登入
         public ActionResult Login() {
             return View();
