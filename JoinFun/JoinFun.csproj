@@ -976,6 +976,7 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Adm\Post.cshtml" />
     <Content Include="Views\Shared\_Post.cshtml" />
+    <Content Include="Views\Member\ActCheck.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
