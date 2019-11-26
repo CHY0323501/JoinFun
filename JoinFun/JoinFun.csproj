@@ -277,6 +277,7 @@
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />
     <Content Include="Photos\w2.png" />
+    <Content Include="Photos\管理員背景.jpg" />
     <Content Include="Scripts\ActivityScripts.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
