@@ -205,10 +205,46 @@ namespace JoinFun.Controllers
                     Host_Now = db.Host_Now.Where(m => m.hostId == memID).ToList(),
                     Part_Now = db.Part_Now.Where(m => m.memId == memID).ToList(),
                     Photos_of_Activities = db.Photos_of_Activities.ToList(),
+                    Activity_Details = db.Activity_Details.ToList(),
                     Activity_Class = db.Activity_Class.ToList()
                 };
                 return View(MyActivity);
             }
+        }
+        //主辦人審核
+        public ActionResult ActCheck(string FromMemID, string actid,string memid)
+        {
+            var member = db.Member.Where(m => m.memId == FromMemID).FirstOrDefault();
+            if (FromMemID == null || member == null)
+            {
+                return RedirectToAction("Index", "Activity");
+            }
+            else
+            {
+                
+                    MyActivitiesVM MyActCheck = new MyActivitiesVM()
+                    {
+                        Member = db.Member.Where(m => m.memId == memid).ToList(),
+                        Activity_Details = db.Activity_Details.Where(m => m.memId == memid).ToList(),
+                    };
+
+                    ViewBag.actTop = db.Join_Fun_Activities.Where(m => m.actId == actid).Select(m => m.actTopic).FirstOrDefault();
+                    ViewBag.MemNick = db.Member.Where(m => m.memId == memid).ToList();
+                    ViewBag.sex = db.Member.Where(m => m.memId == memid).ToList();
+
+
+                    return View(MyActCheck);
+               
+            }
+        }
+        
+
+        [HttpPost]
+        public ActionResult ActCheck(bool appvStatus)
+        {
+
+
+            return View();
         }
 
 
