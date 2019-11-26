@@ -6,7 +6,7 @@
 
 <h2 class="mt-5 font-weight-bold">建立新揪團</h2>
 
-@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @id = "newApply", @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal pl-0 pr-0">
@@ -16,10 +16,10 @@
         <div class="carousel pl-0">
             @Html.LabelFor(model => model.Photos_of_Activities.FirstOrDefault().actId, "活動照片", htmlAttributes: new { @class = "control-label col-md-2 pl-0 font-weight-bold" })
             <div class="carousel-inner">
-                <div class="bg-transparent">
-                    <img id="uploadMain" src="~/Assets/pages/images/main.jpg" class="img-fluid" />
+                <div class="bg-transparent" id="frontPic">
+                    <img id="uploadMain" src="~/Assets/pages/images/main.jpg" class="img-fluid col-md-10 pl-0" />
                 </div>
-                <input style="display:none" type="file" name="picture" id="picture" />
+                <input style="display:none" type="file" name="firstPic" id="picture" />
             </div>
         </div>
 
@@ -41,46 +41,55 @@
                         <li class="nav-item mr-3 mb-2 rounded-pill bg-light formLi" id="cls002">休閒</li>
                         <li class="nav-item mr-3 mb-2 rounded-pill bg-light formLi" id="cls003">商務</li>
                         @Html.EditorFor(model => model.actClassId, new { htmlAttributes = new { @class = "form-control", @type = "Hidden", @id = "classId" } })
+
                     </ul>
                 </nav>
             </div>
+            @Html.ValidationMessageFor(model => model.actClassId, "", new { @class = "text-danger validation" })
         </div>
 
         <div class="col col-md-12 col-xs-6 pl-0">
             <div class="col col-md-12 col-xs-6 pl-0">
                 @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control text-black-50 mt-3 col col-md-10 col-xs-10", @id = "topic", placeholder = "請輸入揪團主題" } })
-                @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger validation" })
             </div>
         </div>
 
         @*<div class="row col col-md-12">*@
         @*<div class="col col-md-12">*@
         <ul class="mt-3 col col-12 pl-0 pr-0">
-            <li class="fa col col-md-12 col-xs-12 pl-0">
-
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-calendar-alt">活動日期</i></label>
-                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "date" })
-                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+            <li class="fa col col-md-12 col-xs-12 pl-0" id="startDate">
+                <label class="col-md-3 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="datepicker"><i class="fas fa-calendar-alt">活動日期</i></label>
+                    <small class="text-danger"></small>
+                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "text", id = "datepicker" })
+                    @*@Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })*@
+                    <small class="text-secondary">備註:即日起一年內皆可開團</small>
                 </label>
 
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-clock">活動時間</i></label>
-                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "time" })
-                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+                <label class="col col-md-4 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="timepicker"><i class="fas fa-clock">活動時間</i></label>
+                    <small class="text-danger"></small>
+                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "text", id = "timepicker" })
+                    @*@Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })*@
+                    <small>　</small>
                 </label>
             </li>
-            <li class="fa col col-md-12 col-xs-12 pl-0">
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-calendar-check">報名截止日期</i></label>
-                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "date" })
-                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+            <li class="fa col col-md-12 col-xs-12 pl-0" id="deadLine">
+                <label class="col col-md-3 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="datepicker2"><i class="fas fa-calendar-check">報名截止日期</i></label>
+                    <small class="text-danger ml-3"></small>
+                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "text", id = "datepicker2" })
+                    @*@Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })*@
+                    <small class="text-secondary">備註:報名截止時間不可少於活動開始前6個小時</small>
                 </label>
 
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-stopwatch">報名截止時間</i></label>
-                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "time" })
-                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+                <label class="col col-md-4 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="timepicker2"><i class="fas fa-stopwatch">報名截止時間</i></label>
+                    <small class="text-danger ml-3"></small>
+                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "text", id = "timepicker2" })
+                    @*@Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })*@
+                    <small>　</small>
                 </label>
             </li>
 
@@ -108,7 +117,8 @@
             <li class="fa col col-md-12 col-xs-12 pl-0">
                 <label class="col col-md-3 col-xs-12 pl-0">
                     <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
-                    @Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })*@
+                    @Html.DropDownList("Budget_Restriction", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
                 </label>
                 <label class="col col-md-3 col-xs-12 pl-0">
@@ -141,8 +151,8 @@
 
                 <label class="col col-md-4 col-sx-12 pl-0">
                     <label class="pl-0"><i class="fas fa-home">地址</i></label>
+                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger ml-4 validation" })
                     @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control col col-md-12" } })
-                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
                 </label>
             </li>
 
@@ -162,7 +172,7 @@
             <label class="col col-md-6 col-xs-6 pl-0">
                 <label class="mr-1"><i class="fa fa-edit">活動描述</i></label>
                 @Html.TextAreaFor(model => model.actDescription, new { @class = "form-control col col-md-11", placeholder = "請說明活動內容", rows = "10", @style = "resize:none" })
-                @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger validation" })
             </label>
         </div>
         <div class="form-group mt-3">
@@ -173,13 +183,37 @@
             </label>
         </div>
 
-        <div class="col-md-12 align-content-center pl-0 mt-5">
-            <input type="submit" value="開團" class="btn btn-warning btn-block" id="buildUp" style="margin:auto"/>
+        @*<div class="col col-md-10 text-center pl-0">
+                <input type="submit" value="開團" class="btn btn-warning btn-block mb-5" id="buildUp" style="margin:auto"/>
+            </div>*@
+        <button type="button" class="btn btn-warning btn-block mb-5 col-md-4 text-center" data-toggle="modal" data-target="#buildUp" style="margin:auto" id="createAct">
+            開團
+        </button>
+
+        <div class="modal fade" id="buildUp" tabindex="-1" role="dialog" aria-labelledby="buildUpTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buildUpTitle">溫馨提醒</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        請確認填寫的資料是否正確！揪團建立後可編輯項目為【揪團主題】、【揪團內容】、【付款方式】、【預算上限】
+                        ，如需刪除揪團，請聯繫管理員並告知原因！
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">沒問題請開團</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
 
-<div class="mt-5">
+<div>
     @Html.ActionLink("返回活動頁面", "Index")
 </div>
 @section topCSS{
@@ -189,4 +223,15 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@*以下為DateTimePicker需要的JS*@
+<!-- Popper JS -->
+<script src="~/Scripts/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="~/Scripts/bootstrap.min.js"></script>
+<!-- Propeller textfield js -->
+<script type="text/javascript" src="dist/js/propeller.min.js"></script>
+<!-- Datepicker moment with locales -->
+<script type="text/javascript" language="javascript" src="~/Scripts/moment-with-locales.js"></script>
+<!-- Propeller Bootstrap datetimepicker -->
+<script type="text/javascript" language="javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
 <script src="~/Scripts/ActivityScripts.js"></script>
