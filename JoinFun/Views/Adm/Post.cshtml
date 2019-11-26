@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Post</h2>
+@section CSS {
+    <link href="~/CSS/ADMpagedlist.css" rel="stylesheet" />
+}
+<h2 class="text-white text-center p-3">公告管理</h2>
 
 @Html.Action("_Post", "Adm", new { PostNo = ViewBag.PostNo })
