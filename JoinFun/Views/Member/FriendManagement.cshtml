@@ -170,7 +170,7 @@
                 //確認交友邀請
                 $.ajax({
                     type: "Put",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
+                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memid').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
                     success: function () {
                         console.log("成功");
                         //移除未審資料
