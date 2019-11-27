@@ -15,7 +15,7 @@ namespace JoinFun.Controllers
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
-        int pagesize = 10;
+        int pagesize = 1;
         //管理員登入
         public ActionResult Login() {
             return View();
@@ -74,12 +74,10 @@ namespace JoinFun.Controllers
             if (!String.IsNullOrEmpty(PostNo))
                 ViewBag.PostNo = PostNo;
             ////判斷url的page有無輸入正確頁數
-            //int TotalCount = db.Post.ToList().Count();
-            //if (TotalCount > 0)
-            //{
-            //    if (page > getTotalPages(TotalCount))
-            //        return RedirectToRoute(new { page = 1 });
-            //}
+            int TotalCount = db.Post.ToList().Count();
+                if (page > getTotalPages(TotalCount))
+                    return RedirectToRoute(new { page = 1 });
+            
 
             return View();
         }

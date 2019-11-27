@@ -34,6 +34,7 @@
             font-family: 微軟正黑體!important;
             margin-bottom: 0;
             padding:0;
+            background-color:black;
         }
 
         .navbar-light>a {
@@ -210,53 +211,76 @@
         .dropdown-item:hover, .dropdown-item:focus {
             background-color: none!important;
         }
+        .adm-bg {
+        
+        }
+        .adm-bg:before {
+            content:" ";
+            opacity:0.7;
+            -webkit-filter:blur(3px);
+
+        background-image: url('../../Photos/管理員背景.jpg');
+        width:100%;
+        height:100%;
+        position:absolute;
+        top:0;
+        left:0;
+        background-size:cover;
+        background-repeat:no-repeat;
+        z-index:-1;
+        }
     </style>
 
 
 </head>
-<body>
-    <div class="row vw-100 p-0 vh-100" >
-        <div class="col col-2 pr-0 border-right border-white" style="border-right:5px solid white!important">
-            <div class="navbar navbar-light bg-dark  min-vh-100 pl-4">
-                <div class="w-100">
-                    <a id="joinfunbrand2" href="@Url.Action("Index","Adm")" class="mb-auto navbar-brand hvr-underline-from-center font-weight-bold text-decoration-none pb-2 text-white"><i class="fas fa-cog" style="font-size:40px!important"></i>　JoinFun後台系統</a>
+<body class="min-vh-100">
+    <div class="row vw-100 p-0 h-100 ">
+        <div class="col col-2 pr-0 border-right border-white " style="border-right:5px solid white!important">
+            <div class="navbar navbar-light bg-dark pl-4 min-vh-100">
+                <div class="row w-100 mb-auto">
+                    <div class="col col-12 text-center ">
+                        <a id="joinfunbrand2" href="@Url.Action("Index","Adm")" class=" navbar-brand hvr-underline-from-center font-weight-bold text-decoration-none pb-2 text-white"><i class="fas fa-cog" style="font-size:40px!important"></i>　JoinFun後台系統</a>
+                    
+                        <div class="col col-12 text-left" style="width:80%">
+                            <ul class=" navbar-nav ">
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link hvr-underline-from-center nav-font " href="#"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link hvr-underline-from-center nav-font" href="#"><span class="fas fa-glass-cheers icon-size" style="width:20px"></span>　揪團管理</a>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link nav-font " href="#" id="VioDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
+                                    <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop">
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("Post","Adm")"><span class="far fa-list-alt icon-size"></span>　公告管理</a>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link nav-font " href="#" id="VioDrop2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-user-cog icon-size" style="width:20px"></span>　管理員資訊</a>
+                                    <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop2">
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-edit icon-size"></i> 修改個人資訊</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-plus icon-size"></i> 新增管理員</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-sign-out-alt icon-size"></i> 登出</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <ul class="navbar-nav mb-auto min-vh-100 w-75">
-                    <li class="nav-item mt-1 pl-4">
-                        <a class="nav-link hvr-underline-from-center nav-font " href="#"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
-                    </li>
-                    <li class="nav-item mt-1 pl-4">
-                        <a class="nav-link hvr-underline-from-center nav-font" href="#"><span class="fas fa-glass-cheers icon-size" style="width:20px"></span>　揪團管理</a>
-                    </li>
-                    <li class="nav-item mt-1 pl-4">
-                        <a class="nav-link nav-font " href="#" id="VioDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
-                        <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop">
-                            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a>
-                            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a>
-                            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a>
-                            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a>
-                        </div>
-                    </li>
-                    <li class="nav-item mt-1 pl-4">
-                        <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("Post","Adm")"><span class="far fa-list-alt icon-size"></span>　公告管理</a>
-                    </li>
-                    <li class="nav-item mt-1 pl-4">
-                        <a class="nav-link nav-font " href="#" id="VioDrop2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-user-cog icon-size" style="width:20px"></span>　管理員資訊</a>
-                        <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop2">
-                            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-edit icon-size"></i> 修改個人資訊</a>
-                            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-plus icon-size"></i> 新增管理員</a>
-                            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-sign-out-alt icon-size"></i> 登出</a>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </div>
-        <div class="col col-10" style="background-image: url('../../Photos/管理員背景.jpg');background-attachment:fixed;background-repeat:no-repeat">
+        <div class="col col-10 py-0 adm-bg" style="">
             @RenderBody()
         </div>
     </div>
 
-    
+
 
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
