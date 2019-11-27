@@ -16,8 +16,8 @@
         //瀏覽詳細公告
         foreach (var i in Model)
         {
-            <div class="container">
-                <div class="row">
+            <div class="container ">
+                <div class="row ">
                     <div class="col col-12">
                         <div class="w-100 border-top border-bottom border-white font-weight-bold text-white mb-5 mt-5 p-2" style="height:50px;">
                             <div class="row">
@@ -32,11 +32,15 @@
                         <div class="mx-auto" style="width:400px;height:400px;">
                             <img src="~/Photos/Posts/@i.postPics" class="img-fluid " />
                         </div>
-                        <div class="text-white d-block mt-5">
-                            <div class="text-center admFont">
+                        <div class="text-white d-block my-5 overflow-auto px-5" style="min-height:200px;max-height:200px">
+                            <div class="admFont">
                                 @Html.Raw(i.postContent.Replace("\n", "<br>"))
                             </div>
                         </div>
+                    </div>
+                    <div class="col-12 my-5 text-center" style="min-height:200px">
+                        <a class="btn btn-success" href="@Url.Action("Post","Adm")"><i class="fas fa-chevron-circle-left"></i>　回公告列表</a>
+                        <a class="btn btn-success ml-5" href="@Url.Action("PostEdit","Adm",new { PostNo =i.postSerial})"><i class="fas fa-edit"></i>　編輯公告</a>
                     </div>
                 </div>
             </div>
@@ -44,9 +48,15 @@
     }
     else
     {
-        <h2 class="text-white text-center my-3">公告管理</h2>
-        //查看指定筆數公告
-        <div class="table-responsive">
+
+        <h2 class="text-center font-weight-bold my-3 text-warning">公告管理</h2>
+        <div class="row text-white mb-3 pl-5">
+            <div class="col-2 font-weight-bold">
+                <a class="btn btn-info" href="#" style="font-size:1.1rem;"><i class="fas fa-plus icon-size"></i>　新增公告</a>
+            </div>
+        </div>
+        @*查看指定筆數公告*@
+        <div class="table-responsive overflow-auto" style="min-height:780px">
             <table class="table table-dark table-hover table-striped ">
                 <thead>
                     <tr class="text-center text-white border-bottom border-white">
@@ -62,14 +72,15 @@
                         <tr class="text-center text-white" style="font-family:微軟正黑體;">
                             <td scope="row" class="text-white-50">@i.postSerial</td>
                             <td>@i.postTitle</td>
-                            <td >@i.postTime.ToShortDateString().Replace("/", "-")</td>
-                            <td><a href="@Url.Action("Post","Adm",new { PostNo = i.postSerial })"><span class="btn btn-success"><i class="fas fa-search"></i></span></a>　<a href="@Url.Action("PostEdit","Adm",new { PostNo = i.postSerial })"><span class="btn btn-info"><i class="fas fa-edit"></i></span></a>　<span class="btn btn-danger"><i class="far fa-trash-alt"></i></span></td>
+                            <td>@i.postTime.ToShortDateString().Replace("/", "-")</td>
+                            <td><a href="@Url.Action("Post","Adm",new { PostNo = i.postSerial })"><span class="btn btn-success"><i class="fas fa-search"></i></span></a>　<a href="@Url.Action("PostEdit","Adm",new { PostNo = i.postSerial })"><span class="btn btn-info"><i class="fas fa-edit"></i></span></a>　<a href="@Url.Action("PostDelete","Adm",new { PostNo = i.postSerial })" onclick="return confirm('您確定要刪除公告嗎？')"><span class="btn btn-danger"><i class="far fa-trash-alt"></i></span></a></td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
         <div class="w-100 text-center" style="padding-left:42%">@Html.PagedListPager(Model, page => Url.Action("Post", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)</div>
+
     }
 }
 else
