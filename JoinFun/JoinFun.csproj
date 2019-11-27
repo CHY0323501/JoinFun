@@ -140,6 +140,7 @@
     <Content Include="Content\hover.css" />
     <Content Include="Content\MyStyle.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CSS\ADMpagedlist.css" />
     <Content Include="CSS\ADM_login.css" />
     <Content Include="CSS\card\bootstrap-grid.min.css" />
     <Content Include="CSS\card\htmleaf-demo.css" />
@@ -278,6 +279,7 @@
     <Content Include="Photos\w1.png" />
     <Content Include="Photos\w2.png" />
     <Content Include="Photos\管理員背景.jpg" />
+    <Content Include="Photos\管理員背景模糊.jpg" />
     <Content Include="Scripts\ActivityScripts.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -979,6 +981,7 @@
     <Content Include="Views\Adm\Post.cshtml" />
     <Content Include="Views\Shared\_Post.cshtml" />
     <Content Include="Views\Member\ActCheck.cshtml" />
+    <Content Include="Views\Adm\PostEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

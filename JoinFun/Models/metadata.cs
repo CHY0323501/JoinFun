@@ -560,29 +560,31 @@ namespace JoinFun.Models
         [Required(ErrorMessage = "請輸入公告編號")]
         public string postSerial { get; set; }
 
-        [DisplayName("發佈管理員編號")]
+        [DisplayName("發佈者")]
         [Required(ErrorMessage = "請輸入管理員編號")]
         public string admId { get; set; }
 
-        [DisplayName("公告標題")]
+        [DisplayName("標題")]
         [Required(ErrorMessage = "請輸入公告標題")]
         [StringLength(30, ErrorMessage = "公告標題最多30個字")]
         public string postTitle { get; set; }
 
-        [DisplayName("公告內容")]
+        [DisplayName("內容")]
         [Required(ErrorMessage = "請輸入公告內容")]
         public string postContent { get; set; }
 
 
         [DisplayName("公告時間")]
         [Required(ErrorMessage = "請輸入公告時間")]
-        [DataType(DataType.DateTime,ErrorMessage ="輸入時間有誤")]
-        [DisplayFormat(DataFormatString ="{0:yyyy/MM/dd}",ApplyFormatInEditMode =true)]
+        [DataType(DataType.Date,ErrorMessage ="輸入時間有誤")]
+        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}",ApplyFormatInEditMode =true)]
         public System.DateTime postTime { get; set; }
 
         [DisplayName("照片")]
         [Required(ErrorMessage = "請上傳圖片")]
         public string postPics { get; set; }
+        [DisplayName("前台顯示")]
+        public bool ShowInCarousel { get; set; }
 
     }
 

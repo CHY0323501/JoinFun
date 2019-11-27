@@ -1,0 +1,67 @@
+﻿@model JoinFun.Models.Post
+
+@{
+    ViewBag.Title = "編輯公告";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2 class="text-white text-center py-3">編輯公告－@Model.postSerial</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="container">
+    <div class="form-horizontal text-white mt-5">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.postSerial)
+
+        <div class="row">
+            <div class="col col-12 text-center">
+                <div class="form-group">
+                    <img src="~/Photos/Posts/@Model.postPics" class="img-fluid" style="width:400px;height:400px;" />
+                </div>
+            </div>
+            <div class="col col-12 mt-4">
+                <div class="row px-3">
+                    
+                    @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label col-2" })
+                    @Html.DropDownList("管理員清單", null, htmlAttributes: new { @class = "form-control text-center col-2" })
+                    @Html.ValidationMessageFor(model => model.admId, "", new { @class = "text-danger text-center" })
+          
+                    @Html.LabelFor(model => model.postTime, htmlAttributes: new { @class = "control-label text-center col-2" })
+                    @Html.EditorFor(model => model.postTime, new { htmlAttributes = new { @class = "form-control text-center col-2" } })
+                    @Html.ValidationMessageFor(model => model.postTime, "", new { @class = "text-danger text-center" })
+       
+                    @Html.LabelFor(model => model.ShowInCarousel, htmlAttributes: new { @class = "control-label text-center col-2" })
+                    @Html.EditorFor(model => model.ShowInCarousel, new { htmlAttributes = new { @class = "form-control col-2" } })
+                    @Html.ValidationMessageFor(model => model.ShowInCarousel, "", new { @class = "text-danger " })
+                
+                    @Html.LabelFor(model => model.postTitle, htmlAttributes: new { @class = "control-label col-2 mt-4" })
+                    @Html.EditorFor(model => model.postTitle, new { htmlAttributes = new { @class = "form-control text-center col-10 pr-5 mt-4" } })
+                    @Html.ValidationMessageFor(model => model.postTitle, "", new { @class = "text-danger text-center mt-4" })
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 px-3">
+            <div class="col col-3 text-left">
+                @Html.LabelFor(model => model.postContent, htmlAttributes: new { @class = "control-label " })
+            </div>
+        </div>
+        <div class="row px-3">
+            @*, style = "resize:none;max-width: 100%"*@
+                @Html.TextArea("postContent", Model.postContent, 20, 100, new { @class = "form-control col-12" })
+                @Html.ValidationMessageFor(model => model.postContent, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default text-white" />
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
