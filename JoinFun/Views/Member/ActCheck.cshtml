@@ -38,8 +38,8 @@
                         if (!i.appvStatus)
                         {
 
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1">
-                                <input type="hidden" value="@i.memId" />
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1"id="@count">
+                                <input type="hidden" id="f@(+count)" value="@i.memId" />
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
 
@@ -148,7 +148,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6  mt-3 ">
-                                                    <input type="button" value="退出揪團" class="btn btn-outline-danger ml-5 " new{ onclick="return confirm(您確定要刪除嗎?)" } />
+                                                    <input type="button" value="退出揪團" class="btn btn-outline-danger ml-5 "  } />
                                                 </div>
 
                                             </div>
@@ -167,10 +167,71 @@
 </div>
 @section scripts{
     
-    
-    
-    
-    
-    
+    <script>
+         $(document).ready(function () {
+            //確認參團審核並移除該會員未審資料
+            $('.Accept').click(function () {
+                //取得目前id
+                var btnid = $(this).attr("id").slice(6);
+                 
+                //確認交友邀請
+                $.ajax({
+                    type: "Put",
+                    url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
+                    success: function () {
+                        console.log("成功");
+                        //移除未審資料
+                       $("div").find("div[id='" + btnid + "']").remove();
+                    },
+                    error: function () {
+                        console.log("失敗");
+                    }
+                });
+                
+            })
+
+            //拒絕交友邀請並移除該好友未審資料
+            $('.Reject').click(function () {
+                //取得目前id
+                var btnid = $(this).attr("id").slice(6);
+
+                //取消交友邀請
+                $.ajax({
+                    type: "Delete",
+                    url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#memID').val() + "&memid=" +$('#f' + btnid).attr('value') + "&Cancel=false",
+                    success: function () {
+                        console.log("成功");
+                        //移除未審資料
+                        $("div").find("div[id='" + btnid + "']").remove();
+                    },
+                    error: function () {
+                        console.log("失敗");
+                    }
+                });
+            })
+
+           
+            //刪除參團者與審核不通過者
+            $('.deleteFD').click(function () {
+                //取得目前id
+                var NowID = $(this).attr("id").slice(8);
+                if (confirm("您確定要刪除嗎？")) {
+
+                    //刪除好友
+                    $.ajax({
+                        type: "Delete",
+                        url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#d' + NowID).attr('value') + "&memID="+ $('#memID2').val() +"&Cancel=true",
+                        success: function () {
+                            console.log("fdid="+$('#d' + NowID).attr('value')+",memid="+$('#memID2').val())
+                            alert("刪除成功");
+                            myrefresh();
+                        }
+                    });
+                }
+            })
+
+        })
+
+    </script>
     
     }
