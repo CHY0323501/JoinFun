@@ -230,14 +230,18 @@
             font-family:微軟正黑體;
             font-size:2rem;
         }
+        .adm-editFont {
+            font-size:1.2rem;
+            font-weight:900;
+        }
     </style>
 
 
 </head>
-<body class="min-vh-100">
+<body class="min-vh-100 overflow-hidden">
     <div class="row vw-100 p-0 h-100 ">
-        <div class="col col-2 pr-0 border-right border-white " style="border-right:5px solid white!important">
-            <div class="navbar navbar-light bg-dark pl-4 min-vh-100">
+        <div class="col col-2 pr-0 border-right border-white " style="border-right:5px solid white!important;">
+            <div class="navbar navbar-light bg-dark pl-4 vh-100"position:fixed;top:0;left:0>
                 <div class="row w-100 mb-auto">
                     <div class="col col-12 text-center ">
                         <a id="joinfunbrand2" href="@Url.Action("Index","Adm")" class=" navbar-brand hvr-underline-from-center font-weight-bold text-decoration-none pb-2 text-white"><i class="fas fa-cog" style="font-size:40px!important"></i>　JoinFun後台系統</a>
@@ -276,7 +280,7 @@
                 </div>
             </div>
         </div>
-        <div class="col col-10 py-0 adm-bg" style="">
+        <div class="col col-10 py-0 adm-bg overflow-auto" >
             @RenderBody()
         </div>
     </div>

@@ -105,18 +105,31 @@ namespace JoinFun.Controllers
         //編輯公告
         public ActionResult PostEdit(string PostNo) {
             Post post= db.Post.Where(m=>m.postSerial==PostNo).FirstOrDefault();
-            ViewBag.管理員清單 = new SelectList(db.Administrator, "admId", "admNick");
+            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick");
             return View(post);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PostEdit(Post post)
         {
-            db.Entry(post).State = EntityState.Modified;
-            db.SaveChanges();
+            if (ModelState.IsValid) {
+                db.Entry(post).State = EntityState.Modified;
+                db.SaveChanges();
+            }
 
             return RedirectToAction("Post",new { PostNo =post.postSerial});
         }
+
+        //刪除公告
+        public ActionResult PostDelete(string PostNo) {
+            var post = db.Post.Find(PostNo);
+            if (!String.IsNullOrEmpty(PostNo)&&post!=null) {
+                db.Post.Remove(post);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Post");
+        }
+
         //計算總頁數
         private decimal getTotalPages(int TotalCount) {
             decimal TotalPages = TotalCount / pagesize;
