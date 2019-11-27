@@ -256,8 +256,10 @@ namespace JoinFun.Controllers
             act.actId = actId;
             act.hostId = "M000000003";//Session["memId"].ToString();
             //將Dropdown List的值取回 ---start--- 
-            //act.acceptDrop = Convert.ToBoolean(form["Drop"].ToString());
+            act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
             //將Dropdown List的值取回 ---end--- 
+            act.actTime = DateTime.Parse(Request["actTime"]);
+            act.actDeadline = DateTime.Parse(Request["actDeadline"]);
             act.keepAct = true;
             db.Join_Fun_Activities.Add(act);
             db.SaveChanges();
@@ -465,11 +467,18 @@ namespace JoinFun.Controllers
         //建立"新增"或"編輯"有對應資料表Dropdown list
         private void GetSelectList()
         {
+            var budget = db.Budget_Restriction.ToList();
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (var item in budget)
+            {
+                list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+            }
             ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName");
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age");
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender");
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction");
             ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget");
+            ViewBag.Budget_Restrict = list;
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment");
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName");
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName");
@@ -478,11 +487,21 @@ namespace JoinFun.Controllers
         private void GetSelectList(string actId)
         {
             var act = db.Join_Fun_Activities.Find(actId);
+            var budget = db.Budget_Restriction.ToList();
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (var item in budget)
+            {
+                if (item.BudgetNo == act.maxBudget)
+                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString(), Selected = true });
+                else
+                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+            }
             ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName", act.actClassId);
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age", act.ageRestrict);
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender", act.gender);
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction", act.maxNumPeople);
             ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget", act.maxBudget);
+            ViewBag.Budget_Restrict = list;
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment", act.paymentTerm);
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName", act.actCounty);
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName", act.actDistrict);
