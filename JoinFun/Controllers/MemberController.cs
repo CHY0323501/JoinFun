@@ -35,7 +35,7 @@ namespace JoinFun.Controllers
             }
             else
             {
-                //Session["memid"] = "M000000004";
+                Session["memid"] = "M000000008";
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),

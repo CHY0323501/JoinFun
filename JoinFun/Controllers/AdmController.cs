@@ -15,7 +15,7 @@ namespace JoinFun.Controllers
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
-        int pagesize = 1;
+        int pagesize = 10;
         //管理員登入
         public ActionResult Login() {
             return View();
@@ -53,7 +53,7 @@ namespace JoinFun.Controllers
             //比對結果
             if (reader.Read()) {
                 //保留登入狀態及管理員暱稱
-                Session["admAccount"] = reader["admAcc"].ToString();
+                Session["admid"] = reader["admId"].ToString();
                 Session["admNick"] = reader["admNick"].ToString();
                 //中斷資料庫連線
                 Conn.Close();
@@ -74,10 +74,10 @@ namespace JoinFun.Controllers
             if (!String.IsNullOrEmpty(PostNo))
                 ViewBag.PostNo = PostNo;
             ////判斷url的page有無輸入正確頁數
-            int TotalCount = db.Post.ToList().Count();
-                if (page > getTotalPages(TotalCount))
-                    return RedirectToRoute(new { page = 1 });
-            
+            //int TotalCount = db.Post.ToList().Count();
+            //if (page > getTotalPages(TotalCount))
+            //    return RedirectToRoute(new { page = 1 });
+            Session["admid"] = "adm002";
 
             return View();
         }
@@ -92,7 +92,7 @@ namespace JoinFun.Controllers
             {
                 var p = post.Where(m => m.postSerial == PostNo).ToList();
                 ViewBag.PostCount = 1;
-                return PartialView(p);
+                return PartialView(p.ToPagedList(1,1));
             }
             //公告分頁
             
@@ -100,6 +100,22 @@ namespace JoinFun.Controllers
             var pagedlist = post.ToPagedList(pagecurrent, pagesize);
 
             return PartialView(pagedlist);
+        }
+
+        //編輯公告
+        public ActionResult PostEdit(string PostNo) {
+            Post post= db.Post.Where(m=>m.postSerial==PostNo).FirstOrDefault();
+            ViewBag.管理員清單 = new SelectList(db.Administrator, "admId", "admNick");
+            return View(post);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PostEdit(Post post)
+        {
+            db.Entry(post).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Post",new { PostNo =post.postSerial});
         }
         //計算總頁數
         private decimal getTotalPages(int TotalCount) {
