@@ -117,54 +117,7 @@ $('#addFile').click(function () {
     });
 });
 
-$('#buildUp').click(function () {
-    alert("請確認填寫的資料是否正確，揪團建立後僅有【揪團主題】、【揪團內容】、【付款方式】、【預算上限】可供編輯，若需刪除揪團請聯繫管理員！")
-});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Javascript for 訊息中心
-//全選或取消全選狀態
-$("#clickAll").click(function () {
-    if ($("#clickAll").prop("checked")) {
-        $("#activeTbody input[name='clickOne']").each(function () {
-            $(this).prop("checked", true);
-        });
-    } else {
-        $("#activeTbody input[name='clickOne']").each(function () {
-            $(this).prop("checked", false);
-        });
-    }
-});
-$("#delClkAll").click(function () {
-    if ($("#delClkAll").prop("checked")) {
-        $("#delTbody input[name='clickOne']").each(function () {
-            $(this).prop("checked", true);
-        });
-    } else {
-        $("#delTbody input[name='clickOne']").each(function () {
-            $(this).prop("checked", false);
-        });
-    }
-});
 
-//切換資源回收桶與一般訊息，click後去掉checkbox選取狀態
-$('#mList>li').click(function () {
-    $("input[name='clickOne']").prop("checked", false)
-    $("input[name='clickAll']").prop("checked", false)
-    $("input[name='delClkAll']").prop("checked", false)
-    switch ($(this).attr("id")) {
-        case "messages":
-            //$('#recycleOne').hide();
-            //$('#activeOne').show();
-            $('#recycle').removeClass("font-weight-bold");
-            $(this).addClass("font-weight-bold");
-            break;
-        case "recycle":
-            //$('#activeOne').hide();
-            //$('#recycleOne').show();
-            $('#messages').removeClass("font-weight-bold");
-            $(this).addClass("font-weight-bold");
-            break;
-    }
-});
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

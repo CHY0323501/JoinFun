@@ -67,6 +67,7 @@ namespace JoinFun.Models
         public virtual DbSet<Host_Now> Host_Now { get; set; }
         public virtual DbSet<Part_Now> Part_Now { get; set; }
         public virtual DbSet<Notification> Notification { get; set; }
+
         public virtual DbSet<vw_ActCheck> vw_ActCheck { get; set; }
         public virtual DbSet<vw_Member_Join> vw_Member_Join { get; set; }
         public virtual DbSet<vw_MemJoinDetail> vw_MemJoinDetail { get; set; }
@@ -83,5 +84,9 @@ namespace JoinFun.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_blockMember", blockedMemIDParameter, memIDParameter);
         }
+
+        public virtual DbSet<vw_Member_Join> vw_Member_Join { get; set; }
+        public virtual DbSet<vw_MemJoinDetail> vw_MemJoinDetail { get; set; }
+
     }
 }

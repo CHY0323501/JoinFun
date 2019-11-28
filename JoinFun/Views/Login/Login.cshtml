@@ -3,63 +3,86 @@
 @{
     ViewBag.Title = "登入";
 }
-@section memberinfo{
+
+@section Register{
     <link href="~/CSS/Register.css" rel="stylesheet" />
+
+
 }
 
-<div class="container " >
-    <div style="height:900px" class="row justify-content-center">
-        <div class="bg-morandi rounded" style="height:500px;width:400px">
-            <h2 class=" text-center pt-5 ">登入</h2>
-            <form id="login" class=" ml-5  " method="post" action="@Url.Action("Login")">
-                @*<div class="row justify-content-center  ">
-                    <div class="form-group ">
-                        <div class="row mt-3 mr-2">
-                            <label class="col-md-3 col-form-label   col-sm-3" for="account">帳號:</label>
-                            <div class="col-md-9  col-sm-9">
+
+
+<div class="container "  style="min-height: 100vh">
+    
+        <div class="row justify-content-center">
+
+            <div class="login-box">
+                <img src="~/Photos/iconfinder_1041_boy_c_2400506.png" class="login-portrait" />
+                <h2 class=" text-center pt-5 ">登入</h2>
+                <form id="login" class=" ml-5  " method="post" action="@Url.Action("Login")">
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 ml-4">
+                            <label class=" col-form-label   pr-1" for="account">帳號:</label>
+                            <div class=" pl-0">
                                 <input id="account" name="account" type="text" class="form-control  " required placeholder="Enter Your Account...." />
                             </div>
                             <div>
 
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center ">
-                    <div class="form-group ">
-                        <div class="row mt-3 mr-2">
-                            <label class="col-md-3 col-form-label   col-sm-3" for="pass">密碼:</label>
-                            <div class="col-md-9 col-sm-9">
-                                <input id="pass" name="pass" type="password" class="form-control  " required />
-                                <small class="form-text text-muted"><a href="@Url.Action("ForgetPwd","Register")">忘記密碼</a></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-4">
-                    <h5 class="text-danger">@ViewBag.LoginErr</h5>
-                </div>
 
-                <div class="row justify-content-center">
-                    @*<div class="form-group form-check">
-                            <input id="remember" type="checkbox" class="form-check-input" />
-                            <label for="remember">記住我</label>
-                        </div> <!---->
-                    <div>
-                    <div class="form-group">
-                        <div class="col-md-12 ">
-                            <div class="mt-3 mr-4">
-                                <input id="Submit1" type="submit" value="登入" class="btn btn-primary btn-block" />
+                        <div class="col-md-12 ml-4">
+                            <label class=" col-form-label   pr-1" for="pass">密碼:</label>
+                            <div class=" pl-0">
+                                <input id="pass" name="pass" type="password" class="form-control  " required />
+                                <h6 class="form-text  "><a href="@Url.Action("ForgetPwd","Register")" class="text-white ">忘記密碼</a></h6>
                             </div>
-                            <div class="mt-3 mr-4">
-                                <input id="Reset1" type="reset" value="重設" class="btn btn-light btn-block form-control" />
+                        </div>
+                        <div class="row mt-3 mr-4">
+                            <h5 class="text-danger">@ViewBag.LoginErr</h5>
+                        </div>
+
+                        <div class="col-md-12  ml-4 mt-3">
+                            <div class="col-form-label   pr-1 ml-3">
+                                <input id="Submit1" type="submit" value="登入" class="btn btn-primary btn-block w-75" />
                             </div>
-                            <div class="mt-3 mr-4">
-                                @Html.ActionLink("註冊", "Register", "Register", "", new { @class = "btn btn-warning d-block" })
+                            <div class="col-form-label   pr-1 ml-3">
+                                <input id="Reset1" type="reset" value="重設" class="btn btn-light btn-block  w-75" />
+                            </div>
+                            <div class="col-form-label   pr-1 ml-3">
+                                @Html.ActionLink("註冊", "Register", "Register", "", new { @class = "btn btn-warning btn-block w-75 " })
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-1 ml-4 ">
+                            <div class="col-form-label pr-1 ml-3 ch-font ">
+                                <button id="FB_login" class="ui facebook button btn-block w-75 fb-bg form-control text-white border-0">
+                                    <i class="fab fa-facebook-f"></i>
+                                    <span class="ch-font">　使用Facebook登入</span>
+                                </button>
                             </div>
                         </div>
                     </div>
-                </div>*@
+                </form>
+            </div>
+        </div>
+    
+
+</div>
+
+
+}
+
+
+
+<div class="container ">
+
+    <div style="height:1000px" class="row justify-content-center">
+        @*<div class="bg-morandi rounded" style="height:500px;width:400px">*@
+        <div class="login-box">
+            <img src="~/Photos/iconfinder_1041_boy_c_2400506.png" class="login-portrait" />
+            <h2 class=" text-center pt-5 ">登入</h2>
+            <form id="login" class=" ml-5  " method="post" action="@Url.Action("Login")">
 
                 <div class="row justify-content-center">
                     <div class="col-md-12 ml-4">
@@ -76,7 +99,7 @@
                         <label class=" col-form-label   pr-1" for="pass">密碼:</label>
                         <div class=" pl-0">
                             <input id="pass" name="pass" type="password" class="form-control  " required />
-                            <small class="form-text text-muted"><a href="@Url.Action("ForgetPwd","Register")">忘記密碼</a></small>
+                            <h6 class="form-text  "><a href="@Url.Action("ForgetPwd","Register")" class="text-white ">忘記密碼</a></h6>
                         </div>
                     </div>
                     <div class="row mt-3 mr-4">
@@ -94,10 +117,15 @@
                             @Html.ActionLink("註冊", "Register", "Register", "", new { @class = "btn btn-warning btn-block w-75 " })
                         </div>
                     </div>
-
+                    <div class="col-md-12 mt-1 ml-4 ">
+                        <div class="col-form-label pr-1 ml-3 ch-font ">
+                            <button id="FB_login" class="ui facebook button btn-block w-75 fb-bg form-control text-white border-0">
+                                <i class="fab fa-facebook-f"></i>
+                                <span class="ch-font">　使用Facebook登入</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-
             </form>
         </div>
     </div>
@@ -105,7 +133,80 @@
 
 
 
-@*<div>
-        @Html.ActionLink("Back to Home", "Index")
-    </div>*@
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '679500922527245', // 填入 FB APP ID
+                cookie: true,
+                xfbml: true,
+                version: 'v3.2'
+            });
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+                //console.log(response);
+            });
+        };
+
+        var id = "";
+        // 處理各種登入身份
+        function statusChangeCallback(response) {
+
+
+
+        var id = "";
+        // 處理各種登入身份
+        function statusChangeCallback(response) {
+
+
+
+            // 登入 FB 且已加入會員
+            if (response.status === 'connected') {
+                FB.api('/me?fields=id,name,email', function (response) {
+                    id = response.id;
+                    email = response.email;
+                    //console.log(id,email);
+                    checkIsMember(id,email);
+                });
+            }
+            //登入 FB, 未偵測到加入會員
+            else if (response.status === "not_authorized") {
+            }
+            // 未登入 FB
+            else {
+            }
+        }
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                //statusChangeCallback(response);
+                console.log(response);
+            });
+        }
+        // 載入 FB SDK
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/zh_TW/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+         // 點擊登入按鈕
+        $("#FB_login").click(function () {
+            FB.login(function (response) {
+                statusChangeCallback(response);
+
+            }, {
+                scope: 'public_profile,email'
+            });
+        });
+        //判斷fb登入的使用者是否已完成註冊
+    function checkIsMember(sid,email) {
+        window.location.href = "@Url.Action("FbLogin","Login")" +"?ID="+ sid + "&email=" + email;
+    }
+    </script>
+}
+

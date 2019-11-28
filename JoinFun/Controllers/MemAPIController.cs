@@ -134,8 +134,8 @@ namespace JoinFun.Controllers
                 Common com = new Common();
                 var M1 = db.Member.Find(FriendID).memNick;
                 var M2 = db.Member.Find(memID).memNick;
-                com.CreateNoti(true,"",memID,"您以和"+ M1 + "成為好友", "恭喜您和<a href = '/Member/Info?memID="+memID+"'>"+M1 +"</a>成為好友</br>Join Fun營運團隊");
-                com.CreateNoti(true,"", FriendID, "您以和"+ M2 + "成為好友", "恭喜您和<a href = '/Member/Info?memID=" + memID + "'>" + M2 + "</a>成為好友</br>Join Fun營運團隊");
+                com.CreateNoti(true,"",memID,"您以和"+ M1 + "成為好友", "恭喜您和<a href = '/Member/Info?memID="+memID+"'>"+M1 + "</a>成為好友<br />Join Fun營運團隊");
+                com.CreateNoti(true,"", FriendID, "您以和"+ M2 + "成為好友", "恭喜您和<a href = '/Member/Info?memID=" + memID + "'>" + M2 + "</a>成為好友<br />Join Fun營運團隊");
             }
             //已為好友關係，僅修改好友暱稱
             else {

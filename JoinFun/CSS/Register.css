@@ -1,9 +1,119 @@
-﻿/*6510*/
+﻿
+
+body {
+    background-image: url('../Photos/index/carousel1.jpg');  
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+    top:70px;
+    
+    
+    position:relative;
+}
+/*548*/
+/*.container {
+padding-bottom:5rem;
+}*/
+
+/*container {
+    width: 100%;
+    
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+   
+}*/
+
+/*6510*/
 .bg-morandi {
     background-color: #eee5f8;
 }
 
+
+
+
 /*7852*/
 .w-85 {
     width: 80% !important;
+}
+
+
+.login-box {
+    width: 400px;
+    min-height: 600px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    top:50%;
+    left: 50%;
+    bottom: auto;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    box-shadow: 5px 5px 12px 4px rgba(20%,20%,40%,0.5);
+    border-radius: 10px;
+}
+
+.login-portrait {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(38%);
+}
+
+.register-box {
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    
+}
+
+.pwdEdit-box {
+    width:450px;
+    height: 700px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    top: 350px;
+    left: 49%;
+    bottom: auto;
+    position: relative;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    box-shadow: 5px 5px 12px 4px rgba(20%,20%,40%,0.5);
+    border-radius: 10px;
+}
+
+footer {
+    position: absolute;   
+    bottom: 0;
+    width: 100%;
+}
+
+
+
+.ch-font {
+    font-family: 微軟正黑體;
+}
+
+.fb-bg {
+    background-color: #3b5998;
+}
+
+/*.emailBg {
+    background-image: url('../Photos/blank letter.jpg');
+    background-image: url('../Photos/mail-1454734_1920.png');
+    background-image: url('../Photos/envelope-4313721_1280.png');
+}*/
+
+.emailBg {
+   width:100%;
+   background-image:url('../Photos/mail-1454734_1920.png');
+   background-size:cover;
+   background-position:center;
+   position:relative;
 }

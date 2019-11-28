@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - JoinFun</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/Content/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/hover-min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("memberinfo", required: false)
+    @RenderSection("memberRemarks", required: false)
+    @RenderSection("Detail", required: false)
+    @RenderSection("indexcss", required: false)
+    @RenderSection("topCSS", required: false)
+    @RenderSection("CSS", required: false)
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    
+    <style>
+        .dropdown-item.active, .dropdown-item:active {
+            text-decoration: none;
+            background-color: #EEE8AA;
+        }
+
+        body {
+            font-family: 微軟正黑體!important;
+            margin-bottom: 0;
+            padding:0;
+            background-color:black;
+        }
+
+        .navbar-light>a {
+            color: #0b0c16 !important;
+            /*color: white !important;*/
+        }
+        .nav-font {
+            font-weight:600;
+            font-size:1.2rem;
+            color:rgba(255, 255, 255, 0.52) !important;
+        }
+        .nav-bg {
+            background: linear-gradient(270deg, #359fdb, #54baf3, #9cd7f7);
+            background-size: 600% 600%;
+            -webkit-animation: bg-ani 30s ease infinite;
+            -moz-animation: bg-ani 30s ease infinite;
+            animation: bg-ani 30s ease infinite;
+        }
+        @@-webkit-keyframes bg-ani {
+            0%
+        {
+            background-position: 0% 50%
+        }
+
+        50% {
+            background-position: 100% 50%
+        }
+
+        100% {
+            background-position: 0% 50%
+        }
+
+        }
+
+        @@-moz-keyframes bg-ani {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
+
+        @@keyframes bg-ani {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
+
+        .foot-bg {
+            background-color: bisque;
+            color: brown;
+        }
+
+        .dropdown-menu li:hover .sub-menu {
+            visibility: visible;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .containerMinH {
+            min-height: 1200px
+        }
+
+        @@media (min-width: 576px) {
+            .container {
+                /*max-width: 540px;*/
+                max-width: 660px;
+            }
+        }
+
+        @@media (min-width: 768px) {
+            .container {
+                /*max-width: 720px;*/
+                max-width: 800px;
+            }
+        }
+
+        @@media (min-width: 992px) {
+            .container {
+                /*max-width: 960px;*/
+                max-width: 1200px;
+            }
+        }
+
+        @@media (min-width: 1200px) {
+            .container {
+                /*max-width: 1140px;*/
+                max-width: 1500px;
+            }
+        }
+
+        .containerbody {
+            min-height: 400px;
+        }
+        /*調整Scrollbar*/
+        .hvr-underline-from-center:before {
+            background-color:rgba(255, 255, 255, 0.52);
+        }
+
+        ::-webkit-scrollbar {
+            width: 13px;
+            border-radius: 8px;
+        }
+
+            ::-webkit-scrollbar:hover {
+                box-shadow: 0 0 10px rgba(255, 255, 255,0.5);
+            }
+
+        ::-webkit-scrollbar-track {
+            /*background-color: rgba(255, 255, 255, 0.7);*/
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            border-radius: 8px;
+        }
+        /*/////*/
+        .footer-content {
+            height: 60px;
+            line-height: 60px;
+        }
+        /*navbar調整*/
+        #a a {
+            font-size: 1rem;
+        }
+
+        #memsearch::-webkit-input-placeholder {
+            color: rgb(23, 162, 184);
+            text-align: center;
+            font-size: 1rem !important;
+        }
+
+        #memsearch {
+            font-size: 1rem !important;
+            display: initial;
+        }
+
+        #joinfunbrand {
+            font-size: 1.5rem !important;
+        }
+        .icon-size {
+            font-size:20px!important;
+        }
+        .nav-drop-font {
+            font-weight:600;
+            font-size:1.1rem;
+            color:#EEE8AA !important;
+        }
+        .dropdown-item:hover, .dropdown-item:focus {
+            background-color: none !important;
+        }
+
+        .adm-bg:before {
+            content: " ";
+            opacity: 0.7;
+            -webkit-filter: blur(3px);
+            background-image: url('../../Photos/管理員背景.jpg');
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+        .admFont {
+            font-family:微軟正黑體;
+            font-size:2rem;
+        }
+        .adm-editFont {
+            font-size:1.2rem;
+            font-weight:900;
+        }
+    </style>
+
+
+</head>
+<body class="min-vh-100 overflow-hidden">
+    <div class="row vw-100 p-0 h-100 ">
+        <div class="col col-2 pr-0 border-right border-white " style="border-right:5px solid white!important;">
+            <div class="navbar navbar-light bg-dark pl-4 vh-100"position:fixed;top:0;left:0>
+                <div class="row w-100 mb-auto">
+                    <div class="col col-12 text-center ">
+                        <a id="joinfunbrand2" href="@Url.Action("Index","Adm")" class=" navbar-brand hvr-underline-from-center font-weight-bold text-decoration-none pb-2 text-white"><i class="fas fa-cog" style="font-size:40px!important"></i>　JoinFun後台系統</a>
+                    
+                        <div class="col col-12 text-left" style="width:80%">
+                            <ul class=" navbar-nav ">
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link hvr-underline-from-center nav-font " href="#"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link hvr-underline-from-center nav-font" href="#"><span class="fas fa-glass-cheers icon-size" style="width:20px"></span>　揪團管理</a>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link nav-font " href="#" id="VioDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
+                                    <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop">
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("Post","Adm")"><span class="far fa-list-alt icon-size"></span>　公告管理</a>
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a class="nav-link nav-font " href="#" id="VioDrop2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-user-cog icon-size" style="width:20px"></span>　管理員資訊</a>
+                                    <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop2">
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-edit icon-size"></i> 修改個人資訊</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-plus icon-size"></i> 新增管理員</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-sign-out-alt icon-size"></i> 登出</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-10 py-0 adm-bg overflow-auto" >
+            @RenderBody()
+        </div>
+    </div>
+
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @RenderSection("work", required: false)
+    @RenderSection("scripts", required: false)
+    @RenderSection("indexscript", required: false)
+    <script>
+        //取得未讀訊息數量
+        $(document).ready(function () {
+                $.ajax({
+                    url: "@Url.Action("GetMStatus","Activity")",
+                    method: "post",
+                    traditional: true,
+                    data: { id: $('#mid').val() },
+                    success: function (count) {
+                        if (count == 0)
+                            $('.number').text("");
+                        else
+                            $('.number').text(count);
+                    }
+              });
+        });
+    </script>
+</body>
+</html>

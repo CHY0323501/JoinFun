@@ -43,6 +43,7 @@
           <Property Name="admPass" Type="varchar(max)" Nullable="false" />
           <Property Name="admNick" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="admSalt" Type="varchar(max)" Nullable="false" />
+          <Property Name="admPasswordConfirm" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Age_Restriction">
           <Key>
@@ -1769,6 +1770,7 @@
           <NavigationProperty Name="Comment" Relationship="Self.FK__Comment__admId__7D439ABD" FromRole="Administrator" ToRole="Comment" />
           <NavigationProperty Name="Post" Relationship="Self.FK__Post__admId__7F2BE32F" FromRole="Administrator" ToRole="Post" />
           <NavigationProperty Name="Violation" Relationship="Self.FK__Violation__imple__7E37BEF6" FromRole="Administrator" ToRole="Violation" />
+          <Property Name="admPasswordConfirm" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Age_Restriction">
           <Key>
@@ -2772,6 +2774,7 @@
             <End Role="Member" EntitySet="Member" />
             <End Role="Notification" EntitySet="Notification" />
           </AssociationSet>
+
           <EntitySet Name="vw_ActCheck" EntityType="JoinFunModel.vw_ActCheck" />
           <EntitySet Name="vw_Member_Join" EntityType="JoinFunModel.vw_Member_Join" />
           <EntitySet Name="vw_MemJoinDetail" EntityType="JoinFunModel.vw_MemJoinDetail" />
@@ -2779,6 +2782,7 @@
             <Parameter Name="BlockedMemID" Mode="In" Type="String" />
             <Parameter Name="memID" Mode="In" Type="String" />
           </FunctionImport>
+
         </EntityContainer>
         <EntityType Name="vw_Host_Remarks">
           <Key>
@@ -3113,6 +3117,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+
         <EntityType Name="vw_ActCheck">
           <Key>
             <PropertyRef Name="memId" />
@@ -3128,6 +3133,7 @@
           <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="appvDate" Type="DateTime" Precision="3" />
         </EntityType>
+
         <EntityType Name="vw_Member_Join">
           <Key>
             <PropertyRef Name="actId" />
@@ -3232,6 +3238,7 @@
           <EntitySetMapping Name="Administrator">
             <EntityTypeMapping TypeName="JoinFunModel.Administrator">
               <MappingFragment StoreEntitySet="Administrator">
+                <ScalarProperty Name="admPasswordConfirm" ColumnName="admPasswordConfirm" />
                 <ScalarProperty Name="admId" ColumnName="admId" />
                 <ScalarProperty Name="admAcc" ColumnName="admAcc" />
                 <ScalarProperty Name="admPass" ColumnName="admPass" />
@@ -3776,6 +3783,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <EntitySetMapping Name="vw_ActCheck">
             <EntityTypeMapping TypeName="JoinFunModel.vw_ActCheck">
               <MappingFragment StoreEntitySet="vw_ActCheck">
@@ -3788,6 +3796,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <EntitySetMapping Name="vw_Member_Join">
             <EntityTypeMapping TypeName="JoinFunModel.vw_Member_Join">
               <MappingFragment StoreEntitySet="vw_Member_Join">
@@ -3829,7 +3838,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <FunctionImportMapping FunctionImportName="sp_blockMember" FunctionName="JoinFunModel.Store.sp_blockMember" />
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,0 +1,237 @@
+﻿@model JoinFun.ViewModel.MyActivitiesVM
+
+
+@{
+    ViewBag.Title = "參團會員管理";
+}
+@section memberRemarks{
+    <link href="~/CSS/Remark.css" rel="stylesheet" />
+}
+
+<div class="container containerMinH">
+    <h2 class="mt-5 text-center p-3 text-warning">@(ViewBag.actTop)活動參團會員管理</h2>
+    <div class="card text-center border-0 p-adjust bg-transparent">
+        <div class="card-header bg-transparent text-white ">
+            <div class="d-flex">
+                <ul class="nav nav-tabs card-header-tabs mx-auto ">
+                    <li class="nav-item ">
+                        <a class="nav-link active p-3 text-success " href="#tab1" data-toggle="tab"><strong>待審會員清單</strong></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>參團會員管理</strong></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div class="card-body tab-pane show active fade " id="tab1">
+                @if (Model.Activity_Details.Where(m => m.appvStatus == false).ToList().Count == 0)
+                {
+                    <h2 class="text-center text-success bg-transparent">無未審核資料</h2>
+                }
+                else
+                {
+                    <input type="hidden" id="memID" value="@Model.Member.ToList()[0].memId" />
+                    int count = 0;
+                    foreach (var i in Model.Activity_Details)
+                    {
+                        if (!i.appvStatus)
+                        {
+
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1"id="@count">
+                                <input type="hidden" id="f@(+count)" value="@i.memId" />
+                                <div class="row mb-1 align-items-center ">
+                                    <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
+
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.memId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+
+                                            <img src="~/Photos/@(i.Member.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />
+                                        </a>
+                                    </div>
+
+                                    <div class="col col-12 col-md-8 b-top ">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.memId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+                                            <div class="row text-center mt-3 ">
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-success text-success p-1 rounded-pill ">會員編號</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.memId</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-success text-success p-1 rounded-pill">會員暱稱</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.Member.memNick</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="row text-center  mt-md-3 b-top">
+                                            <div class="col-6 col-md-4 offset-md-2 mt-3">
+                                                <input type="button" id="Accept@(+count)" value="確認參團" class="btn btn-info Accept" />
+                                            </div>
+                                            <div class="col-6 col-md-2  mt-3">
+                                                <input type="button" id="Reject@(+count)" value="取消參團" class="btn btn-danger Reject" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            count += 1;
+                        }
+                    }
+                }
+            </div>
+            <div class="card-body tab-pane fade " id="tab2">
+                @if (Model.Activity_Details.Where(m => m.appvStatus == true).Count() == 0)
+                {
+                    <h2 class="text-center text-success bg-transparent">目前尚無好友</h2>
+                }
+                else
+                {
+                    <input type="hidden" id="memID2" value="@Model.Member.ToList()[0].memId" />
+                    int count = 0;
+                    foreach (var i in Model.Activity_Details)
+                    {
+                        if (i.appvStatus)
+                        {
+                            <input type="hidden" id="d@(+count)" value="@i.memId" />
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@("c" + count)">
+                                <div class="row mb-1 align-items-center ">
+                                    <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.memId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+
+                                            <img src="~/Photos/@(i.Member.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-35 " />
+                                        </a>
+                                    </div>
+
+                                    <div class="col col-12 col-md-8 b-top ">
+                                        <a href="@Url.Action("Info", "Member", new { memID = i.memId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
+                                            <div class="row text-center mt-3 ">
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-info text-info p-1 rounded-pill ">會員編號</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.memId</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                            <span class="border border-info text-info p-1 rounded-pill">會員暱稱</span>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                            <span class="text-warning ">@i.Member.memNick</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <form class=" form-group" method="put">
+                                            <div class="row text-center  mt-md-3 b-top">
+
+                                                <div class="col-12 col-md-6 mt-3">
+                                                    <div class="row">
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6  mt-3 ">
+                                                    <input type="button" value="退出揪團" class="btn btn-outline-danger ml-5 "  } />
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        count++;
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    
+    <script>
+         $(document).ready(function () {
+            //確認參團審核並移除該會員未審資料
+            $('.Accept').click(function () {
+                //取得目前id
+                var btnid = $(this).attr("id").slice(6);
+                 
+                //確認交友邀請
+                $.ajax({
+                    type: "Put",
+                    url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
+                    success: function () {
+                        console.log("成功");
+                        //移除未審資料
+                       $("div").find("div[id='" + btnid + "']").remove();
+                    },
+                    error: function () {
+                        console.log("失敗");
+                    }
+                });
+                
+            })
+
+            //拒絕交友邀請並移除該好友未審資料
+            $('.Reject').click(function () {
+                //取得目前id
+                var btnid = $(this).attr("id").slice(6);
+
+                //取消交友邀請
+                $.ajax({
+                    type: "Delete",
+                    url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#memID').val() + "&memid=" +$('#f' + btnid).attr('value') + "&Cancel=false",
+                    success: function () {
+                        console.log("成功");
+                        //移除未審資料
+                        $("div").find("div[id='" + btnid + "']").remove();
+                    },
+                    error: function () {
+                        console.log("失敗");
+                    }
+                });
+            })
+
+           
+            //刪除參團者與審核不通過者
+            $('.deleteFD').click(function () {
+                //取得目前id
+                var NowID = $(this).attr("id").slice(8);
+                if (confirm("您確定要刪除嗎？")) {
+
+                    //刪除好友
+                    $.ajax({
+                        type: "Delete",
+                        url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#d' + NowID).attr('value') + "&memID="+ $('#memID2').val() +"&Cancel=true",
+                        success: function () {
+                            console.log("fdid="+$('#d' + NowID).attr('value')+",memid="+$('#memID2').val())
+                            alert("刪除成功");
+                            myrefresh();
+                        }
+                    });
+                }
+            })
+
+        })
+
+    </script>
+    
+    }

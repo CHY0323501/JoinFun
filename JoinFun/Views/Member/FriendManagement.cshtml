@@ -17,7 +17,7 @@
             <div class="d-flex">
                 <ul class="nav nav-tabs card-header-tabs mx-auto ">
                     <li class="nav-item ">
-                        <a class="nav-link active p-3 text-success" href="#tab1" data-toggle="tab"><strong>待審好友清單</strong></a>
+                        <a class="nav-link active p-3 text-success " href="#tab1" data-toggle="tab"><strong>待審好友清單</strong></a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>好友管理</strong></a>
@@ -41,7 +41,7 @@
                         if (!i.Approved)
                         {
 
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@count">
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@count">
                                 <input type="hidden" id="f@(+count)" value="@i.friendMemId"  />
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
@@ -99,7 +99,7 @@
                         if (i.Approved)
                         {
                             <input type="hidden" id="d@(+count)" value="@i.friendMemId" />
-                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp " id="@("c"+count)">
+                            <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1" id="@("c"+count)">
                                 <div class="row mb-1 align-items-center ">
                                     <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
                                         <a href="@Url.Action("Info", "Member", new { memID = i.friendMemId })" class="text-decoration-none changeCursor" title="點擊連結至會員資訊">
@@ -166,7 +166,7 @@
             $('.Accept').click(function () {
                 //取得目前id
                 var btnid = $(this).attr("id").slice(6);
-
+                 
                 //確認交友邀請
                 $.ajax({
                     type: "Put",
@@ -174,7 +174,7 @@
                     success: function () {
                         console.log("成功");
                         //移除未審資料
-                        $("div").find("div[id='" + btnid + "']").remove();
+                       $("div").find("div[id='" + btnid + "']").remove();
                     },
                     error: function () {
                         console.log("失敗");

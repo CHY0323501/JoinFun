@@ -35,7 +35,7 @@
                     foreach (var i in Model.Host_Now)
                     {
 
-                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1">
                             <div class="row mb-1 align-items-center ">
                                 <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
                                     @{var photo = Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault();
@@ -81,6 +81,28 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row text-center mt-md-3">
+                                            <div class="col-12 col-md-6  ">
+                                                <div class="row ">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                        <span class="bg-success text-white p-1 rounded-pill">目前參加數</span>
+                                                    </div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                        <span class="text-warning p-2">@Model.Activity_Details.Where(m => m.appvStatus == true && m.actId == i.actId).Count() </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6  ">
+                                                <div class="row ">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                        <span class="bg-success text-white p-1 rounded-pill">待審核人數</span>
+                                                    </div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                        <span class="text-warning p-2">@Model.Activity_Details.Where(m => m.appvStatus == false && m.actId == i.actId).Count()</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </a>
                                     @try
                                     {
@@ -93,7 +115,7 @@
                                                         <div class="col-12 col-md-4 mb-2 mb-md-0">
                                                         </div>
                                                         <div class="col-12 col-md-8 mb-2 mb-md-0">
-                                                            <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId ,FromMemID=Session["memid"].ToString(),ishost=false})" class="text-decoration-none btn btn-info">新增會員評價</a>
+                                                            <a href="@Url.Action("ActCheck","Member",new { actID = i.actId ,FromMemID=Session["memid"].ToString()})" class="text-decoration-none btn btn-info">會員審核</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -121,7 +143,7 @@
                     foreach (var i in Model.Part_Now)
                     {
 
-                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp">
+                        <div class="card p-3 Remarkcard border-0 mb-4 animated slideInUp pic1">
                             <div class="row mb-1 align-items-center ">
                                 <div class="col col-12 col-md-4 border-right  pl-3 mb-3 mb-md-0 ">
                                     @{var photo = Model.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault();
@@ -167,29 +189,30 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
-                                    @try
-                                    {
-                                        var session = Session["memid"].ToString();
-                                        if (session == i.memId)
-                                        {
-                                            <div class="row  mt-md-3 ">
-                                                <div class="col-12 col-md-6 offset-md-6">
-                                                    <div class="row">
-                                                        <div class="col-12 col-md-4 mb-2 mb-md-0">
-                                                        </div>
-                                                        <div class="col-12 col-md-8 mb-2 mb-md-0">
-                                                            <a href="@Url.Action("RemarkCreate","Member",new { actID = i.actId ,FromMemID=Session["memid"].ToString(),ishost=false})" class="text-decoration-none btn btn-info">新增會員評價</a>
-                                                        </div>
+                                        <div class="row text-center mt-md-3">
+                                            <div class="col-12 col-md-6  ">
+                                                <div class="row ">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                        <span class="bg-success text-white p-1 rounded-pill">目前參加數</span>
+                                                    </div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                        <span class="text-warning p-2">@Model.Activity_Details.Where(m => m.appvStatus == true && m.actId == i.actId).Count() </span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
-                                    }
-                                    catch
-                                    {
-                                        Response.Redirect("~/Activity/Index");
-                                    }
+                                            <div class="col-12 col-md-6  ">
+                                                <div class="row ">
+                                                    <div class="col col-12 col-md-4 mb-2 mb-md-0">
+                                                        <span class="bg-success text-white p-1 rounded-pill">待審核人數</span>
+                                                    </div>
+                                                    <div class="col col-12 col-md-8 mb-2 mb-md-0">
+                                                        <span class="text-warning p-2">@Model.Activity_Details.Where(m => m.appvStatus == false && m.actId == i.actId).Count()</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    
 
                                 </div>
                             </div>

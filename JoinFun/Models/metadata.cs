@@ -83,6 +83,11 @@ namespace JoinFun.Models
         [StringLength(10, ErrorMessage = "最多輸入10字")]
         public string admNick { get; set; }
         public string admSalt { get; set; }
+
+        [Required]
+        [DisplayName("確認密碼")]
+        [Compare("admPass")]
+        public string admPasswordConfirm { get; set; }
     }
     public  class MetaAge_Restriction
     {
@@ -560,29 +565,30 @@ namespace JoinFun.Models
         [Required(ErrorMessage = "請輸入公告編號")]
         public string postSerial { get; set; }
 
-        [DisplayName("發佈管理員編號")]
+        [DisplayName("發佈者")]
         [Required(ErrorMessage = "請輸入管理員編號")]
         public string admId { get; set; }
 
-        [DisplayName("公告標題")]
+        [DisplayName("標題")]
         [Required(ErrorMessage = "請輸入公告標題")]
         [StringLength(30, ErrorMessage = "公告標題最多30個字")]
         public string postTitle { get; set; }
 
-        [DisplayName("公告內容")]
+        [DisplayName("內容")]
         [Required(ErrorMessage = "請輸入公告內容")]
         public string postContent { get; set; }
 
 
         [DisplayName("公告時間")]
         [Required(ErrorMessage = "請輸入公告時間")]
-        [DataType(DataType.DateTime,ErrorMessage ="輸入時間有誤")]
-        [DisplayFormat(DataFormatString ="{0:yyyy/MM/dd}",ApplyFormatInEditMode =true)]
+        [DataType(DataType.Date,ErrorMessage ="輸入時間有誤")]
+        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}",ApplyFormatInEditMode =true)]
         public System.DateTime postTime { get; set; }
 
         [DisplayName("照片")]
-        [Required(ErrorMessage = "請上傳圖片")]
         public string postPics { get; set; }
+        [DisplayName("前台顯示")]
+        public bool ShowInCarousel { get; set; }
 
     }
 
@@ -815,5 +821,18 @@ namespace JoinFun.Models
         [DisplayName("活動區域")]
         public string DistrictName { get; set; }
         public string hostId { get; set; }
+    }
+    public  class Metavw_Member_Join
+    {
+        [DisplayName("活動編號")]
+        public string actId { get; set; }
+        [DisplayName("會員編號")]
+        public string memId { get; set; }
+        [DisplayName("會員暱稱")]
+        public string memNick { get; set; }
+        [DisplayName("性別")]
+        public string Sex { get; set; }
+        [DisplayName("審核狀態")]
+        public bool appvStatus { get; set; }
     }
 }
