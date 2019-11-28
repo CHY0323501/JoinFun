@@ -22,6 +22,7 @@ namespace JoinFun.Models
         public string postContent { get; set; }
         public System.DateTime postTime { get; set; }
         public string postPics { get; set; }
+        public bool ShowInCarousel { get; set; }
     
         public virtual Administrator Administrator { get; set; }
     }

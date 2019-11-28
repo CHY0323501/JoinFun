@@ -185,13 +185,17 @@
     <Content Include="Photos\ClassIMG\商務.png" />
     <Content Include="Photos\ClassIMG\活動.jpg" />
     <Content Include="Photos\ClassIMG\活動.png" />
+    <Content Include="Photos\desk-1081708_1280.jpg" />
     <Content Include="Photos\detail\bg1.jpg" />
     <Content Include="Photos\detail\makecake1.jpg" />
     <Content Include="Photos\detail\makecake2.jpg" />
     <Content Include="Photos\detail\makecake3.jpg" />
     <Content Include="Photos\dog-face.png" />
+    <Content Include="Photos\envelope-4313721_1280.png" />
     <Content Include="Photos\female.png" />
+    <Content Include="Photos\fog-3622519_1280.jpg" />
     <Content Include="Photos\glass-cheers.ico" />
+    <Content Include="Photos\iconfinder_1041_boy_c_2400506.png" />
     <Content Include="Photos\index\card1.jpg" />
     <Content Include="Photos\index\card2.jpg" />
     <Content Include="Photos\index\card3.jpg" />
@@ -206,6 +210,7 @@
     <Content Include="Photos\index\photo5.png" />
     <Content Include="Photos\index\photo6.png" />
     <Content Include="Photos\InfoBG.jpg" />
+    <Content Include="Photos\mail-1454734_1920.png" />
     <Content Include="Photos\male.png" />
     <Content Include="Photos\oops.jpg" />
     <Content Include="Photos\oops.png" />
@@ -215,7 +220,8 @@
     <Content Include="Photos\male.png" />
     <Content Include="Photos\memphis-colorful.png" />
     <Content Include="Photos\no_results_found.png" />
-    <Content Include="Photos\photo-1532117364815-720cd35ff6e3.png" />
+    <Content Include="Photos\photo-1490367605959-06955305859b.jpg" />
+    <Content Include="Photos\photo-1532117364815-720cd35ff6e3.jpg" />
     <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\gplaypattern.png" />
     <Content Include="Photos\img.png" />
@@ -227,7 +233,6 @@
     <Content Include="Photos\star.png" />
     <Content Include="Photos\title.png" />
     <Content Include="Photos\title2.png" />
-    <Content Include="Photos\user.png" />
     <Content Include="Photos\user_icon.png" />
     <Content Include="Photos\w-1.png" />
     <Content Include="Photos\w-2.png" />
@@ -870,6 +875,7 @@
     <Content Include="Views\Activity\Messages.cshtml" />
     <Content Include="Views\Activity\MContent.cshtml" />
     <Content Include="Views\Login\FBRegister.cshtml" />
+    <Content Include="Views\Adm\AdmRegister.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

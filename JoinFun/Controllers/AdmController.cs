@@ -11,9 +11,9 @@ namespace JoinFun.Controllers
 {
     public class AdmController : Controller
     {
-        SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["dbJoinFun"].ConnectionString);
+        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
-        
+
         public ActionResult Login() {
             return View();
         }
@@ -61,6 +61,51 @@ namespace JoinFun.Controllers
             ViewBag.admLoginERR = "您輸入的帳號或密碼錯誤";
             return View();
         }
-        
+
+
+        //註冊管理員
+        public ActionResult AdmRegister()
+        {
+
+         
+
+            return View();
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AdmRegister(string admId, string admAcc, string admPass, string admNick)
+        {
+
+
+            //密碼雜湊 salt+hash
+            string salt = Guid.NewGuid().ToString();
+            byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(admPass + salt);
+            byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
+            string hashString = Convert.ToBase64String(hashBytes);
+
+
+
+            //string getadmId = db.Database.SqlQuery<string>("select [dbo].[GetAdmId]()").FirstOrDefault();
+
+            Administrator accAdm = new Administrator();
+            accAdm.admId = admId;
+            accAdm.admAcc = admAcc;
+            accAdm.admPass= hashString;
+            accAdm.admPasswordConfirm = hashString;
+            accAdm.admNick = admNick;
+
+
+            accAdm.admSalt = salt;
+            db.Administrator.Add(accAdm);           
+            db.SaveChanges();
+
+
+            return RedirectToAction("Index");
+
+        }
+
+
     }
 }

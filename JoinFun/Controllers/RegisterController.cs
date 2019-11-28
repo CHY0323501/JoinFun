@@ -85,6 +85,7 @@ namespace JoinFun.Controllers
             return RedirectToAction("CheckEmail", "Register", new { account = account });
 
         }
+
         //註冊完提醒確認密碼
         public ActionResult CheckEmail(string account)
         {
@@ -115,18 +116,24 @@ namespace JoinFun.Controllers
         }
 
         //修改密碼
-        public ActionResult PwdEdit(string memId)
+        public ActionResult PwdEdit(string memId )
         {
             if (Session["memid"].ToString() == memId)
             {
                 var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
-                //var accAccount = db.Acc_Pass.Where(m => m.Account == Account).FirstOrDefault();
+                //var accAccount = db.Acc_Pass.Where(m => m.Account == Account).FirstOrDefault().Account;
 
-                //TempData["Account"] = accPwd.Account;
-                ViewData["Account"] = accPwd.Account;
+
                 //ViewBag.account = (from a in db.Acc_Pass
-                //           where a.memId == memId
-                //           select a.Account).FirstOrDefault();
+                //                   where a.memId == memId
+                //                   select a.Account).FirstOrDefault();
+
+                var account = (from a in db.Acc_Pass
+                               where a.memId == memId
+                               select a.Account).FirstOrDefault();
+
+
+                Session["Account"] = account;
                 return View();
             }
             return RedirectToAction("Login", "Login");
@@ -164,11 +171,14 @@ namespace JoinFun.Controllers
                 byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
                 string hashString = Convert.ToBase64String(hashBytes);
 
+                   
                 accPwd.Salt = salt;
                 accPwd.memId = memId;
                 accPwd.Password = hashString;
                 accPwd.PasswordConfirm = hashString;
+
                 db.SaveChanges();
+                    
 
                 return RedirectToAction("Index", "Activity");
 
@@ -176,7 +186,7 @@ namespace JoinFun.Controllers
                }
                else
                {
-                ViewBag.PwdEditErr = "舊密碼有誤!";
+                ViewBag.PwdEditErr = "舊密碼未填或有誤!";
                 return View();
                }
                
