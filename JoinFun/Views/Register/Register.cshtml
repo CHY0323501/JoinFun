@@ -6,186 +6,184 @@
     ViewBag.Title = "Register";
 }
 
-@section memberinfo{
+@section Register{
     <link href="~/CSS/Register.css" rel="stylesheet" />
 }
 
-<div class="container bg-morandi rounded">
-    <h2 class="mt-3 display-4 text-center font-weight-bold">註冊</h2>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal ">
-
-            <div class="row ">
-                <div class="col-md-6 ">
-                    <div class="form-group col-md-12 offset-3">
-                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+    <div class="container register-box " style="min-height: 100vh">
 
 
-                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
+        <h3 class="mt-3 display-4 text-center font-weight-bold">註冊</h3>
 
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "account", name = "account" } })
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal  ">
+
+                <div class="row justify-content-around">
+
+                    <div class="col-md-4 col-sm-6 ">
+                        <div class="form-group col-md-12 ">
+                            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
 
-                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
-                        <div id="prompt"></div>
+                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
 
+                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "account", name = "account" } })
+
+
+                            @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @class = "text-danger" })
+                            <div id="prompt"></div>
+
+                        </div>
+
+                        <div class="form-group col-md-12 ">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password", id = "Password" } })
+
+
+                            @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @class = "text-danger" })
+                            <div></div>
+                        </div>
+                        <div class="form-group col-md-12 ">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "password", id = "PasswordConfirm" } })
+
+
+                            @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
+                            @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
+                            <div> </div>
+                        </div>
+
+                        <div class="form-group col-md-12 ">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+
+
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            @*<input id="Email" type="email" class="form-control" />*@
+
+                            <div></div>
+
+                        </div>
+
+                        <div class="form-group col-md-12 ">
+                            @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
+                            @Html.ValidationMessageFor(model => model.memCounty, "", new { @class = "text-danger" })
+                            <select id="memCounty" name="memCounty" class="form-control">
+                                @foreach (var i in co)
+                                {
+                                    <option value="@i.CountyNo">@i.CountyName</option>
+                                }
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
+                            @Html.ValidationMessageFor(model => model.memDistrict, "", new { @class = "text-danger" })
+                            <select id="memDistrict" name="memDistrict" class="form-control ">
+                                @foreach (var i in dis)
+                                {
+                                    <option value="@i.DistrictSerial">@i.DistrictName</option>
+                                }
+                            </select>
+
+                        </div>
+
+
+
+                        <div class="form-group col-md-12 ">
+                            @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                            @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+
+                        <div class="form-group col-md-12 ">
+                            @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                            @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                            <select id="Sex" name="Sex" class="form-control">
+                                <option selected>男</option>
+                                <option>女</option>
+                            </select>
+
+                        </div>
                     </div>
 
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4  col-sm-6">
+                        <div class="form-group col-md-12 ">
 
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password", id = "Password" } })
+                            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                            @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
 
+                        </div>
 
-                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @class = "text-danger" })
-                        <div></div>
-                    </div>
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group col-md-12">
 
-                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-12" })
 
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "password", id = "PasswordConfirm" } })
+                            <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>
+                            @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
 
+                        </div>
 
-                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new { @class = "text-danger" })
+                        <div class="form-group col-md-12 ">
+                            @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
+                            @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @class = "text-danger" })
 
-                    </div>
+                        </div>
 
-
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
-                        @Html.ValidationMessageFor(model => model.memNick, "", new { @class = "text-danger" })
-                        <div> </div>
-                    </div>
-
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-
-
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                        @*<input id="Email" type="email" class="form-control" />*@
-
-                        <div></div>
-
-                    </div>
-
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
-                        @Html.ValidationMessageFor(model => model.memCounty, "", new { @class = "text-danger" })
-                        <select id="memCounty" name="memCounty" class="form-control">
-                            @foreach (var i in co)
-                            {
-                                <option value="@i.CountyNo">@i.CountyName</option>
-                            }
-                        </select>
-
-                    </div>
-
-
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-3" })
-                        @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
-                        @Html.ValidationMessageFor(model => model.memDistrict, "", new { @class = "text-danger" })
-                        <select id="memDistrict" name="memDistrict" class="form-control ">
-                            @foreach (var i in dis)
-                            {
-                                <option value="@i.DistrictSerial">@i.DistrictName</option>
-                            }
-                        </select>
-
-                    </div>
-
-
-
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                        @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
-
-                    </div>
-
-
-
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                        @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
-                        <select id="Sex" name="Sex" class="form-control">
-                            <option selected>男</option>
-                            <option>女</option>
-                        </select>
-
-                    </div>
-                </div>
-
-
-                <div class="col-md-6 ">
-                    <div class="form-group col-md-12 offset-3">
-
-                        @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="form-group col-md-12 offset-3">
-
-                        @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-2" })
-
-                        <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="form-group col-md-12 offset-3">
-                        @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @class = "text-danger" })
-
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <div class="form-group">
-                            <div class="col-12 align-self-end ">
-                                <input id="submit" name="submit" type="submit" value="送出資料" class="btn btn-success " />
+                        <div class="row justify-content-center">
+                            <div class="form-group">
+                                <div class="col-12 align-self-end ">
+                                    <input id="submit" name="submit" type="submit" value="送出資料" class="btn btn-success " />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
-        </div>
 
 
 
 
+        }
 
-    }
 
-    @*<div class="form-group">
-            <div class="btn btn-danger">
-                @Html.ActionLink("使用 Google 註冊", "Index")
-            </div>
-            <div class="btn btn-primary">
-                @Html.ActionLink("使用 Facebook 註冊", "Index")
-            </div>
-        </div>*@
 
-</div>
+
+    </div>
 
 
 @*<div>
@@ -226,7 +224,7 @@
         $('#Password').keyup(function () {
             if ($('#Password').val().length < 8) {
                 $('#Password').addClass("is-invalid");
-                $('#Password~div').addClass("invalid-feedback").text('至少8個字元!!');
+                $('#Password~div').addClass("invalid-feedback").text('至少8個字元!!').css({ "color": "#fd9e9e", "font-size": "12pt" });
                 flag = false;
             }
             else {
@@ -245,7 +243,7 @@
 
 
         $('#account').blur(function () {
-            if ($('#account').val() != null) {
+            if ($('#account').val() != '') {
                 $.ajax({
                     type: "Get",
                     url: "http://localhost:54129/api/AccountAPI",
@@ -257,7 +255,7 @@
                             var n = str.search(data[i]);
                             if (n != -1) {
                                 console.log("帳號重複");
-                                $('#prompt').text("帳號重複").css("color", "red");
+                                $('#prompt').text("帳號重複").css("color", "#fd9e9e");
                                 break;
                             } else {
                                 i++;
@@ -270,21 +268,22 @@
 
                         if (i == data.length) {
                             console.log("驗證成功");
-                            $('#prompt').text("此帳號可使用").css("color", "green");
+                            $('#prompt').text("此帳號可使用").css("color", "#a2fba2");
                         }
+
 
                     }
 
                 });
             }
-            else
-            {
-                 $('#account~div').text('請輸入帳號!!');
+            else {
+                $('#prompt').text("");
             }
+
         });
 
 
-                                        //$('[data-toggle="popover"]').popover();
+                                                                //$('[data-toggle="popover"]').popover();
 
     </script>
 

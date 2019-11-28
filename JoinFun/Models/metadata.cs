@@ -83,6 +83,11 @@ namespace JoinFun.Models
         [StringLength(10, ErrorMessage = "最多輸入10字")]
         public string admNick { get; set; }
         public string admSalt { get; set; }
+
+        [Required]
+        [DisplayName("確認密碼")]
+        [Compare("admPass")]
+        public string admPasswordConfirm { get; set; }
     }
     public  class MetaAge_Restriction
     {

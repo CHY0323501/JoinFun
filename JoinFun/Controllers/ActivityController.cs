@@ -42,10 +42,11 @@ namespace JoinFun.Controllers
                 Session["memid"] = "";
             }
             ViewBag.age = db.Age_Restriction.ToList();
+            DropAct();
             //ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
             Finalchoose fc = new Finalchoose()
-            {
-                vwActList = db.vw_Activities.Where(m => m.actDeadline != DateTime.Now).ToList(),
+            {   
+                vwActList = db.vw_Activities.Where(m => m.keepAct == true).ToList(),
                 joinfunlist = db.Join_Fun_Activities.ToList()
                 
             };
@@ -54,12 +55,30 @@ namespace JoinFun.Controllers
             return View(fc);
         }
 
-      
+        public void DropAct()
+        {
+            var actedAct = db.Join_Fun_Activities.Where(m => m.actTime <= DateTime.Now).ToList();
+            foreach (var item in actedAct)
+            {
+                item.keepAct = false;
+            }
+            db.SaveChanges();
+        }
+
+
+
+
         //
         public ActionResult GetActdetail(string actId, string MemID)
         {
-            var onlyDetail=db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault();
-            return Json(onlyDetail);
+            if (db.Activity_Details.Any(m=>m.actId == actId && m.memId == MemID))
+            {
+                var onlyDetail = (db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault().appvStatus).ToString();
+
+                return Json(new { status = onlyDetail }, JsonRequestBehavior.AllowGet);
+            }
+                
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -70,20 +89,24 @@ namespace JoinFun.Controllers
             m.appvDate = DateTime.Now;
             db.Activity_Details.Add(m);
             db.SaveChanges();
+
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-        public void ChangeAppv(string actId, string MemID)
+        //public void ChangeAppv(string actId, string MemID)
+        //{
+        //    bool appv=db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault().appvStatus;
+        //    bool changeappv = !appv;
+            
+
+
+
+        //}
+
+        public ActionResult DelActdetail(string actId, string MemID)
         {
-            GetActdetail(actId, MemID);
-
-
-        }
-
-        public ActionResult Delete(string actId, string MemID)
-        {
-            m.actId = actId;
-            m.memId = MemID;
-            db.Activity_Details.Remove(m);
+           var delact= db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault();
+          
+            db.Activity_Details.Remove(delact);
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
@@ -98,6 +121,8 @@ namespace JoinFun.Controllers
         //    }
 
         //}
+
+        
 
         public ActionResult Details(string actId, string memID, string actClassId)
         {
@@ -114,7 +139,7 @@ namespace JoinFun.Controllers
             {
                 vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
                 ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
-                //MemberList = db.Member.Where(m=>m.memId==memID).ToList(),
+                MemberList = db.Member.Where(m => m.memId == memID).ToList(),
                 members = db.Member.ToList(),
                 MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
                 ActDetails=db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
@@ -126,8 +151,20 @@ namespace JoinFun.Controllers
             ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
             return View(ACT);
         }
+        //已參加會員
+        public ActionResult MemJoin(string actId, string memID, string actClassId)
+        {
+            ViewBag.memID = memID;
+            ViewBag.actClassId = actClassId;
+            ViewBag.actId = actId;
 
-      
+            var memjoin = db.vw_Member_Join.Where(m => m.actId == actId & m.appvStatus == true).ToList();
+
+            return View(memjoin);
+
+
+        }
+
         //留言action
         [HttpPost]
         public ActionResult AddComment(string id, string memID, string comment)
@@ -340,16 +377,15 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(string actId, FormCollection form, HttpPostedFileBase picture)
+        public ActionResult Edit(string actId, short paymentTerm, short maxNumPeople, short gender)
         {
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
-            //string actTopic = form["actTopic"].ToString();
-            //string actDescription = form["actDescription"].ToString();
-            //short payment = Int16.Parse(form["Payment_Restriction"].ToString());
-            //act.actTopic = actTopic;
-            //act.actDescription = actDescription;
-            //act.paymentTerm = payment;
-
+            act.paymentTerm = paymentTerm;
+            act.maxNumPeople = maxNumPeople;
+            act.gender = gender;
+            //將Dropdown List的值取回 ---start--- 
+            act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
+            //將Dropdown List的值取回 ---end--- 
             db.SaveChanges();
             return RedirectToAction("Index");
         }

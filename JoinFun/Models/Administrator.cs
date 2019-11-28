@@ -30,6 +30,7 @@ namespace JoinFun.Models
         public string admPass { get; set; }
         public string admNick { get; set; }
         public string admSalt { get; set; }
+        public string admPasswordConfirm { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }
