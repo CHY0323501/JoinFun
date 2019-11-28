@@ -187,6 +187,52 @@
 
 @section scripts{
     <script>
+        //Javascript for 訊息中心
+//全選或取消全選狀態
+$("#clickAll").click(function () {
+    if ($("#clickAll").prop("checked")) {
+        $("#activeTbody input[name='clickOne']").each(function () {
+            $(this).prop("checked", true);
+        });
+    } else {
+        $("#activeTbody input[name='clickOne']").each(function () {
+            $(this).prop("checked", false);
+        });
+    }
+});
+$("#delClkAll").click(function () {
+    if ($("#delClkAll").prop("checked")) {
+        $("#delTbody input[name='clickOne']").each(function () {
+            $(this).prop("checked", true);
+        });
+    } else {
+        $("#delTbody input[name='clickOne']").each(function () {
+            $(this).prop("checked", false);
+        });
+    }
+});
+
+//切換資源回收桶與一般訊息，click後去掉checkbox選取狀態
+$('#mList>li').click(function () {
+    $("input[name='clickOne']").prop("checked", false)
+    $("input[name='clickAll']").prop("checked", false)
+    $("input[name='delClkAll']").prop("checked", false)
+    switch ($(this).attr("id")) {
+        case "messages":
+            //$('#recycleOne').hide();
+            //$('#activeOne').show();
+            $('#recycle').removeClass("font-weight-bold");
+            $(this).addClass("font-weight-bold");
+            break;
+        case "recycle":
+            //$('#activeOne').hide();
+            //$('#recycleOne').show();
+            $('#messages').removeClass("font-weight-bold");
+            $(this).addClass("font-weight-bold");
+            break;
+    }
+});
+
         //將郵件讀取狀態變更為已讀或未讀
         $('#mStatus>li').click(function () {
             var rid = [];

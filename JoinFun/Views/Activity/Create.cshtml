@@ -6,7 +6,7 @@
 
 <h2 class="mt-5 font-weight-bold">建立新揪團</h2>
 
-@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { @id = "newApply", @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal pl-0 pr-0">
@@ -16,10 +16,10 @@
         <div class="carousel pl-0">
             @Html.LabelFor(model => model.Photos_of_Activities.FirstOrDefault().actId, "活動照片", htmlAttributes: new { @class = "control-label col-md-2 pl-0 font-weight-bold" })
             <div class="carousel-inner">
-                <div class="bg-transparent">
-                    <img id="uploadMain" src="~/Assets/pages/images/main.jpg" class="img-fluid" />
+                <div class="bg-transparent" id="frontPic">
+                    <img id="uploadMain" src="~/Assets/pages/images/main.jpg" class="img-fluid col-md-10 pl-0" />
                 </div>
-                <input style="display:none" type="file" name="picture" id="picture" />
+                <input style="display:none" type="file" name="firstPic" id="picture" />
             </div>
         </div>
 
@@ -41,46 +41,55 @@
                         <li class="nav-item mr-3 mb-2 rounded-pill bg-light formLi" id="cls002">休閒</li>
                         <li class="nav-item mr-3 mb-2 rounded-pill bg-light formLi" id="cls003">商務</li>
                         @Html.EditorFor(model => model.actClassId, new { htmlAttributes = new { @class = "form-control", @type = "Hidden", @id = "classId" } })
+
                     </ul>
                 </nav>
             </div>
+            @Html.ValidationMessageFor(model => model.actClassId, "", new { @class = "text-danger validation" })
         </div>
 
         <div class="col col-md-12 col-xs-6 pl-0">
             <div class="col col-md-12 col-xs-6 pl-0">
                 @Html.EditorFor(model => model.actTopic, new { htmlAttributes = new { @class = "form-control text-black-50 mt-3 col col-md-10 col-xs-10", @id = "topic", placeholder = "請輸入揪團主題" } })
-                @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.actTopic, "", new { @class = "text-danger validation" })
             </div>
         </div>
 
         @*<div class="row col col-md-12">*@
         @*<div class="col col-md-12">*@
         <ul class="mt-3 col col-12 pl-0 pr-0">
-            <li class="fa col col-md-12 col-xs-12 pl-0">
-
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-calendar-alt">活動日期</i></label>
-                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "date" })
-                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+            <li class="fa col col-md-12 col-xs-12 pl-0" id="startDate">
+                <label class="col-md-3 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="datepicker"><i class="fas fa-calendar-alt">活動日期</i></label>
+                    <small class="text-danger"></small>
+                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "text", id = "datepicker" })
+                    @*@Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })*@
+                    <small class="text-secondary">備註:即日起一年內皆可開團</small>
                 </label>
 
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-clock">活動時間</i></label>
-                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "time" })
-                    @Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })
+                <label class="col col-md-4 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="timepicker"><i class="fas fa-clock">活動時間</i></label>
+                    <small class="text-danger"></small>
+                    @Html.TextBoxFor(model => model.actTime, new { @class = "form-control", @type = "text", id = "timepicker" })
+                    @*@Html.ValidationMessageFor(model => model.actTime, "", new { @class = "text-danger" })*@
+                    <small>　</small>
                 </label>
             </li>
-            <li class="fa col col-md-12 col-xs-12 pl-0">
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-calendar-check">報名截止日期</i></label>
-                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "date" })
-                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+            <li class="fa col col-md-12 col-xs-12 pl-0" id="deadLine">
+                <label class="col col-md-3 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="datepicker2"><i class="fas fa-calendar-check">報名截止日期</i></label>
+                    <small class="text-danger ml-3"></small>
+                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "text", id = "datepicker2" })
+                    @*@Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })*@
+                    <small class="text-secondary">備註:報名截止時間不可少於活動開始前6個小時</small>
                 </label>
 
-                <label class="col col-md-3 col-xs-12 pl-0">
-                    <label><i class="fas fa-stopwatch">報名截止時間</i></label>
-                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "time" })
-                    @Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })
+                <label class="col col-md-4 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
+                    <label class="control-label" for="timepicker2"><i class="fas fa-stopwatch">報名截止時間</i></label>
+                    <small class="text-danger ml-3"></small>
+                    @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "text", id = "timepicker2" })
+                    @*@Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })*@
+                    <small>　</small>
                 </label>
             </li>
 
@@ -108,7 +117,8 @@
             <li class="fa col col-md-12 col-xs-12 pl-0">
                 <label class="col col-md-3 col-xs-12 pl-0">
                     <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
-                    @Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })*@
+                    @Html.DropDownList("Budget_Restrict", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
                 </label>
                 <label class="col col-md-3 col-xs-12 pl-0">
@@ -141,8 +151,8 @@
 
                 <label class="col col-md-4 col-sx-12 pl-0">
                     <label class="pl-0"><i class="fas fa-home">地址</i></label>
+                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger ml-4 validation" })
                     @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control col col-md-12" } })
-                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger" })
                 </label>
             </li>
 
@@ -162,7 +172,7 @@
             <label class="col col-md-6 col-xs-6 pl-0">
                 <label class="mr-1"><i class="fa fa-edit">活動描述</i></label>
                 @Html.TextAreaFor(model => model.actDescription, new { @class = "form-control col col-md-11", placeholder = "請說明活動內容", rows = "10", @style = "resize:none" })
-                @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.actDescription, "", new { @class = "text-danger validation" })
             </label>
         </div>
         <div class="form-group mt-3">
@@ -173,13 +183,37 @@
             </label>
         </div>
 
-        <div class="col-md-12 align-content-center pl-0 mt-5">
-            <input type="submit" value="開團" class="btn btn-warning btn-block" id="buildUp" style="margin:auto"/>
+        @*<div class="col col-md-10 text-center pl-0">
+                <input type="submit" value="開團" class="btn btn-warning btn-block mb-5" id="buildUp" style="margin:auto"/>
+            </div>*@
+        <button type="button" class="btn btn-warning btn-block mb-5 col-md-4 text-center" data-toggle="modal" data-target="#buildUp" style="margin:auto" id="createAct">
+            開團
+        </button>
+
+        <div class="modal fade" id="buildUp" tabindex="-1" role="dialog" aria-labelledby="buildUpTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buildUpTitle">溫馨提醒</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        請確認填寫的資料是否正確！揪團建立後可編輯項目為【揪團主題】、【揪團內容】、【付款方式】、【預算上限】
+                        ，如需刪除揪團，請聯繫管理員並告知原因！
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">沒問題請開團</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
 
-<div class="mt-5">
+<div>
     @Html.ActionLink("返回活動頁面", "Index")
 </div>
 @section topCSS{
@@ -189,4 +223,199 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@*以下為DateTimePicker需要的JS*@
+<!-- Popper JS -->
+<script src="~/Scripts/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="~/Scripts/bootstrap.min.js"></script>
+<!-- Propeller textfield js -->
+<script type="text/javascript" src="dist/js/propeller.min.js"></script>
+<!-- Datepicker moment with locales -->
+<script type="text/javascript" language="javascript" src="~/Scripts/moment-with-locales.js"></script>
+<!-- Propeller Bootstrap datetimepicker -->
+<script type="text/javascript" language="javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
 <script src="~/Scripts/ActivityScripts.js"></script>
+
+@section scripts{
+    <script>
+        $('#createAct').click(function () {
+    var ValidStatus = $('#newApply').valid();
+    console.log(ValidStatus);
+    if (ValidStatus == false) {
+        return false;
+    }
+});
+
+$('#buildUp').click(function () {
+    //alert("請確認填寫的資料是否正確，揪團建立後僅有【揪團主題】、【揪團內容】、【付款方式】、【預算上限】可供編輯，若需刪除揪團請聯繫管理員！");
+
+    if ($('#datepicker').val() == "") {
+        $('#datepicker').addClass("is-invalid");
+        $('#datepicker').prev().addClass('createTime').text('請選擇活動日期');
+    }
+    else {
+        $('#datepicker').removeClass("is-invalid").addClass("is-valid");
+        $('#datepicker').prev().text("");
+    }
+    if ($('#timepicker').val() == "") {
+        $('#timepicker').addClass("is-invalid");
+        $('#timepicker').prev().addClass('createTime').text('請選擇活動時間');
+    } else {
+        $('#timepicker').removeClass("is-invalid").addClass("is-valid");
+        $('#timepicker').prev().text("");
+    }
+    if ($('#datepicker2').val() == "") {
+        $('#datepicker2').addClass("is-invalid");
+        $('#datepicker2').prev().addClass('createTime').text('請選擇截止日期');
+    }
+    else {
+        $('#datepicker2').removeClass("is-invalid").addClass("is-valid");
+        $('#datepicker2').prev().text("");
+    }
+    if ($('#timepicker2').val() == "") {
+        $('#timepicker2').addClass("is-invalid");
+        $('#timepicker2').prev().addClass('createTime').text('請選擇截止時間');
+    } else {
+        $('#timepicker2').removeClass("is-invalid").addClass("is-valid");
+        $('#timepicker2').prev().text("");
+    }
+    if ($('#actRoad').val() == "") {
+        $('#actRoad').addClass("is-invalid");
+    }
+    if ($('#actDescription').val() == "") {
+        $('#actDescription').addClass("is-invalid");
+    }
+});
+
+$('#actRoad').keyup(function () {
+    if ($('#actRoad').val() != "") {
+        $('#actRoad').removeClass("is-invalid");
+    }
+});
+
+$('#actDescription').keyup(function () {
+    if ($('#actDescription').val() != "") {
+        $('#actDescription').removeClass("is-invalid");
+    }
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//DateTimePicker for create.cshtml
+var today = new Date();
+today.setHours(23);
+today.setMinutes(59);
+today.setSeconds(59);
+var upper = new Date();
+upper.setFullYear(today.getFullYear() + 1);
+upper.setDate(today.getDate());
+
+// Date picker only
+$('#datepicker').datetimepicker({
+    format: 'YYYY-MM-DD',
+    minDate: today,
+    maxDate: upper
+});
+$('#datepicker2').datetimepicker({
+    format: 'YYYY-MM-DD',
+    minDate: today
+});
+// Time picker only
+$('#timepicker').datetimepicker({
+    format: 'LT'
+});
+$('#timepicker2').datetimepicker({
+    format: 'LT'
+});
+var current, picked, chosen;
+//判斷是否輸入活動日期與時間  
+$('#startDate input').blur(function () {
+    current = new Date();
+    current = current.getHours() * 3600 + current.getMinutes() * 60 + current.getSeconds();
+    picked = new Date($('#timepicker').data('DateTimePicker').date());
+    picked = picked.getHours() * 3600 + picked.getMinutes() * 60 + picked.getSeconds();
+    chosen = new Date($('#datepicker').data('DateTimePicker').date());
+    chosen.setHours(23);
+    chosen.setMinutes(59);
+    chosen.setSeconds(59);
+    switch ($(this).attr("id")) {
+        case "datepicker":
+            if ($('#datepicker').val() == "") {
+                $('#datepicker').addClass("is-invalid");
+                //$('#datepicker').addClass("invalid-feedback").text('請選擇活動日期');
+                $('#datepicker').prev().addClass('createTime').text('請選擇活動日期');
+            } else {
+                $('#datepicker').removeClass("is-invalid").addClass("is-valid");
+                $('#datepicker').prev().text("");
+            }
+            break;
+        case "timepicker":
+            if ($('#timepicker').val() == "") {
+                $('#timepicker').addClass("is-invalid");
+                $('#timepicker').prev().addClass('createTime').text('請選擇活動時間');
+            } else if ($('#datepicker').val() == "") {
+                $('#timepicker').addClass("is-invalid");
+                $('#timepicker').prev().addClass('createTime').text('請先選擇活動日期');
+            } else if (Date.parse(chosen) == Date.parse(today) && (picked - current) < 60 * 60 * 6 && (picked - current) >= 0) {
+                $('#timepicker').addClass("is-invalid");
+                $('#timepicker').prev().text("開團時間需與現在間隔6小時以上");
+            } else if (Date.parse(chosen) == Date.parse(today) && (picked - current) <= 0) {
+                $('#timepicker').addClass("is-invalid");
+                $('#timepicker').prev().addClass("ml-1").text("開團時間超出範圍");
+            }
+            else {
+                $('#timepicker').removeClass("is-invalid").addClass("is-valid");
+                $('#timepicker').prev().text("");
+            }
+            break;
+    }
+    $('#datepicker2').data('DateTimePicker').maxDate(chosen);
+});
+
+//判斷是否輸入報名截止日期與時間
+var endTime, endDate;
+$('#deadLine input').blur(function () {
+    endTime = new Date($('#timepicker2').data('DateTimePicker').date());
+    endTime = endTime.getHours() * 3600 + endTime.getMinutes() * 60 + endTime.getSeconds();
+    endDate = new Date($('#datepicker2').data('DateTimePicker').date());
+    endDate.setHours(23);
+    endDate.setMinutes(59);
+    endDate.setSeconds(59);
+    switch ($(this).attr("id")) {
+        case "datepicker2":
+            if ($('#datepicker2').val() == "") {
+                $('#datepicker2').addClass("is-invalid");
+                $('#datepicker2').prev().text('請選擇截止日期');
+                //}else if (Date.parse(deadLine) > Date.parse(actDate)) {
+                //    $('#datepicker2').addClass("is-invalid");
+                //    $('#datepicker2').prev().text("截止日不得超過活動日"); 
+                //}else if (Date.parse(deadLine) < Date.parse(today)) {
+                //    $('#datepicker2').addClass("is-invalid");
+                //    $('#datepicker2').prev().text("截止日不可早於今天"); 
+            } else {
+                $('#datepicker2').removeClass("is-invalid").addClass("is-valid");
+                $('#datepicker2').prev().text("");
+            }
+            break;
+        case "timepicker2":
+            $('#timepicker2').blur(function () {
+                if ($('#timepicker2').val() == "") {
+                    $('#timepicker2').addClass("is-invalid");
+                    $('#timepicker2').prev().text('請選擇截止時間');
+                } else if ($('#datepicker2').val() == "") {
+                    $('#timepicker2').addClass("is-invalid");
+                    $('#timepicker2').prev().addClass('createTime').text('請先選擇截止日期');
+                } else if (Date.parse(endDate) == Date.parse(chosen) && (picked - endTime) < 60 * 60 * 3 && (picked - endTime) >= 0) {
+                    $('#timepicker2').addClass("is-invalid");
+                    $('#timepicker2').prev().text("與開團時間需間隔3小時以上");
+                } else if (Date.parse(endDate) == Date.parse(chosen) && (picked - endTime) <= 0) {
+                    $('#timepicker2').addClass("is-invalid");
+                    $('#timepicker2').prev().text("截止時間超出範圍");
+                } else {
+                    $('#timepicker2').removeClass("is-invalid").addClass("is-valid");
+                    $('#timepicker2').prev().text("");
+                }
+            });
+            break;
+    }
+});
+    </script>
+    }

@@ -1,0 +1,31 @@
+﻿
+.table-hover tbody tr:hover {
+    color: #212529;
+    background-color: rgba(252, 185, 243, 0.69);
+}
+
+.page-link {
+    color: white;
+    background-color: #343a40;
+    border: 1px solid #dee2e6;
+}
+
+    .page-link:hover {
+        color: black;
+        background-color: white;
+        border-color: white;
+    }
+
+.page-item.active .page-link {
+    color: #343a40;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #343a40;
+    border-color: #dee2e6;
+}
+
+

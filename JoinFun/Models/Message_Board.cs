@@ -14,6 +14,7 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaMessage_Board))]
+
     public partial class Message_Board
     {
         public string mboardSerial { get; set; }
