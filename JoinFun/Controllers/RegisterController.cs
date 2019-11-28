@@ -141,7 +141,7 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult PwdEdit(string memId, string OldPassword, string NewPassword)
+        public ActionResult PwdEdit(string memId, string OldPassword, string Password)
         {
 
             var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
@@ -167,7 +167,7 @@ namespace JoinFun.Controllers
 
                 //密碼雜湊 salt+hash
                 string salt = Guid.NewGuid().ToString();
-                byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(NewPassword + salt);
+                byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(Password + salt);
                 byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
                 string hashString = Convert.ToBase64String(hashBytes);
 
@@ -204,16 +204,16 @@ namespace JoinFun.Controllers
         public ActionResult ForgetPwd(string account, string email)
         {
             var acc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
-
-            var memEmail = db.Member.Where(m => m.Email == email).FirstOrDefault();
+            var getmemid = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault().memId;
+            var memEmail = db.Member.Where(m => m.memId == getmemid).FirstOrDefault().Email;
             if (acc != null)
             {
-                if (acc.Account == account && memEmail.Email == email)
+                if (acc.Account == account && memEmail == email)
                 {
-                    
+                    string getEmailID = db.Member.Find(getmemid).email_ID;
                     MessageCenter mes = new MessageCenter();
-                        List<string> mailList = new List<string>() { memEmail.Email };
-                        mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的會員:</h3></br><h3>請點擊下面連結來重置您的密碼!</h3></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + memEmail.email_ID + "'>重置密碼請點擊</a></br>");
+                        List<string> mailList = new List<string>() { memEmail };
+                        mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的會員:</h3></br><h3>請點擊下面連結來重置您的密碼!</h3></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + getEmailID + "'>重置密碼請點擊</a></br>");
 
                     ViewBag.ForgetPwd = "信件已發送";
                     return View();
