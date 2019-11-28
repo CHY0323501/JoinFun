@@ -1,0 +1,131 @@
+﻿@model JoinFun.Models.Post
+
+@{
+    ViewBag.Title = "新增公告";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    var select=(SelectListItem)ViewBag.admDropdown;
+}
+
+    <h2 class="text-white text-center">新增公告</h2>
+    <div class="container">
+        @using (Html.BeginForm("PostCreate", "Adm", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal text-white">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.postSerial, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.postSerial, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.postSerial, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+                <div class="row">
+                    <div class="col col-12 text-center">
+                        <div class="container">
+                            <div class="bg-transparent" id="frontPic">
+                                <img id="uploadMain" src="~/Assets/pages/images/main.jpg" class="img-fluid col-md-10 pl-0" />
+                            </div>
+                            <input style="display:none" type="file" name="firstPic" id="picture" />
+
+                        </div>
+                    </div>
+                    <div class="col col-12 mt-4">
+                        <div class="row px-3">
+
+                            @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label col-2 adm-editFont" })
+                            @Html.EditorFor(model => model.admId, new { htmlAttributes = new { @class = "form-control text-center col-2 adm-editFont", @readonly = "readonly", @Value = ViewBag.admNick } })
+                            @Html.ValidationMessageFor(model => model.admId, "", new { @class = "text-danger text-center adm-editFont" })
+
+                            @Html.LabelFor(model => model.postTime, htmlAttributes: new { @class = "control-label text-center col-2 adm-editFont" })
+                            @Html.EditorFor(model => model.postTime, new { htmlAttributes = new { @class = "form-control text-center col-2 adm-editFont", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.postTime, "", new { @class = "text-danger text-center adm-editFont" })
+
+                            @Html.LabelFor(model => model.ShowInCarousel, htmlAttributes: new { @class = "control-label text-center col-2 adm-editFont" })
+                            @Html.EditorFor(model => model.ShowInCarousel, new { htmlAttributes = new { @class = "form-control col-2 adm-editFont" } })
+                            @Html.ValidationMessageFor(model => model.ShowInCarousel, "", new { @class = "text-danger adm-editFont" })
+
+                            @Html.LabelFor(model => model.postTitle, htmlAttributes: new { @class = "control-label col-2 mt-4 adm-editFont" })
+                            @Html.EditorFor(model => model.postTitle, new { htmlAttributes = new { @class = "form-control text-center col-10 pr-5 mt-4 adm-editFont" } })
+                            @Html.ValidationMessageFor(model => model.postTitle, "", new { @class = "text-danger text-center mt-4 adm-editFont" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 px-3">
+                    <div class="col col-3 text-left">
+                        @Html.LabelFor(model => model.postContent, htmlAttributes: new { @class = "control-label adm-editFont" })
+                    </div>
+                </div>
+                <div class="row px-3">
+                    @Html.TextArea("postContent", Model.postContent, 10, 100, new { @class = "form-control col-12 adm-editFont" })
+                    @Html.ValidationMessageFor(model => model.postContent, "", new { @class = "text-danger adm-editFont" })
+                </div>
+
+
+                @*分隔線*@
+
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.admId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.admNick } })
+                        @Html.ValidationMessageFor(model => model.admId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.postTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.postTitle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.postTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.postContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.postContent, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.postContent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.postTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.postTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.postTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.postPics, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.postPics, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.postPics, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShowInCarousel, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.ShowInCarousel)
+                            @Html.ValidationMessageFor(model => model.ShowInCarousel, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="新增公告" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+<script>
+    $('#uploadMain').click(function () {
+        $('#picture').click();
+    });
+</script>

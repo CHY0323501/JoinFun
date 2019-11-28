@@ -81,6 +81,37 @@ namespace JoinFun.Controllers
 
             return View();
         }
+        //新增公告
+        public ActionResult PostCreate() {
+            Session["admid"] = "adm002";
+            if (Session["admid"] != null) {
+                string session = Session["admid"].ToString();
+                Post post = new Post();
+                post.postTime = DateTime.Now;
+                ViewBag.admNick= db.Administrator.Where(m => m.admId == session).FirstOrDefault().admNick;
+                return View(post);
+            }
+            
+            return RedirectToAction("Post");
+        }
+        [HttpPost,ValidateAntiForgeryToken]
+        public ActionResult PostCreate(Post post,HttpPostedFileBase pic)
+        {
+            if (ModelState.IsValid) {
+                string getPostid = db.Database.SqlQuery<string>("Select [dbo].[GetPostId]()").FirstOrDefault();
+                post.postSerial = getPostid;
+
+                if(pic != null)
+                {
+                    post.postPics = pic.FileName;
+                };
+                db.Post.Add(post);
+                db.SaveChanges();
+
+            } 
+            return View();
+        }
+
         //公告partial view
         //用於前後台觀看詳細公告、後台瀏覽所有公告
         [ChildActionOnly]

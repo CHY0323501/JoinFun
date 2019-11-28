@@ -984,6 +984,7 @@
     <Content Include="Views\Shared\_Post.cshtml" />
     <Content Include="Views\Member\ActCheck.cshtml" />
     <Content Include="Views\Adm\PostEdit.cshtml" />
+    <Content Include="Views\Adm\PostCreate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,7 +9,7 @@
 
 <div class="container containerMinH">
     @{
-        if (Session["memid"].ToString().IsEmpty()) {
+        if (Session["memid"]==null) {
             Session["memid"]= "";
         }
 

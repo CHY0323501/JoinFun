@@ -4,7 +4,7 @@
 @using X.PagedList.Mvc.Bootstrap4;
 @model X.PagedList.PagedList<JoinFun.Models.Post>
 
-<link href="~/CSS/ADMpagedlist.css" rel="stylesheet" />
+
 
 
 
@@ -52,7 +52,7 @@
         <h2 class="text-center font-weight-bold my-3 text-warning">公告管理</h2>
         <div class="row text-white mb-3 pl-5">
             <div class="col-2 font-weight-bold">
-                <a class="btn btn-info" href="#" style="font-size:1.1rem;"><i class="fas fa-plus icon-size"></i>　新增公告</a>
+                <a class="btn btn-info" href="@Url.Action("PostCreate","Adm")" style="font-size:1.1rem;"><i class="fas fa-plus icon-size"></i>　新增公告</a>
             </div>
         </div>
         @*查看指定筆數公告*@
