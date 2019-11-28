@@ -340,16 +340,15 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(string actId, FormCollection form, HttpPostedFileBase picture)
+        public ActionResult Edit(string actId, short paymentTerm, short maxNumPeople, short gender)
         {
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
-            //string actTopic = form["actTopic"].ToString();
-            //string actDescription = form["actDescription"].ToString();
-            //short payment = Int16.Parse(form["Payment_Restriction"].ToString());
-            //act.actTopic = actTopic;
-            //act.actDescription = actDescription;
-            //act.paymentTerm = payment;
-
+            act.paymentTerm = paymentTerm;
+            act.maxNumPeople = maxNumPeople;
+            act.gender = gender;
+            //將Dropdown List的值取回 ---start--- 
+            act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
+            //將Dropdown List的值取回 ---end--- 
             db.SaveChanges();
             return RedirectToAction("Index");
         }
