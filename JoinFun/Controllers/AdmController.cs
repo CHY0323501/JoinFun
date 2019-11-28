@@ -82,7 +82,7 @@ namespace JoinFun.Controllers
             return View();
         }
         //公告partial view
-        //用於前台首頁Carousel連結、後台瀏覽所有公告、後台查看個別公告
+        //用於前後台觀看詳細公告、後台瀏覽所有公告
         [ChildActionOnly]
         public PartialViewResult _Post(string PostNo,int page=1)
         {
