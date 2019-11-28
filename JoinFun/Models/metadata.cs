@@ -76,7 +76,6 @@ namespace JoinFun.Models
         public string admAcc { get; set; }
         [DisplayName("管理員密碼")]
         [Required(ErrorMessage = "請輸入管理員密碼")]
-        [StringLength(15, ErrorMessage = "最多輸入15字")]
         public string admPass { get; set; }
         [DisplayName("管理員暱稱")]
         [Required(ErrorMessage = "請輸入管理員暱稱")]

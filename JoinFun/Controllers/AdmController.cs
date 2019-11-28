@@ -74,20 +74,14 @@ namespace JoinFun.Controllers
         //註冊管理員
         public ActionResult AdmRegister()
         {
-
-         
-
             return View();
-
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AdmRegister(string admId, string admAcc, string admPass, string admNick)
+        public ActionResult AdmRegister( string admAcc, string admPass, string admNick)
         {
-
-
-            //密碼雜湊 salt+hash
+          //密碼雜湊 salt+hash
             string salt = Guid.NewGuid().ToString();
             byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(admPass + salt);
             byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
@@ -95,10 +89,10 @@ namespace JoinFun.Controllers
 
 
 
-            //string getadmId = db.Database.SqlQuery<string>("select [dbo].[GetAdmId]()").FirstOrDefault();
+            string getadmId = db.Database.SqlQuery<string>("select [dbo].[GetAdmId]()").FirstOrDefault();
 
             Administrator accAdm = new Administrator();
-            accAdm.admId = admId;
+            accAdm.admId = getadmId;
             accAdm.admAcc = admAcc;
             accAdm.admPass= hashString;
             accAdm.admPasswordConfirm = hashString;
@@ -114,7 +108,79 @@ namespace JoinFun.Controllers
 
         }
 
+        //修改管理員密碼
+        public ActionResult AdmPwdEdit(string admId)
+        {
+            if (Session["admId"].ToString() == admId)
+            {
+                var accAdmPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
+                
 
+                var account = (from a in db.Acc_Pass
+                               where a.memId == memId
+                               select a.Account).FirstOrDefault();
+
+
+                Session["Account"] = account;
+                return View();
+            }
+            return RedirectToAction("Login", "Login");
+
+        }
+
+        [HttpPost]
+        public ActionResult AdmPwdEdit(string memId, string OldPassword, string Password)
+        {
+
+            var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
+            //var accPwd = db.Acc_Pass.Find();
+
+            var oldsalt = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault().Salt;
+            //var oldsalt = db.Acc_Pass.Find();
+            //string old = oldsalt.Salt;
+
+            //ViewBag.account = (from a in db.Acc_Pass
+            //                   where a.memId == memId
+            //                   select a.Account).FirstOrDefault();
+
+
+            byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(OldPassword + oldsalt);
+            byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
+            string HashString = Convert.ToBase64String(HashBytes);
+
+            if (accPwd.Password != null)
+            {
+                if (accPwd.Password == HashString)
+                {
+
+                    //密碼雜湊 salt+hash
+                    string salt = Guid.NewGuid().ToString();
+                    byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(Password + salt);
+                    byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
+                    string hashString = Convert.ToBase64String(hashBytes);
+
+
+                    accPwd.Salt = salt;
+                    accPwd.memId = memId;
+                    accPwd.Password = hashString;
+                    accPwd.PasswordConfirm = hashString;
+
+                    db.SaveChanges();
+
+
+                    return RedirectToAction("Index", "Activity");
+
+
+                }
+                else
+                {
+                    ViewBag.PwdEditErr = "舊密碼未填或有誤!";
+                    return View();
+                }
+
+            }
+            return View();
+        }
 
         public ActionResult Index() {
 

@@ -74,7 +74,7 @@ namespace JoinFun.Controllers
 
                     Session["memid"] = reader["memId"].ToString();
                     Session["nick"] = a.memNick;
-
+                    
 
                     return RedirectToAction("Index", "Activity");
                 }
