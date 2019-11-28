@@ -776,6 +776,9 @@
     <Compile Include="Models\Violation.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_ActCheck.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Activities.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
@@ -794,7 +797,13 @@
     <Compile Include="Models\vw_Host_Remarks.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_Member_Join.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_Member_Remarks.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_MemJoinDetail.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_PartHistory.cs">
@@ -861,6 +870,7 @@
     <Content Include="Views\Register\RemakePwd.cshtml" />
     <Content Include="Views\Activity\Messages.cshtml" />
     <Content Include="Views\Activity\MContent.cshtml" />
+    <Content Include="Views\Activity\MemJoin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

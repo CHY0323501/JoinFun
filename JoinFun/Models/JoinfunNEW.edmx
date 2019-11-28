@@ -261,6 +261,7 @@
           <Property Name="postContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="postTime" Type="datetime" Nullable="false" />
           <Property Name="postPics" Type="nvarchar(max)" />
+          <Property Name="ShowInCarousel" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Punishment">
           <Key>
@@ -395,6 +396,23 @@
           <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_ActCheck' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_ActCheck">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="appvStatus" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="appvStatus" Type="bit" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="appvDate" Type="datetime" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Activities' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -591,6 +609,22 @@
           <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Member_Join' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_Member_Join">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="appvStatus" />
+          </Key>
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="appvStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_Member_Remarks' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
         <EntityType Name="vw_Member_Remarks">
           <Key>
@@ -652,6 +686,58 @@
           <Property Name="hashTag" Type="nvarchar(max)" />
           <Property Name="Expr1" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'JoinFun.dbo.vw_MemJoinDetail' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_MemJoinDetail">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="age" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="actClassName" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="PeoRestriction" />
+            <PropertyRef Name="payment" />
+          </Key>
+          <Property Name="memId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="actId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="memNick" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="age" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="Budget" Type="money" Nullable="false" />
+          <Property Name="actClassName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CountyName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="acceptDrop" Type="bit" Nullable="false" />
+          <Property Name="actClassId" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="actCounty" Type="smallint" Nullable="false" />
+          <Property Name="actDeadline" Type="datetime" Nullable="false" />
+          <Property Name="actDescription" Type="nvarchar(max)" />
+          <Property Name="actDistrict" Type="smallint" Nullable="false" />
+          <Property Name="actRoad" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="actTime" Type="datetime" Nullable="false" />
+          <Property Name="actTopic" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="clickTimes" Type="int" Nullable="false" />
+          <Property Name="hostId" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="hashTag" Type="nvarchar(max)" />
+          <Property Name="PeoRestriction" Type="int" Nullable="false" />
+          <Property Name="payment" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--產生期間發現錯誤:
 警告 6002: 資料表/檢視 'JoinFun.dbo.vw_PartHistory' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
@@ -1156,6 +1242,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetActClassId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetActId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetActId1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetAdmId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetChatId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetCommentId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetDietId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetHabitId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetHashId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetMBoardSerial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetMemId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetNoteId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetPhotoId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetPostId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetPunishId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetRemarkId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetSocialId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetVioId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="GetVioTypeId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="char" />
+        <Function Name="sp_blockMember" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BlockedMemID" Type="char" Mode="In" />
+          <Parameter Name="memID" Type="char" Mode="In" />
+        </Function>
         <EntityContainer Name="JoinFunModelStoreContainer">
           <EntitySet Name="Acc_Pass" EntityType="Self.Acc_Pass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Activity_Class" EntityType="Self.Activity_Class" Schema="dbo" store:Type="Tables" />
@@ -1237,6 +1346,16 @@
     [Part_Now].[memId] AS [memId], 
     [Part_Now].[memNick] AS [memNick]
     FROM [dbo].[Part_Now] AS [Part_Now]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_ActCheck" EntityType="Self.vw_ActCheck" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ActCheck].[memId] AS [memId], 
+    [vw_ActCheck].[actId] AS [actId], 
+    [vw_ActCheck].[appvStatus] AS [appvStatus], 
+    [vw_ActCheck].[memNick] AS [memNick], 
+    [vw_ActCheck].[Sex] AS [Sex], 
+    [vw_ActCheck].[appvDate] AS [appvDate]
+    FROM [dbo].[vw_ActCheck] AS [vw_ActCheck]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_Activities" EntityType="Self.vw_Activities" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1344,6 +1463,15 @@
     [vw_HostHistory].[DistrictName] AS [DistrictName]
     FROM [dbo].[vw_HostHistory] AS [vw_HostHistory]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_Member_Join" EntityType="Self.vw_Member_Join" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_Member_Join].[actId] AS [actId], 
+    [vw_Member_Join].[memId] AS [memId], 
+    [vw_Member_Join].[memNick] AS [memNick], 
+    [vw_Member_Join].[Sex] AS [Sex], 
+    [vw_Member_Join].[appvStatus] AS [appvStatus]
+    FROM [dbo].[vw_Member_Join] AS [vw_Member_Join]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_Member_Remarks" EntityType="Self.vw_Member_Remarks" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_Member_Remarks].[remarkSerial] AS [remarkSerial], 
@@ -1377,6 +1505,34 @@
     [vw_Member_Remarks].[Expr1] AS [Expr1], 
     [vw_Member_Remarks].[actClassId] AS [actClassId]
     FROM [dbo].[vw_Member_Remarks] AS [vw_Member_Remarks]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_MemJoinDetail" EntityType="Self.vw_MemJoinDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_MemJoinDetail].[memId] AS [memId], 
+    [vw_MemJoinDetail].[actId] AS [actId], 
+    [vw_MemJoinDetail].[memNick] AS [memNick], 
+    [vw_MemJoinDetail].[Sex] AS [Sex], 
+    [vw_MemJoinDetail].[age] AS [age], 
+    [vw_MemJoinDetail].[Budget] AS [Budget], 
+    [vw_MemJoinDetail].[actClassName] AS [actClassName], 
+    [vw_MemJoinDetail].[CountyName] AS [CountyName], 
+    [vw_MemJoinDetail].[DistrictName] AS [DistrictName], 
+    [vw_MemJoinDetail].[gender] AS [gender], 
+    [vw_MemJoinDetail].[acceptDrop] AS [acceptDrop], 
+    [vw_MemJoinDetail].[actClassId] AS [actClassId], 
+    [vw_MemJoinDetail].[actCounty] AS [actCounty], 
+    [vw_MemJoinDetail].[actDeadline] AS [actDeadline], 
+    [vw_MemJoinDetail].[actDescription] AS [actDescription], 
+    [vw_MemJoinDetail].[actDistrict] AS [actDistrict], 
+    [vw_MemJoinDetail].[actRoad] AS [actRoad], 
+    [vw_MemJoinDetail].[actTime] AS [actTime], 
+    [vw_MemJoinDetail].[actTopic] AS [actTopic], 
+    [vw_MemJoinDetail].[clickTimes] AS [clickTimes], 
+    [vw_MemJoinDetail].[hostId] AS [hostId], 
+    [vw_MemJoinDetail].[hashTag] AS [hashTag], 
+    [vw_MemJoinDetail].[PeoRestriction] AS [PeoRestriction], 
+    [vw_MemJoinDetail].[payment] AS [payment]
+    FROM [dbo].[vw_MemJoinDetail] AS [vw_MemJoinDetail]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_PartHistory" EntityType="Self.vw_PartHistory" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1873,6 +2029,7 @@
           <Property Name="postTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="postPics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Administrator" Relationship="Self.FK__Post__admId__7F2BE32F" FromRole="Post" ToRole="Administrator" />
+          <Property Name="ShowInCarousel" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Punishment">
           <Key>
@@ -2615,6 +2772,13 @@
             <End Role="Member" EntitySet="Member" />
             <End Role="Notification" EntitySet="Notification" />
           </AssociationSet>
+          <EntitySet Name="vw_ActCheck" EntityType="JoinFunModel.vw_ActCheck" />
+          <EntitySet Name="vw_Member_Join" EntityType="JoinFunModel.vw_Member_Join" />
+          <EntitySet Name="vw_MemJoinDetail" EntityType="JoinFunModel.vw_MemJoinDetail" />
+          <FunctionImport Name="sp_blockMember">
+            <Parameter Name="BlockedMemID" Mode="In" Type="String" />
+            <Parameter Name="memID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="vw_Host_Remarks">
           <Key>
@@ -2949,6 +3113,85 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_ActCheck">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="appvStatus" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+          </Key>
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="appvStatus" Type="Boolean" Nullable="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="appvDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="vw_Member_Join">
+          <Key>
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="appvStatus" />
+          </Key>
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="appvStatus" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_MemJoinDetail">
+          <Key>
+            <PropertyRef Name="memId" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="age" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="actClassName" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="gender" />
+            <PropertyRef Name="acceptDrop" />
+            <PropertyRef Name="actClassId" />
+            <PropertyRef Name="actCounty" />
+            <PropertyRef Name="actDeadline" />
+            <PropertyRef Name="actDistrict" />
+            <PropertyRef Name="actRoad" />
+            <PropertyRef Name="actTime" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="clickTimes" />
+            <PropertyRef Name="hostId" />
+            <PropertyRef Name="PeoRestriction" />
+            <PropertyRef Name="payment" />
+          </Key>
+          <Property Name="memId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="age" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="actClassName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="acceptDrop" Type="Boolean" Nullable="false" />
+          <Property Name="actClassId" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="actCounty" Type="Int16" Nullable="false" />
+          <Property Name="actDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="actDistrict" Type="Int16" Nullable="false" />
+          <Property Name="actRoad" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="actTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="clickTimes" Type="Int32" Nullable="false" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="hashTag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PeoRestriction" Type="Int32" Nullable="false" />
+          <Property Name="payment" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3208,6 +3451,7 @@
           <EntitySetMapping Name="Post">
             <EntityTypeMapping TypeName="JoinFunModel.Post">
               <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="ShowInCarousel" ColumnName="ShowInCarousel" />
                 <ScalarProperty Name="postSerial" ColumnName="postSerial" />
                 <ScalarProperty Name="admId" ColumnName="admId" />
                 <ScalarProperty Name="postTitle" ColumnName="postTitle" />
@@ -3532,6 +3776,60 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_ActCheck">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_ActCheck">
+              <MappingFragment StoreEntitySet="vw_ActCheck">
+                <ScalarProperty Name="appvDate" ColumnName="appvDate" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="appvStatus" ColumnName="appvStatus" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Member_Join">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_Member_Join">
+              <MappingFragment StoreEntitySet="vw_Member_Join">
+                <ScalarProperty Name="appvStatus" ColumnName="appvStatus" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_MemJoinDetail">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_MemJoinDetail">
+              <MappingFragment StoreEntitySet="vw_MemJoinDetail">
+                <ScalarProperty Name="payment" ColumnName="payment" />
+                <ScalarProperty Name="PeoRestriction" ColumnName="PeoRestriction" />
+                <ScalarProperty Name="hashTag" ColumnName="hashTag" />
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="clickTimes" ColumnName="clickTimes" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="actTime" ColumnName="actTime" />
+                <ScalarProperty Name="actRoad" ColumnName="actRoad" />
+                <ScalarProperty Name="actDistrict" ColumnName="actDistrict" />
+                <ScalarProperty Name="actDescription" ColumnName="actDescription" />
+                <ScalarProperty Name="actDeadline" ColumnName="actDeadline" />
+                <ScalarProperty Name="actCounty" ColumnName="actCounty" />
+                <ScalarProperty Name="actClassId" ColumnName="actClassId" />
+                <ScalarProperty Name="acceptDrop" ColumnName="acceptDrop" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="actClassName" ColumnName="actClassName" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="memId" ColumnName="memId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_blockMember" FunctionName="JoinFunModel.Store.sp_blockMember" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

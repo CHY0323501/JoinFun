@@ -12,6 +12,8 @@ namespace JoinFun.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class JoinFunEntities : DbContext
     {
@@ -64,8 +66,22 @@ namespace JoinFun.Models
         public virtual DbSet<vw_PartHistory> vw_PartHistory { get; set; }
         public virtual DbSet<Host_Now> Host_Now { get; set; }
         public virtual DbSet<Part_Now> Part_Now { get; set; }
-
         public virtual DbSet<Notification> Notification { get; set; }
-
+        public virtual DbSet<vw_ActCheck> vw_ActCheck { get; set; }
+        public virtual DbSet<vw_Member_Join> vw_Member_Join { get; set; }
+        public virtual DbSet<vw_MemJoinDetail> vw_MemJoinDetail { get; set; }
+    
+        public virtual int sp_blockMember(string blockedMemID, string memID)
+        {
+            var blockedMemIDParameter = blockedMemID != null ?
+                new ObjectParameter("BlockedMemID", blockedMemID) :
+                new ObjectParameter("BlockedMemID", typeof(string));
+    
+            var memIDParameter = memID != null ?
+                new ObjectParameter("memID", memID) :
+                new ObjectParameter("memID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_blockMember", blockedMemIDParameter, memIDParameter);
+        }
     }
 }

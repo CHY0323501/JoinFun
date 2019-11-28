@@ -11,10 +11,7 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataType(typeof(MetaPost))]
-
+    
     public partial class Post
     {
         public string postSerial { get; set; }
@@ -23,6 +20,7 @@ namespace JoinFun.Models
         public string postContent { get; set; }
         public System.DateTime postTime { get; set; }
         public string postPics { get; set; }
+        public bool ShowInCarousel { get; set; }
     
         public virtual Administrator Administrator { get; set; }
     }

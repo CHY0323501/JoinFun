@@ -36,6 +36,11 @@
     background-position:center center;
 }
 
+.center{
+    margin-left:25%;
+    margin-top:35px;
+
+}
 #tag>a{
     color:cornflowerblue;
 }

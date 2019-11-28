@@ -12,18 +12,13 @@ namespace JoinFun.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Member_Remarks
+    public partial class vw_ActCheck
     {
-        public string remarkSerial { get; set; }
+        public string memId { get; set; }
         public string actId { get; set; }
-        public string FromMemId { get; set; }
-        public string ToMemId { get; set; }
-        public bool keepRemark { get; set; }
-        public short remarkStar { get; set; }
-        public string remarkContent { get; set; }
-        public System.DateTime remarkTime { get; set; }
-    
-        public virtual Join_Fun_Activities Join_Fun_Activities { get; set; }
-        public virtual Member Member { get; set; }
+        public bool appvStatus { get; set; }
+        public string memNick { get; set; }
+        public string Sex { get; set; }
+        public Nullable<System.DateTime> appvDate { get; set; }
     }
 }

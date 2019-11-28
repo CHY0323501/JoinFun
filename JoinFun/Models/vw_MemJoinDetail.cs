@@ -12,11 +12,15 @@ namespace JoinFun.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_Activities
+    public partial class vw_MemJoinDetail
     {
+        public string memId { get; set; }
+        public string actId { get; set; }
+        public string memNick { get; set; }
+        public string Sex { get; set; }
         public string age { get; set; }
-        public string actClassName { get; set; }
         public decimal Budget { get; set; }
+        public string actClassName { get; set; }
         public string CountyName { get; set; }
         public string DistrictName { get; set; }
         public string gender { get; set; }
@@ -26,26 +30,13 @@ namespace JoinFun.Models
         public System.DateTime actDeadline { get; set; }
         public string actDescription { get; set; }
         public short actDistrict { get; set; }
-        public string actId { get; set; }
         public string actRoad { get; set; }
         public System.DateTime actTime { get; set; }
         public string actTopic { get; set; }
-        public short ageRestrict { get; set; }
         public int clickTimes { get; set; }
         public string hostId { get; set; }
-        public bool keepAct { get; set; }
-        public string memNick { get; set; }
-        public string payment { get; set; }
-        public int PeoRestriction { get; set; }
         public string hashTag { get; set; }
-        public short genderSerial { get; set; }
-        public short serial { get; set; }
-        public short BudgetNo { get; set; }
-        public short CountyNo { get; set; }
-        public short peoSerial { get; set; }
-        public short paymentSerial { get; set; }
-        public short memCounty { get; set; }
-        public short memDistrict { get; set; }
-        public string Sex { get; set; }
+        public int PeoRestriction { get; set; }
+        public string payment { get; set; }
     }
 }
