@@ -11,7 +11,8 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    
+   
+
     public partial class vw_MemJoinDetail
     {
         public string memId { get; set; }

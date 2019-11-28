@@ -265,13 +265,10 @@
     <Content Include="Photos\male.png" />
     <Content Include="Photos\memphis-colorful.png" />
     <Content Include="Photos\no_results_found.png" />
-
     <Content Include="Photos\photo-1490367605959-06955305859b.jpg" />
     <Content Include="Photos\photo-1532117364815-720cd35ff6e3.jpg" />
-
     <Content Include="Photos\photo-1532117364815-720cd35ff6e3.png" />
     <Content Include="Photos\Posts\維修.png" />
-
     <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\gplaypattern.png" />
     <Content Include="Photos\img.png" />
@@ -315,13 +312,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <EntityDeploy Include="Models\JoinfunNEW.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>JoinfunNEW.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\JoinfunNEW.edmx.diagram">
-      <DependentUpon>JoinfunNEW.edmx</DependentUpon>
-    </Content>
     <Content Include="dist\css\propeller.css.map" />
     <Content Include="dist\css\propeller.min.css.map" />
     <Content Include="dist\fonts\roboto\Roboto-Black-webfont.eot" />
@@ -379,6 +369,13 @@
     <Content Include="dist\fonts\roboto\RobotoCondensed-Regular-webfont.ttf" />
     <Content Include="dist\fonts\roboto\RobotoCondensed-Regular-webfont.woff" />
     <Content Include="dist\js\propeller.js.map" />
+    <EntityDeploy Include="Models\JoinfunNEW.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>JoinfunNEW.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\JoinfunNEW.edmx.diagram">
+      <DependentUpon>JoinfunNEW.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Photos\ADM_Login.jpg" />
     <Content Include="Photos\ADM_login_minions.jpg" />
@@ -896,9 +893,6 @@
     <Compile Include="Models\Violation.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vw_ActCheck.cs">
-      <DependentUpon>JoinfunNEW.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\vw_Activities.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
@@ -990,19 +984,14 @@
     <Content Include="Views\Register\RemakePwd.cshtml" />
     <Content Include="Views\Activity\Messages.cshtml" />
     <Content Include="Views\Activity\MContent.cshtml" />
-
     <Content Include="Views\Activity\MemJoin.cshtml" />
-
     <Content Include="Views\Login\FBRegister.cshtml" />
-
     <Content Include="Views\Adm\AdmRegister.cshtml" />
-
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Adm\Post.cshtml" />
     <Content Include="Views\Shared\_Post.cshtml" />
     <Content Include="Views\Member\ActCheck.cshtml" />
     <Content Include="Views\Adm\PostEdit.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
