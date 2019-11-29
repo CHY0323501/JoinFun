@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -147,21 +148,35 @@ namespace JoinFun.Controllers
             return RedirectToAction("Post");
         }
         [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult PostCreate(Post post,HttpPostedFileBase pic)
+        public ActionResult PostCreate(Post post,HttpPostedFileBase postPics)
         {
-            if (ModelState.IsValid) {
+            Session["admid"] = "adm002";
+            if (post != null) {
                 string getPostid = db.Database.SqlQuery<string>("Select [dbo].[GetPostId]()").FirstOrDefault();
                 post.postSerial = getPostid;
-
-                if(pic != null)
+                post.admId = Session["admid"].ToString();
+                post.ShowInCarousel = Request["ShowInCarousel"]=="0"?false:true;
+                if (postPics != null)
                 {
-                    post.postPics = pic.FileName;
+                    if (postPics.ContentLength > 0)
+                    {               
+                        string fileName = getPostid+ Session["admid"].ToString() + ".jpg";
+
+                        postPics.SaveAs(Server.MapPath("~/Photos/Posts/" + fileName));
+                        post.postPics = fileName;
+                    }
                 };
                 db.Post.Add(post);
                 db.SaveChanges();
+                return RedirectToAction("Post");
 
-            } 
-            return View();
+            }
+
+            //post.postTime = DateTime.Now;
+            //ViewBag.admNick = db.Administrator.Where(m => m.admId == Session["admid"].ToString()).FirstOrDefault().admNick;
+            return View(post);
+            
+            
         }
 
         //公告partial view
@@ -189,6 +204,7 @@ namespace JoinFun.Controllers
         public ActionResult PostEdit(string PostNo) {
             Post post= db.Post.Where(m=>m.postSerial==PostNo).FirstOrDefault();
             ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick");
+            ViewBag.ShowInCarouselState = post.ShowInCarousel;
             return View(post);
         }
         [HttpPost]
@@ -196,7 +212,9 @@ namespace JoinFun.Controllers
         public ActionResult PostEdit(Post post)
         {
             if (ModelState.IsValid) {
+                
                 db.Entry(post).State = EntityState.Modified;
+                post.ShowInCarousel = Request["ShowInCarousel"] == "0" ? false : true;
                 db.SaveChanges();
             }
 

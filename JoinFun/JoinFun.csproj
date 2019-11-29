@@ -146,6 +146,7 @@
     <Content Include="CSS\card\bootstrap-grid.min.css" />
     <Content Include="CSS\card\htmleaf-demo.css" />
     <Content Include="CSS\card\style.css" />
+    <Content Include="CSS\DatetimePickerUse.css" />
     <Content Include="CSS\Detail.css" />
     <Content Include="CSS\index_fun.css" />
     <Content Include="CSS\MemberInfo.css" />
@@ -165,6 +166,7 @@
     <Content Include="CSS\pmd-datetimepicker.css" />
     <Content Include="CSS\Register.css" />
     <Content Include="CSS\Remark.css" />
+    <Content Include="CSS\SwitchButton.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
     <Content Include="CSS\time\timeTo.css" />

@@ -586,7 +586,7 @@ namespace JoinFun.Models
         public System.DateTime postTime { get; set; }
 
         [DisplayName("照片")]
-        [Required(ErrorMessage = "請選擇公告圖片")]
+        //[Required(ErrorMessage = "請選擇公告圖片")]
         public string postPics { get; set; }
         [DisplayName("前台顯示")]
         public bool ShowInCarousel { get; set; }
