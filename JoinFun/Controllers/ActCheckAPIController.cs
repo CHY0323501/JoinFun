@@ -32,6 +32,7 @@ namespace JoinFun.Controllers
             //確認參團,修改Act_Detail審核
             var editAC = db.Activity_Details.Where(m => m.actId == actID && m.memId == memID).FirstOrDefault();
             editAC.appvStatus = true;
+            editAC.appvDate = DateTime.Now;
 
             //{
             //    //確認後寄送通知
@@ -43,7 +44,6 @@ namespace JoinFun.Controllers
         }
 
 
-        //退出參團(Cancel=true)、取消參團(Cancel=false)
         //退出參團及取消參團需刪除Activity_Detail資料表中的該會員資料
         public IHttpActionResult Delete(string memID, string actID)
         {
