@@ -43,15 +43,17 @@
                             string result = "";
                             if (ViewBag.ShowInCarouselState)
                             {
-                                result= "checked";
+                                result = "checked";
                             }
-                            else {
+                            else
+                            {
                                 result = "";
                             }
                         }
                         <label class="switch ">
-                            <input type="checkbox" class="warning" name="ShowInCarousel" id="ShowInCarousel" @result>
+                            <input type="checkbox" class="warning" id="switch" @result>
                             <span class="slider round"></span>
+                            <input id="ShowInCarousel" name="ShowInCarousel" type="hidden" value="0" />
                         </label>
 
                         @Html.LabelFor(model => model.postTitle, htmlAttributes: new { @class = "control-label col-2 mt-4 adm-editFont" })
@@ -84,10 +86,9 @@
 @section scripts{
     <script>
         //更換Switch Button Value
-        $('#ShowInCarousel').click(function () {
+        $('#switch').click(function () {
             $(this).checked = !$(this).checked;
-            $(this).val($(this).val() == 1 ? 0 : 1);
-            console.log($(this).val());
+            $('#ShowInCarousel').val($(this).is(':checked') ? 1 : 0);
         })
     </script>
 }

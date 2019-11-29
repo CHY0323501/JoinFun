@@ -31,13 +31,14 @@
                             <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">個人資訊</h3>
                             ViewBag.Title = "個人資訊";
 
-                            //給好友新增、刪除使用
-                            <input type="hidden" id="memID" value="@session" />
+
                         }
                         else
                         {
                             <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">會員資訊</h3>
                             ViewBag.Title = "會員資訊";
+                            //給好友新增、刪除使用
+                            <input type="hidden" id="memID" value="@session" />
                         }
 
                     </div>

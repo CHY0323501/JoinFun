@@ -50,8 +50,9 @@
                             @Html.ValidationMessageFor(model => model.ShowInCarousel, "", new { @class = "text-danger adm-editFont" })*@
 
                         <label class="switch ">
-                            <input type="checkbox" class="warning" name="ShowInCarousel" id="ShowInCarousel">
+                            <input type="checkbox" class="warning" id="switch">
                             <span class="slider round"></span>
+                            <input id="ShowInCarousel" name="ShowInCarousel" type="hidden" value="0"/>
                         </label>
 
                         @Html.LabelFor(model => model.postTitle, htmlAttributes: new { @class = "control-label col-2 mt-4 adm-editFont" })
@@ -98,9 +99,9 @@
         });
 
         //更換Switch Button Value
-        $('#ShowInCarousel').click(function () {
+        $('#switch').click(function () {
             $(this).checked = !$(this).checked;
-            $(this).val($(this).val() == 1 ? 0 : 1);
+            $('#ShowInCarousel').val($(this).is(':checked') ? 1 : 0);
         })
     </script>
 }

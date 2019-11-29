@@ -221,7 +221,7 @@ namespace JoinFun.Controllers
                 string getPostid = db.Database.SqlQuery<string>("Select [dbo].[GetPostId]()").FirstOrDefault();
                 post.postSerial = getPostid;
                 post.admId = Session["admid"].ToString();
-                post.ShowInCarousel = Request["ShowInCarousel"]=="0"?false:true;
+                post.ShowInCarousel = Request["ShowInCarousel"] == "0" ? false : true;
                 if (postPics != null)
                 {
                     if (postPics.ContentLength > 0)
@@ -269,7 +269,7 @@ namespace JoinFun.Controllers
         //編輯公告
         public ActionResult PostEdit(string PostNo) {
             Post post= db.Post.Where(m=>m.postSerial==PostNo).FirstOrDefault();
-            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick");
+            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick",post.admId);
             ViewBag.ShowInCarouselState = post.ShowInCarousel;
             return View(post);
         }
@@ -277,14 +277,12 @@ namespace JoinFun.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult PostEdit(Post post)
         {
-            if (ModelState.IsValid) {
-                
-                db.Entry(post).State = EntityState.Modified;
-                post.ShowInCarousel = Request["ShowInCarousel"] == "0" ? false : true;
-                db.SaveChanges();
-            }
+            db.Entry(post).State = EntityState.Modified;
+            post.ShowInCarousel = Request["ShowInCarousel"] == "0" ? false : true;
 
-            return RedirectToAction("Post",new { PostNo =post.postSerial});
+            db.SaveChanges();
+
+            return RedirectToAction("Post",new { PostNo = post.postSerial });
         }
 
         //刪除公告
