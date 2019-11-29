@@ -47,8 +47,8 @@ namespace JoinFun.Controllers
             Finalchoose fc = new Finalchoose()
             {   
                 vwActList = db.vw_Activities.Where(m => m.keepAct == true).ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList()
-                
+                joinfunlist = db.Join_Fun_Activities.ToList(),
+                post=db.Post.OrderByDescending(m=>m.postSerial).Take(1).ToList()
             };
             GetSelectList();
             //var vwAct = fc;

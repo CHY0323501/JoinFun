@@ -295,11 +295,11 @@ namespace JoinFun.Controllers
             return RedirectToAction("Post");
         }
 
-        //計算總頁數
-        private decimal getTotalPages(int TotalCount) {
-            decimal TotalPages = TotalCount / pagesize;
-            return Math.Ceiling(TotalPages);
-        }
+        ////計算總頁數
+        //private decimal getTotalPages(int TotalCount) {
+        //    decimal TotalPages = TotalCount / pagesize;
+        //    return Math.Ceiling(TotalPages);
+        //}
 
     }
 }
