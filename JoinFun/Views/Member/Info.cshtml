@@ -103,7 +103,7 @@
                                                     {
                                                         <i class="fas fa-user-plus "></i>@:　加好友
                                                     }
-                                                    else if (Model.Friendship.FirstOrDefault().Approved == false)
+                                                    else if (Model.Friendship.Where(m=>m.friendMemId==session).FirstOrDefault().Approved == false)
                                                     {
                                                         <i class="fas fa-user-times"></i>@:　取消申請
                                                     }
