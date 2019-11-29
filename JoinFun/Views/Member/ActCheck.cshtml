@@ -19,6 +19,7 @@
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link p-3 text-decoration-none text-info " href="#tab2" data-toggle="tab"><strong>參團會員管理</strong></a>
+                        <input id="actID" type="hidden" value="@(ViewBag.actID)" />
                     </li>
                 </ul>
             </div>
@@ -148,7 +149,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6  mt-3 ">
-                                                    <input type="button" value="退出揪團" class="btn btn-outline-danger ml-5 "  } />
+                                                    <input type="button" id="deleteAC@(+count)" value="退出揪團" class="btn btn-outline-danger ml-5 deleteAC"  } />
                                                 </div>
 
                                             </div>
@@ -168,16 +169,18 @@
 @section scripts{
     
     <script>
+
          $(document).ready(function () {
-            //確認參團審核並移除該會員未審資料
+            //確認參團審核按鈕
             $('.Accept').click(function () {
                 //取得目前id
                 var btnid = $(this).attr("id").slice(6);
                  
-                //確認交友邀請
+                //修改參團審核
                 $.ajax({
                     type: "Put",
-                    url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
+                    url: "http://localhost:54129/api/ActCheckAPI?memid="  +$('#f' + btnid).attr('value') + "&actID="+  $('#actID').attr('value') 
+,
                     success: function () {
                         console.log("成功");
                         //移除未審資料
@@ -190,15 +193,15 @@
                 
             })
 
-            //拒絕交友邀請並移除該好友未審資料
+            //拒絕參團邀請按鈕
             $('.Reject').click(function () {
                 //取得目前id
                 var btnid = $(this).attr("id").slice(6);
 
-                //取消交友邀請
+                //取消參團通知刪除此資料列
                 $.ajax({
                     type: "Delete",
-                    url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#memID').val() + "&memid=" +$('#f' + btnid).attr('value') + "&Cancel=false",
+                    url: "http://localhost:54129/api/ActCheckAPI?memid="  +$('#f' + btnid).attr('value') + "&actID="+  $('#actID').attr('value') ,
                     success: function () {
                         console.log("成功");
                         //移除未審資料
@@ -210,19 +213,24 @@
                 });
             })
 
-           
+           //重整頁面
+            function myrefresh() {
+                window.location.reload();
+            }
             //刪除參團者與審核不通過者
-            $('.deleteFD').click(function () {
+            $('.deleteAC').click(function () {
                 //取得目前id
-                var NowID = $(this).attr("id").slice(8);
+                var btnID = $(this).attr("id").slice(8);
                 if (confirm("您確定要刪除嗎？")) {
 
                     //刪除好友
                     $.ajax({
                         type: "Delete",
-                        url: "http://localhost:54129/api/ActCheckAPI?memid=" + $('#d' + NowID).attr('value') + "&memID="+ $('#memID2').val() +"&Cancel=true",
+                        url: "http://localhost:54129/api/ActCheckAPI?memid="+ $('#d' +btnID).attr('value')+"&actID="+  $('#actID').attr('value') ,
                         success: function () {
-                            console.log("fdid="+$('#d' + NowID).attr('value')+",memid="+$('#memID2').val())
+                            console.log( $('#d' +btnID).attr('value')+"&actID="+  $('#actID').attr('value'))
+                              //移除未審資料
+                        $("div").find("div[id='" + btnID + "']").remove();
                             alert("刪除成功");
                             myrefresh();
                         }
@@ -230,7 +238,7 @@
                 }
             })
 
-        })
+         })
 
     </script>
     
