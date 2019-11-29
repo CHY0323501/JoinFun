@@ -34,22 +34,34 @@ namespace JoinFun.Controllers
             editAC.appvStatus = true;
             editAC.appvDate = DateTime.Now;
 
-            //{
-            //    //確認後寄送通知
-            //    Common com = new Common();
-            //    com.CreateNoti(true, "", memID, "恭喜您已成功加入" + actID + "揪團活動。", " < br />Join Fun營運團隊");
-            //}
+
+            var ACT = db.Join_Fun_Activities.Find(actID).actTopic;
+
+             //確認後寄送通知
+             Common com = new Common();
+            com.CreateNoti(true, "", memID, "恭喜您已成功加入" +ACT+ "揪團活動。", " < br />Join Fun營運團隊");
+           
             db.SaveChanges();
             return Ok();
         }
 
-
+        //退出參團(Cancel=true)、取消邀請(Cancel=false)
         //退出參團及取消參團需刪除Activity_Detail資料表中的該會員資料
-        public IHttpActionResult Delete(string memID, string actID)
+        public IHttpActionResult Delete(string memID, string actID,bool Cancel)
         {
-            
-                var DeleteAC = db.Activity_Details.Where(m => m.actId == actID && m.memId == memID).FirstOrDefault();
-                            if (DeleteAC != null)
+
+            var ACT = db.Join_Fun_Activities.Find(actID).actTopic;
+
+            if (Cancel)
+                {
+                //確認後寄送通知
+                Common com = new Common();
+                com.CreateNoti(true, "", memID, "您提出退出" + ACT + "揪團活動已核准。", " < br />Join Fun營運團隊");
+
+            }
+
+            var DeleteAC = db.Activity_Details.Where(m => m.actId == actID && m.memId == memID).FirstOrDefault();
+            if (DeleteAC != null)
 
                     db.Activity_Details.Remove(DeleteAC);
             db.SaveChanges();
