@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;    
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,38 +17,55 @@ namespace JoinFun.Controllers
         JoinFunEntities db = new JoinFunEntities();
 
         //確認審核狀態
-        public IHttpActionResult Get(string memid,string actid)
+        public IHttpActionResult Get(string memID, string actID)
         {
-            var ActivityDetail = db.Activity_Details.Where(m => m.actId == actid&&m.memId==memid).ToList();
+            var ActivityDetail = db.Activity_Details.Where(m => m.actId == actID && m.memId == memID).ToList();
 
             return Ok(ActivityDetail);
         }
 
- 
+
         //確認參團
-        //更改Activity_Detail
-        public IHttpActionResult Put(string actid,string memid)
+        //更改Activity_Detail的AppvStatus
+        public IHttpActionResult Put(string memID, string actID)
         {
             //確認參團,修改Act_Detail審核
-            var editAC = db.Activity_Details.Where(m => m.actId == actid && m.memId == memid).FirstOrDefault();
+            var editAC = db.Activity_Details.Where(m => m.actId == actID && m.memId == memID).FirstOrDefault();
             editAC.appvStatus = true;
+            editAC.appvDate = DateTime.Now;
 
-            //確認後寄送通知
-            Common com = new Common();
-            var M1 = db.Member.Find(memid).memNick;
-            com.CreateNoti(true, "", memid, "恭喜您已成功加入" + actid + "揪團活動。"," < br />Join Fun營運團隊");
+
+            var ACT = db.Join_Fun_Activities.Find(actID).actTopic;
+
+             //確認後寄送通知
+             Common com = new Common();
+            com.CreateNoti(true, "", memID, "恭喜您已成功加入" +ACT+ "揪團活動。", " < br />Join Fun營運團隊");
+           
             db.SaveChanges();
             return Ok();
         }
 
-        //刪除Activity_Detail資料列
-        public IHttpActionResult Delete(string actid, string memid)
+        //退出參團(Cancel=true)、取消邀請(Cancel=false)
+        //退出參團及取消參團需刪除Activity_Detail資料表中的該會員資料
+        public IHttpActionResult Delete(string memID, string actID,bool Cancel)
         {
-            var DeleteAC = db.Activity_Details.Where(m => m.actId == actid && m.memId == memid).FirstOrDefault();
-            if (DeleteAC != null)
-            db.Activity_Details.Remove(DeleteAC);
 
+            var ACT = db.Join_Fun_Activities.Find(actID).actTopic;
+
+            if (Cancel)
+                {
+                //確認後寄送通知
+                Common com = new Common();
+                com.CreateNoti(true, "", memID, "您提出退出" + ACT + "揪團活動已核准。", " < br />Join Fun營運團隊");
+
+            }
+
+            var DeleteAC = db.Activity_Details.Where(m => m.actId == actID && m.memId == memID).FirstOrDefault();
+            if (DeleteAC != null)
+
+                    db.Activity_Details.Remove(DeleteAC);
             db.SaveChanges();
+
             return Ok();
 
         }
