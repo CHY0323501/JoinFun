@@ -938,6 +938,7 @@
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
     <Compile Include="ViewModel\MyActivitiesVM.cs" />
+    <Compile Include="Controllers\InfoController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -995,6 +996,8 @@
     <Content Include="Views\Member\ActCheck.cshtml" />
     <Content Include="Views\Adm\PostEdit.cshtml" />
     <Content Include="Views\Adm\PostCreate.cshtml" />
+    <Content Include="Views\Info\Post.cshtml" />
+    <Content Include="Views\Info\_Post.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1005,7 +1008,7 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Info\" />
+    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

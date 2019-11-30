@@ -17,8 +17,6 @@ namespace JoinFun.Controllers
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
 
-
-
         int pagesize = 10;
         //管理員登入
 
@@ -202,7 +200,9 @@ namespace JoinFun.Controllers
         }
         //新增公告
         public ActionResult PostCreate() {
+
             Session["admid"] = "adm002";
+
             if (Session["admid"] != null) {
                 string session = Session["admid"].ToString();
                 Post post = new Post();
@@ -216,7 +216,9 @@ namespace JoinFun.Controllers
         [HttpPost,ValidateAntiForgeryToken]
         public ActionResult PostCreate(Post post,HttpPostedFileBase postPics)
         {
+
             Session["admid"] = "adm002";
+
             if (post != null) {
                 string getPostid = db.Database.SqlQuery<string>("Select [dbo].[GetPostId]()").FirstOrDefault();
                 post.postSerial = getPostid;
@@ -246,7 +248,6 @@ namespace JoinFun.Controllers
         }
 
         //公告partial view
-        //用於前後台觀看詳細公告、後台瀏覽所有公告
         [ChildActionOnly]
         public PartialViewResult _Post(string PostNo,int page=1)
         {

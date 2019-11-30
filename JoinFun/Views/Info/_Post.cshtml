@@ -1,0 +1,83 @@
+﻿
+@using X.PagedList;
+@using X.PagedList.Mvc;
+@using X.PagedList.Mvc.Common;
+@using X.PagedList.Mvc.Bootstrap4;
+@model X.PagedList.PagedList<JoinFun.Models.Post>
+
+
+
+@if (ViewBag.PostCount > 0)
+{
+    if (ViewBag.PostCount == 1)
+    {
+        //瀏覽詳細公告
+        foreach (var i in Model)
+        {
+            <div class="container ">
+                <div class="row px-5">
+                    <div class="col col-12">
+                        <div class="w-100 border-top border-bottom border-danger font-weight-bold text-white mb-5 mt-5 p-2" style="height:50px;">
+                            <div class="row ">
+                                <div class="col col-6  text-left text-danger" style="font-size:1.5rem;font-weight:900">
+                                    @i.postTitle
+                                </div>
+                                <div class="col col-6 text-right text-secondary text-secondary" style="font-size:1.1rem">
+                                    @i.postTime.ToShortDateString().Replace("/", "-")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mx-auto" style="width:400px;height:400px;">
+                            <img src="~/Photos/Posts/@i.postPics" class="img-fluid" style="max-height:400px;min-width:400px;min-height:300px" />
+                        </div>
+                        <div class=" text-white w-100 my-5 overflow-auto px-5" style="min-height:200px;max-height:200px">
+                            <div class="admFont text-dark">
+                                @Html.Raw(i.postContent.Replace("\n", "<br>"))
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 my-5 text-center" style="min-height:200px">
+                        <a class="btn btn-success" href="@Url.Action("Post","Info")"><i class="fas fa-chevron-circle-left"></i>　查看所有公告</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+<div class="container" >
+    <h2 class="text-center font-weight-bold my-3 text-warning">所有公告</h2>
+    <div style="min-height:780px">
+        <div class="row text-center p-2" style="border-bottom:3px #ffc107 solid !important">
+            <div class="col offset-2 col-3 text-secondary text-center">
+                <h4>公告日期</h4>
+            </div>
+            <div class="col col-7">
+                <h4 class="text-success">標題</h4>
+            </div>
+        </div>
+
+        @foreach (var i in Model)
+        {
+            <a href="@Url.Action("Post","Info",new { PostNo=i.postSerial})" class="text-decoration-none">
+                <div class="row text-center mt-3 p-2 border-bottom border-light">
+                    <div class="col offset-2 col-3 text-secondary text-center">
+                        @i.postTime.ToShortDateString().Replace("/", "-")
+                    </div>
+                    <div class="col col-7 text-success">
+                        @i.postTitle
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+    
+    <div class="w-100 text-center" style="padding-left:42%">@Html.PagedListPager(Model, page => Url.Action("Post", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)</div>
+</div>
+
+    }
+}
+else
+{
+    <h1 class="border-top border-bottom border-danger">目前無最新公告</h1>
+}

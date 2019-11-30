@@ -1,17 +1,6 @@
 ﻿
 @{
     ViewBag.Title = "JoinFun公告";
-    if (Session["isUser"] != null)
-    {
-        if ((bool)Session["isUser"] != true)
-        {
-            Layout = "~/Views/Shared/_Layout2.cshtml";
-        }
-        else {
-            Layout = "~/Views/Shared/_Layout.cshtml";
-        }
-    }
-
 
 }
 

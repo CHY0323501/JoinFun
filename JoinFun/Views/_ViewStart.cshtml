@@ -1,3 +1,17 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //指定adm controller使用layout2
+    string ControllerName = Convert.ToString(HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"]);
+    switch (ControllerName.ToUpper())
+    {
+        case "ADM":
+            Layout = "~/Views/Shared/_Layout2.cshtml";
+            break;
+        default:
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
 }
+ 
