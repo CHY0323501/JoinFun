@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using JoinFun.Models;
 using X.PagedList;
+using JoinFun.Utilities;
 
 namespace JoinFun.Controllers
 {
@@ -228,14 +229,45 @@ namespace JoinFun.Controllers
                 {
                     if (postPics.ContentLength > 0)
                     {               
+                        
                         string fileName = getPostid+ Session["admid"].ToString() + ".jpg";
-
+                       
                         postPics.SaveAs(Server.MapPath("~/Photos/Posts/" + fileName));
                         post.postPics = fileName;
                     }
                 };
+                //重要公告通知
+                if (post.ShowInCarousel) {
+                    
+                    Common comm = new Common();
+
+                    for (int i = 0; i < db.Member.Count(); i++)
+                    {
+                        comm.CreateNoti(false, post.postSerial,db.Member.ToList()[i].memId,post.postTitle,post.postContent);
+                    }
+                }
+                //重要公告寄信
+                if (post.ShowInCarousel)
+                {
+
+                    MessageCenter mes = new MessageCenter();
+
+                    //取得所有會員信箱
+                    List<string> getMemEmail = new List<string>();
+                    for (int m = 0; m < db.Member.Count(); m++)
+                    {
+                        getMemEmail.Add(db.Member.ToList()[m].Email);
+                    }
+                    for (int i = 0; i < db.Member.Count(); i++)
+                    {
+                        mes.SendEmail(getMemEmail, post.postTitle, post.postContent);
+                    }
+                }
+
                 db.Post.Add(post);
                 db.SaveChanges();
+
+                
                 return RedirectToAction("Post");
 
             }
@@ -290,6 +322,10 @@ namespace JoinFun.Controllers
         public ActionResult PostDelete(string PostNo) {
             var post = db.Post.Find(PostNo);
             if (!String.IsNullOrEmpty(PostNo)&&post!=null) {
+                //刪除原公告圖檔
+                string filename = post.postPics;
+                System.IO.File.Delete(Server.MapPath("~/Photos/Posts/") + filename);
+
                 db.Post.Remove(post);
                 db.SaveChanges();
             }

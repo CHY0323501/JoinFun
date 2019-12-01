@@ -30,10 +30,16 @@ namespace JoinFun.Controllers
         public IHttpActionResult Post(string memid,string FoMemID)
         {
             FollowUp folw = new FollowUp();
-            folw.memId = memid;
-            folw.FoMemId = FoMemID;
+            folw.memId = FoMemID;
+            folw.FoMemId = memid;
+
+            Fans fan = new Fans();
+            fan.memId = FoMemID;
+            fan.fanMemId = memid;
 
             db.FollowUp.Add(folw);
+            db.SaveChanges();
+            db.Fans.Add(fan);
             db.SaveChanges();
             return Ok();
         }
@@ -42,12 +48,18 @@ namespace JoinFun.Controllers
         public IHttpActionResult Delete(string memid, string FoMemID)
         {
 
-            var folw = db.FollowUp.Where(m => m.memId == memid && m.FoMemId == FoMemID).FirstOrDefault();
-            if(folw!=null)
+            var folw = db.FollowUp.Where(m => m.memId == FoMemID && m.FoMemId == memid).FirstOrDefault();
+            var fan = db.Fans.Where(m => m.memId == FoMemID && m.fanMemId == memid).FirstOrDefault();
+            if (folw != null) {
+                db.FollowUp.Remove(folw);
+                db.SaveChanges();
+            }
+            if (fan != null) {
+                db.Fans.Remove(fan);
+                db.SaveChanges();
+            }
+                
 
-            db.FollowUp.Remove(folw);
-
-            db.SaveChanges();
             return Ok();
         }
 

@@ -45,7 +45,7 @@ namespace JoinFun.Controllers
                     Bookmark_Details = db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
                     Friendship = db.Friendship.Where(m => m.memId == memID).ToList(),
                     vw_FansNew = db.vw_FansNew.Where(m => m.memId == memID).ToList(),
-                    vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
+                    vw_FollowUp = db.vw_FollowUp.ToList(),
                     vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID&&m.Approved==true).ToList(),
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),

@@ -12,7 +12,7 @@ namespace JoinFun.Utilities
         {
             MailMessage msg = new MailMessage();
             msg.To.Add(string.Join(",", mailList.ToList()));
-            msg.From = new MailAddress("joinfun2019@gmail.com", "測試郵件", System.Text.Encoding.UTF8);
+            msg.From = new MailAddress("joinfun2019@gmail.com", "JoinFun", System.Text.Encoding.UTF8);
             msg.Subject = subject;
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
 
