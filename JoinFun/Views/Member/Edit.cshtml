@@ -2,6 +2,7 @@
 
 @section memberinfo{
     <link href="~/CSS/MemberInfo.css" rel="stylesheet" />
+    <link href="~/CSS/DatetimePickerUse.css" rel="stylesheet" />
 }
 
 
@@ -79,13 +80,13 @@
                     @*@Html.DropDownList("district_drop", null, htmlAttributes: new { @class = "form-control ml-auto mr-auto mb-1 text-center w-25" })*@
                     @*<div class="form-group">
 
-                    </div>*@
+                        </div>*@
                     <select id="memCounty" name="memCounty" class="form-control mx-auto mb-1 text-center w-25">
                         @foreach (var i in cc)
                         {
                             if (Model.County.CountyNo == i.CountyNo)
                             {
-                                <option value="@i.CountyNo" selected >@i.CountyName</option>
+                                <option value="@i.CountyNo" selected>@i.CountyName</option>
                             }
                             else
                             {
@@ -109,11 +110,12 @@
                 </div>
             </div>
             <div class="row form-inline mx-auto  text-center text-md-left mb-3">
-                <div class="col-12 col-md-4 ">
-                    @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label text-success font-weight-bold" })
+                <div class="col-12 col-md-4">
+                    @*<label class="control-label text-success font-weight-bold" for="Birthday">生日</label>*@
+                    @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label text-success font-weight-bold" ,@for="Birthday"})
                 </div>
                 <div class="col-12 col-md-8 ">
-                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50" } })
+                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control mx-auto text-center w-50", @type = "text" } })
                     @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -129,7 +131,7 @@
         <div class="col-12 col-md-4 border-right mb-3 ">
             <div>
                 @Html.LabelFor(model => model.Habit, "興趣", htmlAttributes: new { @class = "control-label adj_fontsize text-success font-weight-bold col-12" })
-                @Html.TextArea("Habit", Model.Habit, 8, 50, new { @class = "form-control mx-auto text-center " ,style = "resize:none"})
+                @Html.TextArea("Habit", Model.Habit, 8, 50, new { @class = "form-control mx-auto text-center ", style = "resize:none" })
             </div>
             @Html.ValidationMessageFor(model => model.Habit, "", new { @class = "text-danger" })
         </div>
@@ -151,6 +153,18 @@
 
 @section scripts{
     <script src="~/JS/MemberEdit.js"></script>
+    @*以下為DateTimePicker需要的JS*@
+    <!-- Popper JS -->
+    <script src="~/Scripts/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Propeller textfield js -->
+    <script type="text/javascript" src="dist/js/propeller.min.js"></script>
+    <!-- Datepicker moment with locales -->
+    <script type="text/javascript" language="javascript" src="~/Scripts/moment-with-locales.js"></script>
+    <!-- Propeller Bootstrap datetimepicker -->
+    <script type="text/javascript" language="javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
     <script>
         //填入原始會員生日
         var day = ("0" + @Model.Birthday.Day).slice(-2);
@@ -160,5 +174,25 @@
         var today = @Model.Birthday.Year + "-" + (month) + "-" + (day);
         //完成賦值
         $('#Birthday').val(today);
+
+        
+
+
+        //DateTimePicker
+        var min = new Date();
+        min.setFullYear(new Date().getFullYear() - 100);
+        console.log(min);
+
+        var max = new Date();
+        max.setFullYear(new Date().getFullYear() - 15);
+        console.log(max);
+
+        // Date picker only
+        $('#Birthday').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: min,
+            maxDate: max
+        });
+
     </script>
 }

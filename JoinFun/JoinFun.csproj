@@ -146,6 +146,7 @@
     <Content Include="CSS\card\bootstrap-grid.min.css" />
     <Content Include="CSS\card\htmleaf-demo.css" />
     <Content Include="CSS\card\style.css" />
+    <Content Include="CSS\DatetimePickerUse.css" />
     <Content Include="CSS\Detail.css" />
     <Content Include="CSS\index_fun.css" />
     <Content Include="CSS\MemberInfo.css" />
@@ -165,6 +166,7 @@
     <Content Include="CSS\pmd-datetimepicker.css" />
     <Content Include="CSS\Register.css" />
     <Content Include="CSS\Remark.css" />
+    <Content Include="CSS\SwitchButton.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
     <Content Include="CSS\time\timeTo.css" />
@@ -769,7 +771,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountAPIController.cs" />
-    <Compile Include="Controllers\ActAPIController.cs" />
     <Compile Include="Controllers\ActCheckAPIController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
@@ -936,6 +937,7 @@
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
     <Compile Include="ViewModel\MyActivitiesVM.cs" />
+    <Compile Include="Controllers\InfoController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -993,6 +995,8 @@
     <Content Include="Views\Member\ActCheck.cshtml" />
     <Content Include="Views\Adm\PostEdit.cshtml" />
     <Content Include="Views\Adm\PostCreate.cshtml" />
+    <Content Include="Views\Info\Post.cshtml" />
+    <Content Include="Views\Info\_Post.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1003,7 +1007,7 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Info\" />
+    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -37,7 +37,7 @@ namespace JoinFun.Controllers
             }
             else
             {
-                //Session["memid"] = "M000000008";
+                //Session["memid"] = "M000000002";
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
@@ -231,6 +231,7 @@ namespace JoinFun.Controllers
                     };
 
                     ViewBag.actTop = db.Join_Fun_Activities.Where(m => m.actId == actid).Select(m => m.actTopic).FirstOrDefault();
+                    ViewBag.actID = db.Join_Fun_Activities.Where(m => m.actId == actid).Select(m => m.actId).FirstOrDefault();
                     ViewBag.memNick = db.Member.Where(m => m.memId == memid).Select(m=>m.memNick).FirstOrDefault();
                     //ViewBag.sex = db.Member.Where(m => m.memId == memid).;
 
@@ -240,14 +241,6 @@ namespace JoinFun.Controllers
             }
         }
         
-
-        [HttpPost]
-        public ActionResult ActCheck(string memid)
-        {
-
-
-            return View();
-        }
 
 
         //揪團歷史

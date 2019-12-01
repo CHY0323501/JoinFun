@@ -1,0 +1,8 @@
+﻿/* Bootstrap css */
+@import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+/* Google Material icons */
+@import "http://fonts.googleapis.com/icon?family=Material+Icons";
+/* Propeller css */
+@import "dist/css/propeller.min.css";
+@import url('../CSS/bootstrap-datetimepicker.css');
+@import url('../CSS/pmd-datetimepicker.css');

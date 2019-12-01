@@ -29,5 +29,6 @@ namespace JoinFun.ViewModel
         public List<Gender_Restriction> genderlist { get; set; }
         public List<County> countylist { get; set; }
         public List<Join_Fun_Activities> joinfunlist { get; set; }
+        public List<Post> post { get; set; }
     }
 }

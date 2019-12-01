@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,8 +16,6 @@ namespace JoinFun.Controllers
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
-
-
 
         int pagesize = 10;
         //管理員登入
@@ -201,7 +200,9 @@ namespace JoinFun.Controllers
         }
         //新增公告
         public ActionResult PostCreate() {
+
             Session["admid"] = "adm002";
+
             if (Session["admid"] != null) {
                 string session = Session["admid"].ToString();
                 Post post = new Post();
@@ -213,25 +214,40 @@ namespace JoinFun.Controllers
             return RedirectToAction("Post");
         }
         [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult PostCreate(Post post,HttpPostedFileBase pic)
+        public ActionResult PostCreate(Post post,HttpPostedFileBase postPics)
         {
-            if (ModelState.IsValid) {
+
+            Session["admid"] = "adm002";
+
+            if (post != null) {
                 string getPostid = db.Database.SqlQuery<string>("Select [dbo].[GetPostId]()").FirstOrDefault();
                 post.postSerial = getPostid;
-
-                if(pic != null)
+                post.admId = Session["admid"].ToString();
+                post.ShowInCarousel = Request["ShowInCarousel"] == "0" ? false : true;
+                if (postPics != null)
                 {
-                    post.postPics = pic.FileName;
+                    if (postPics.ContentLength > 0)
+                    {               
+                        string fileName = getPostid+ Session["admid"].ToString() + ".jpg";
+
+                        postPics.SaveAs(Server.MapPath("~/Photos/Posts/" + fileName));
+                        post.postPics = fileName;
+                    }
                 };
                 db.Post.Add(post);
                 db.SaveChanges();
+                return RedirectToAction("Post");
 
-            } 
-            return View();
+            }
+
+            //post.postTime = DateTime.Now;
+            //ViewBag.admNick = db.Administrator.Where(m => m.admId == Session["admid"].ToString()).FirstOrDefault().admNick;
+            return View(post);
+            
+            
         }
 
         //公告partial view
-        //用於前後台觀看詳細公告、後台瀏覽所有公告
         [ChildActionOnly]
         public PartialViewResult _Post(string PostNo,int page=1)
         {
@@ -254,19 +270,20 @@ namespace JoinFun.Controllers
         //編輯公告
         public ActionResult PostEdit(string PostNo) {
             Post post= db.Post.Where(m=>m.postSerial==PostNo).FirstOrDefault();
-            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick");
+            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick",post.admId);
+            ViewBag.ShowInCarouselState = post.ShowInCarousel;
             return View(post);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PostEdit(Post post)
         {
-            if (ModelState.IsValid) {
-                db.Entry(post).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            db.Entry(post).State = EntityState.Modified;
+            post.ShowInCarousel = Request["ShowInCarousel"] == "0" ? false : true;
 
-            return RedirectToAction("Post",new { PostNo =post.postSerial});
+            db.SaveChanges();
+
+            return RedirectToAction("Post",new { PostNo = post.postSerial });
         }
 
         //刪除公告
@@ -279,11 +296,11 @@ namespace JoinFun.Controllers
             return RedirectToAction("Post");
         }
 
-        //計算總頁數
-        private decimal getTotalPages(int TotalCount) {
-            decimal TotalPages = TotalCount / pagesize;
-            return Math.Ceiling(TotalPages);
-        }
+        ////計算總頁數
+        //private decimal getTotalPages(int TotalCount) {
+        //    decimal TotalPages = TotalCount / pagesize;
+        //    return Math.Ceiling(TotalPages);
+        //}
 
     }
 }
