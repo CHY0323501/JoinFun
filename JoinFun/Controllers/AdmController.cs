@@ -113,15 +113,15 @@ namespace JoinFun.Controllers
         {
             if (Session["admId"].ToString() == admId)
             {
-                //var accAdmPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
-                
+                var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
+                var AccountAdmEdit = db.Administrator.Find().admAcc;
 
                 //var account = (from a in db.Acc_Pass
                 //               where a.memId == memId
                 //               select a.Account).FirstOrDefault();
 
 
-                //Session["Account"] = account;
+                Session["AdmAccount"] = AccountAdmEdit;
                 return View();
             }
             return RedirectToAction("Login", "Login");
