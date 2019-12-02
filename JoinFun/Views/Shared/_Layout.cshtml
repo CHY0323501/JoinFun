@@ -190,8 +190,8 @@
                                 <li class="nav-item text-center ml-2">
                                     <a class="nav-link hvr-underline-from-center" href="@Url.Action("Register", "Register")"><i class="fas fa-edit"></i> 註冊</a>
                                 </li>
-                                <li>
-                                    <a class="nav-link hvr-underline-from-center" href="@Url.Action("Post", "Info")"><i class="fas fa-bullhorn"></i> 公告</a>
+                                <li class="nav-item dropdown text-center ml-2">
+                                    <a class="nav-link hvr-underline-from-center text-center" href="@Url.Action("Post", "Info",new { PostNo=""})"><i class="fas fa-bullhorn"></i> 公告</a>
                                 </li>
                                 
                             }
@@ -228,8 +228,8 @@
                                         <a class="dropdown-item" href="@Url.Action("Logout","Login")"><i class="fas fa-sign-out-alt"></i>　登出帳號</a>
                                     </div>
                                 </li>
-                                <li>
-                                    <a class="nav-link hvr-underline-from-center" href="@Url.Action("Post", "Info")"><i class="fas fa-bullhorn"></i> 公告</a>
+                                <li class="nav-item dropdown text-center ml-2">
+                                    <a class="nav-link hvr-underline-from-center text-center" href="@Url.Action("Post", "Info",new { PostNo=""})"><i class="fas fa-bullhorn"></i> 公告</a>
                                 </li>
 
                             }

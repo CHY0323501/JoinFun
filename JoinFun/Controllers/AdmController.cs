@@ -183,8 +183,10 @@ namespace JoinFun.Controllers
         }
 
         public ActionResult Index() {
+            Post post = db.Post.OrderByDescending(m=>m.postSerial).FirstOrDefault();
 
-            return View();
+
+            return View(post);
         }
         //查看公告
         public ActionResult Post(string PostNo, int page = 1)
@@ -236,37 +238,41 @@ namespace JoinFun.Controllers
                         post.postPics = fileName;
                     }
                 };
-                //重要公告通知
-                if (post.ShowInCarousel) {
-                    
-                    Common comm = new Common();
-
-                    for (int i = 0; i < db.Member.Count(); i++)
-                    {
-                        comm.CreateNoti(false, post.postSerial,db.Member.ToList()[i].memId,post.postTitle,post.postContent);
-                    }
-                }
-                //重要公告寄信
-                if (post.ShowInCarousel)
+                try
                 {
-
-                    MessageCenter mes = new MessageCenter();
-
-                    //取得所有會員信箱
-                    List<string> getMemEmail = new List<string>();
-                    for (int m = 0; m < db.Member.Count(); m++)
+                    //重要公告通知
+                    if (post.ShowInCarousel)
                     {
-                        getMemEmail.Add(db.Member.ToList()[m].Email);
+
+                        Common comm = new Common();
+
+                        for (int i = 0; i < db.Member.Count(); i++)
+                        {
+                            comm.CreateNoti(false, post.postSerial, db.Member.ToList()[i].memId, post.postTitle, post.postContent);
+                        }
                     }
-                    for (int i = 0; i < db.Member.Count(); i++)
+                    //重要公告寄信
+                    if (post.ShowInCarousel)
                     {
-                        mes.SendEmail(getMemEmail, post.postTitle, post.postContent);
+
+                        MessageCenter mes = new MessageCenter();
+
+                        //取得所有會員信箱
+                        List<string> getMemEmail = new List<string>();
+                        for (int m = 0; m < db.Member.Count(); m++)
+                        {
+                            getMemEmail.Add(db.Member.ToList()[m].Email);
+                        }
+                        for (int i = 0; i < db.Member.Count(); i++)
+                        {
+                            mes.SendEmail(getMemEmail, post.postTitle, post.postContent);
+                        }
                     }
                 }
-
-                db.Post.Add(post);
-                db.SaveChanges();
-
+                catch {
+                    db.Post.Add(post);
+                    db.SaveChanges();
+                }
                 
                 return RedirectToAction("Post");
 
@@ -288,6 +294,15 @@ namespace JoinFun.Controllers
             if (!String.IsNullOrEmpty(PostNo))
             {
                 var p = post.Where(m => m.postSerial == PostNo).ToList();
+
+                //取得上、下一則公告編號
+                Post next = post.SkipWhile(m => m.postSerial != PostNo).Skip(1).FirstOrDefault();
+                Post previous = post.TakeWhile(m => m.postSerial != PostNo).LastOrDefault();
+                if (next != null)
+                ViewBag.next = next.postSerial;
+                if(previous!=null)
+                ViewBag.previous = previous.postSerial;
+                
                 ViewBag.PostCount = 1;
                 return PartialView(p.ToPagedList(1,1));
             }

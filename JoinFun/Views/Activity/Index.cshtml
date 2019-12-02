@@ -78,7 +78,7 @@
 
     </div>
     <div class=" bg-dark text-white mb-4 mt-1 rounded p-3" style="max-height:80px;font-size:1.2rem;line-height:1.2rem">
-        <div class="mb-1 text-warning font-weight-bolder " style="letter-spacing:3px"><i class="fas fa-bullhorn" style="font-size:1.5rem;line-height:1.5rem"></i>　@Model.post.FirstOrDefault().postTime.ToShortDateString().Replace("/","-")　最新公告：</div>
+        <div class="mb-1 text-warning font-weight-bolder " style="letter-spacing:3px"><i class="fas fa-bullhorn" style="font-size:1.5rem;line-height:1.5rem"></i>　@Model.post.FirstOrDefault().postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)　最新公告：</div>
         <a href="@Url.Action("Post","Info",new { PostNo=Model.post.FirstOrDefault().postSerial})" class="text-white"><marquee direction="left" behavior="scroll" scrollamount="10" style="font-size:1.5rem;line-height:1.5rem;cursor:pointer;letter-spacing:5px">@Model.post.FirstOrDefault().postTitle</marquee></a>
     </div>
     @*</div>*@

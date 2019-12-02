@@ -14,6 +14,7 @@ namespace JoinFun.Views.Info
 
         int pagesize = 10;
 
+        
         //一般會員查看公告
         public ActionResult Post(string PostNo, int page = 1)
         {
@@ -35,6 +36,15 @@ namespace JoinFun.Views.Info
             if (!String.IsNullOrEmpty(PostNo))
             {
                 var p = post.Where(m => m.postSerial == PostNo).ToList();
+
+                //取得上、下一則公告編號
+                Post next = post.SkipWhile(m => m.postSerial != PostNo).Skip(1).FirstOrDefault();
+                Post previous = post.TakeWhile(m => m.postSerial != PostNo).LastOrDefault();
+                if (next != null)
+                    ViewBag.next = next.postSerial;
+                if (previous != null)
+                    ViewBag.previous = previous.postSerial;
+
                 ViewBag.PostCount = 1;
                 return PartialView(p.ToPagedList(1, 1));
             }
