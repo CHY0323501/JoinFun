@@ -369,9 +369,10 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index", "Activity");
         }
 
-        //新手幫助
-        public ActionResult Help() {
-            return View();
+        //我的收藏
+        public ActionResult Bookmark(string memID) {
+            List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
+            return View(Bookmark);
         }
 
 

@@ -1,6 +1,7 @@
-﻿@model IEnumerable<JoinFun.Models.Member>
+﻿@model IEnumerable<JoinFun.Models.Bookmark_Details>
+
 @{
-    ViewBag.Title = "會員搜尋結果";
+    ViewBag.Title = "我的收藏";
 }
 @section CSS{
     <style>
@@ -15,46 +16,54 @@
         }
     </style>
 }
-
 <div class="container" style="min-height:1000px">
 
-    @if (!Model.Any())
+    @if (Model.Count() == 0)
     {
-        <h1 class="text-center ">
-            <img src="~/Photos/no_results_found.png" class="img-fluid" />
-        </h1>
+        <h1 class="my-5 text-center text-danger">您目前無收藏揪團</h1>
     }
     else
     {
-        <h1 class="mt-5 mb-5 text-center text-secondary">以下為<strong class="text-info">@(ViewBag.SearchContent)</strong>的搜尋結果</h1>
+        <h1 class="my-5 text-center text-success">我的收藏</h1>
         <div class="row">
             @foreach (var i in Model)
             {
                 <div class="col col-12 col-sm-6 col-md-4 mb-5 animated slideInUp">
-                    <a href="@Url.Action("Info","Member",new { memID=i.memId})" style="cursor:pointer" class="text-decoration-none " title="點擊連結至會員資訊">
+                    <a href="@Url.Action("Details","Activity",new { actId=i.actId})" style="cursor:pointer" class="text-decoration-none " title="點擊連結至會員資訊">
                         <div class="card border-warning p-1">
                             <div class="card-header text-center card-bg-search">
-                                <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-25 " />
+                                @{var photo = i.Join_Fun_Activities.Photos_of_Activities.Where(m => m.actId == i.actId).FirstOrDefault();
+
+                                    if (photo != null)
+                                    {
+                                        <img src="@Url.Content(photo.actPics)" class="img-fluid  " style="height:190px;width:190px" />
+                                    }
+                                    else
+                                    {
+
+                                        <img src="@Url.Content(i.Join_Fun_Activities.Activity_Class.Photos)" class="img-fluid  " style="height:190px;width:190px" />
+                                    }
+                                }
                             </div>
                             <div class="card-body text-center">
                                 <div class="row">
                                     <div class="col col-12">
                                         <div class="row">
                                             <div class="col-5 text-success">
-                                                會員編號
+                                                活動編號
                                             </div>
                                             <div class="col-7 text-secondary">
-                                                @i.memId
+                                                @i.actId
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col col-12">
                                         <div class="row">
                                             <div class="col-5 text-success">
-                                                會員暱稱
+                                                活動主題
                                             </div>
                                             <div class="col-7 text-warning">
-                                                @i.memNick
+                                                @i.Join_Fun_Activities.actTopic
                                             </div>
                                         </div>
                                     </div>
@@ -67,3 +76,5 @@
         </div>
     }
 </div>
+
+
