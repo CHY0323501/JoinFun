@@ -998,6 +998,7 @@
     <Content Include="Views\Info\Post.cshtml" />
     <Content Include="Views\Info\_Post.cshtml" />
     <Content Include="Views\Member\Bookmark.cshtml" />
+    <Content Include="Views\Adm\Inquire.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -353,5 +353,20 @@ namespace JoinFun.Controllers
         //    return Math.Ceiling(TotalPages);
         //}
 
+        //查詢會員狀態
+        public ActionResult Inquire(string memid)
+        {
+            var member = db.Member.Where(m=>m.memId==memid).ToList();
+
+
+
+
+
+            return View();
+
+        }
+
+
+
     }
 }
