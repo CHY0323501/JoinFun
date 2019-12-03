@@ -937,6 +937,7 @@
     <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
+    <Compile Include="ViewModel\MemberViolationVM.cs" />
     <Compile Include="ViewModel\MyActivitiesVM.cs" />
     <Compile Include="Controllers\InfoController.cs" />
   </ItemGroup>
@@ -998,12 +999,10 @@
     <Content Include="Views\Adm\PostCreate.cshtml" />
     <Content Include="Views\Info\Post.cshtml" />
     <Content Include="Views\Info\_Post.cshtml" />
-
     <Content Include="Views\Adm\AdmPwdEdit.cshtml" />
-
     <Content Include="Views\Member\Bookmark.cshtml" />
     <Content Include="Views\Adm\Inquire.cshtml" />
-
+    <Content Include="Views\Adm\Inquire1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
