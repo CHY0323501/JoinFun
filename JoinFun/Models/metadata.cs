@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace JoinFun.Models
 {
@@ -24,7 +25,7 @@ namespace JoinFun.Models
 
         [Required]
         [DisplayName("確認密碼")]
-        [Compare("Password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password")]
         public string PasswordConfirm { get; set; }
         [JsonIgnore()]
         public virtual Member Member { get; set; }
@@ -85,7 +86,7 @@ namespace JoinFun.Models
 
         [Required]
         [DisplayName("確認密碼")]
-        [Compare("admPass")]
+        [System.ComponentModel.DataAnnotations.Compare("admPass")]
         public string admPasswordConfirm { get; set; }
     }
     public  class MetaAge_Restriction
@@ -575,6 +576,7 @@ namespace JoinFun.Models
 
         [DisplayName("內容")]
         [Required(ErrorMessage = "請輸入公告內容")]
+        [AllowHtml]
         public string postContent { get; set; }
 
 

@@ -19,11 +19,11 @@
                     <div class="col col-12">
                         <div class="w-100 border-top border-bottom border-danger font-weight-bold text-white mb-5 mt-5 p-2" style="height:50px;">
                             <div class="row ">
-                                <div class="col col-6  text-left text-danger" style="font-size:1.5rem;font-weight:900">
+                                <div class="col col-6  text-left text-danger text-truncate" style="font-size:1.5rem;font-weight:900">
                                     @i.postTitle
                                 </div>
                                 <div class="col col-6 text-right text-secondary text-secondary" style="font-size:1.1rem">
-                                    @i.postTime.ToShortDateString().Replace("/", "-")
+                                    @i.postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
                                 </div>
                             </div>
                         </div>
@@ -37,7 +37,17 @@
                         </div>
                     </div>
                     <div class="col-12 my-5 text-center" style="min-height:200px">
-                        <a class="btn btn-success" href="@Url.Action("Post","Info")"><i class="fas fa-chevron-circle-left"></i>　查看所有公告</a>
+                        <a class="btn btn-success" href="@Url.Action("Post","Info",new { PostNo=""})"><i class="fas fa-chevron-circle-left"></i>　查看所有公告</a>
+
+                        @if (ViewBag.previous != null)
+                        {
+                            <a class="btn btn-info ml-3" href="@Url.Action("Post","Info",new { PostNo=ViewBag.previous})"><i class="fas fa-chevron-left"></i>　上一則公告</a>
+                        }
+                        @if (ViewBag.next != null)
+                        {
+                            <a class="btn btn-info ml-3" href="@Url.Action("Post","Info",new { PostNo=ViewBag.next})"><i class="fas fa-chevron-right"></i>　下一則公告</a>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -62,7 +72,7 @@
             <a href="@Url.Action("Post","Info",new { PostNo=i.postSerial})" class="text-decoration-none">
                 <div class="row text-center mt-3 p-2 border-bottom border-light">
                     <div class="col offset-2 col-3 text-secondary text-center">
-                        @i.postTime.ToShortDateString().Replace("/", "-")
+                        @i.postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
                     </div>
                     <div class="col col-7 text-success">
                         @i.postTitle

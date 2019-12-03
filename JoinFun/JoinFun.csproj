@@ -992,13 +992,18 @@
     <Content Include="Views\Adm\AdmRegister.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Adm\Post.cshtml" />
-    <Content Include="Views\Shared\_Post.cshtml" />
+    <Content Include="Views\Adm\_Post.cshtml" />
     <Content Include="Views\Member\ActCheck.cshtml" />
     <Content Include="Views\Adm\PostEdit.cshtml" />
     <Content Include="Views\Adm\PostCreate.cshtml" />
     <Content Include="Views\Info\Post.cshtml" />
     <Content Include="Views\Info\_Post.cshtml" />
+
     <Content Include="Views\Adm\AdmPwdEdit.cshtml" />
+
+    <Content Include="Views\Member\Bookmark.cshtml" />
+    <Content Include="Views\Adm\Inquire.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

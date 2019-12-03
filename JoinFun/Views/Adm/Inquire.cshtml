@@ -1,0 +1,37 @@
+﻿@model IEnumerable<JoinFun.Models.Member>
+
+@{
+    ViewBag.Title = "會員狀態管理";
+}
+@section CSS {
+    <link href="/CSS/ADMpagedlist.css" rel="stylesheet" />
+}
+
+<h2>會員狀態管理</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.memNick)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numViolate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Suspend)
+        </th>
+    </tr>
+
+    @*@foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.numViolate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Suspend)
+                </td>
+            </tr>
+        }*@
+
+</table>

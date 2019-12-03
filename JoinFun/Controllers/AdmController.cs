@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using JoinFun.Models;
 using X.PagedList;
+using JoinFun.Utilities;
 
 namespace JoinFun.Controllers
 {
@@ -199,8 +200,10 @@ namespace JoinFun.Controllers
         }
 
         public ActionResult Index() {
+            Post post = db.Post.OrderByDescending(m=>m.postSerial).FirstOrDefault();
 
-            return View();
+
+            return View(post);
         }
         //查看公告
         public ActionResult Post(string PostNo, int page = 1)
@@ -245,14 +248,49 @@ namespace JoinFun.Controllers
                 {
                     if (postPics.ContentLength > 0)
                     {               
+                        
                         string fileName = getPostid+ Session["admid"].ToString() + ".jpg";
-
+                       
                         postPics.SaveAs(Server.MapPath("~/Photos/Posts/" + fileName));
                         post.postPics = fileName;
                     }
                 };
-                db.Post.Add(post);
-                db.SaveChanges();
+                try
+                {
+                    //重要公告通知
+                    if (post.ShowInCarousel)
+                    {
+
+                        Common comm = new Common();
+
+                        for (int i = 0; i < db.Member.Count(); i++)
+                        {
+                            comm.CreateNoti(false, post.postSerial, db.Member.ToList()[i].memId, post.postTitle, post.postContent);
+                        }
+                    }
+                    //重要公告寄信
+                    if (post.ShowInCarousel)
+                    {
+
+                        MessageCenter mes = new MessageCenter();
+
+                        //取得所有會員信箱
+                        List<string> getMemEmail = new List<string>();
+                        for (int m = 0; m < db.Member.Count(); m++)
+                        {
+                            getMemEmail.Add(db.Member.ToList()[m].Email);
+                        }
+                        for (int i = 0; i < db.Member.Count(); i++)
+                        {
+                            mes.SendEmail(getMemEmail, post.postTitle, post.postContent);
+                        }
+                    }
+                }
+                catch {
+                    db.Post.Add(post);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Post");
 
             }
@@ -273,6 +311,15 @@ namespace JoinFun.Controllers
             if (!String.IsNullOrEmpty(PostNo))
             {
                 var p = post.Where(m => m.postSerial == PostNo).ToList();
+
+                //取得上、下一則公告編號
+                Post next = post.SkipWhile(m => m.postSerial != PostNo).Skip(1).FirstOrDefault();
+                Post previous = post.TakeWhile(m => m.postSerial != PostNo).LastOrDefault();
+                if (next != null)
+                ViewBag.next = next.postSerial;
+                if(previous!=null)
+                ViewBag.previous = previous.postSerial;
+                
                 ViewBag.PostCount = 1;
                 return PartialView(p.ToPagedList(1,1));
             }
@@ -307,6 +354,10 @@ namespace JoinFun.Controllers
         public ActionResult PostDelete(string PostNo) {
             var post = db.Post.Find(PostNo);
             if (!String.IsNullOrEmpty(PostNo)&&post!=null) {
+                //刪除原公告圖檔
+                string filename = post.postPics;
+                System.IO.File.Delete(Server.MapPath("~/Photos/Posts/") + filename);
+
                 db.Post.Remove(post);
                 db.SaveChanges();
             }
@@ -318,6 +369,21 @@ namespace JoinFun.Controllers
         //    decimal TotalPages = TotalCount / pagesize;
         //    return Math.Ceiling(TotalPages);
         //}
+
+        //查詢會員狀態
+        public ActionResult Inquire(string memid)
+        {
+            var member = db.Member.Where(m=>m.memId==memid).ToList();
+
+
+
+
+
+            return View();
+
+        }
+
+
 
     }
 }

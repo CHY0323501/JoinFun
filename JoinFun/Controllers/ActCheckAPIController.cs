@@ -39,7 +39,7 @@ namespace JoinFun.Controllers
 
              //確認後寄送通知
              Common com = new Common();
-            com.CreateNoti(true, "", memID, "恭喜您已成功加入" +ACT+ "揪團活動。", " < br />Join Fun營運團隊");
+            com.CreateNoti(true, "", memID, "恭喜您已成功加入" +ACT+ "揪團活動。", " <br />Join Fun營運團隊");
            
             db.SaveChanges();
             return Ok();
@@ -56,7 +56,7 @@ namespace JoinFun.Controllers
                 {
                 //確認後寄送通知
                 Common com = new Common();
-                com.CreateNoti(true, "", memID, "您提出退出" + ACT + "揪團活動已核准。", " < br />Join Fun營運團隊");
+                com.CreateNoti(true, "", memID, "您提出退出" + ACT + "揪團活動已核准。", " <br />Join Fun營運團隊");
 
             }
 

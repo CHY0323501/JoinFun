@@ -1,10 +1,47 @@
-﻿
+﻿@model JoinFun.Models.Post
 @{
     ViewBag.Title = "後台系統";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-    <br><h2>JoinFun後台系統</h2>
+<div class="container text-white ">
+    <h2 class="text-center my-5 ">JoinFun後台系統</h2>
+    <div class="w-100 adm-subtitle">目前時間　<span id="nowtime"></span></div>
+    
+        <p class="adm-subtitle">
+            最新公告：@Model.postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)　
+            @Model.postTitle
+        </p>
+    
+
+</div>
 
 
+@section scripts{
+    <script>
+        nowTime();
+
+        function nowTime() {
+            var nowtime = new Date();
+            var y = nowtime.getFullYear();
+            var M = nowtime.getMonth() + 1;
+            var d = nowtime.getDate();
+
+            var h = nowtime.getHours();
+            var m = nowtime.getMinutes();
+            var s = nowtime.getSeconds();
+
+            M = M < 10 ? "0" + M : M;
+            d = d < 10 ? "0" + d : d;
+
+            h = h < 10 ? "0" + h : h;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+
+            $('#nowtime').text(y + "-" + M + "-" + d + "　" + h + ":" + m + ":" + s);
+
+            setTimeout(nowTime, 1000);
+        }
+    </script>
+}
 

@@ -187,8 +187,8 @@
                                 <li class="nav-item text-center ml-2">
                                     <a class="nav-link hvr-underline-from-center" href="@Url.Action("Register", "Register")"><i class="fas fa-edit"></i> 註冊</a>
                                 </li>
-                                <li>
-                                    <a class="nav-link hvr-underline-from-center" href="@Url.Action("Post", "Info")"><i class="fas fa-bullhorn"></i> 公告</a>
+                                <li class="nav-item dropdown text-center ml-2">
+                                    <a class="nav-link hvr-underline-from-center text-center" href="@Url.Action("Post", "Info",new { PostNo=""})"><i class="fas fa-bullhorn"></i> 公告</a>
                                 </li>
                                 
                             }
@@ -219,14 +219,15 @@
 
                                         @*<a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　我的資訊</a>*@
                                         <a class="dropdown-item" href="@Url.Action("MyActivities","Member",new { memID = Session["memid"] })"><i class="fas fa-glass-cheers"></i>　我的揪團</a>
+                                        <a class="dropdown-item" href="@Url.Action("Bookmark","Member",new { memID = Session["memid"] })"><i class="far fa-heart"></i>　我的收藏</a>
                                         <a class="dropdown-item" href="@Url.Action("FriendManagement","Member",new{memID=Session["memid"]})"><i class="fas fa-user-friends"></i>　好友管理</a>
                                         <a class="dropdown-item " href="@Url.Action("BlockManage","Member",new { memID=Session["memid"]})"><i class="fas fa-user-lock"></i>　封鎖管理</a>
                                         <a class="dropdown-item" href="@Url.Action("PwdEdit","Register",new {memId= Session["memid"]})"><i class="fas fa-key"></i>　修改密碼</a>
                                         <a class="dropdown-item" href="@Url.Action("Logout","Login")"><i class="fas fa-sign-out-alt"></i>　登出帳號</a>
                                     </div>
                                 </li>
-                                <li>
-                                    <a class="nav-link hvr-underline-from-center" href="@Url.Action("Post", "Info")"><i class="fas fa-bullhorn"></i> 公告</a>
+                                <li class="nav-item dropdown text-center ml-2">
+                                    <a class="nav-link hvr-underline-from-center text-center" href="@Url.Action("Post", "Info",new { PostNo=""})"><i class="fas fa-bullhorn"></i> 公告</a>
                                 </li>
 
                             }

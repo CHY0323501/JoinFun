@@ -12,6 +12,26 @@ namespace JoinFun
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            //前台查看公告
+            routes.MapRoute(
+               name: "MemberPost",
+               url: "Post/{PostNo}",
+               defaults: new { controller = "Info", action = "Post", PostNo = UrlParameter.Optional }
+           );
+            //前台會員資訊
+            routes.MapRoute(
+               name: "MemberInfo",
+               url: "Info/{memID}",
+               defaults: new { controller = "Member", action = "Info" }
+           );
+            //前台編輯會員資訊
+            routes.MapRoute(
+               name: "MemberEdit",
+               url: "Edit/{memID}",
+               defaults: new { controller = "Member", action = "Edit" }
+           );
+            //啟動自訂路由
+            routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
                 name: "Default",
