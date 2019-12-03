@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "小工具";
+}
+
+<h2 class="my-5 text-center text-warning">Widget</h2>
+<form id="form1">
+    <input id="Number" type="text" name="Number" class="form-control" />
+    <input id="random" type="button" value="抽籤" class="btn btn-success" />
+
+</form>
+<div id="result">
+
+</div>
+@*<div class="card">
+    <div class="card-body">
+        <p><span>送禮人</span><span></span></p>
+        <p><span>收禮人</span><span></span></p>
+    </div>
+</div>*@
+
+<script>
+    $('#random').click(function () {
+        var OldString = $('#Number').val();
+        var ArrayOld = new Array;
+        ArrayOld = OldString.split(",");
+      
+
+        $.ajax({
+            url: "@Url.Action("Random","Member")",
+            method: "post",
+            traditional: true,
+            data: { Number: $('#Number').val() },
+            success: function (d) {
+                $('#result').empty();
+                console.log("成功");
+                for (var i = 0; i < ArrayOld.length; i++) {
+                    $('#result').append(`<div class="card">
+    <div class="card-body">
+        <p><span>送禮人</span><span id=S${i}>${ArrayOld[i]}號</span></p>
+        <p><span>收禮人</span><span id=G${i}>${d[i]}號</span></p>
+    </div>
+</div>`);
+                }
+            },
+            error: function () {
+                console.log("失敗");
+            }
+        })
+        
+    })
+</script>
+
