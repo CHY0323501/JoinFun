@@ -250,6 +250,7 @@
     <Content Include="Photos\index\carousel2.jpg" />
     <Content Include="Photos\index\carousel3.jpg" />
     <Content Include="Photos\index\carousel4.jpg" />
+    <Content Include="Photos\index\carousel5.jpg" />
     <Content Include="Photos\index\photo1.jpg" />
     <Content Include="Photos\index\photo2.jpg" />
     <Content Include="Photos\index\photo3.jpg" />
@@ -997,8 +998,16 @@
     <Content Include="Views\Adm\PostCreate.cshtml" />
     <Content Include="Views\Info\Post.cshtml" />
     <Content Include="Views\Info\_Post.cshtml" />
+
+    <Content Include="Views\Adm\AdmPwdEdit.cshtml" />
+
     <Content Include="Views\Member\Bookmark.cshtml" />
+
     <Content Include="Views\Member\Widget.cshtml" />
+
+    <Content Include="Views\Adm\Inquire.cshtml" />
+
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

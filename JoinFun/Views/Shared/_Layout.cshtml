@@ -26,9 +26,6 @@
     @RenderSection("topCSS", required: false)
     @RenderSection("Register", required: false)
 
-    @RenderSection("PwdEdit", required: false)
-
-
     @RenderSection("CSS", required: false)
 
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
@@ -241,7 +238,7 @@
             </div>
         </div>
 
-        <div class="container body-content pt-5">
+        <div class="container body-content pt-5 " style="min-height: calc(100vh - 132px)">
             @RenderBody()
         </div>
     </div>

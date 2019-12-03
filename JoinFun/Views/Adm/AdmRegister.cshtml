@@ -14,6 +14,7 @@
     <div class="form-horizontal text-white">
         <h4>管理員註冊</h4>
         <hr />
+        <input id="admId" type="hidden" name="admId"/>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @*<div class="form-group">
                 @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label col-md-2" })

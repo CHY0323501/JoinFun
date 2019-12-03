@@ -253,7 +253,7 @@
                         <div class="col col-12 text-left w-100" >
                             <ul class=" navbar-nav ">
                                 <li class="nav-item mt-1 pl-4">
-                                    <a class="nav-link hvr-underline-from-center nav-font" href="#"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
+                                    <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("Inquire","Adm")"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
                                 </li>
                                 <li class="nav-item mt-1 pl-4">
                                     <a class="nav-link hvr-underline-from-center nav-font" href="#"><span class="fas fa-glass-cheers icon-size" style="width:20px"></span>　揪團管理</a>
@@ -273,9 +273,9 @@
                                 <li class="nav-item mt-1 pl-4">
                                     <a class="nav-link nav-font " href="#" id="VioDrop2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-user-cog icon-size" style="width:20px"></span>　管理員資訊</a>
                                     <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop2">
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-edit icon-size"></i> 修改個人資訊</a>
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-plus icon-size"></i> 新增管理員</a>
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-sign-out-alt icon-size"></i> 登出</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="@Url.Action("AdmPwdEdit","Adm",new {admId= Session["admid"]})"><i class="fas fa-edit icon-size"></i> 修改個人資訊</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="@Url.Action("AdmRegister","Adm",new {admId= Session["admid"]})"><i class="fas fa-plus icon-size"></i> 新增管理員</a><br />                                       
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="@Url.Action("AdmLogout","Adm")"><i class="fas fa-sign-out-alt icon-size"></i> 登出</a>
                                     </div>
                                 </li>
                             </ul>
