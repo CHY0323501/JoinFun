@@ -10,7 +10,6 @@ using System.Web.Mvc;
 using JoinFun.Models;
 using X.PagedList;
 using JoinFun.Utilities;
-using JoinFun.ViewModel;
 
 namespace JoinFun.Controllers
 {
@@ -374,17 +373,13 @@ namespace JoinFun.Controllers
         //查詢會員狀態
         public ActionResult Inquire(string memid)
         {
-            List<Member> member = db.Member.OrderByDescending(m => m.memId).ToList();
+            var member = db.Member.Where(m=>m.memId==memid).ToList();
 
-            MemberViolationVM memVio = new MemberViolationVM()
-            {
-                Member = db.Member.ToList(),
-                Violation = db.Violation.ToList(),
-                Punishment=db.Punishment.ToList()
-            };
-            ViewBag.memNick = db.Member.Where(m => m.memId == memid).ToList();
 
-            return View(memVio);
+
+
+
+            return View();
 
         }
 

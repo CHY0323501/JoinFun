@@ -1,48 +1,37 @@
-﻿
-@model JoinFun.ViewModel.MemberViolationVM
+﻿@model IEnumerable<JoinFun.Models.Member>
 
 @{
     ViewBag.Title = "會員狀態管理";
 }
 @section CSS {
-    <link href="~/CSS/ADMpagedlist.css" rel="stylesheet" />
+    <link href="/CSS/ADMpagedlist.css" rel="stylesheet" />
 }
 
+<h2>會員狀態管理</h2>
 
-<div class="container">
-    <h2 class="text-warning">會員狀態管理 </h2>
 
-    <table class="table text-white">
-        <thead>
-            <tr class="center">
-                <th class="">會員編號</th>
-                <th>會員暱稱</th>
-                <th>違規次數</th>
-                <th>停權</th>
-                <th>停權天數</th>
-                <th>管理</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var i in Model.Member)
-            {
-            <tr class="center">
-                <td> @i.memId</td>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.memNick)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numViolate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Suspend)
+        </th>
+    </tr>
 
-                <td> @i.memNick </td>
-               
-                <td> @i.numViolate 次</td>
-
-                <td> @i.Suspend </td>
-                <td> LALA</td>
+    @*@foreach (var item in Model) {
+            <tr>
                 <td>
-                    <span class="btn btn-dark"><a href="#">新增</a></span>
-                    <span class="btn btn-info">編輯</span>
-
+                    @Html.DisplayFor(modelItem => item.numViolate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Suspend)
                 </td>
             </tr>
-            }
-        </tbody>
+        }*@
 
-    </table>
-</div>
+</table>
