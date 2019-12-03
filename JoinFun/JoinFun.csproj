@@ -999,21 +999,10 @@
     <Content Include="Views\Adm\PostCreate.cshtml" />
     <Content Include="Views\Info\Post.cshtml" />
     <Content Include="Views\Info\_Post.cshtml" />
-
     <Content Include="Views\Adm\AdmPwdEdit.cshtml" />
-
     <Content Include="Views\Member\Bookmark.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Adm\Inquire.cshtml" />
     <Content Include="Views\Adm\Inquire1.cshtml" />
-=======
-
-    <Content Include="Views\Member\Widget.cshtml" />
-
-    <Content Include="Views\Adm\Inquire.cshtml" />
-
-
->>>>>>> parent of 5e9c8ad... 新增檢舉管理與意見回饋管理功能
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

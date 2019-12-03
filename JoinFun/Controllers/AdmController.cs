@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using JoinFun.Models;
 using X.PagedList;
 using JoinFun.Utilities;
+using JoinFun.ViewModel;
 
 namespace JoinFun.Controllers
 {
@@ -375,7 +376,6 @@ namespace JoinFun.Controllers
         {
             List<Member> member = db.Member.OrderByDescending(m => m.memId).ToList();
 
-<<<<<<< HEAD
             MemberViolationVM memVio = new MemberViolationVM()
             {
                 Member = db.Member.ToList(),
@@ -385,13 +385,6 @@ namespace JoinFun.Controllers
             ViewBag.memNick = db.Member.Where(m => m.memId == memid).ToList();
 
             return View(memVio);
-=======
-
-
-
-
-            return View();
->>>>>>> parent of 5e9c8ad... 新增檢舉管理與意見回饋管理功能
 
         }
 
