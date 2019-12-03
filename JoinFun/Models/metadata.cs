@@ -421,7 +421,7 @@ namespace JoinFun.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> reportTime { get; set; }
 
-        [DisplayName("意見回覆內容")]
+        [DisplayName("回覆內容")]
         public string reportContent { get; set; }
 
         [DisplayName("管理員編號")]

@@ -932,6 +932,7 @@
     <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\MessageCenter.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
+    <Compile Include="ViewModel\AdmView.cs" />
     <Compile Include="ViewModel\BlockMemberVM.cs" />
     <Compile Include="ViewModel\FriendManagementVW.cs" />
     <Compile Include="ViewModel\HistoryViewModel.cs" />
@@ -967,7 +968,6 @@
     <Content Include="Scripts\jquery-validation-1.19.1\demo\captcha\fonts\Anorexia.ttf" />
     <Content Include="Scripts\jquery-validation-1.19.1\package.json" />
     <Content Include="Scripts\jquery-validation-1.19.1\README.md" />
-    <Content Include="Views\Activity\AddPhoto.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
     <Content Include="Views\Member\Remarks.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
@@ -998,16 +998,14 @@
     <Content Include="Views\Adm\PostCreate.cshtml" />
     <Content Include="Views\Info\Post.cshtml" />
     <Content Include="Views\Info\_Post.cshtml" />
-
     <Content Include="Views\Adm\AdmPwdEdit.cshtml" />
-
     <Content Include="Views\Member\Bookmark.cshtml" />
-
     <Content Include="Views\Member\Widget.cshtml" />
-
     <Content Include="Views\Adm\Inquire.cshtml" />
-
-
+    <Content Include="Views\Adm\ManageViolations.cshtml" />
+    <Content Include="Views\Adm\ViolationContent.cshtml" />
+    <Content Include="Views\Adm\Feedback.cshtml" />
+    <Content Include="Views\Adm\FeedBackReply.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
