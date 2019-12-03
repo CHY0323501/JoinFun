@@ -30,6 +30,11 @@ namespace JoinFun
                url: "Edit/{memID}",
                defaults: new { controller = "Member", action = "Edit" }
            );
+            routes.MapRoute(
+               name: "widget",
+               url: "Widget",
+               defaults: new { controller = "Info", action = "Widget" }
+           );
             //啟動自訂路由
             routes.MapMvcAttributeRoutes();
 

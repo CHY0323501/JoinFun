@@ -1,0 +1,93 @@
+﻿@model JoinFun.Models.Comment
+
+@{
+    ViewBag.Title = "會員意見回覆";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2 class="text-warning text-center mt-4 mb-4">回覆會員意見</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="container text-white w-50">
+
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-12">
+            <label>會員編號：</label>
+            @Html.DisplayFor(model => model.memId)
+        </div>
+        <div class="col-md-12">
+            <label>　　編號：</label>
+            @Html.DisplayFor(model => model.commentId)
+        </div>
+        <div class="col-md-12">
+            <label>　　標題：</label>
+            @Html.DisplayFor(model => model.commentTitle)
+        </div>
+
+        <div class="col-md-12">
+            <label>　　意見：</label>
+            @Html.DisplayFor(model => model.Comment1)
+        </div>
+
+        <div class="pull-right">
+            @Model.receivedTime
+        </div>
+
+        <br />
+        <hr />
+
+        @if (Model.reportTime == null)
+        {
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.reportContent, htmlAttributes: new { @class = "control-label col-md-12 text-center" })
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.reportContent, new { @class = "form-control col col-md-12", @rows = "10", @style = "resize:none" })
+                    @Html.ValidationMessageFor(model => model.reportContent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 text-center">
+                    @Html.TextBoxFor(m => m.admId, new { Value = "adm001", @type = "hidden" })
+                    <input type="submit" value="送出" class="btn btn-primary" />
+                </div>
+            </div>
+            <div>
+                @Html.ActionLink("返回列表", "Feedback", new { Page = "unprocessed" })
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.reportContent, htmlAttributes: new { @class = "control-label col-md-12 text-center" })
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.reportContent, new { @class = "form-control col col-md-12", @rows = "10", @style = "resize:none", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.reportContent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div>
+                @Html.ActionLink("返回列表", "Feedback", new { Page = "processed" })
+            </div>
+        }
+
+
+    </div>
+}
+
+
+
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#feedback').show();
+        });
+    </script>
+}
