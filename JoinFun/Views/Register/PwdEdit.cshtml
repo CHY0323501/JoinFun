@@ -2,18 +2,19 @@
 
 @{
     ViewBag.Title = "修改密碼";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section PwdEdit{
+@section Register{
     <link href="~/CSS/Register.css" rel="stylesheet" />
 
 }
 
-<div class="container mt-5  "  style="min-height: 100vh">
+<div class="container mt-5  " style="min-height: 100vh">
 
     <div class="row justify-content-center pwdEdit-box ml-1">
         <div class="col-md-12">
-            <h2 class="text-center mt-4">修改密碼</h2>
+            <h2 class="text-center mt-5">修改密碼</h2>
         </div>
 
         @using (Html.BeginForm(new { id = "pwdEdit" }))

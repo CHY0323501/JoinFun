@@ -22,6 +22,7 @@ namespace JoinFun.Controllers
 
         public ActionResult Login() {
             return View();
+
         }
         [HttpPost]
         public ActionResult Login(string account,string pass)
@@ -68,12 +69,31 @@ namespace JoinFun.Controllers
             return View();
         }
 
-
+        //管理員登出
+        public ActionResult AdmLogout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "Adm");
+        }
 
         //註冊管理員
-        public ActionResult AdmRegister()
+        public ActionResult AdmRegister(string admId)
         {
-            return View();
+            var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
+            if (admId == null)
+            {
+                return RedirectToAction("Login", "Adm");
+            }
+            else
+            {
+                if (Session["admid"].ToString() == admId )
+                {
+                    return View();
+                }
+                return RedirectToAction("Login", "Adm");
+
+            }
+           
         }
 
         [HttpPost]
@@ -107,73 +127,70 @@ namespace JoinFun.Controllers
 
         }
 
-        //修改管理員密碼
+        //修改管理員密碼、暱稱
         public ActionResult AdmPwdEdit(string admId)
         {
+
+
+
             if (Session["admId"].ToString() == admId)
             {
                 var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
-                var AccountAdmEdit = db.Administrator.Find().admAcc;
+            //var AccountAdmEdit = db.Administrator.Find().admAcc;
 
-                //var account = (from a in db.Acc_Pass
-                //               where a.memId == memId
-                //               select a.Account).FirstOrDefault();
+            var AccountAdmEdit = (from a in db.Administrator
+                           where a.admId== admId
+                                  select a.admAcc).FirstOrDefault();
 
-
+                Session["admid"] = "adm007";
                 Session["AdmAccount"] = AccountAdmEdit;
-                return View();
-            }
-            return RedirectToAction("Login", "Login");
-
+            return View();
         }
+            return RedirectToAction("Index", "Adm");
+
+    }
 
         [HttpPost]
-        public ActionResult AdmPwdEdit(string memId, string OldPassword, string Password)
+        [ValidateAntiForgeryToken]
+        public ActionResult AdmPwdEdit(string admId,string admNick, string OldPassword, string Password)
         {
 
-            var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
-            //var accPwd = db.Acc_Pass.Find();
-
-            var oldsalt = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault().Salt;
-            //var oldsalt = db.Acc_Pass.Find();
-            //string old = oldsalt.Salt;
-
-            //ViewBag.account = (from a in db.Acc_Pass
-            //                   where a.memId == memId
-            //                   select a.Account).FirstOrDefault();
-
-
+            var accPwd = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
+           
+            //舊管理員密碼解密
+            var oldsalt = db.Administrator.Where(m => m.admId == admId).FirstOrDefault().admSalt;          
             byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(OldPassword + oldsalt);
             byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
             string HashString = Convert.ToBase64String(HashBytes);
 
-            if (accPwd.Password != null)
+            if (accPwd.admPass!= null)
             {
-                if (accPwd.Password == HashString)
+                if (accPwd.admPass == HashString)
                 {
 
-                    //密碼雜湊 salt+hash
+                    //新密碼雜湊 salt+hash
                     string salt = Guid.NewGuid().ToString();
                     byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(Password + salt);
                     byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
                     string hashString = Convert.ToBase64String(hashBytes);
 
 
-                    accPwd.Salt = salt;
-                    accPwd.memId = memId;
-                    accPwd.Password = hashString;
-                    accPwd.PasswordConfirm = hashString;
+                    accPwd.admSalt = salt;
+                    accPwd.admId = admId;
+                    accPwd.admNick = admNick;
+                    accPwd.admPass = hashString;
+                    accPwd.admPasswordConfirm= hashString;
 
                     db.SaveChanges();
 
 
-                    return RedirectToAction("Index", "Activity");
+                    return RedirectToAction("Index", "Adm");
 
 
                 }
                 else
                 {
-                    ViewBag.PwdEditErr = "舊密碼未填或有誤!";
+                    ViewBag.AdmPwdEditErr = "舊密碼未填或有誤!";
                     return View();
                 }
 
