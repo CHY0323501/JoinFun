@@ -388,9 +388,8 @@ namespace JoinFun.Controllers
             List<int> arrayold = Number.Split(',').Select(int.Parse).ToList();
             List<int> arraynew = arrayold;
 
-            int Temp = 0;
+            int Temp = 0, ran = 0, check = 0;
             Random R = new Random();
-            int ran = 0,check=0;
             for (int j = 0; j < arraynew.Count(); j++)
             {
                 check = j;
@@ -399,10 +398,10 @@ namespace JoinFun.Controllers
                 arraynew[j] = arraynew[ran];
                 arraynew[ran] = Temp;
 
-                //if (arraynew[j] == arrayold[j])
-                //{
-                //    j = check;
-                //}
+                if (arraynew[j] == arrayold[j])
+                {
+                    j = check;
+                }
             }
 
 

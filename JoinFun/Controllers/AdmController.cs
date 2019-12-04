@@ -280,10 +280,9 @@ namespace JoinFun.Controllers
                         {
                             getMemEmail.Add(db.Member.ToList()[m].Email);
                         }
-                        for (int i = 0; i < db.Member.Count(); i++)
-                        {
-                            mes.SendEmail(getMemEmail, post.postTitle, post.postContent);
-                        }
+                        
+                         mes.SendEmail(getMemEmail, post.postTitle, post.postContent);
+                        
                     }
                 }
                 catch {
