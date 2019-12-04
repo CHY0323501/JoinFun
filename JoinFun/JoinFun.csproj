@@ -1047,6 +1047,7 @@
     <Compile Include="Utilities\Common.cs" />
     <Compile Include="Utilities\MessageCenter.cs" />
     <Compile Include="ViewModel\ActClass.cs" />
+    <Compile Include="ViewModel\AdmView.cs" />
     <Compile Include="ViewModel\BlockMemberVM.cs" />
     <Compile Include="ViewModel\FriendManagementVW.cs" />
     <Compile Include="ViewModel\HistoryViewModel.cs" />
@@ -1082,7 +1083,6 @@
     <Content Include="Scripts\jquery-validation-1.19.1\demo\captcha\fonts\Anorexia.ttf" />
     <Content Include="Scripts\jquery-validation-1.19.1\package.json" />
     <Content Include="Scripts\jquery-validation-1.19.1\README.md" />
-    <Content Include="Views\Activity\AddPhoto.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
     <Content Include="Views\Member\Remarks.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
@@ -1115,7 +1115,9 @@
     <Content Include="Views\Info\_Post.cshtml" />
     <Content Include="Views\Adm\AdmPwdEdit.cshtml" />
     <Content Include="Views\Member\Bookmark.cshtml" />
+    <Content Include="Views\Member\Widget.cshtml" />
     <Content Include="Views\Adm\Inquire.cshtml" />
+
     <Content Include="sweetalert-master\.babelrc" />
     <Content Include="sweetalert-master\.editorconfig" />
     <Content Include="sweetalert-master\.github\ISSUE_TEMPLATE.md" />
@@ -1143,6 +1145,13 @@
     <Content Include="sweetalert-master\README.md" />
     <Content Include="sweetalert-master\tsconfig.json" />
     <Content Include="sweetalert-master\tslint.json" />
+
+    <Content Include="Views\Adm\ManageViolations.cshtml" />
+    <Content Include="Views\Adm\ViolationContent.cshtml" />
+    <Content Include="Views\Adm\Feedback.cshtml" />
+    <Content Include="Views\Adm\FeedBackReply.cshtml" />
+    <Content Include="Views\Adm\AllViolations.cshtml" />
+
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1221,6 +1230,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -1239,6 +1251,9 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:54129/" workingDir="" />
+          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using JoinFun.Models;
+using Newtonsoft.Json;
 using X.PagedList;
 
 namespace JoinFun.Views.Info
@@ -55,5 +56,6 @@ namespace JoinFun.Views.Info
 
             return PartialView(pagedlist);
         }
+        
     }
 }

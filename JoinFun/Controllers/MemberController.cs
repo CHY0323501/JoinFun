@@ -376,6 +376,40 @@ namespace JoinFun.Controllers
         }
 
 
+        //小工具
+        public ActionResult Widget()
+        {
+            return View();
+        }
+        //抽籤
+        [HttpPost]
+        public ActionResult Random(string Number)
+        {
+            List<int> arrayold = Number.Split(',').Select(int.Parse).ToList();
+            List<int> arraynew = arrayold;
+
+            int Temp = 0;
+            Random R = new Random();
+            int ran = 0,check=0;
+            for (int j = 0; j < arraynew.Count(); j++)
+            {
+                check = j;
+                ran = R.Next(0, arraynew.Count());
+                Temp = arraynew[j];
+                arraynew[j] = arraynew[ran];
+                arraynew[ran] = Temp;
+
+                //if (arraynew[j] == arrayold[j])
+                //{
+                //    j = check;
+                //}
+            }
+
+
+            return Json(arraynew, JsonRequestBehavior.AllowGet);
+        }
+       
+
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)
         {

@@ -1,0 +1,183 @@
+﻿@model JoinFun.ViewModel.AdmView
+
+@{
+    ViewBag.Title = "檢舉內容";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    var evtID = Model.violateList.FirstOrDefault().CorrespondingEventID;
+    string ActID = "";
+    if (Model.mboardList.Any(m => m.mboardSerial == evtID))
+    {
+        ActID = Model.mboardList.Where(m => m.mboardSerial == evtID).FirstOrDefault().actId;
+    }
+}
+
+
+@using (Html.BeginForm("ViolationContent", "Adm", FormMethod.Post, new { id = "form1" }))
+{
+    @*@Html.AntiForgeryToken()*@
+    <div class="container w-75">
+
+        <h2 class="text-center text-secondary alert alert-warning">檢舉內容</h2>
+        <div class="card">
+            <div class="card-header">
+                檢舉原因：@Model.violateList.FirstOrDefault().vioTitle
+
+            </div>
+            <div class="card-body" style="height:500px">
+                @if (Model.actList.Any(m => m.actId == evtID))
+                {
+                    <span>活動編號：</span>
+                    <a href="@Url.Action("Details", "Activity", new { actId = evtID, memID = Model.actList.Where(m=>m.actId == evtID).FirstOrDefault().hostId, actClassId = Model.actList.Where(m=>m.actId == evtID).FirstOrDefault().actClassId})" id="actEvent">@Model.violateList.FirstOrDefault().CorrespondingEventID</a>
+                    @*<button type="button" class="btn btn-danger pull-right ml-1" id="delActivity">刪除活動</button>*@
+                    <button type="button" class="btn btn-warning pull-right" id="hideActivity">隱藏活動</button>
+                    <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
+                    <input id="memID" name="memID" type="hidden" value="@Model.actList.Where(m=>m.actId == evtID).FirstOrDefault().hostId" />
+                    if (ViewBag.ID == null)
+                    {
+                        ViewBag.ID = "actList";
+                    }
+                    <hr />
+                }
+                else if (Model.memList.Any(m => m.memId == evtID))
+                {
+                    <span>違規會員編號：</span>
+                    <a href="@Url.Action("Info", "Member", new { memID = evtID })">@Model.violateList.FirstOrDefault().CorrespondingEventID</a>
+                    <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
+                    <input id="memID" name="memID" type="hidden" value="@evtID" />
+                    if (ViewBag.ID == null)
+                    {
+                        ViewBag.ID = "memList";
+                    }
+
+                    <hr />
+                }
+                else if (Model.remarkList.Any(m => m.remarkSerial == evtID))
+                {
+                    <span>被投訴評價編號：</span>
+                    <a href="@Url.Action("Remarks", "Member", new { memID = Model.remarkList.Where(m=>m.remarkSerial == evtID).FirstOrDefault().ToMemId})">@Model.violateList.FirstOrDefault().CorrespondingEventID</a>
+                    <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
+                    <input id="memID" name="memID" type="hidden" value="@Model.remarkList.Where(m=>m.remarkSerial == evtID).FirstOrDefault().FromMemId" />
+                    if (ViewBag.ID == null)
+                    {
+                        ViewBag.ID = "remarkList";
+                    }
+
+                    <hr />
+                }
+                else if (Model.mboardList.Any(m => m.mboardSerial == evtID))
+                {
+                    <span>留言板編號：</span>
+                    <a href="@Url.Action("Details", "Activity", new { actId = Model.actList.Where(m=>m.actId == ActID).FirstOrDefault().actId, memID = Model.mboardList.Where(m=>m.mboardSerial == evtID).FirstOrDefault().memId, actClassId = Model.actList.Where(m=>m.actId == ActID).FirstOrDefault().actClassId})">@Model.violateList.FirstOrDefault().CorrespondingEventID</a>
+                    <button type="button" class="btn btn-warning pull-right" id="hideMessage">隱藏留言</button>
+                    <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
+                    <input id="commentID" name="commentID" type="hidden" value="@Model.mboardList.FirstOrDefault().mboardSerial" />
+                    <input id="memID" name="memID" type="hidden" value="@Model.mboardList.Where(m=>m.mboardSerial == evtID).FirstOrDefault().memId" />
+                    if (ViewBag.ID == null)
+                    {
+                        ViewBag.ID = "commentList";
+                    }
+                    <hr />
+                }
+                <p>檢舉內容：</p>
+                @Model.violateList.FirstOrDefault().vioContent
+            </div>
+
+            <div class="card-footer col-md-12">
+                @foreach (var item in Model.punishList)
+                {
+                    <label class="checkLabel">
+                        @item.punishName
+                        @*@Html.RadioButtonFor(modelItem => item.punishId, item.punishName)*@
+                        <input id="punishID" type="radio" name="punishID" value="@item.punishId" />
+                        <span class="checkmark">&emsp;</span>
+                    </label>
+                }
+                <span id="reminder" class="text-danger"></span>
+            </div>
+
+            <input id="admID" type="hidden" name="admID" value="adm001" />
+            <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#punishForm" id="sendPunish">送出</button>
+            <div class="modal fade" id="punishForm" tabindex="-1" role="dialog" aria-labelledby="punishTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="punishTitle">處置確認</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            請確認處置方式是否正確
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">確認</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<a href="@Url.Action("ManageViolations")" class="text-center">返回揪團檢舉管理頁面</a>*@
+        </div>
+        @Html.ActionLink("返回列表", "ManageViolations", new { Page = ViewBag.ID }, new { @class = "text-center btn btn-link mt-2" })
+    </div>
+
+
+}
+
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+    <link href="~/Content/ButtonStyle.css" rel="stylesheet" />
+}
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#vioArea').show();
+        });
+
+        $('#hideActivity').on('click', function () {
+            if (confirm("確定隱藏活動?")) {
+                $.ajax({
+                url: "@Url.Action("HideActivity", "Adm")",
+                method: "post",
+                traditional: true,
+                data: { actID: $('#actEvent').text() },
+                success: function () {
+                    alert("活動已隱藏");
+                },
+                error: function () {
+                    alert("活動隱藏失敗");
+                }
+            });
+            }
+        });
+
+        $('#hideMessage').click(function () {
+            console.log($('#commentID').val());
+            if (confirm("確定隱藏留言?")) {
+                $.ajax({
+                url: "@Url.Action("HideComment", "Adm")",
+                method: "post",
+                traditional: true,
+                data: { commentID: $('#commentID').val() },
+                success: function () {
+                    alert("留言已隱藏");
+                },
+                error: function () {
+                    alert("留言隱藏失敗");
+                }
+            });
+            }
+        });
+
+        $('#sendPunish').click(function () {
+            if (!$('input[name="punishID"]').is(':checked')) {
+                //$('#punishID').addClass('is-invalid');
+                $('#reminder').text("請選擇處置方式");
+                return false;
+            }
+
+        });
+    </script>
+}

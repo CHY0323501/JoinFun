@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using JoinFun.Models;
 using X.PagedList;
 using JoinFun.Utilities;
+using JoinFun.ViewModel;
 
 namespace JoinFun.Controllers
 {
@@ -383,7 +384,183 @@ namespace JoinFun.Controllers
 
         }
 
+        //所有違規管理(含已處理和未處理項目),預設僅顯示未處理項目,可搜尋選項則包含所有已處理和未處理項目
+        public ActionResult AllViolations(string Page)
+        {
+            AdmView manage = new AdmView()
+            {
+                violateList = db.Violation.ToList(),
+                memList = db.Member.ToList()
+            };
+            ViewBag.ID = Page;
+            return View(manage);
+        }
 
+        //依分類顯示管理的違規項目
+        public ActionResult ManageViolations(string Page)
+        {
+            AdmView manage = new AdmView()
+            {
+                violateList = db.Violation.Where(m => m.vioProcessTime == null).ToList(),
+                memList = db.Member.ToList()
+            };
+            ViewBag.ID = Page;
+            return View(manage);
+        }
+
+        public ActionResult ViolationContent(string vioID)
+        {
+            var evtID = db.Violation.Where(m => m.vioId == vioID).FirstOrDefault().CorrespondingEventID;
+            var member = db.Member.ToList();
+            var remark = db.Member_Remarks.ToList();
+            var mboard = db.Message_Board.ToList();
+            //找出違規會員,若無則回傳某一筆資料以避免空值
+            if (db.Member.Any(m => m.memId == evtID))
+                member = db.Member.Where(m => m.memId == evtID).ToList();
+            member.Where(m => m.memId == "M000000001").ToList();
+            //找出被檢舉的評價,若無則回傳某一筆資料以避免空值
+            if (db.Member_Remarks.Any(m => m.remarkSerial == evtID))
+                remark = db.Member_Remarks.Where(m => m.remarkSerial == evtID).ToList();
+            remark.Where(m => m.remarkSerial == "R000000001").ToList();
+            //找出被檢舉的不當留言,若無則回傳某一筆資料以避免空值
+            if (db.Message_Board.Any(m => m.mboardSerial == evtID))
+                mboard = db.Message_Board.Where(m => m.mboardSerial == evtID).ToList();
+            mboard.Where(m => m.memId == "B000000001").ToList();
+
+            AdmView violate = new AdmView()
+            {
+                violateList = db.Violation.Where(m => m.vioId == vioID && m.vioProcessTime == null).ToList(),
+                punishList = db.Punishment.ToList(),
+                memList = member,
+                actList = db.Join_Fun_Activities.ToList(),
+                remarkList = remark,
+                mboardList = mboard
+            };
+            ViewBag.ID = Request["Page"];
+            return View(violate);
+        }
+
+        [HttpPost]
+        public ActionResult ViolationContent(string vioID, string punishID, string admID, string memID)
+        {
+            if (punishID != null)
+            {
+                var punish = db.Violation.Find(vioID);
+                var violateMem = db.Member.Find(memID);
+                MessageCenter mail = new MessageCenter();
+                List<string> mailList = new List<string> { violateMem.Email };
+                switch (punishID)
+                {
+                    case "pmt0000001":
+                        punish.punishId = punishID;
+                        punish.implement_admId = admID;
+                        punish.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        break;
+                    case "pmt0000002":
+                    case "pmt0000003":
+                    case "pmt0000004":
+                        punish.punishId = punishID;
+                        punish.implement_admId = admID;
+                        punish.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        if (violateMem.numViolate < 3)
+                        {
+                            violateMem.numViolate = Convert.ToInt16(violateMem.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punishID).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
+                    case "pmt0000005":
+                        punish.punishId = punishID;
+                        punish.implement_admId = admID;
+                        punish.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已嚴重違反Join Fun網站規定，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        break;
+                }
+                return RedirectToAction("ManageViolations");
+            }
+            var evtID = db.Violation.Where(m => m.vioId == vioID).FirstOrDefault().CorrespondingEventID;
+            var member = db.Member.ToList();
+            var remark = db.Member_Remarks.ToList();
+            var mboard = db.Message_Board.ToList();
+            //以下為避免寫入資料庫失敗後return view後為空值的問題
+            if (db.Member.Any(m => m.memId == evtID))
+                member = db.Member.Where(m => m.memId == evtID).ToList();
+            member.Where(m => m.memId == "M000000001").ToList();
+            if (db.Member_Remarks.Any(m => m.remarkSerial == evtID))
+                remark = db.Member_Remarks.Where(m => m.remarkSerial == evtID).ToList();
+            remark.Where(m => m.remarkSerial == "R000000001").ToList();
+            if (db.Message_Board.Any(m => m.mboardSerial == evtID))
+                mboard = db.Message_Board.Where(m => m.mboardSerial == evtID).ToList();
+            mboard.Where(m => m.memId == "B000000001").ToList();
+            AdmView violate = new AdmView()
+            {
+                violateList = db.Violation.Where(m => m.vioId == vioID && m.vioProcessTime == null).ToList(),
+                memList = member,
+                actList = db.Join_Fun_Activities.ToList(),
+                punishList = db.Punishment.ToList(),
+                remarkList = remark,
+                mboardList = mboard
+            };
+            return View(violate);
+        }
+
+        //隱藏有問題的活動
+        [HttpPost]
+        public ActionResult HideActivity(string actID)
+        {
+            var act = db.Join_Fun_Activities.Find(actID);
+            act.keepAct = false;
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        //隱藏不當留言
+        [HttpPost]
+        public ActionResult HideComment(string commentID)
+        {
+            var comment = db.Message_Board.Find(commentID);
+            comment.keepMboard = false;
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Feedback(string Page)
+        {
+            var feedback = db.Comment.ToList();
+            ViewBag.ID = Page;
+            return View(feedback);
+        }
+
+        public ActionResult FeedBackReply(string id)
+        {
+            Comment reply = db.Comment.Find(id);
+            return View(reply);
+        }
+
+        [HttpPost]
+        public ActionResult FeedBackReply(string id, string admId)
+        {
+
+            var reply = db.Comment.Find(id);
+            reply.reportTime = DateTime.Now;
+            reply.reportContent = Request["reportContent"];
+            reply.admId = admId;
+            db.SaveChanges();
+            return RedirectToAction("FeedBack");
+        }
 
     }
 }
