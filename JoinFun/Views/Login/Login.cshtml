@@ -4,15 +4,14 @@
     ViewBag.Title = "登入";
 }
 
-@section Register{
-    <link href="~/CSS/Register.css" rel="stylesheet" />
-
-
+@section login{
+    <link href="~/CSS/Login.css" rel="stylesheet" />
+   
 }
 
 
 
-<div class="container " >
+<div class="container ">
 
     <div class="row justify-content-center">
 
@@ -75,6 +74,7 @@
 
 @section scripts{
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+   
     <script>
         window.fbAsyncInit = function () {
             FB.init({
@@ -89,7 +89,7 @@
                 //console.log(response);
             });
         };
-         
+
 
         var id = "",email="";
         // 處理各種登入身份
@@ -143,6 +143,6 @@
         window.location.href = "@Url.Action("FbLogin","Login")" +"?ID="+ sid + "&email=" + email;
     }
     </script>
-    
+
 }
 

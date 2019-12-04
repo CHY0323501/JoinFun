@@ -2,32 +2,57 @@
 
 @{
     ViewBag.Title = "CheckEmail";
-     Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section Register{
-    <link href="~/CSS/Register.css" rel="stylesheet" />
+@section Login{
+
+    <link href="~/CSS/Login.css" rel="stylesheet" />
 
 }
 
 
-<div class="container " style="min-height: 100vh">
-    <div class="emailBg">
-        <div class="row justify-content-center ">
-            @*<img src="~/Photos/blank letter.jpg" />*@
-            <div class="col-md-12">
+@*<div class="container " >
+        <div class="card">
+            <div class="row justify-content-center ">
+                <img src="~/Photos/blank letter.jpg" />
+                <div class="col-md-12">
 
-                <h3>親愛的 @ViewBag.account 您好:</h3>
-                <h3 class="mt-3">
-                    感謝您註冊JoinFun會員,稍後請務必至您註冊時所填寫的信箱完成啟用動作,方可使用本網站所提供之服務!
-                </h3>
-                <h3 class="mt-3 text-danger"><i class="fas fa-exclamation-triangle"></i>信箱認證注意事項:</h3>
-                <h3>請勿直接按回復郵件,該動作無法協助您進行帳號啟用!</h3>
+                    <h3>親愛的 @ViewBag.account 您好:</h3>
+                    <h3 class="mt-3">
+                        感謝您註冊JoinFun會員,稍後請務必至您註冊時所填寫的信箱完成啟用動作,方可使用本網站所提供之服務!
+                    </h3>
+                    <h3 class="mt-3 text-danger"><i class="fas fa-exclamation-triangle"></i>信箱認證注意事項:</h3>
+                    <h3>請勿直接按回復郵件,該動作無法協助您進行帳號啟用!</h3>
+                </div>
             </div>
-        </div>
 
-        @*<div>
-                @Html.ActionLink("返回會員登入", "Login", "Login", ,new { c=1}, new { @class = "btn btn-primary w-25 mt-5" })
-            </div>*@
+            <div>
+                    @Html.ActionLink("返回會員登入", "Login", "Login", ,new { c=1}, new { @class = "btn btn-primary w-25 mt-5" })
+                </div>
+        </div>
+    </div>*@
+<div class="row justify-content-center">
+    <div class="card text-white bg-dark" style="width:600px">
+
+        <div class="card-body">
+            <h3 class="card-title">親愛的 @ViewBag.account 您好:</h3>
+            <h4 class="card-text">感謝您註冊JoinFun會員,稍後請務必至您註冊時所填寫的信箱完成啟用動作,方可使用本網站所提供之服務!</h4>
+        </div>
+        <div class="card-footer">
+            <h3 class="mt-3 text-danger">
+                <i class="fas fa-exclamation-triangle"></i>信箱認證注意事項:
+            </h3>
+            <h3>請勿直接按回復郵件,該動作無法協助您進行帳號啟用!</h3>
+        </div>
     </div>
+
+    <div  >
+            @Html.ActionLink("返回會員登入", "Login", "Login", new { c = 1 }, new { @class = "btn btn-primary w-25 mt-5" })
+        </div>
 </div>
+
+
+
+
+
 
