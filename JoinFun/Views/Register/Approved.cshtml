@@ -1,20 +1,65 @@
 ﻿
 @{
     ViewBag.Title = "Approved";
-     Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section memberinfo{
-    <link href="~/CSS/Register.css" rel="stylesheet" />
-}
-<div class="container mt-5 " style="height:750px ;width:800px">
+@section Login{
 
-    <div class="row bg-morandi rounded " style="height:350px">
-        <div class="col-md-12 offset-md-4 ">
-            <h1 class="text-success mt-5">帳號驗證成功</h1>
-            <div class="mt-5 ">
-                @Html.ActionLink("返回會員登入", "Login", "Login" ,new { @class = "btn btn-warning w-25 ml-1"})
+    <link href="~/CSS/Login.css" rel="stylesheet" />
+
+    <link href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">
+
+}
+@*<div class="container mt-5 ">
+
+        <div class="row bg-white rounded ">
+            <div class="col-md-12 offset-md-4 ">
+                <h1 class="text-success mt-5">帳號驗證成功</h1>
+                <div class="mt-5 ">
+                    @Html.ActionLink("返回會員登入", "Login", "Login", new { @class = "btn btn-warning w-25 ml-1" })
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
+
+
+@*<a href="#" class="big-link" data-reveal-id="myModal" data-animation="fade"> Fade</a>
+    <div id="myModal" class="reveal-modal">
+        <h1>test</h1>
+        <a class="close-reveal-modal">×</a>
+    </div>*@
+
+
+
+
+
+@section scripts{
+    @*<script src="~/sweetalert-master/docs/assets/sweetalert/sweetalert.min.js"></script>*@
+    <script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
+    @*<script src="~/reveal/jquery.reveal.js"></script>*@
+   
+    <script>
+        $(document).ready(function () {
+            swal({
+                title: "認證成功！",
+                text: "點及登入頁使用其功能",
+                type: "success",
+                confirmButtonText: "關閉",
+            })
+            //    .then(function () {
+            //    $(".confirm").on('click', function () {
+
+            //        window.location.href = "https://blog.miniasp.com/post/2009/03/25/location-href-and-location-replace-in-practice";
+
+            //    });
+            //});
+
+
+        });
+
+
+
+
+    </script>
+}
 

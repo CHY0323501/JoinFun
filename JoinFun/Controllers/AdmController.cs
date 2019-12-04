@@ -143,7 +143,7 @@ namespace JoinFun.Controllers
                            where a.admId== admId
                                   select a.admAcc).FirstOrDefault();
 
-                Session["admid"] = "adm007";
+                //Session["admid"] = "adm007";
                 Session["AdmAccount"] = AccountAdmEdit;
             return View();
         }

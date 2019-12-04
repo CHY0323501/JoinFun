@@ -7,133 +7,207 @@
 
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal text-white">
-        <h4>個人資訊修改</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.admId)
+        <div class="form-horizontal text-white">
+            <h4 class="mt-5">個人資訊修改</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.admId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.admId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["admid"] } })
-                @Html.ValidationMessageFor(model => model.admId, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.admId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["admid"] } })
+                    @Html.ValidationMessageFor(model => model.admId, "", new { @style = "color:#ffb0b7" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.admAcc, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.admAcc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["AdmAccount"] } })
+                    @Html.ValidationMessageFor(model => model.admAcc, "", new { @style = "color:#ffb0b7" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.admNick, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.admNick, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.admNick, "", new { @style = "color:#ffb0b7" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class=" control-label col-md-2">舊密碼</label>
+                <div class="col-md-10">
+                    <input id="OldPassword" name="OldPassword" type="password" class="form-control " />
+                    <span class=" text-center " style="color:#ff9cb3">@ViewBag.AdmPwdEditErr</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class=" control-label col-md-2">新密碼</label>
+                <div class="col-md-10">
+                    <input id="Password" name="Password" type="password" class="form-control " />
+                    <div></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class=" control-label col-md-2">確認密碼</label>
+                <div class="col-md-10">
+                    <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control " onkeyup="checkPwd()" required />
+                    <div></div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-info" />
+                </div>
             </div>
         </div>
+    }*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.admAcc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.admAcc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["AdmAccount"] } })
-                @Html.ValidationMessageFor(model => model.admAcc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.admNick, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.admNick, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.admNick, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="container h-100 ">
+        <div class="row h-100 justify-content-center ">
 
 
-        <div class="form-group">
-            <label class=" control-label col-md-2">舊密碼</label>
-            <div class="col-md-10">
-                <input id="OldPassword" name="OldPassword" type="password" class="form-control " />
-                <span class=" text-center " style="color:#ff9cb3">@ViewBag.AdmPwdEditErr</span>
-            </div>
-        </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+         
+                <div class="col-12  text-white">
+                    <h4 class="mt-5">個人資訊修改</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.admId)
 
-        <div class="form-group">
-            <label class=" control-label col-md-2">新密碼</label>
-            <div class="col-md-10">
-                <input id="Password" name="Password" type="password" class="form-control " />
-                <div></div>
-            </div>
-        </div>
+                    <div class="form-group">
 
-        <div class="form-group">
-            <label class=" control-label col-md-2">確認密碼</label>
-            <div class="col-md-10">
-                <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control " onkeyup="checkPwd()" required />
-                <div></div>
-            </div>
-        </div>
+                        @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label  " })
+
+                        @Html.EditorFor(model => model.admId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["admid"] } })
+                        @Html.ValidationMessageFor(model => model.admId, "", new { @style = "color:#ffb0b7" })
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-info" />
-            </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.admAcc, htmlAttributes: new { @class = "control-label " })
+
+                        @Html.EditorFor(model => model.admAcc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["AdmAccount"] } })
+                        @Html.ValidationMessageFor(model => model.admAcc, "", new { @style = "color:#ffb0b7" })
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.admNick, htmlAttributes: new { @class = "control-label " })
+
+                        @Html.EditorFor(model => model.admNick, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.admNick, "", new { @style = "color:#ffb0b7" })
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class=" control-label">舊密碼</label>
+
+                        <input id="OldPassword" name="OldPassword" type="password" class="form-control " />
+                        <span class=" text-center " style="color:#ff9cb3">@ViewBag.AdmPwdEditErr</span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class=" control-label">新密碼</label>
+
+                        <input id="Password" name="Password" type="password" class="form-control " />
+                        <div></div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class=" control-label">確認密碼</label>
+
+                        <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control " onkeyup="checkPwd()" required />
+                        <div></div>
+
+                    </div>
+
+
+                    <div class="form-group mt-4">
+                        
+                            <input type="submit" value="儲存" class="btn btn-info d-block w-100 " />
+                       
+                    </div>
+
+                </div>
+
+            }
         </div>
     </div>
-}
+            @section scripts{
+                <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+                <script src="~/Scripts/jquery.validate.min.js"></script>
+                <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+                <script>
+                    //未填警告
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-@section scripts{
-    <script>
-        //未填警告
+                    $('form').submit(function () {
 
-        $('form').submit(function () {
+                        if ($('#Password').val() == "") {
+                            $('#Password~div').text('請輸入新密碼!').css("color", "#ff9cb3");
+                            return false;
+                        }
+                        else {
+                            $('#Password').keyup(function () {
+                                if ($('#Password').val() != "") {
+                                    $('#Password~div').text("");
+                                }
+                            });
+                        }
 
-            if ($('#Password').val() == "") {
-                $('#Password~div').text('請輸入新密碼!').css("color", "#ff9cb3");
-                return false;
-            }
-            else {
-                $('#Password').keyup(function () {
-                    if ($('#Password').val() != "") {
-                        $('#Password~div').text("");
+                    });
+
+
+
+                    //比對新密碼
+                    function checkPwd() {
+                        var passNew = document.getElementById("Password").value;
+                        var passwordConfirm = document.getElementById("PasswordConfirm").value;
+
+                        if (passNew != passwordConfirm) {
+                            $('#errMessage').show();
+                            if (!$('#errMessage').length)
+                                $('<div id="errMessage" style="color:#ff9cb3">新密碼和確認密碼不一致</div >').insertAfter("#PasswordConfirm");
+
+                        }
+                        else {
+                            $('#errMessage').hide();
+                        }
                     }
-                });
+
+                    //新密碼字數
+                    $('#Password').keyup(function () {
+                        if ($('#Password').val().length < 8) {
+                            $('#Password~div').text("最少8字元").css("color", "#ff9cb3");
+                        }
+                        else {
+                            $('#Password~div').hide();
+                        }
+
+                    });
+
+
+
+
+                </script>
+
             }
-
-        });
-
-
-
-        //比對新密碼
-        function checkPwd() {
-            var passNew = document.getElementById("Password").value;
-            var passwordConfirm = document.getElementById("PasswordConfirm").value;
-
-            if (passNew != passwordConfirm) {
-                $('#errMessage').show();
-                if (!$('#errMessage').length)
-                    $('<div id="errMessage" style="color:#ff9cb3">新密碼和確認密碼不一致</div >').insertAfter("#PasswordConfirm");
-
-            }
-            else {
-                $('#errMessage').hide();
-            }
-        }
-
-        //新密碼字數
-        $('#Password').keyup(function () {
-            if ($('#Password').val().length < 8) {
-                $('#Password~div').text("最少8字元").css("color", "#ff9cb3");
-            }
-            else {
-                $('#Password~div').hide();
-            }
-
-        });
-
-
-
-
-    </script>
-
-}
