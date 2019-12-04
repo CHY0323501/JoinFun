@@ -22,12 +22,13 @@ namespace JoinFun.Controllers
         int pagesize = 10;
         //管理員登入
 
-        public ActionResult Login() {
+        public ActionResult Login()
+        {
             return View();
 
         }
         [HttpPost]
-        public ActionResult Login(string account,string pass)
+        public ActionResult Login(string account, string pass)
         {
             //使用Linq查詢取得帳號(加密用)
             var getAcc = db.Administrator.Where(m => m.admAcc == account).FirstOrDefault();
@@ -38,13 +39,13 @@ namespace JoinFun.Controllers
             }
             //查詢管理員帳號及密碼
             string sql = "select * from Administrator where admAcc=@acc and admPass=@pass";
-            SqlCommand cmd = new SqlCommand(sql,Conn);
+            SqlCommand cmd = new SqlCommand(sql, Conn);
             SqlDataReader reader;
 
-            
+
 
             //取得salt字串
-            string salt = getAcc.admSalt; 
+            string salt = getAcc.admSalt;
             //產生雜湊
             byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(pass + salt);
             byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
@@ -57,7 +58,8 @@ namespace JoinFun.Controllers
             reader = cmd.ExecuteReader();
 
             //比對結果
-            if (reader.Read()) {
+            if (reader.Read())
+            {
                 //保留登入狀態及管理員暱稱
                 Session["admid"] = reader["admId"].ToString();
                 Session["admNick"] = reader["admNick"].ToString();
@@ -88,21 +90,21 @@ namespace JoinFun.Controllers
             }
             else
             {
-                if (Session["admid"].ToString() == admId )
+                if (Session["admid"].ToString() == admId)
                 {
                     return View();
                 }
                 return RedirectToAction("Login", "Adm");
 
             }
-           
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AdmRegister( string admAcc, string admPass, string admNick)
+        public ActionResult AdmRegister(string admAcc, string admPass, string admNick)
         {
-          //密碼雜湊 salt+hash
+            //密碼雜湊 salt+hash
             string salt = Guid.NewGuid().ToString();
             byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(admPass + salt);
             byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
@@ -115,13 +117,13 @@ namespace JoinFun.Controllers
             Administrator accAdm = new Administrator();
             accAdm.admId = getadmId;
             accAdm.admAcc = admAcc;
-            accAdm.admPass= hashString;
+            accAdm.admPass = hashString;
             accAdm.admPasswordConfirm = hashString;
             accAdm.admNick = admNick;
 
 
             accAdm.admSalt = salt;
-            db.Administrator.Add(accAdm);           
+            db.Administrator.Add(accAdm);
             db.SaveChanges();
 
 
@@ -138,34 +140,34 @@ namespace JoinFun.Controllers
             if (Session["admId"].ToString() == admId)
             {
                 var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
-            //var AccountAdmEdit = db.Administrator.Find().admAcc;
+                //var AccountAdmEdit = db.Administrator.Find().admAcc;
 
-            var AccountAdmEdit = (from a in db.Administrator
-                           where a.admId== admId
-                                  select a.admAcc).FirstOrDefault();
+                var AccountAdmEdit = (from a in db.Administrator
+                                      where a.admId == admId
+                                      select a.admAcc).FirstOrDefault();
 
                 Session["admid"] = "adm007";
                 Session["AdmAccount"] = AccountAdmEdit;
-            return View();
-        }
+                return View();
+            }
             return RedirectToAction("Index", "Adm");
 
-    }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AdmPwdEdit(string admId,string admNick, string OldPassword, string Password)
+        public ActionResult AdmPwdEdit(string admId, string admNick, string OldPassword, string Password)
         {
 
             var accPwd = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
-           
+
             //舊管理員密碼解密
-            var oldsalt = db.Administrator.Where(m => m.admId == admId).FirstOrDefault().admSalt;          
+            var oldsalt = db.Administrator.Where(m => m.admId == admId).FirstOrDefault().admSalt;
             byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(OldPassword + oldsalt);
             byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
             string HashString = Convert.ToBase64String(HashBytes);
 
-            if (accPwd.admPass!= null)
+            if (accPwd.admPass != null)
             {
                 if (accPwd.admPass == HashString)
                 {
@@ -181,7 +183,7 @@ namespace JoinFun.Controllers
                     accPwd.admId = admId;
                     accPwd.admNick = admNick;
                     accPwd.admPass = hashString;
-                    accPwd.admPasswordConfirm= hashString;
+                    accPwd.admPasswordConfirm = hashString;
 
                     db.SaveChanges();
 
@@ -200,8 +202,9 @@ namespace JoinFun.Controllers
             return View();
         }
 
-        public ActionResult Index() {
-            Post post = db.Post.OrderByDescending(m=>m.postSerial).FirstOrDefault();
+        public ActionResult Index()
+        {
+            Post post = db.Post.OrderByDescending(m => m.postSerial).FirstOrDefault();
 
 
             return View(post);
@@ -220,27 +223,30 @@ namespace JoinFun.Controllers
             return View();
         }
         //新增公告
-        public ActionResult PostCreate() {
-
-            Session["admid"] = "adm002";
-
-            if (Session["admid"] != null) {
-                string session = Session["admid"].ToString();
-                Post post = new Post();
-                post.postTime = DateTime.Now;
-                ViewBag.admNick= db.Administrator.Where(m => m.admId == session).FirstOrDefault().admNick;
-                return View(post);
-            }
-            
-            return RedirectToAction("Post");
-        }
-        [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult PostCreate(Post post,HttpPostedFileBase postPics)
+        public ActionResult PostCreate()
         {
 
             Session["admid"] = "adm002";
 
-            if (post != null) {
+            if (Session["admid"] != null)
+            {
+                string session = Session["admid"].ToString();
+                Post post = new Post();
+                post.postTime = DateTime.Now;
+                ViewBag.admNick = db.Administrator.Where(m => m.admId == session).FirstOrDefault().admNick;
+                return View(post);
+            }
+
+            return RedirectToAction("Post");
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult PostCreate(Post post, HttpPostedFileBase postPics)
+        {
+
+            Session["admid"] = "adm002";
+
+            if (post != null)
+            {
                 string getPostid = db.Database.SqlQuery<string>("Select [dbo].[GetPostId]()").FirstOrDefault();
                 post.postSerial = getPostid;
                 post.admId = Session["admid"].ToString();
@@ -248,10 +254,10 @@ namespace JoinFun.Controllers
                 if (postPics != null)
                 {
                     if (postPics.ContentLength > 0)
-                    {               
-                        
-                        string fileName = getPostid+ Session["admid"].ToString() + ".jpg";
-                       
+                    {
+
+                        string fileName = getPostid + Session["admid"].ToString() + ".jpg";
+
                         postPics.SaveAs(Server.MapPath("~/Photos/Posts/" + fileName));
                         post.postPics = fileName;
                     }
@@ -287,11 +293,12 @@ namespace JoinFun.Controllers
                         }
                     }
                 }
-                catch {
+                catch
+                {
                     db.Post.Add(post);
                     db.SaveChanges();
                 }
-                
+
                 return RedirectToAction("Post");
 
             }
@@ -299,13 +306,13 @@ namespace JoinFun.Controllers
             //post.postTime = DateTime.Now;
             //ViewBag.admNick = db.Administrator.Where(m => m.admId == Session["admid"].ToString()).FirstOrDefault().admNick;
             return View(post);
-            
-            
+
+
         }
 
         //公告partial view
         [ChildActionOnly]
-        public PartialViewResult _Post(string PostNo,int page=1)
+        public PartialViewResult _Post(string PostNo, int page = 1)
         {
             List<Post> post = db.Post.OrderByDescending(m => m.postSerial).ToList();
             ViewBag.PostCount = post.Count();
@@ -317,15 +324,15 @@ namespace JoinFun.Controllers
                 Post next = post.SkipWhile(m => m.postSerial != PostNo).Skip(1).FirstOrDefault();
                 Post previous = post.TakeWhile(m => m.postSerial != PostNo).LastOrDefault();
                 if (next != null)
-                ViewBag.next = next.postSerial;
-                if(previous!=null)
-                ViewBag.previous = previous.postSerial;
-                
+                    ViewBag.next = next.postSerial;
+                if (previous != null)
+                    ViewBag.previous = previous.postSerial;
+
                 ViewBag.PostCount = 1;
-                return PartialView(p.ToPagedList(1,1));
+                return PartialView(p.ToPagedList(1, 1));
             }
             //公告分頁
-            
+
             int pagecurrent = page < 1 ? 1 : page;
             var pagedlist = post.ToPagedList(pagecurrent, pagesize);
 
@@ -333,9 +340,10 @@ namespace JoinFun.Controllers
         }
 
         //編輯公告
-        public ActionResult PostEdit(string PostNo) {
-            Post post= db.Post.Where(m=>m.postSerial==PostNo).FirstOrDefault();
-            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick",post.admId);
+        public ActionResult PostEdit(string PostNo)
+        {
+            Post post = db.Post.Where(m => m.postSerial == PostNo).FirstOrDefault();
+            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick", post.admId);
             ViewBag.ShowInCarouselState = post.ShowInCarousel;
             return View(post);
         }
@@ -348,13 +356,15 @@ namespace JoinFun.Controllers
 
             db.SaveChanges();
 
-            return RedirectToAction("Post",new { PostNo = post.postSerial });
+            return RedirectToAction("Post", new { PostNo = post.postSerial });
         }
 
         //刪除公告
-        public ActionResult PostDelete(string PostNo) {
+        public ActionResult PostDelete(string PostNo)
+        {
             var post = db.Post.Find(PostNo);
-            if (!String.IsNullOrEmpty(PostNo)&&post!=null) {
+            if (!String.IsNullOrEmpty(PostNo) && post != null)
+            {
                 //刪除原公告圖檔
                 string filename = post.postPics;
                 System.IO.File.Delete(Server.MapPath("~/Photos/Posts/") + filename);
@@ -372,17 +382,70 @@ namespace JoinFun.Controllers
         //}
 
         //查詢會員狀態
-        public ActionResult Inquire(string memid)
+
+        public ActionResult Inquire(string searchString)
         {
-            var member = db.Member.Where(m=>m.memId==memid).ToList();
 
 
+            var member = from a in db.Member select a;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                //member = member.Where(m => m.memId.Contains(searchString));
+                MemberInquireVM model = new MemberInquireVM()
+                {
+                    Member = db.Member.Where(s => s.memId.Contains(searchString) || s.memNick.Contains(searchString)).ToList()
+                };
+                return View(model);
+            }
+            else
+            {
+
+                MemberInquireVM read = new MemberInquireVM()
+                {
+                    Member = db.Member.ToList(),
+                    Violation = db.Violation.ToList(),
+                    Punishment = db.Punishment.ToList()
 
 
+                };
+                return View(read);
+            }
 
-            return View();
+
 
         }
+        //新增違規
+        public ActionResult InquireCreate(string memid)
+        {
+            Violation vio = new Violation();
+
+
+            MemberInquireVM read = new MemberInquireVM()
+            {
+                Member = db.Member.ToList(),
+                Violation = db.Violation.ToList(),
+                Punishment = db.Punishment.ToList()
+            };
+
+            return View(read);
+
+        }
+        //修改違規紀錄
+        public ActionResult InquireEdit(string memid)
+        {
+
+            MemberInquireVM read = new MemberInquireVM()
+            {
+                Member = db.Member.ToList(),
+                Violation = db.Violation.ToList(),
+                Punishment = db.Punishment.ToList()
+            };
+
+            return View(read);
+
+        }
+
 
         public ActionResult ManageViolations(string Page)
         {

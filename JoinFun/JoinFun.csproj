@@ -938,6 +938,7 @@
     <Compile Include="ViewModel\HistoryViewModel.cs" />
     <Compile Include="ViewModel\MemberViewModel.cs" />
     <Compile Include="ViewModel\MemRemarkViewModel.cs" />
+    <Compile Include="ViewModel\MemberInquireVM.cs" />
     <Compile Include="ViewModel\MyActivitiesVM.cs" />
     <Compile Include="Controllers\InfoController.cs" />
   </ItemGroup>
