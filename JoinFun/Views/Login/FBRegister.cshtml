@@ -6,20 +6,21 @@
     ViewBag.Title = "Register";
 }
 
-@section memberinfo{
-    <link href="~/CSS/Register.css" rel="stylesheet" />
+@section Register{
+    <link href="~/CSS/Register .css" rel="stylesheet" />
+    <link href="~/CSS/DatetimePickerUse.css" rel="stylesheet" />
 }
 
-<div class="container bg-morandi rounded">
+@*<div class="container bg-morandi rounded">
     <h2 class="mt-3 display-4 text-center font-weight-bold">註冊</h2>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal ">
-            <input id="SocialID" name="SocialID" type="hidden" value="@ViewBag.SocialID"/>
-            <input id="SocialID" name="SocialID" type="hidden" value="@ViewBag.email"/>
-            
+            <input id="SocialID" name="SocialID" type="hidden" value="@ViewBag.SocialID" />
+            <input id="SocialID" name="SocialID" type="hidden" value="@ViewBag.email" />
+
             <div class="row ">
                 <div class="col-md-6 ">
                     <div class="form-group col-md-12 offset-3">
@@ -31,7 +32,7 @@
 
                     <div class="form-group col-md-12 offset-3">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" ,@Value = @ViewBag.email,@readonly = "readonly"} })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email", @Value = @ViewBag.email, @readonly = "readonly" } })
                         <div></div>
                     </div>
 
@@ -106,13 +107,166 @@
             </div>
         </div>
     }
-</div>
+</div>*@
 
+
+<div class="container register-box " style="min-height: 100vh">
+
+
+    <h3 class="mt-3 display-4 text-center font-weight-bold">註冊</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal  ">
+
+            <div class="row justify-content-around">
+
+
+                <input id="SocialID" name="SocialID" type="hidden" value="@ViewBag.SocialID" />
+                <input id="SocialID" name="SocialID" type="hidden" value="@ViewBag.email" />
+                <div class="col-md-4 col-sm-6 ">
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
+                        @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
+                        @Html.ValidationMessageFor(model => model.memNick, "", new { @style="color:#ffb0b7"})
+                        <div> </div>
+                    </div>
+
+                    <div class="form-group col-md-12  mt-5">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+
+
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email", @Value = @ViewBag.email, @readonly = "readonly" } })
+                        @*@Html.ValidationMessageFor(model => model.Email, "", new { @style="color:#ffb0b7"})*@
+                        @*<input id="Email" type="email" class="form-control" />*@
+
+                        <div></div>
+
+                    </div>
+
+                    <div class="form-group col-md-12 mt-5">
+                        @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
+                        @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.memCounty, "", new { @style="color:#ffb0b7"})
+                        <select id="memCounty" name="memCounty" class="form-control">
+                            @foreach (var i in co)
+                            {
+                                <option value="@i.CountyNo">@i.CountyName</option>
+                            }
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group col-md-12 mt-5">
+                        @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })
+                        @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.memDistrict, "", new { @style="color:#ffb0b7"})
+                        <select id="memDistrict" name="memDistrict" class="form-control ">
+                            @foreach (var i in dis)
+                            {
+                                <option value="@i.DistrictSerial">@i.DistrictName</option>
+                            }
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group col-md-12 mt-5">
+                        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })
+                        @*<input type="text" id="Birthday" class="form-control">*@
+                        @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                        @Html.ValidationMessageFor(model => model.Birthday, "", new { @style="color:#ffb0b7" })
+
+                    </div>
+
+
+
+                    <div class="form-group col-md-12  mt-5">
+                        @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                        @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Sex, "", new { @style="color:#ffb0b7"})
+                        <select id="Sex" name="Sex" class="form-control">
+                            <option selected>男</option>
+                            <option>女</option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-4  col-sm-6">
+                    <div class="form-group col-md-12 ">
+
+                        @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                        @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Introduction, "", new { @style="color:#ffb0b7" })
+
+                    </div>
+
+                    <div class="form-group col-md-12">
+
+                        @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-12" })
+
+                        <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>
+                        @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Habit, "", new { @style="color:#ffb0b7" })
+
+                    </div>
+
+                    <div class="form-group col-md-12 ">
+                        @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
+                        @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @style="color:#ffb0b7"})
+
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="form-group">
+                            <div class="col-12 align-self-end ">
+                                <input id="submit" name="submit" type="submit" value="送出資料" class="btn btn-success " />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    }
+
+
+
+
+</div>
 
 @section scripts{
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    @*以下為DateTimePicker需要的JS*@
+    <!-- Popper JS -->
+    <script src="~/Scripts/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Propeller textfield js -->
+    <script type="text/javascript" src="dist/js/propeller.min.js"></script>
+    <!-- Datepicker moment with locales -->
+    <script type="text/javascript" language="javascript" src="~/Scripts/moment-with-locales.js"></script>
+    <!-- Propeller Bootstrap datetimepicker -->
+    <script type="text/javascript" language="javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
     <script>
         $('#memCounty').change(function () {
             $('#memDistrict').empty();
@@ -130,11 +284,21 @@
             });
         });
 
-        //驗證:Password
-        function clearErrText(id) {
-            $(id).removeClass('is-invalid').addClass('is-valid');
-            $(id + '~div').removeClass('invalid-feedback').addClass('valid-feedback').text('');
-            flag = true;
-        }
+        //DateTimePicker
+        var min = new Date();
+        min.setFullYear(new Date().getFullYear() - 100);
+        console.log(min);
+
+        var max = new Date();
+        max.setFullYear(new Date().getFullYear() - 15);
+        console.log(max);
+
+        // Date picker only
+        $('#Birthday').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: min,
+            maxDate: max,
+
+        });
     </script>
 }
