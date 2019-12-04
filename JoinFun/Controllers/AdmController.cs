@@ -384,6 +384,19 @@ namespace JoinFun.Controllers
 
         }
 
+        //所有違規管理(含已處理和未處理項目),預設僅顯示未處理項目,可搜尋選項則包含所有已處理和未處理項目
+        public ActionResult AllViolations(string Page)
+        {
+            AdmView manage = new AdmView()
+            {
+                violateList = db.Violation.ToList(),
+                memList = db.Member.ToList()
+            };
+            ViewBag.ID = Page;
+            return View(manage);
+        }
+
+        //依分類顯示管理的違規項目
         public ActionResult ManageViolations(string Page)
         {
             AdmView manage = new AdmView()

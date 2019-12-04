@@ -1006,6 +1006,7 @@
     <Content Include="Views\Adm\ViolationContent.cshtml" />
     <Content Include="Views\Adm\Feedback.cshtml" />
     <Content Include="Views\Adm\FeedBackReply.cshtml" />
+    <Content Include="Views\Adm\AllViolations.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
