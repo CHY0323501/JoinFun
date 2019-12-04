@@ -48,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody id="activeTbody">
-                    @foreach (var item in Model.Where(m => m.keepNotice == true))
+                    @foreach (var item in Model.Where(m => m.keepNotice == true).OrderByDescending(m=>m.NotiSerial))
                     {
                         <tr class="@item.NotiSerial ">
                             <td class="text-center">
@@ -124,7 +124,7 @@
                     </tr>
                 </thead>
                 <tbody id="delTbody">
-                    @foreach (var item in Model.Where(m => m.keepNotice == false))
+                    @foreach (var item in Model.Where(m => m.keepNotice == false).OrderByDescending(m=>m.NotiSerial))
                     {
                         <tr class="@item.NotiSerial ">
                             <td class="text-center">

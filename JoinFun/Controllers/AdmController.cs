@@ -292,7 +292,7 @@ namespace JoinFun.Controllers
                         
                     }
                 }
-                catch
+                finally
                 {
                     db.Post.Add(post);
                     db.SaveChanges();

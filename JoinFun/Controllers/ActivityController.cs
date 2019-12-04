@@ -447,7 +447,7 @@ namespace JoinFun.Controllers
 
         public ActionResult Messages(string memID)
         {
-            var message = db.Notification.Where(m => m.ToMemId == memID).ToList();
+            var message = db.Notification.Where(m => m.ToMemId == memID).OrderByDescending(m => m.NotiSerial).ToList();
             return View(message);
         }
 
