@@ -47,8 +47,7 @@
 
 
                         <td>
-                            <span class="btn btn-info">新增</span>
-                            <span class="btn btn-danger">編輯</span>
+                            <a href="@Url.Action("InquireEdit", "Adm", new { memID = i.memId })" class="text-decoration-none btn btn-danger">編輯</a>
                         </td>
                     </tr>
                 </tbody>
@@ -64,8 +63,8 @@
                         <td>HAHA</td>
                         <td>@i.numViolate 次</td>
                         <td>
-                            <span class="btn btn-info">新增</span>
-                            <span class="btn btn-danger">編輯</span>
+                            <a href="@Url.Action("InquireEdit", "Adm", new { memID = i.memId })" class="text-decoration-none btn btn-info">編輯</a>
+
                         </td>
                     </tr>
                 </tbody>

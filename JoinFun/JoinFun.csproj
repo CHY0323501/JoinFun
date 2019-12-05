@@ -1126,7 +1126,6 @@
     <Content Include="Views\Member\Bookmark.cshtml" />
     <Content Include="Views\Member\Widget.cshtml" />
     <Content Include="Views\Adm\Inquire.cshtml" />
-
     <Content Include="sweetalert-master\.babelrc" />
     <Content Include="sweetalert-master\.editorconfig" />
     <Content Include="sweetalert-master\.github\ISSUE_TEMPLATE.md" />
@@ -1154,13 +1153,12 @@
     <Content Include="sweetalert-master\README.md" />
     <Content Include="sweetalert-master\tsconfig.json" />
     <Content Include="sweetalert-master\tslint.json" />
-
     <Content Include="Views\Adm\ManageViolations.cshtml" />
     <Content Include="Views\Adm\ViolationContent.cshtml" />
     <Content Include="Views\Adm\Feedback.cshtml" />
     <Content Include="Views\Adm\FeedBackReply.cshtml" />
     <Content Include="Views\Adm\AllViolations.cshtml" />
-
+    <Content Include="Views\Adm\InquireEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
