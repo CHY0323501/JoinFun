@@ -5,10 +5,12 @@
 
 @{
     var pic = (IEnumerable<JoinFun.Models.Photos_of_Activities>)ViewBag.Picture;
-    //var defaultpic = (IEnumerable<JoinFun.Models.Activity_Class>)ViewBag.defaultPic;
+    var defaultpic = (IEnumerable<JoinFun.Models.Activity_Class>)ViewBag.defaultPic;
     var allpic = (IEnumerable<JoinFun.Models.Photos_of_Activities>)ViewBag.allpic;
     ViewBag.Title = "活動詳細資訊";
     int count = 0;
+    string actid = ViewBag.actId;
+     string actclassid=Model.ActivityList.Where(m => m.actId == actid).FirstOrDefault().actClassId;
 }
 
 @section Detail{
@@ -20,10 +22,10 @@
 
 @*大螢幕*@
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Fluid jumbotron</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+<div class="jumbotron jb ">
+    <div class="container ">
+        <h3></h3>
+
     </div>
 </div>
 
@@ -31,7 +33,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-md-6 ">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     @for (var i = 0; i <= pic.Count(); i++)
@@ -53,10 +55,11 @@
                         };
 
                     };
-
+                
                     @if (count == 0)
-                    {
-                        <img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />
+                      {  
+                        @*<img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />*@
+                        <img src=" @Url.Content(defaultpic.Where(m=>m.actClassId==actclassid).FirstOrDefault().Photos)" class="carousel-item active bg_carousel"/>
                     }
 
 
@@ -75,62 +78,73 @@
 
         </div>
 
-        <div class="col-lg-6 h-100">
+        <div class="col-md-6  h-100">
 
 
             @foreach (var item in Model.vwActivityList)
             {
                 <input id="JoinId" type="hidden" value="@item.actId" />
-                <input id="mem" type="hidden" value="@Session["memid"]"/>
+                <input id="mem" type="hidden" value="@Session["memid"]" />
                 <h1 class="title">@item.actTopic</h1>
 
+                <div class="row justify-content-center">
 
-                <div id="cutdown">
-                    <span id="day" class="time">00</span>
-                    <span id="hour" class="time">00</span>
-                    <span id="minute" class="time">00</span>
-                    <span id="second" class="time">00</span>
+                    <div id="cutdown" class="col-12">
+                        <span id="day" class="time">00</span>
+                        <span id="hour" class="time">00</span>
+                        <span id="minute" class="time">00</span>
+                        <span id="second" class="time">00</span>
+                    </div>
+
                 </div>
+                <div class="center ">
+                    <div class="row justify-content-center">
+                        <div class="col-6 ">
 
-                <div class="center mr-sm-3 mr-md-0">
+                            @if (Session["memid"].ToString() != "")
 
-                    @if (item.hostId == ViewBag.memID)
-                    {
-                        @Html.ActionLink("編輯活動", "Edit", new { actId = item.actId }, new { @class = "btn btn-warning btn-block " })
+                            {
 
-                    }
-                    else
-                    {
-                        @*<button id="join" class="btn btn-warning btn-block d-block  ml-5 ">*@
-                        if (Model.ActDetails.Count() == 0)
-                        {
-                            <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block d-block  ml-5 " />
-                        }
-                        @*</button>*@
-                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == false)
-                        {
-                            <input id="join" type="button" value="取消審核" class="btn btn-warning btn-block d-block  ml-5 " />
-                        }
-                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == true)
-                        {
-                            <input id="join" type="button" value="退出揪團" class="btn btn-warning btn-block d-block  ml-5 " />
-                        }
-                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == false)
-                        {
-                            <input id="join" type="button" value="報名成功" class="btn btn-warning btn-block d-block  ml-5 "disabled="disabled" />
-                        }
-                        @*else
-            {
-                <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block d-block  ml-5 " />
-            }*@
+                                if (item.hostId == ViewBag.memID)
+                                {
+                                    @Html.ActionLink("編輯活動", "Edit", new { actId = item.actId }, new { @class = "btn btn-warning btn-block " })
 
+                                }
+                                else
+                                {
+                                    if (Model.ActDetails.Count() == 0)
+                                    {
+                                        <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block    " />
+                                    }
 
-
-                        @*<input id="remark" type="button" value="收藏" class="btn btn-danger btn-block   ml-5 " />*@
+                                    else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == false)
+                                    {
+                                        <input id="join" type="button" value="取消審核" class="btn btn-warning btn-block    " />
+                                    }
+                                    else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == true)
+                                    {
+                                        <input id="join" type="button" value="退出揪團" class="btn btn-warning btn-block    " />
+                                    }
+                                    else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == false)
+                                    {
+                                        <input id="join" type="button" value="報名成功" class="btn btn-warning btn-block     " disabled="disabled" />
+                                    }
 
 
-                    }
-                    <p>@item.hashTag</p>
+                                    <a href="@Url.Action("Report","Activity",new { id=@item.actId,reporterID=@Session["memid"]})" class="btn btn-outline-danger mt-5 ml-5"><i class="fas fa-exclamation-triangle "></i>　檢舉活動</a>
+                                }
+                            }
+                            else
+                            {
+                                <input id="join" type="button" value="歡迎登入參加" class="btn btn-warning btn-block  " disabled="disabled" />
+                            }
+                            <p id="hash">@item.hashTag</p>
+                        </div>
+
+
+                    </div>
+
+
 
                 </div>
 
@@ -140,31 +154,28 @@
     @*-------------------------------------------------------------------*@
 
     <div class="row">
-        <div class="col-lg-6 ">
+        <div class="col-lg-6 order-md-1 order-2">
             <span class="subtitle">活動內容</span>
             <div class="w-100">
-                <pre id="act_content1"> 
+                <div id="act_content1">
 
- @foreach (var item in Model.vwActivityList) {
+                    @foreach (var item in Model.vwActivityList)
+                    {
+                        <input id="age" type="hidden" value="@item.serial" />
+                        <pre id="text" class="text-center mt-4"> @item.actDescription</pre>
 
- @item.actDescription
-                <input id="age" type="hidden" value="@item.serial" />
-
-
-
-}
-                 </pre>
+                    }
+                </div>
             </div>
 
 
             <div id="notice">
-                @*<div class="row">*@
-                @*<div class="col-md-6">*@
+
                 <span class="subtitle">留言板</span>
 
                 <div id="act_content" class="w-100">
                     @*<h1>留言板區</h1>*@
-                    <div id="commentBoard">
+                    <div id="commentBoard ">
                         @foreach (var item in Model.MBoard)
                         {
                             <div class="mb-4">
@@ -210,15 +221,11 @@
             </div>
 
 
-            @*</div>*@
-            @*<div class="container">
 
-
-                </div>*@
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-6 order-md-2 order-1">
             <span class="subtitle">活動資訊</span>
-            <div id="act_info" class="w-100">
+            <div id="act_info" class="w-100 text-md-center">
                 <ul>
                     @foreach (var item in Model.vwActivityList)
                     {
@@ -228,16 +235,17 @@
                         <li class="detail_info">活動地點：</li>@address
                         <a href="https://www.google.com/maps/place/@address" target="_blank" class="btn btn-outline-danger "><sapn class="fa fa-map-marker"></sapn></a>
                         <li class="detail_info">活動時間：</li>@item.actTime
-                        <li class="detail_info">報名截止：</li><span id="actdeadtime">@item.actDeadline</span>
+                        <li class="detail_info">報名截止：</li>
+                        <span id="actdeadtime">@item.actDeadline</span>
                         <li><strong>性別限制：</strong> <span id="gender">@item.gender</span></li>
                         <li><strong>預算金額：</strong>   @item.Budget</li>
                         <li><strong>年齡限制：</strong><span id="age">@item.age</span></li>
                         <li><strong>人數限制:</strong>  @item.PeoRestriction 人以下</li>
-                        <li id="peojoin"><strong>已參團人數:</strong> @ViewBag.joinTime</li>
+                        <li id="peojoin"><strong>已參團人數:</strong> @ViewBag.joinTime          @Html.ActionLink("-", "MemJoin", "Activity", new { actId = ViewBag.actId, memID = ViewBag.memID, actClassId = ViewBag.actClassId }, new { @class = "fa fa-user", id = "memamount" })</li>
                         <li><strong>剩餘名額：</strong> <span id="remainpeo"> @(@item.PeoRestriction - @ViewBag.joinTime)</span></li>
                         <li><strong>主辦人:</strong>   @item.memNick</li>
                         <li><strong>付款方式:</strong>   @item.payment</li>
-                       
+
                     }
                 </ul>
 
@@ -245,64 +253,77 @@
 
             @*<div class="col-md-6">*@
             <span class="subtitle">關於揪團主</span>
-            <div id="act_info" class="w-100">
+            <div id="act_info" class="w-100 ">
+                <br />
                 @foreach (var item in Model.vwActivityList)
                 {
 
+                    <a href="@Url.Action("Info", "Member", new { memID = item.hostId })"><img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid mb-2" style="width:2.3rem" /></a>
 
-                    <a href="@Url.Action("Info", "Member", new { memID = item.hostId })"><img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" /></a>
-                    @*<img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />*@
-                    <span id="hostId">@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, null)</span>
-
-                    @*<img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid " style="width:50px" />
-                    <p>@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, null)</p>*@
-
+                    <span id="hostId">@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, new { id = "hostid", })</span>
 
 
                 }
+
                 <br />
-                <br />
-                @*<input id="Button1" type="button" value="加好友" class="btn btn-outline-warning" />
-
-                <input id="Button1" type="button" value="追蹤他" class="btn btn-outline-warning" />*@
 
 
-            <div class="d-sm-flex justify-content-center" style="width:600px">
-                @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-warning" })
-
-                @Html.ActionLink("參團會員","MemJoin","Activity", new { actId = ViewBag.actId,memID= ViewBag.memID,actClassId=ViewBag.actClassId}, new { @class = "fa fa-user" });
-            </div>
             </div>
             @*</div>*@
         </div>
 
     </div>
+    <div class="row justify-content-end mt-4">
+        <div class="col-4 ">
+            @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-danger" })
+        </div>
 
+    </div>
 
     @*-------------------------------------------------------------------*@
 
 </div>
 
-
-
-
-@foreach (var item in Model.vwActivityList)
-{
-    <span id="time">@item.actDeadline.ToString().Replace("上午", "").Replace("下午", "")</span>
-    
-}
-<span id="now">@DateTime.Now.ToString().Replace("上午","").Replace("下午","")</span>
-
-<p id="gendercompare">@Model.MemberList.FirstOrDefault().Sex</p>
-@*<p id="gendercompare">@Model.members.Find(m => m.memId == Model.vwActivityList.ToList().FirstOrDefault().hostId).Sex</p>*@
 @{
-    var memage = (DateTime.Now.Year - Model.MemberList.FirstOrDefault().Birthday.Year);
-    //int age = int.Parse(memage);
-    <p id="agecompare">@memage</p>
-}
-        <input id="agecompare" type="hidden" value="@memage"/>
 
-<p id="date">@DateTime.Now</p>
+    //判斷時間(用於定時器)
+    foreach (var item in Model.vwActivityList)
+    {
+        <span id="time">@item.actDeadline.ToString().Replace("上午", "").Replace("下午", "")</span>
+
+    }
+    <span id="now">@DateTime.Now.ToString().Replace("上午", "").Replace("下午", "")</span>
+
+
+
+
+    <p id="date">@DateTime.Now</p>
+
+
+    <p id="ismem">@ViewBag.memID</p>
+
+
+    //判斷當前會員性別
+
+    if (Session["memid"].ToString()!="")
+    {
+
+        @*<p id="gendercompare">@Model.members.Where(m => m.memId == Session["memid"]).FirstOrDefault().Sex</p>*@
+
+        <p id="gendercompare">@Model.MemberList.FirstOrDefault().Sex</p>
+
+        //判斷年齡
+
+        var memage = (DateTime.Now.Year - Model.MemberList.FirstOrDefault().Birthday.Year);
+
+        @*<p id="agecompare">@memage</p>*@
+        <input id="agecompare" type="hidden" value="@memage" />
+
+    }
+}
+
+
+
 
 @section work{
     <script>
@@ -312,7 +333,7 @@
         var hour = document.querySelector('#hour');
         var minute = document.querySelector('#minute');
         var second = document.querySelector('#second');
-        var d, h, m, s;
+        var d, h, m, s,D,H,M,S;
 
 
         var inputTime = new Date(time);
@@ -320,34 +341,53 @@
         //console.log(inputTime);
         countDown();
         // 开启定时器
-        setInterval(countDown, 1000);
+        var interval=setInterval(countDown, 1000);
 
         function countDown() {
             var nowTime = new Date();
             var times = (inputTime - nowTime) / 1000;
 
             d = parseInt(times / 60 / 60 / 24);
+            D = d;
             d = d < 10 ? '0' + d : d;
             day.innerHTML = d;
             h = parseInt(times / 60 / 60 % 24);
+            H = h;
             h = h < 10 ? '0' + h : h;
             hour.innerHTML = h;
             m = parseInt(times / 60 % 60);
+            M = m;
             m = m < 10 ? '0' + m : m;
+
             minute.innerHTML = m;
             s = parseInt(times % 60);
+            S = s;
             s = s < 10 ? '0' + s : s;
             second.innerHTML = s;
         }
 
+        console.log(D);
+        console.log(H);
+        console.log(M);
+        console.log(S);
 
 
-        if (d == 00 && h == 00 && m == 00 && s == 00) {
-            clearInterval("countDown");
+
+        if (D <= 0 && H <= 0 && M <= 0 && S <= 0) {
+
+            clearInterval(interval);
+            d = "00";
+            h = "00";
+            m = "00";
+            s = "00";
+            day.innerHTML = d;
+            hour.innerHTML = h;
+            minute.innerHTML = m;
+            second.innerHTML = s;
         }
 
         //判斷參加狀態
-       
+
         function CheckMemJoin() {
             $.ajax({
 
@@ -366,8 +406,8 @@
                     } /*else if(data.status =="True"){*/
                     //    $('#join').val("退出揪團");
                     //}
-                        
-                    
+
+
                 }
 
             })
@@ -397,7 +437,7 @@
                     traditional: true,
                     data: { MemID: $("#mem").val(), actId: $('#JoinId').val() },
                     success: function () {
-                        
+
                         alert("已成功取消");
                     }
                 });
@@ -410,7 +450,7 @@
                     traditional: true,
                     data: { MemID: $("#mem").val(), actId: $('#JoinId').val() },
                     success: function () {
-                        
+
                         alert("已成功退出");
                     }
                 });
@@ -418,9 +458,10 @@
             }
         });
 
-      
 
-      
+        //if ($("#ismem").text() != "1") {
+
+
         console.log($("#age").text() =="18-25歲");
         console.log("&nbsp;"+"&nbsp;"+"18-25歲".length);
         console.log($("#age").text().length);
@@ -438,6 +479,7 @@
         };
 
         //判斷性別限制
+
         if ($("#gender").text() == "限男性") {
             if ($("#gendercompare").text() == "F") {
                 $("#join").attr("disabled", "disabled");
@@ -451,8 +493,40 @@
                  $("#join").val("不符合報名資格")
             };
         };
+
+
+           //判斷年齡限制
+
+
+        console.log($("#age").val());
+         console.log($("#agecompare").val());
+        if ($("#age").val() == 2) {
+            if ($("#agecompare").val() < 18 ||$("#agecompare").val() > 25) {
+                $("#join").attr("disabled", "disabled");
+                $("#join").val("不符合報名資格")
+            }
+        }
+        else if ($("#age").val() == 3) {
+            if ($("#agecompare").val() < 26 || $("#agecompare").val()> 30) {
+                console.log("ok");
+                $("#join").attr("disabled", "disabled");
+                 $("#join").val("不符合報名資格")
+            }
+        }
+         else if ($("#age").val() == 4) {
+              if ($("#agecompare").val() < 31 || $("#agecompare").val()> 40) {
+                  $("#join").attr("disabled", "disabled");
+                   $("#join").val("不符合報名資格")
+               }
+         } else if ($("#age").val() == 5) {
+             if ($("#agecompare").val()< 41) {
+                 $("#join").attr("disabled", "disabled");
+                  $("#join").val("不符合報名資格")
+                };
+        }
+
         //判斷活動截止
-      
+
         var newactdate = Date.parse($("#now").text());
         console.log($("#now").text());
 
@@ -463,37 +537,13 @@
             $("#join").attr("disabled", "disabled");
             $("#remark").attr("disabled", "disabled");
             $("#join").val("活動報名截止")
-        }
-
-        //判斷年齡限制
-
-       
-        console.log($("#age").val());
-         console.log(@memage);
-        if ($("#age").val() == 2) {
-            if (@memage < 18 || @memage > 25) {
-                $("#join").attr("disabled", "disabled");
-                $("#join").val("不符合報名資格")
             }
+
+
+     //判斷是否為匿名會員
+        if ($("#ismem").text() == '1') {
+             $("#join").attr("disabled", "disabled");
         }
-        else if ($("#age").val() == 3) {
-            if (@memage < 26 || @memage > 30) {
-                console.log("ok");
-                $("#join").attr("disabled", "disabled");
-                 $("#join").val("不符合報名資格")
-            }
-        }
-         else if ($("#age").val() == 4) {
-              if (@memage < 31 || @memage > 40) {
-                  $("#join").attr("disabled", "disabled");
-                   $("#join").val("不符合報名資格")
-               }
-         } else if ($("#age").val() == 5) {
-             if (@memage < 41) {
-                 $("#join").attr("disabled", "disabled");
-                  $("#join").val("不符合報名資格")
-                };
-         }
     </script>
 }
 

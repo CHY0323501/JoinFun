@@ -95,9 +95,7 @@ namespace JoinFun.Controllers
                     return View();
                 }
                 return RedirectToAction("Login", "Adm");
-
             }
-
         }
 
         [HttpPost]
@@ -338,7 +336,6 @@ namespace JoinFun.Controllers
             return PartialView(pagedlist);
         }
 
-        //編輯公告
         public ActionResult PostEdit(string PostNo)
         {
             Post post = db.Post.Where(m => m.postSerial == PostNo).FirstOrDefault();
@@ -414,34 +411,41 @@ namespace JoinFun.Controllers
 
 
         }
-        //新增違規
-        public ActionResult InquireCreate(string memid)
-        {
-            Violation vio = new Violation();
-
-
-            MemberInquireVM read = new MemberInquireVM()
-            {
-                Member = db.Member.ToList(),
-                Violation = db.Violation.ToList(),
-                Punishment = db.Punishment.ToList()
-            };
-
-            return View(read);
-
-        }
         //修改違規紀錄
-        public ActionResult InquireEdit(string memid)
+        public ActionResult InquireEdit(string memID="M000000002")
         {
+            var vio = db.Violation.ToList();
+            var activity = db.Join_Fun_Activities.Where(m=>m.hostId== memID).ToList();
 
-            MemberInquireVM read = new MemberInquireVM()
+            List<string> act = new List<string>();
+            for (int a=0 ;a < vio.Count();a++)
             {
-                Member = db.Member.ToList(),
-                Violation = db.Violation.ToList(),
-                Punishment = db.Punishment.ToList()
-            };
+                for (int b = 0; b < activity.Count(); b++)
+                {
+                    //if (activity[b].hostId == memID)
+                    //{
+                    //    act.Add(activity[b].actId);
+                    //}
+                }
+            }
+            
 
-            return View(read);
+            
+            MemberInquireVM edit = new MemberInquireVM()
+            {
+                Member = db.Member.Where(m => m.memId == memID).ToList(),
+                MemberRemark = db.Member_Remarks.Where(m => m.FromMemId == memID).ToList(),
+                MessageBoard = db.Message_Board.Where(m => m.memId == memID).ToList(),
+                Activity = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList(), 
+                Violation = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList(),
+                Type_of_Violate = db.Type_of_Violate.ToList()
+                
+            };
+            
+            ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
+
+
+            return View(edit);
 
         }
 
@@ -624,5 +628,86 @@ namespace JoinFun.Controllers
             return RedirectToAction("FeedBack");
         }
 
+
+
+        public ActionResult ActManage(int page = 1)
+        {
+            var actdetail = db.Join_Fun_Activities.ToList();
+
+            int pagesize = 8;
+            int pagecurrent = page < 1 ? 1 : page;
+            var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
+            return View(pagedlist);
+
+
+
+        }
+
+        public void ActKeepChange(string actId)
+        {
+
+            var changeact = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
+            bool keepact = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault().keepAct;
+            changeact.keepAct = !keepact;
+            db.SaveChanges();
+            //return Json(true, JsonRequestBehavior.AllowGet);
+
+        }
+        //[HttpPost]
+        //public ActionResult ActManage(string[] actId, bool[] keepAct, int page = 1)
+        //{
+        //    string id = "";
+        //    for (var i = 0; i < actId.Length; i++) {
+        //        id = actId[i];
+        //        var changeact = db.Join_Fun_Activities.Where(m => m.actId == id).FirstOrDefault();
+        //        changeact.keepAct = keepAct[i];
+        //        db.SaveChanges();
+        //    }
+
+
+        //    var actdetail = db.Join_Fun_Activities.ToList();
+
+        //    int pagesize = 8;
+        //    int pagecurrent = page < 1 ? 1 : page;
+        //    var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
+        //    return View(pagedlist);
+        //}
+
+
+        [HttpPost]
+        public ActionResult ActManage(bool[] keepAct, string[] actId, int page = 1)
+        {
+            //db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct = joinkeep.keepAct;
+            if(keepAct.Length > 0)
+            {
+                for(int i=0; i<keepAct.Length; i++)
+                {
+                    var id = actId[i];
+                    var act = db.Join_Fun_Activities.Find(id);
+                    act.keepAct = keepAct[i];
+                    db.SaveChanges();
+                }
+            }
+            //db.SaveChanges();
+            //var result = db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct;
+
+            var actdetail = db.Join_Fun_Activities.ToList();
+
+            int pagesize = 8;
+            int pagecurrent = page < 1 ? 1 : page;
+            var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
+            return View(pagedlist);
+        }
+
+
+        public void DeleteAct(string actid) {
+            var delact=db.Join_Fun_Activities.Where(m => m.actId == actid).FirstOrDefault();
+            db.Join_Fun_Activities.Remove(delact);
+            db.SaveChanges();
+
+
+        }
+
+        
     }
 }
