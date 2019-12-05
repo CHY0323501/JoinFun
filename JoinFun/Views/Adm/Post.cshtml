@@ -1,12 +1,12 @@
 ﻿
 @{
     ViewBag.Title = "JoinFun公告";
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+
 }
 
-@section CSS{
+@section CSS {
     <link href="~/CSS/ADMpagedlist.css" rel="stylesheet" />
 }
 
 
-@Html.Action("_Post", "Adm",new { PostNo=ViewBag.PostNo})
+@Html.Action("_Post", "Adm", new { PostNo = ViewBag.PostNo })

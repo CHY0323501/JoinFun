@@ -9,7 +9,7 @@
 
 <div class="container containerMinH">
     @{
-        if (Session["memid"].ToString().IsEmpty()) {
+        if (Session["memid"]==null) {
             Session["memid"]= "";
         }
 
@@ -22,6 +22,7 @@
             {
                 //給好友新增、刪除使用
                 <input id="FriendID" type="hidden" value="@i.memId" />
+                <input id="FollowID" type="hidden" value="@i.memId" />
 
                 <div class="row ">
                     <div class="col-12 text-center">
@@ -31,13 +32,14 @@
                             <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">個人資訊</h3>
                             ViewBag.Title = "個人資訊";
 
-                            //給好友新增、刪除使用
-                            <input type="hidden" id="memID" value="@session" />
+
                         }
                         else
                         {
                             <h3 class="mt-5 mb-5 bg-warning text-white rounded-pill p-1 w-50 mx-auto">會員資訊</h3>
                             ViewBag.Title = "會員資訊";
+                            //給好友新增、刪除使用
+                            <input type="hidden" id="memID" value="@session" />
                         }
 
                     </div>
@@ -94,7 +96,18 @@
                                     {
                                         <div class="row">
                                             <div class="col-md">
-                                                <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit"><i class="fas fa-child"></i>　追蹤他</button>
+                                                <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit">
+                                                    @if (Model.vw_FollowUp.Where(m=>m.FoMemId==session&&m.memId==i.memId).Count()==0)
+                                                    {
+                                                        <i class="fol fo-yes"></i>@:　追蹤他
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <i class="fol fo-delete"></i>@:　取消追蹤
+                                                    }
+
+                                                </button>
                                             </div>
                                             <div class="col-md">
                                                 <button id="FriendBtn" class="btn btn-outline-info mb-1 " style="width:inherit">
@@ -102,7 +115,7 @@
                                                     {
                                                         <i class="fas fa-user-plus "></i>@:　加好友
                                                     }
-                                                    else if (Model.Friendship.FirstOrDefault().Approved == false)
+                                                    else if (Model.Friendship.Where(m=>m.friendMemId==session).FirstOrDefault().Approved == false)
                                                     {
                                                         <i class="fas fa-user-times"></i>@:　取消申請
                                                     }
@@ -130,7 +143,7 @@
                         <div class="col col-md-12 ">
                             <div class="row mx-auto justify-content-center" id="btnrow">
                                 <div id="follow" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color  animated bounceIn bshadow  btn-hov">
-                                    <div class="adj_fontsize font-weight-bold">@Model.vw_FollowUp.Count</div>
+                                    <div class="adj_fontsize font-weight-bold">@Model.vw_FollowUp.Where(m=>m.FoMemId==i.memId).Count()</div>
                                     <div>追蹤</div>
                                 </div>
                                 <div id="fans" class="col-md-2 col-sm-12 card rounded-pill  mr-md-2 mb-2 ml-sm-3  bg-color animated bounceIn bshadow   btn-hov">
@@ -232,7 +245,7 @@
                                 @{if (Model.vw_FollowUp.FirstOrDefault() != null)
                                     {
                                         var last = Model.vw_FollowUp.Last();
-                                        foreach (var fol in Model.vw_FollowUp)
+                                        foreach (var fol in Model.vw_FollowUp.Where(m=>m.FoMemId==i.memId))
                                         {
                                             if (fol.Equals(last))
                                             {
@@ -397,6 +410,43 @@
                 }
             }
         })
+
+      
+    //追蹤他 新增粉絲
+    $('#FollowBtn').click(function () {
+
+       if( $('#FollowBtn').text().includes  ('追蹤他'))
+        {
+            $.ajax({
+                type: "Post",
+                url: "http://localhost:54129/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
+                success: function () {
+                    console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
+                    $('#FollowBtn').html('<i class="fol fo-delete"></i>　取消追蹤');
+                },
+                error: function () {
+                    console.log("失敗");
+                }
+            })
+        }
+         else
+        {
+            $.ajax({
+                type: "Delete",
+                url: "http://localhost:54129/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
+                success: function () {
+                    console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
+                   $('#FollowBtn').html('<i class="fol fo-yes"></i>　追蹤他');
+                },
+                error: function () {
+                    console.log("失敗");
+                }
+            })
+        }
+    })
+        
+ 
+
         </script>
 
     }

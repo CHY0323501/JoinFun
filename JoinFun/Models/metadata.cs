@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace JoinFun.Models
 {
@@ -24,7 +25,7 @@ namespace JoinFun.Models
 
         [Required]
         [DisplayName("確認密碼")]
-        [Compare("Password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password")]
         public string PasswordConfirm { get; set; }
         [JsonIgnore()]
         public virtual Member Member { get; set; }
@@ -76,7 +77,6 @@ namespace JoinFun.Models
         public string admAcc { get; set; }
         [DisplayName("管理員密碼")]
         [Required(ErrorMessage = "請輸入管理員密碼")]
-        [StringLength(15, ErrorMessage = "最多輸入15字")]
         public string admPass { get; set; }
         [DisplayName("管理員暱稱")]
         [Required(ErrorMessage = "請輸入管理員暱稱")]
@@ -86,7 +86,7 @@ namespace JoinFun.Models
 
         [Required]
         [DisplayName("確認密碼")]
-        [Compare("admPass")]
+        [System.ComponentModel.DataAnnotations.Compare("admPass")]
         public string admPasswordConfirm { get; set; }
     }
     public  class MetaAge_Restriction
@@ -421,7 +421,7 @@ namespace JoinFun.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> reportTime { get; set; }
 
-        [DisplayName("意見回覆內容")]
+        [DisplayName("回覆內容")]
         public string reportContent { get; set; }
 
         [DisplayName("管理員編號")]
@@ -576,6 +576,7 @@ namespace JoinFun.Models
 
         [DisplayName("內容")]
         [Required(ErrorMessage = "請輸入公告內容")]
+        [AllowHtml]
         public string postContent { get; set; }
 
 
@@ -586,6 +587,7 @@ namespace JoinFun.Models
         public System.DateTime postTime { get; set; }
 
         [DisplayName("照片")]
+        //[Required(ErrorMessage = "請選擇公告圖片")]
         public string postPics { get; set; }
         [DisplayName("前台顯示")]
         public bool ShowInCarousel { get; set; }

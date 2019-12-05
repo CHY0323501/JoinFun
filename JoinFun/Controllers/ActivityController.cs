@@ -47,8 +47,8 @@ namespace JoinFun.Controllers
             Finalchoose fc = new Finalchoose()
             {   
                 vwActList = db.vw_Activities.Where(m => m.keepAct == true).ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList()
-                
+                joinfunlist = db.Join_Fun_Activities.ToList(),
+                post=db.Post.Where(m=>m.ShowInCarousel==true).OrderByDescending(m=>m.postSerial).Take(1).ToList()
             };
             GetSelectList();
             //var vwAct = fc;
@@ -477,7 +477,7 @@ namespace JoinFun.Controllers
 
         public ActionResult Messages(string memID)
         {
-            var message = db.Notification.Where(m => m.ToMemId == memID).ToList();
+            var message = db.Notification.Where(m => m.ToMemId == memID).OrderByDescending(m => m.NotiSerial).ToList();
             return View(message);
         }
 

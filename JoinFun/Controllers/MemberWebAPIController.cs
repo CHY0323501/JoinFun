@@ -22,8 +22,48 @@ namespace JoinFun.Controllers
 
             var friendship = db.Friendship.Where(m => m.friendMemId == FriendID).ToList();
 
-            return Ok(friendship); 
+            return Ok(friendship);
         }
+
+
+        //追蹤他 資料表新增粉絲
+        public IHttpActionResult Post(string memid,string FoMemID)
+        {
+            FollowUp folw = new FollowUp();
+            folw.memId = FoMemID;
+            folw.FoMemId = memid;
+
+            Fans fan = new Fans();
+            fan.memId = FoMemID;
+            fan.fanMemId = memid;
+
+            db.FollowUp.Add(folw);
+            db.SaveChanges();
+            db.Fans.Add(fan);
+            db.SaveChanges();
+            return Ok();
+        }
+
+        //取消追蹤
+        public IHttpActionResult Delete(string memid, string FoMemID)
+        {
+
+            var folw = db.FollowUp.Where(m => m.memId == FoMemID && m.FoMemId == memid).FirstOrDefault();
+            var fan = db.Fans.Where(m => m.memId == FoMemID && m.fanMemId == memid).FirstOrDefault();
+            if (folw != null) {
+                db.FollowUp.Remove(folw);
+                db.SaveChanges();
+            }
+            if (fan != null) {
+                db.Fans.Remove(fan);
+                db.SaveChanges();
+            }
+                
+
+            return Ok();
+        }
+
+
 
         ////Post加入好友
         ////需寫入Friendship、fans、followup三張資料表

@@ -95,12 +95,26 @@
 
     </div>
 
+
     <div>
         <h2 id="index_title" class=" pl-2 mt-1">揪團活動</h2>
         <form class="form-inline form-row mt-2 justify-content-center " method="get" action="/Activity/Search">
 
             <input class="form-control col-md-auto col-7 ml-md-auto " type="search" placeholder="查詢活動關鍵字" name="keyword">
             <button class="btn btn-outline-secondary col-offset-3 col-md-auto col-3 ml-3 " type="submit">Search</button>
+
+    <div class=" bg-dark text-white mb-4 mt-1 rounded p-3" style="max-height:80px;font-size:1.2rem;line-height:1.2rem">
+        <div class="mb-1 text-warning font-weight-bolder " style="letter-spacing:3px"><i class="fas fa-bullhorn" style="font-size:1.5rem;line-height:1.5rem"></i>　@Model.post.FirstOrDefault().postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)　最新公告：</div>
+        <a href="@Url.Action("Post","Info",new { PostNo=Model.post.FirstOrDefault().postSerial})" class="text-white"><marquee direction="left" behavior="scroll" scrollamount="10" style="font-size:1.5rem;line-height:1.5rem;cursor:pointer;letter-spacing:5px">@Model.post.FirstOrDefault().postTitle</marquee></a>
+    </div>
+    @*</div>*@
+    <div>
+        <h2 id="index_title" class="mx-5 pl-2 mt-1">揪團活動</h2>
+        <form class="form-inline form-row mt-2 " method="get" action="/Activity/Search">
+
+            <input class="form-control col-md-auto col-sm-7 ml-auto " type="search" placeholder="查詢活動關鍵字" name="keyword">
+            <button class="btn btn-outline-secondary col-offset-3 col-md-auto ml-1 " type="submit">Search</button>
+
 
         </form>
     </div>

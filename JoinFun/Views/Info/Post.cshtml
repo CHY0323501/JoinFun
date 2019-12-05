@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "JoinFun公告";
+
+}
+
+@section CSS {
+    <link href="~/CSS/ADMpagedlist.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('../../Photos/banner/bg.png');
+            background-attachment: fixed;
+            background-repeat:round;
+        }
+        .admFont {
+            font-family:微軟正黑體;
+            font-size:2rem;
+        }
+        .page-link {
+            color: white;
+            background-color: #ffc107;
+            border: 1px solid #dee2e6;
+        }
+
+            .page-link:hover {
+                color: black;
+                background-color: white;
+                border-color: white;
+            }
+
+        .page-item.active .page-link {
+            color: #28a745;
+            background-color: #fff;
+            border-color: #fff;
+        }
+
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            background-color: #ffc107;
+            border-color: #dee2e6;
+        }
+    </style>
+}
+
+
+@Html.Action("_Post", "Info", new { PostNo = ViewBag.PostNo })

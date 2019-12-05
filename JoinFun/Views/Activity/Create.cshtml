@@ -220,202 +220,203 @@
     <link href="~/Content/MyStyle.css" rel="stylesheet" />
 }
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-@*以下為DateTimePicker需要的JS*@
-<!-- Popper JS -->
-<script src="~/Scripts/popper.min.js"></script>
-<!-- Bootstrap js -->
-<script src="~/Scripts/bootstrap.min.js"></script>
-<!-- Propeller textfield js -->
-<script type="text/javascript" src="dist/js/propeller.min.js"></script>
-<!-- Datepicker moment with locales -->
-<script type="text/javascript" language="javascript" src="~/Scripts/moment-with-locales.js"></script>
-<!-- Propeller Bootstrap datetimepicker -->
-<script type="text/javascript" language="javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
-<script src="~/Scripts/ActivityScripts.js"></script>
+
 
 @section scripts{
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @*以下為DateTimePicker需要的JS*@
+    <!-- Popper JS -->
+    <script src="~/Scripts/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Propeller textfield js -->
+    <script type="text/javascript" src="dist/js/propeller.min.js"></script>
+    <!-- Datepicker moment with locales -->
+    <script type="text/javascript" language="javascript" src="~/Scripts/moment-with-locales.js"></script>
+    <!-- Propeller Bootstrap datetimepicker -->
+    <script type="text/javascript" language="javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/ActivityScripts.js"></script>
     <script>
         $('#createAct').click(function () {
-    var ValidStatus = $('#newApply').valid();
-    console.log(ValidStatus);
-    if (ValidStatus == false) {
-        return false;
-    }
-});
+            var ValidStatus = $('#newApply').valid();
+            console.log(ValidStatus);
+            if (ValidStatus == false) {
+                return false;
+            }
+        });
 
-$('#buildUp').click(function () {
-    //alert("請確認填寫的資料是否正確，揪團建立後僅有【揪團主題】、【揪團內容】、【付款方式】、【預算上限】可供編輯，若需刪除揪團請聯繫管理員！");
+        $('#buildUp').click(function () {
+            //alert("請確認填寫的資料是否正確，揪團建立後僅有【揪團主題】、【揪團內容】、【付款方式】、【預算上限】可供編輯，若需刪除揪團請聯繫管理員！");
 
-    if ($('#datepicker').val() == "") {
-        $('#datepicker').addClass("is-invalid");
-        $('#datepicker').prev().addClass('createTime').text('請選擇活動日期');
-    }
-    else {
-        $('#datepicker').removeClass("is-invalid").addClass("is-valid");
-        $('#datepicker').prev().text("");
-    }
-    if ($('#timepicker').val() == "") {
-        $('#timepicker').addClass("is-invalid");
-        $('#timepicker').prev().addClass('createTime').text('請選擇活動時間');
-    } else {
-        $('#timepicker').removeClass("is-invalid").addClass("is-valid");
-        $('#timepicker').prev().text("");
-    }
-    if ($('#datepicker2').val() == "") {
-        $('#datepicker2').addClass("is-invalid");
-        $('#datepicker2').prev().addClass('createTime').text('請選擇截止日期');
-    }
-    else {
-        $('#datepicker2').removeClass("is-invalid").addClass("is-valid");
-        $('#datepicker2').prev().text("");
-    }
-    if ($('#timepicker2').val() == "") {
-        $('#timepicker2').addClass("is-invalid");
-        $('#timepicker2').prev().addClass('createTime').text('請選擇截止時間');
-    } else {
-        $('#timepicker2').removeClass("is-invalid").addClass("is-valid");
-        $('#timepicker2').prev().text("");
-    }
-    if ($('#actRoad').val() == "") {
-        $('#actRoad').addClass("is-invalid");
-    }
-    if ($('#actDescription').val() == "") {
-        $('#actDescription').addClass("is-invalid");
-    }
-});
-
-$('#actRoad').keyup(function () {
-    if ($('#actRoad').val() != "") {
-        $('#actRoad').removeClass("is-invalid");
-    }
-});
-
-$('#actDescription').keyup(function () {
-    if ($('#actDescription').val() != "") {
-        $('#actDescription').removeClass("is-invalid");
-    }
-});
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//DateTimePicker for create.cshtml
-var today = new Date();
-today.setHours(23);
-today.setMinutes(59);
-today.setSeconds(59);
-var upper = new Date();
-upper.setFullYear(today.getFullYear() + 1);
-upper.setDate(today.getDate());
-
-// Date picker only
-$('#datepicker').datetimepicker({
-    format: 'YYYY-MM-DD',
-    minDate: today,
-    maxDate: upper
-});
-$('#datepicker2').datetimepicker({
-    format: 'YYYY-MM-DD',
-    minDate: today
-});
-// Time picker only
-$('#timepicker').datetimepicker({
-    format: 'LT'
-});
-$('#timepicker2').datetimepicker({
-    format: 'LT'
-});
-var current, picked, chosen;
-//判斷是否輸入活動日期與時間  
-$('#startDate input').blur(function () {
-    current = new Date();
-    current = current.getHours() * 3600 + current.getMinutes() * 60 + current.getSeconds();
-    picked = new Date($('#timepicker').data('DateTimePicker').date());
-    picked = picked.getHours() * 3600 + picked.getMinutes() * 60 + picked.getSeconds();
-    chosen = new Date($('#datepicker').data('DateTimePicker').date());
-    chosen.setHours(23);
-    chosen.setMinutes(59);
-    chosen.setSeconds(59);
-    switch ($(this).attr("id")) {
-        case "datepicker":
             if ($('#datepicker').val() == "") {
                 $('#datepicker').addClass("is-invalid");
-                //$('#datepicker').addClass("invalid-feedback").text('請選擇活動日期');
                 $('#datepicker').prev().addClass('createTime').text('請選擇活動日期');
-            } else {
+            }
+            else {
                 $('#datepicker').removeClass("is-invalid").addClass("is-valid");
                 $('#datepicker').prev().text("");
             }
-            break;
-        case "timepicker":
             if ($('#timepicker').val() == "") {
                 $('#timepicker').addClass("is-invalid");
                 $('#timepicker').prev().addClass('createTime').text('請選擇活動時間');
-            } else if ($('#datepicker').val() == "") {
-                $('#timepicker').addClass("is-invalid");
-                $('#timepicker').prev().addClass('createTime').text('請先選擇活動日期');
-            } else if (Date.parse(chosen) == Date.parse(today) && (picked - current) < 60 * 60 * 6 && (picked - current) >= 0) {
-                $('#timepicker').addClass("is-invalid");
-                $('#timepicker').prev().text("開團時間需與現在間隔6小時以上");
-            } else if (Date.parse(chosen) == Date.parse(today) && (picked - current) <= 0) {
-                $('#timepicker').addClass("is-invalid");
-                $('#timepicker').prev().addClass("ml-1").text("開團時間超出範圍");
-            }
-            else {
+            } else {
                 $('#timepicker').removeClass("is-invalid").addClass("is-valid");
                 $('#timepicker').prev().text("");
             }
-            break;
-    }
-    $('#datepicker2').data('DateTimePicker').maxDate(chosen);
-});
-
-//判斷是否輸入報名截止日期與時間
-var endTime, endDate;
-$('#deadLine input').blur(function () {
-    endTime = new Date($('#timepicker2').data('DateTimePicker').date());
-    endTime = endTime.getHours() * 3600 + endTime.getMinutes() * 60 + endTime.getSeconds();
-    endDate = new Date($('#datepicker2').data('DateTimePicker').date());
-    endDate.setHours(23);
-    endDate.setMinutes(59);
-    endDate.setSeconds(59);
-    switch ($(this).attr("id")) {
-        case "datepicker2":
             if ($('#datepicker2').val() == "") {
                 $('#datepicker2').addClass("is-invalid");
-                $('#datepicker2').prev().text('請選擇截止日期');
-                //}else if (Date.parse(deadLine) > Date.parse(actDate)) {
-                //    $('#datepicker2').addClass("is-invalid");
-                //    $('#datepicker2').prev().text("截止日不得超過活動日"); 
-                //}else if (Date.parse(deadLine) < Date.parse(today)) {
-                //    $('#datepicker2').addClass("is-invalid");
-                //    $('#datepicker2').prev().text("截止日不可早於今天"); 
-            } else {
+                $('#datepicker2').prev().addClass('createTime').text('請選擇截止日期');
+            }
+            else {
                 $('#datepicker2').removeClass("is-invalid").addClass("is-valid");
                 $('#datepicker2').prev().text("");
             }
-            break;
-        case "timepicker2":
-            $('#timepicker2').blur(function () {
-                if ($('#timepicker2').val() == "") {
-                    $('#timepicker2').addClass("is-invalid");
-                    $('#timepicker2').prev().text('請選擇截止時間');
-                } else if ($('#datepicker2').val() == "") {
-                    $('#timepicker2').addClass("is-invalid");
-                    $('#timepicker2').prev().addClass('createTime').text('請先選擇截止日期');
-                } else if (Date.parse(endDate) == Date.parse(chosen) && (picked - endTime) < 60 * 60 * 3 && (picked - endTime) >= 0) {
-                    $('#timepicker2').addClass("is-invalid");
-                    $('#timepicker2').prev().text("與開團時間需間隔3小時以上");
-                } else if (Date.parse(endDate) == Date.parse(chosen) && (picked - endTime) <= 0) {
-                    $('#timepicker2').addClass("is-invalid");
-                    $('#timepicker2').prev().text("截止時間超出範圍");
-                } else {
-                    $('#timepicker2').removeClass("is-invalid").addClass("is-valid");
-                    $('#timepicker2').prev().text("");
-                }
-            });
-            break;
-    }
-});
+            if ($('#timepicker2').val() == "") {
+                $('#timepicker2').addClass("is-invalid");
+                $('#timepicker2').prev().addClass('createTime').text('請選擇截止時間');
+            } else {
+                $('#timepicker2').removeClass("is-invalid").addClass("is-valid");
+                $('#timepicker2').prev().text("");
+            }
+            if ($('#actRoad').val() == "") {
+                $('#actRoad').addClass("is-invalid");
+            }
+            if ($('#actDescription').val() == "") {
+                $('#actDescription').addClass("is-invalid");
+            }
+        });
+
+        $('#actRoad').keyup(function () {
+            if ($('#actRoad').val() != "") {
+                $('#actRoad').removeClass("is-invalid");
+            }
+        });
+
+        $('#actDescription').keyup(function () {
+            if ($('#actDescription').val() != "") {
+                $('#actDescription').removeClass("is-invalid");
+            }
+        });
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //DateTimePicker for create.cshtml
+        var today = new Date();
+        today.setHours(23);
+        today.setMinutes(59);
+        today.setSeconds(59);
+        var upper = new Date();
+        upper.setFullYear(today.getFullYear() + 1);
+        upper.setDate(today.getDate());
+
+        // Date picker only
+        $('#datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: today,
+            maxDate: upper
+        });
+        $('#datepicker2').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: today
+        });
+        // Time picker only
+        $('#timepicker').datetimepicker({
+            format: 'LT'
+        });
+        $('#timepicker2').datetimepicker({
+            format: 'LT'
+        });
+        var current, picked, chosen;
+        //判斷是否輸入活動日期與時間
+        $('#startDate input').blur(function () {
+            current = new Date();
+            current = current.getHours() * 3600 + current.getMinutes() * 60 + current.getSeconds();
+            picked = new Date($('#timepicker').data('DateTimePicker').date());
+            picked = picked.getHours() * 3600 + picked.getMinutes() * 60 + picked.getSeconds();
+            chosen = new Date($('#datepicker').data('DateTimePicker').date());
+            chosen.setHours(23);
+            chosen.setMinutes(59);
+            chosen.setSeconds(59);
+            switch ($(this).attr("id")) {
+                case "datepicker":
+                    if ($('#datepicker').val() == "") {
+                        $('#datepicker').addClass("is-invalid");
+                        //$('#datepicker').addClass("invalid-feedback").text('請選擇活動日期');
+                        $('#datepicker').prev().addClass('createTime').text('請選擇活動日期');
+                    } else {
+                        $('#datepicker').removeClass("is-invalid").addClass("is-valid");
+                        $('#datepicker').prev().text("");
+                    }
+                    break;
+                case "timepicker":
+                    if ($('#timepicker').val() == "") {
+                        $('#timepicker').addClass("is-invalid");
+                        $('#timepicker').prev().addClass('createTime').text('請選擇活動時間');
+                    } else if ($('#datepicker').val() == "") {
+                        $('#timepicker').addClass("is-invalid");
+                        $('#timepicker').prev().addClass('createTime').text('請先選擇活動日期');
+                    } else if (Date.parse(chosen) == Date.parse(today) && (picked - current) < 60 * 60 * 6 && (picked - current) >= 0) {
+                        $('#timepicker').addClass("is-invalid");
+                        $('#timepicker').prev().text("開團時間需與現在間隔6小時以上");
+                    } else if (Date.parse(chosen) == Date.parse(today) && (picked - current) <= 0) {
+                        $('#timepicker').addClass("is-invalid");
+                        $('#timepicker').prev().addClass("ml-1").text("開團時間超出範圍");
+                    }
+                    else {
+                        $('#timepicker').removeClass("is-invalid").addClass("is-valid");
+                        $('#timepicker').prev().text("");
+                    }
+                    break;
+            }
+            $('#datepicker2').data('DateTimePicker').maxDate(chosen);
+        });
+
+        //判斷是否輸入報名截止日期與時間
+        var endTime, endDate;
+        $('#deadLine input').blur(function () {
+            endTime = new Date($('#timepicker2').data('DateTimePicker').date());
+            endTime = endTime.getHours() * 3600 + endTime.getMinutes() * 60 + endTime.getSeconds();
+            endDate = new Date($('#datepicker2').data('DateTimePicker').date());
+            endDate.setHours(23);
+            endDate.setMinutes(59);
+            endDate.setSeconds(59);
+            switch ($(this).attr("id")) {
+                case "datepicker2":
+                    if ($('#datepicker2').val() == "") {
+                        $('#datepicker2').addClass("is-invalid");
+                        $('#datepicker2').prev().text('請選擇截止日期');
+                        //}else if (Date.parse(deadLine) > Date.parse(actDate)) {
+                        //    $('#datepicker2').addClass("is-invalid");
+                        //    $('#datepicker2').prev().text("截止日不得超過活動日");
+                        //}else if (Date.parse(deadLine) < Date.parse(today)) {
+                        //    $('#datepicker2').addClass("is-invalid");
+                        //    $('#datepicker2').prev().text("截止日不可早於今天");
+                    } else {
+                        $('#datepicker2').removeClass("is-invalid").addClass("is-valid");
+                        $('#datepicker2').prev().text("");
+                    }
+                    break;
+                case "timepicker2":
+                    $('#timepicker2').blur(function () {
+                        if ($('#timepicker2').val() == "") {
+                            $('#timepicker2').addClass("is-invalid");
+                            $('#timepicker2').prev().text('請選擇截止時間');
+                        } else if ($('#datepicker2').val() == "") {
+                            $('#timepicker2').addClass("is-invalid");
+                            $('#timepicker2').prev().addClass('createTime').text('請先選擇截止日期');
+                        } else if (Date.parse(endDate) == Date.parse(chosen) && (picked - endTime) < 60 * 60 * 3 && (picked - endTime) >= 0) {
+                            $('#timepicker2').addClass("is-invalid");
+                            $('#timepicker2').prev().text("與開團時間需間隔3小時以上");
+                        } else if (Date.parse(endDate) == Date.parse(chosen) && (picked - endTime) <= 0) {
+                            $('#timepicker2').addClass("is-invalid");
+                            $('#timepicker2').prev().text("截止時間超出範圍");
+                        } else {
+                            $('#timepicker2').removeClass("is-invalid").addClass("is-valid");
+                            $('#timepicker2').prev().text("");
+                        }
+                    });
+                    break;
+            }
+        });
     </script>
-    }
+}

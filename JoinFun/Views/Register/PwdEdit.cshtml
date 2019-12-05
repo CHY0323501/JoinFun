@@ -2,18 +2,19 @@
 
 @{
     ViewBag.Title = "修改密碼";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section PwdEdit{
-    <link href="~/CSS/Register.css" rel="stylesheet" />
-
+@section Register{
+    
+    <link href="~/CSS/Register .css" rel="stylesheet" />
 }
 
-<div class="container mt-5  "  style="min-height: 100vh">
+<div class="container mt-5  " style="min-height: 100vh">
 
     <div class="row justify-content-center pwdEdit-box ml-1">
         <div class="col-md-12">
-            <h2 class="text-center mt-4">修改密碼</h2>
+            <h2 class="text-center mt-5">修改密碼</h2>
         </div>
 
         @using (Html.BeginForm(new { id = "pwdEdit" }))
@@ -87,7 +88,7 @@
                             <span class="control-label   mr-2  ">確認密碼</span>
                             @*@Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @class = "form-control ", type = "password", id = "PasswordConfirm" } })
                                 @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { @class = "text-danger" })*@
-                            <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control d-inline " onkeyup="checkPwd()" />
+                            <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control d-inline " onkeyup="checkPwd()" required />
                             <div></div>
 
                         </div>

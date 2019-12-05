@@ -20,7 +20,7 @@ namespace JoinFun.Controllers
         //註冊會員
         public ActionResult Register()
         {
-
+           
             ViewBag.County = db.County.ToList();
             ViewBag.District = db.District.ToList();
 
@@ -79,7 +79,7 @@ namespace JoinFun.Controllers
 
             MessageCenter mes = new MessageCenter();
             List<string> mailList = new List<string>() { mem.Email };
-            mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的" + acc.Account + "會員:</h3></br><h3>您在JoinFun的帳號已建立,請點擊下方連結以完成帳號啟用!</h3></br><a href='http://localhost:54129/Register/Approved?email_ID=" + mem.email_ID + "'>信箱驗證請連結</a></br>");
+            mes.SendEmail(mailList, "JoinFun驗證信通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' > <h3>親愛的" + acc.Account + "會員:</h3></br><h3>您在JoinFun的帳號已建立,請點擊下方連結以完成帳號啟用!</h3></br><a href='http://localhost:54129/Register/Approved?email_ID=" + mem.email_ID + "'>信箱驗證請連結</a></br>");
 
 
             return RedirectToAction("CheckEmail", "Register", new { account = account });
@@ -141,7 +141,7 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult PwdEdit(string memId, string OldPassword, string NewPassword)
+        public ActionResult PwdEdit(string memId, string OldPassword, string Password)
         {
 
             var accPwd = db.Acc_Pass.Where(m => m.memId == memId).FirstOrDefault();
@@ -167,7 +167,7 @@ namespace JoinFun.Controllers
 
                 //密碼雜湊 salt+hash
                 string salt = Guid.NewGuid().ToString();
-                byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(NewPassword + salt);
+                byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(Password + salt);
                 byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
                 string hashString = Convert.ToBase64String(hashBytes);
 
@@ -204,22 +204,22 @@ namespace JoinFun.Controllers
         public ActionResult ForgetPwd(string account, string email)
         {
             var acc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
-
-            var memEmail = db.Member.Where(m => m.Email == email).FirstOrDefault();
+            var getmemid = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault().memId;
+            var memEmail = db.Member.Where(m => m.memId == getmemid).FirstOrDefault().Email;
             if (acc != null)
             {
-                if (acc.Account == account && memEmail.Email == email)
+                if (acc.Account == account && memEmail == email)
                 {
-                    
+                    string getEmailID = db.Member.Find(getmemid).email_ID;
                     MessageCenter mes = new MessageCenter();
-                        List<string> mailList = new List<string>() { memEmail.Email };
-                        mes.SendEmail(mailList, "JoinFun權益通知", "<h3>親愛的會員:</h3></br><h3>請點擊下面連結來重置您的密碼!</h3></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + memEmail.email_ID + "'>重置密碼請點擊</a></br>");
+                        List<string> mailList = new List<string>() { memEmail };
+                        mes.SendEmail(mailList, "JoinFun權益通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' style='width:25 %'><h2>親愛的會員:</h2></br><h2>請點擊下面連結來重置您的密碼!</h2></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + getEmailID + "'><h2>重置密碼請點擊</h2></a></br>");
 
                     ViewBag.ForgetPwd = "信件已發送";
                     return View();
                     
                 }
-
+                
                 
 
             }

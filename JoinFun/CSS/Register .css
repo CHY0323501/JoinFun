@@ -1,7 +1,7 @@
 ﻿
 
 body {
-    background-image: url('../Photos/index/carousel1.jpg');  
+    background-image: url('../Photos/index/carousel1.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
     margin: 0;
@@ -9,31 +9,22 @@ body {
     background-size: cover;
     background-position: center;
     font-family: sans-serif;
-    top:70px;
-    
-    
-    position:relative;
-}
-/*548*/
-/*.container {
-padding-bottom:5rem;
-}*/
-
-/*container {
-    width: 100%;
-    
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+    /*top: 70px;*/
+    /*position: relative;*/
+    padding-top: 60px;
    
-}*/
+}
+
+
+
 
 /*6510*/
 .bg-morandi {
     background-color: #eee5f8;
 }
-
+.bg-secondary {
+    background-color: #6c757d !important;
+}
 
 
 
@@ -104,16 +95,6 @@ footer {
     background-color: #3b5998;
 }
 
-/*.emailBg {
-    background-image: url('../Photos/blank letter.jpg');
-    background-image: url('../Photos/mail-1454734_1920.png');
-    background-image: url('../Photos/envelope-4313721_1280.png');
-}*/
 
-.emailBg {
-   width:100%;
-   background-image:url('../Photos/mail-1454734_1920.png');
-   background-size:cover;
-   background-position:center;
-   position:relative;
-}
+
+

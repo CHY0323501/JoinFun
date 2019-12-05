@@ -37,7 +37,7 @@ namespace JoinFun.Controllers
             }
             else
             {
-                Session["memid"] = "M000000008";
+                //Session["memid"] = "M000000002";
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
@@ -45,7 +45,7 @@ namespace JoinFun.Controllers
                     Bookmark_Details = db.Bookmark_Details.Where(m => m.memId == memID).ToList(),
                     Friendship = db.Friendship.Where(m => m.memId == memID).ToList(),
                     vw_FansNew = db.vw_FansNew.Where(m => m.memId == memID).ToList(),
-                    vw_FollowUp = db.vw_FollowUp.Where(m => m.FoMemId == memID).ToList(),
+                    vw_FollowUp = db.vw_FollowUp.ToList(),
                     vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID&&m.Approved==true).ToList(),
                     vw_Member_Remarks = db.vw_Member_Remarks.Where(m => m.ToMemId == memID).ToList(),
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
@@ -231,6 +231,7 @@ namespace JoinFun.Controllers
                     };
 
                     ViewBag.actTop = db.Join_Fun_Activities.Where(m => m.actId == actid).Select(m => m.actTopic).FirstOrDefault();
+                    ViewBag.actID = db.Join_Fun_Activities.Where(m => m.actId == actid).Select(m => m.actId).FirstOrDefault();
                     ViewBag.memNick = db.Member.Where(m => m.memId == memid).Select(m=>m.memNick).FirstOrDefault();
                     //ViewBag.sex = db.Member.Where(m => m.memId == memid).;
 
@@ -240,14 +241,6 @@ namespace JoinFun.Controllers
             }
         }
         
-
-        [HttpPost]
-        public ActionResult ActCheck(string memid)
-        {
-
-
-            return View();
-        }
 
 
         //揪團歷史
@@ -376,11 +369,45 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index", "Activity");
         }
 
-        //新手幫助
-        public ActionResult Help() {
-            return View();
+        //我的收藏
+        public ActionResult Bookmark(string memID) {
+            List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
+            return View(Bookmark);
         }
 
+
+        //小工具
+        public ActionResult Widget()
+        {
+            return View();
+        }
+        //抽籤
+        [HttpPost]
+        public ActionResult Random(string Number)
+        {
+            List<int> arrayold = Number.Split(',').Select(int.Parse).ToList();
+            List<int> arraynew = arrayold;
+
+            int Temp = 0, ran = 0, check = 0;
+            Random R = new Random();
+            for (int j = 0; j < arraynew.Count(); j++)
+            {
+                check = j;
+                ran = R.Next(0, arraynew.Count());
+                Temp = arraynew[j];
+                arraynew[j] = arraynew[ran];
+                arraynew[ran] = Temp;
+
+                if (arraynew[j] == arrayold[j])
+                {
+                    j = check;
+                }
+            }
+
+
+            return Json(arraynew, JsonRequestBehavior.AllowGet);
+        }
+       
 
         //取得被評價會員的DropDownList清單方法
         public void GetMemList(string actID, string FromMemID)

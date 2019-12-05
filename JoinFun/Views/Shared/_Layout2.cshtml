@@ -235,6 +235,10 @@
             font-size:1.2rem;
             font-weight:900;
         }
+        .adm-subtitle {
+            font-family:微軟正黑體;
+            font-size:1.5rem;
+        }
     </style>
 
 
@@ -245,24 +249,68 @@
             <div class="navbar navbar-light bg-dark pl-4 vh-100"position:fixed;top:0;left:0>
                 <div class="row w-100 mb-auto">
                     <div class="col col-12 text-center ">
-                        <a id="joinfunbrand2" href="@Url.Action("Index","Adm")" class=" navbar-brand hvr-underline-from-center font-weight-bold text-decoration-none pb-2 text-white"><i class="fas fa-cog" style="font-size:40px!important"></i>　JoinFun後台系統</a>
+                        <a id="joinfunbrand2" href="@Url.Action("Index","Adm")" class=" navbar-brand hvr-underline-from-center font-weight-bold text-decoration-none pb-2 text-white"><i class="fas fa-cog" style="font-size:40px!important"></i>　JoinFun後台</a>
                     
-                        <div class="col col-12 text-left" style="width:80%">
+                        <div class="col col-12 text-left w-100" >
                             <ul class=" navbar-nav ">
                                 <li class="nav-item mt-1 pl-4">
-                                    <a class="nav-link hvr-underline-from-center nav-font " href="#"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
+                                    <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("Inquire","Adm")"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
                                 </li>
                                 <li class="nav-item mt-1 pl-4">
                                     <a class="nav-link hvr-underline-from-center nav-font" href="#"><span class="fas fa-glass-cheers icon-size" style="width:20px"></span>　揪團管理</a>
                                 </li>
                                 <li class="nav-item mt-1 pl-4">
-                                    <a class="nav-link nav-font " href="#" id="VioDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
-                                    <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop">
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a>
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a>
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a>
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a>
-                                    </div>
+                                    @*<a class="nav-link nav-font " href="#" id="VioDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
+            <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop">
+                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a>
+                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a>
+                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a>
+                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a>
+            </div>*@
+                                    <a href="#" class="nav-link nav-font vioBtn pb-0"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
+                                    @if (!"ManageViolations".Equals(ViewContext.RouteData.Values["Action"].ToString()))
+                                    {
+                                        <div class="bg-transparent border-0" id="vioArea" style="display:none">
+                                            <ul class="nav nav-tabs nav-fill">
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="@Url.Action("ManageViolations","Adm", new { Page = "memList"})"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="@Url.Action("ManageViolations","Adm", new { Page = "remarkList"})"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="@Url.Action("ManageViolations","Adm", new { Page = "actList"})"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="@Url.Action("ManageViolations","Adm", new { Page = "commentList"})"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a></li>
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-transparent border-0" id="vioArea" style="display:none">
+                                            <ul class="nav nav-tabs nav-fill">
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="#memList" data-toggle="tab"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="#remarkList" data-toggle="tab"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="#actList" data-toggle="tab"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="#commentList" data-toggle="tab"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a></li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </li>
+                                <li class="nav-item mt-1 pl-4">
+                                    <a href="#" class="nav-link nav-font feedBtn pb-0"><span class="fas fa-exclamation-circle icon-size"></span>　意見回饋</a>
+                                    @if (!"Feedback".Equals(ViewContext.RouteData.Values["Action"].ToString()))
+                                    {
+                                        <div class="bg-transparent border-0" id="feedback" style="display:none">
+                                            <ul class="nav nav-tabs nav-fill">
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="@Url.Action("Feedback","Adm", new { Page = "unprocessed"})"><i class="fas fa-arrow-circle-right icon-size"></i> 待處理　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="@Url.Action("Feedback","Adm", new { Page = "processed"})"><i class="fas fa-arrow-circle-right icon-size"></i> 已處理　</a></li>
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-transparent border-0" id="feedback" style="display:none">
+                                            <ul class="nav nav-tabs nav-fill">
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="#unprocessed" data-toggle="tab"><i class="fas fa-arrow-circle-right icon-size"></i> 待處理　</a></li>
+                                                <li class="nav-item"><a class="nav-link nav-drop-font nav-drop-hov" href="#processed" data-toggle="tab"><i class="fas fa-arrow-circle-right icon-size"></i> 已處理　</a></li>
+                                            </ul>
+                                        </div>
+                                    }
                                 </li>
                                 <li class="nav-item mt-1 pl-4">
                                     <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("Post","Adm")"><span class="far fa-list-alt icon-size"></span>　公告管理</a>
@@ -270,9 +318,9 @@
                                 <li class="nav-item mt-1 pl-4">
                                     <a class="nav-link nav-font " href="#" id="VioDrop2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-user-cog icon-size" style="width:20px"></span>　管理員資訊</a>
                                     <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop2">
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-edit icon-size"></i> 修改個人資訊</a>
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-plus icon-size"></i> 新增管理員</a>
-                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-sign-out-alt icon-size"></i> 登出</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="@Url.Action("AdmPwdEdit","Adm",new {admId= Session["admid"]})"><i class="fas fa-edit icon-size"></i> 修改個人資訊</a>
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="@Url.Action("AdmRegister","Adm",new {admId= Session["admid"]})"><i class="fas fa-plus icon-size"></i> 新增管理員</a><br />
+                                        <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="@Url.Action("AdmLogout","Adm")"><i class="fas fa-sign-out-alt icon-size"></i> 登出</a>
                                     </div>
                                 </li>
                             </ul>
@@ -281,7 +329,7 @@
                 </div>
             </div>
         </div>
-        <div class="col col-10 py-0 adm-bg overflow-auto" >
+        <div class="col col-10 py-0 adm-bg  vh-100" >
             @RenderBody()
         </div>
     </div>
@@ -295,20 +343,19 @@
     @RenderSection("indexscript", required: false)
     @RenderSection("actscripts",required:false)
     <script>
-        //取得未讀訊息數量
-        $(document).ready(function () {
-                $.ajax({
-                    url: "@Url.Action("GetMStatus","Activity")",
-                    method: "post",
-                    traditional: true,
-                    data: { id: $('#mid').val() },
-                    success: function (count) {
-                        if (count == 0)
-                            $('.number').text("");
-                        else
-                            $('.number').text(count);
-                    }
-              });
+        $('.vioBtn').click(function () {
+            if ($('#vioArea').css('display') == 'none') {
+                $('#vioArea').show();
+            } else {
+                $('#vioArea').hide();
+            }
+        });
+        $('.feedBtn').click(function () {
+            if ($('#feedback').css('display') == 'none') {
+                $('#feedback').show();
+            } else {
+                $('#feedback').hide();
+            }
         });
     </script>
 </body>
