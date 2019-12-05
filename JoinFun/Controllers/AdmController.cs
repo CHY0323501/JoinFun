@@ -414,34 +414,27 @@ namespace JoinFun.Controllers
 
 
         }
-        //新增違規
-        public ActionResult InquireCreate(string memid)
-        {
-            Violation vio = new Violation();
-
-
-            MemberInquireVM read = new MemberInquireVM()
-            {
-                Member = db.Member.ToList(),
-                Violation = db.Violation.ToList(),
-                Punishment = db.Punishment.ToList()
-            };
-
-            return View(read);
-
-        }
         //修改違規紀錄
-        public ActionResult InquireEdit(string memid)
+        public ActionResult InquireEdit(string memID)
         {
+            var vio = from a in db.Violation select a;
 
-            MemberInquireVM read = new MemberInquireVM()
+
+
+            { 
+            MemberInquireVM edit = new MemberInquireVM()
             {
-                Member = db.Member.ToList(),
-                Violation = db.Violation.ToList(),
-                Punishment = db.Punishment.ToList()
+                Member = db.Member.Where(m => m.memId == memID).ToList(),
+                MemberRemark = db.Member_Remarks.Where(m => m.FromMemId == memID).ToList(),
+                MessageBoard = db.Message_Board.Where(m => m.memId == memID).ToList(),
+                Activity = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList(),
+                Violation = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList()
             };
+            }
+            ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
 
-            return View(read);
+
+            return View(edit);
 
         }
 
