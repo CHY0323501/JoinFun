@@ -25,7 +25,7 @@ namespace JoinFun.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string account,string pass)
+        public ActionResult Login(string account, string pass)
         {
             //使用Linq查詢取得帳號(加密用)
             var getAcc = db.Administrator.Where(m => m.admAcc == account).FirstOrDefault();
@@ -36,13 +36,13 @@ namespace JoinFun.Controllers
             }
             //查詢管理員帳號及密碼
             string sql = "select * from Administrator where admAcc=@acc and admPass=@pass";
-            SqlCommand cmd = new SqlCommand(sql,Conn);
+            SqlCommand cmd = new SqlCommand(sql, Conn);
             SqlDataReader reader;
 
-            
+
 
             //取得salt字串
-            string salt = getAcc.admSalt; 
+            string salt = getAcc.admSalt;
             //產生雜湊
             byte[] PasswordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(pass + salt);
             byte[] HashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(PasswordAndSaltBytes);
@@ -75,7 +75,7 @@ namespace JoinFun.Controllers
         public ActionResult AdmRegister()
         {
 
-         
+
 
             return View();
 
@@ -100,13 +100,13 @@ namespace JoinFun.Controllers
             Administrator accAdm = new Administrator();
             accAdm.admId = admId;
             accAdm.admAcc = admAcc;
-            accAdm.admPass= hashString;
+            accAdm.admPass = hashString;
             accAdm.admPasswordConfirm = hashString;
             accAdm.admNick = admNick;
 
 
             accAdm.admSalt = salt;
-            db.Administrator.Add(accAdm);           
+            db.Administrator.Add(accAdm);
             db.SaveChanges();
 
 
@@ -136,7 +136,7 @@ namespace JoinFun.Controllers
         //公告partial view
         //用於前後台觀看詳細公告、後台瀏覽所有公告
         [ChildActionOnly]
-        public PartialViewResult _Post(string PostNo,int page=1)
+        public PartialViewResult _Post(string PostNo, int page = 1)
         {
             List<Post> post = db.Post.OrderByDescending(m => m.postSerial).ToList();
             ViewBag.PostCount = post.Count();
@@ -144,10 +144,10 @@ namespace JoinFun.Controllers
             {
                 var p = post.Where(m => m.postSerial == PostNo).ToList();
                 ViewBag.PostCount = 1;
-                return PartialView(p.ToPagedList(1,1));
+                return PartialView(p.ToPagedList(1, 1));
             }
             //公告分頁
-            
+
             int pagecurrent = page < 1 ? 1 : page;
             var pagedlist = post.ToPagedList(pagecurrent, pagesize);
 
@@ -156,7 +156,7 @@ namespace JoinFun.Controllers
 
         //編輯公告
         public ActionResult PostEdit(string PostNo) {
-            Post post= db.Post.Where(m=>m.postSerial==PostNo).FirstOrDefault();
+            Post post = db.Post.Where(m => m.postSerial == PostNo).FirstOrDefault();
             ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick");
             return View(post);
         }
@@ -169,13 +169,13 @@ namespace JoinFun.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Post",new { PostNo =post.postSerial});
+            return RedirectToAction("Post", new { PostNo = post.postSerial });
         }
 
         //刪除公告
         public ActionResult PostDelete(string PostNo) {
             var post = db.Post.Find(PostNo);
-            if (!String.IsNullOrEmpty(PostNo)&&post!=null) {
+            if (!String.IsNullOrEmpty(PostNo) && post != null) {
                 db.Post.Remove(post);
                 db.SaveChanges();
             }
@@ -188,5 +188,86 @@ namespace JoinFun.Controllers
             return Math.Ceiling(TotalPages);
         }
 
+
+
+        public ActionResult ActManage(int page = 1)
+        {
+            var actdetail = db.Join_Fun_Activities.ToList();
+
+            int pagesize = 8;
+            int pagecurrent = page < 1 ? 1 : page;
+            var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
+            return View(pagedlist);
+
+
+
+        }
+
+        public void ActKeepChange(string actId)
+        {
+
+            var changeact = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
+            bool keepact = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault().keepAct;
+            changeact.keepAct = !keepact;
+            db.SaveChanges();
+            //return Json(true, JsonRequestBehavior.AllowGet);
+
+        }
+        //[HttpPost]
+        //public ActionResult ActManage(string[] actId, bool[] keepAct, int page = 1)
+        //{
+        //    string id = "";
+        //    for (var i = 0; i < actId.Length; i++) {
+        //        id = actId[i];
+        //        var changeact = db.Join_Fun_Activities.Where(m => m.actId == id).FirstOrDefault();
+        //        changeact.keepAct = keepAct[i];
+        //        db.SaveChanges();
+        //    }
+
+
+        //    var actdetail = db.Join_Fun_Activities.ToList();
+
+        //    int pagesize = 8;
+        //    int pagecurrent = page < 1 ? 1 : page;
+        //    var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
+        //    return View(pagedlist);
+        //}
+
+
+        [HttpPost]
+        public ActionResult ActManage(bool[] keepAct, string[] actId, int page = 1)
+        {
+            //db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct = joinkeep.keepAct;
+            if(keepAct.Length > 0)
+            {
+                for(int i=0; i<keepAct.Length; i++)
+                {
+                    var id = actId[i];
+                    var act = db.Join_Fun_Activities.Find(id);
+                    act.keepAct = keepAct[i];
+                    db.SaveChanges();
+                }
+            }
+            //db.SaveChanges();
+            //var result = db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct;
+
+            var actdetail = db.Join_Fun_Activities.ToList();
+
+            int pagesize = 8;
+            int pagecurrent = page < 1 ? 1 : page;
+            var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
+            return View(pagedlist);
+        }
+
+
+        public void DeleteAct(string actid) {
+            var delact=db.Join_Fun_Activities.Where(m => m.actId == actid).FirstOrDefault();
+            db.Join_Fun_Activities.Remove(delact);
+            db.SaveChanges();
+
+
+        }
+
+        
     }
 }

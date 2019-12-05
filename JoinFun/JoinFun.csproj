@@ -139,7 +139,9 @@
     <Content Include="Content\hover-min.css" />
     <Content Include="Content\hover.css" />
     <Content Include="Content\MyStyle.css" />
+    <Content Include="Content\pgwslideshow.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CSS\ActManage.css" />
     <Content Include="CSS\ADMpagedlist.css" />
     <Content Include="CSS\ADM_login.css" />
     <Content Include="CSS\bootstrap-datetimepicker.css" />
@@ -992,6 +994,7 @@
     <Content Include="Views\Shared\_Post.cshtml" />
     <Content Include="Views\Member\ActCheck.cshtml" />
     <Content Include="Views\Adm\PostEdit.cshtml" />
+    <Content Include="Views\Adm\ActManage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
