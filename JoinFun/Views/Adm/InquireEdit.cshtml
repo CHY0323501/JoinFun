@@ -27,7 +27,7 @@
                         <div class="col-12 col-md-6 ">
                             <div class="row">
                                 <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">違規類型</span></div>
-                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.typeId</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@Model.Type_of_Violate.Where(m=>m.typeId==i.typeId).FirstOrDefault().vioClass</span></div>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         <div class="col-12 col-md-6 ">
                             <div class="row">
                                 <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">對應違規事項編號</span></div>
-                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.Type_of_Violate</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.CorrespondingEventID</span></div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6  ">

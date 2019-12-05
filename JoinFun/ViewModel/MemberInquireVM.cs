@@ -15,6 +15,7 @@ namespace JoinFun.ViewModel
         public List<Member_Remarks> MemberRemark { get; set; }
         public List<Message_Board> MessageBoard { get; set; }
         public List<Join_Fun_Activities> Activity { get; set; }
+        public List<Type_of_Violate> Type_of_Violate { get; set; }
 
     }
 }

@@ -415,22 +415,36 @@ namespace JoinFun.Controllers
 
         }
         //修改違規紀錄
-        public ActionResult InquireEdit(string memID)
+        public ActionResult InquireEdit(string memID="M000000002")
         {
-            var vio = from a in db.Violation select a;
+            var vio = db.Violation.ToList();
+            var activity = db.Join_Fun_Activities.Where(m=>m.hostId== memID).ToList();
 
+            List<string> act = new List<string>();
+            for (int a=0 ;a < vio.Count();a++)
+            {
+                for (int b = 0; b < activity.Count(); b++)
+                {
+                    //if (activity[b].hostId == memID)
+                    //{
+                    //    act.Add(activity[b].actId);
+                    //}
+                }
+            }
+            
 
-
-            { 
+            
             MemberInquireVM edit = new MemberInquireVM()
             {
                 Member = db.Member.Where(m => m.memId == memID).ToList(),
                 MemberRemark = db.Member_Remarks.Where(m => m.FromMemId == memID).ToList(),
                 MessageBoard = db.Message_Board.Where(m => m.memId == memID).ToList(),
-                Activity = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList(),
-                Violation = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList()
+                Activity = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList(), 
+                Violation = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList(),
+                Type_of_Violate = db.Type_of_Violate.ToList()
+                
             };
-            }
+            
             ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
 
 
