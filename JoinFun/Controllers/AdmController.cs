@@ -413,7 +413,7 @@ namespace JoinFun.Controllers
 
         }
         //修改違規紀錄
-        public ActionResult InquireEdit(string memID="M000000002")
+        public ActionResult InquireEdit(string memID="M000000003")
         {
             var activityVio = (from a in db.Join_Fun_Activities
                                         join b in db.Violation
@@ -423,13 +423,13 @@ namespace JoinFun.Controllers
 
             var RemarkVio = (from a in db.Member_Remarks
                                       join b in db.Violation
-                                        on a.FromMemId equals b.CorrespondingEventID
+                                        on a.remarkSerial equals b.CorrespondingEventID
                                       where a.FromMemId == memID
                                       select b).ToList();
 
             var BoardVio = (from a in db.Message_Board
                                      join b in db.Violation
-                                      on a.memId equals b.CorrespondingEventID
+                                      on a.mboardSerial equals b.CorrespondingEventID
                                      where a.memId == memID
                                      select b).ToList();
 
