@@ -27,7 +27,7 @@
                         <div class="col-12 col-md-6 ">
                             <div class="row">
                                 <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">違規類型</span></div>
-                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@Model.Type_of_Violate.Where(m=>m.typeId==i.typeId).FirstOrDefault().vioClass</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@Html.DisplayFor(modelItem => i.Type_of_Violate.vioClass)</span></div>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="col-12 col-md-6  ">
                             <div class="row ">
                                 <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">處置人員</span></div>
-                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.FromAdmID</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@Html.DisplayFor(modelItem => i.Administrator.admNick)</span></div>
                             </div>
                         </div>
                     </div>
@@ -51,13 +51,14 @@
                         <div class="col-12 col-md-6  ">
                             <div class="row ">
                                 <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">處置方式</span></div>
-                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.Punishment</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@Html.DisplayFor(modelItem => i.Punishment.punishName)</span></div>
                             </div>
                         </div>
+                        
                         <div class="col-12 col-md-6  ">
                             <div class="row ">
                                 <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">處置時間</span></div>
-                                @*<div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.vioProcessTime.ToString().Substring(0, 10).Replace("/", "-")</span></div>*@
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@(i.vioProcessTime.HasValue?i.vioProcessTime.Value.ToString("yyyy-MM-dd　HH:mm:ss"): "")</span></div>
                             </div>
                         </div>
                     </div>

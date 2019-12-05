@@ -11,6 +11,7 @@ using JoinFun.Models;
 using X.PagedList;
 using JoinFun.Utilities;
 using JoinFun.ViewModel;
+using System.Web.UI.WebControls;
 
 namespace JoinFun.Controllers
 {
@@ -414,36 +415,37 @@ namespace JoinFun.Controllers
         //修改違規紀錄
         public ActionResult InquireEdit(string memID="M000000002")
         {
-            var vio = db.Violation.ToList();
-            var activity = db.Join_Fun_Activities.Where(m=>m.hostId== memID).ToList();
+            var activityVio = (from a in db.Join_Fun_Activities
+                                        join b in db.Violation
+                                        on a.actId equals b.CorrespondingEventID
+                                        where a.hostId == memID
+                                        select b).ToList();
 
-            List<string> act = new List<string>();
-            for (int a=0 ;a < vio.Count();a++)
-            {
-                for (int b = 0; b < activity.Count(); b++)
-                {
-                    //if (activity[b].hostId == memID)
-                    //{
-                    //    act.Add(activity[b].actId);
-                    //}
-                }
-            }
-            
+            var RemarkVio = (from a in db.Member_Remarks
+                                      join b in db.Violation
+                                        on a.FromMemId equals b.CorrespondingEventID
+                                      where a.FromMemId == memID
+                                      select b).ToList();
 
-            
+            var BoardVio = (from a in db.Message_Board
+                                     join b in db.Violation
+                                      on a.memId equals b.CorrespondingEventID
+                                     where a.memId == memID
+                                     select b).ToList();
+
+            var MemberVio = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList();
+
+            //將會員、留言板、評價、揪團違規查詢結果合併
+            var AllVio = activityVio.Union(RemarkVio).Union(BoardVio).Union(MemberVio);
+
+
+
             MemberInquireVM edit = new MemberInquireVM()
             {
-                Member = db.Member.Where(m => m.memId == memID).ToList(),
-                MemberRemark = db.Member_Remarks.Where(m => m.FromMemId == memID).ToList(),
-                MessageBoard = db.Message_Board.Where(m => m.memId == memID).ToList(),
-                Activity = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList(), 
-                Violation = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList(),
-                Type_of_Violate = db.Type_of_Violate.ToList()
-                
+                Violation = AllVio.OrderByDescending(m => m.vioId).Where(m=>m.implement_admId!=null),
             };
             
             ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
-
 
             return View(edit);
 
