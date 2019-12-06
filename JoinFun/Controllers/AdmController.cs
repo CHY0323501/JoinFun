@@ -11,6 +11,7 @@ using JoinFun.Models;
 using X.PagedList;
 using JoinFun.Utilities;
 using JoinFun.ViewModel;
+using System.Web.UI.WebControls;
 
 namespace JoinFun.Controllers
 {
@@ -412,6 +413,7 @@ namespace JoinFun.Controllers
 
         }
         //修改違規紀錄
+
         //public ActionResult InquireEdit(string memID)
         //{
         //    var vio = from a in db.Violation select a;
@@ -433,7 +435,44 @@ namespace JoinFun.Controllers
 
         //    return View(edit);
 
-        //}
+        public ActionResult InquireEdit(string memID="M000000003")
+        {
+            var activityVio = (from a in db.Join_Fun_Activities
+                                        join b in db.Violation
+                                        on a.actId equals b.CorrespondingEventID
+                                        where a.hostId == memID
+                                        select b).ToList();
+
+            var RemarkVio = (from a in db.Member_Remarks
+                                      join b in db.Violation
+                                        on a.remarkSerial equals b.CorrespondingEventID
+                                      where a.FromMemId == memID
+                                      select b).ToList();
+
+            var BoardVio = (from a in db.Message_Board
+                                     join b in db.Violation
+                                      on a.mboardSerial equals b.CorrespondingEventID
+                                     where a.memId == memID
+                                     select b).ToList();
+
+            var MemberVio = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList();
+
+            //將會員、留言板、評價、揪團違規查詢結果合併
+            var AllVio = activityVio.Union(RemarkVio).Union(BoardVio).Union(MemberVio);
+
+
+
+            MemberInquireVM edit = new MemberInquireVM()
+            {
+                Violation = AllVio.OrderByDescending(m => m.vioId).Where(m=>m.implement_admId!=null),
+            };
+            
+            ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
+
+            return View(edit);
+
+
+        }
 
 
         //所有違規管理(含已處理和未處理項目),預設僅顯示未處理項目,可搜尋選項則包含所有已處理和未處理項目
