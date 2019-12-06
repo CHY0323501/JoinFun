@@ -31,7 +31,7 @@
 
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
 
-    <style>
+    @*<style>
         .dropdown-item.active, .dropdown-item:active {
             text-decoration: none;
             background-color: #EEE8AA;
@@ -65,13 +65,13 @@
             display: block
         }
 
-       
+
 
         .containerMinH {
             min-height: 1200px;
         }
 
-     
+
 
         .containerbody {
             min-height: 400px;
@@ -86,7 +86,134 @@
             border-radius: 8px;
         }
 
-        ::-webkit-scrollbar:hover {
+            ::-webkit-scrollbar:hover {
+                box-shadow: 0 0 10px rgba(255, 255, 255,0.5);
+            }
+
+        ::-webkit-scrollbar-track {
+            /*background-color: rgba(255, 255, 255, 0.7);*/
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            border-radius: 8px;
+        }
+        /*/////*/
+        .footer-content {
+            height: 60px;
+            line-height: 60px;
+        }
+        /*navbar調整*/
+        #a a {
+            font-size: 1rem;
+        }
+
+        #memsearch::-webkit-input-placeholder {
+            color: rgb(23, 162, 184);
+            text-align: center;
+            font-size: 1rem !important;
+        }
+
+        #memsearch {
+            font-size: 1rem !important;
+            display: initial;
+        }
+
+        #joinfunbrand {
+            font-size: 1.5rem !important;
+        }
+    </style>*@
+
+
+    <style>
+        .dropdown-item.active, .dropdown-item:active {
+            text-decoration: none;
+            background-color: #EEE8AA;
+        }
+
+        body {
+            font-family: 微軟正黑體 !important;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .navbar-light a {
+            color: orangered !important;
+            /*color: white !important;*/
+        }
+
+        .nav-bg {
+            background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+        }
+
+        .foot-bg {
+            background-color: bisque;
+            color: brown;
+        }
+
+        .dropdown-menu li:hover .sub-menu {
+            visibility: visible;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .containerMinH {
+            min-height: 1200px
+        }
+
+        @@media (min-width: 576px) {
+            .container {
+                /*max-width: 540px;*/
+                max-width: 660px;
+            }
+        }
+
+        @@media (min-width: 768px) {
+            .container {
+                /*max-width: 720px;*/
+                max-width: 800px;
+            }
+        }
+
+        @@media (min-width: 992px) {
+            .container {
+                /*max-width: 960px;*/
+                max-width: 1200px;
+            }
+        }
+
+        @@media (min-width: 1200px) {
+            .container {
+                /*max-width: 1140px;*/
+                max-width: 1500px;
+            }
+        }
+
+        .containerbody {
+            min-height: 400px;
+        }
+        /*調整Scrollbar*/
+        .hvr-underline-from-center:before {
+            background: #ff6a00;
+        }
+
+        ::-webkit-scrollbar {
+            width: 13px;
+            border-radius: 8px;
+        }
+
+            ::-webkit-scrollbar:hover {
                 box-shadow: 0 0 10px rgba(255, 255, 255,0.5);
             }
 
@@ -124,7 +251,6 @@
             font-size: 1.5rem !important;
         }
     </style>
-
 
 </head>
 <body>
