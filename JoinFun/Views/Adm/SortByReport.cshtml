@@ -11,7 +11,7 @@
     <button type="button" class="btn btn-outline-primary" id="sortByAct">依揪團時間</button>
     <button type="button" class="btn btn-outline-primary" id="sortById">依揪團編號</button>
 </div>
-<div class="row d-none ml-1" id="byReport">
+<div class="row ml-1" id="byReport">
     <form method="get" action="@Url.Action("SortByReport")" class="col-md-8">
         <label class="row" style="line-height:30pt">
             檢舉時間：<input id="reportStart" name="reportStart" type="datetime-local" class="form-control col-md-3" />　至　<input id="reportEnd" name="reportEnd" type="datetime-local" class="form-control col-md-3" />
@@ -38,10 +38,9 @@
 
 
 <div class="tab-content mt-2">
-    <input id="load" type="hidden" value="@ViewBag.ID" />
     <div class="tab-pane fade show active" id="allList">
         <table class="table table-striped table-hover table-responsive-sm">
-            <caption>待處理違規列表</caption>
+            <caption>搜尋結果列表</caption>
             <thead class="thead-dark text-center">
                 <tr>
                     <th scope="col">違規編號</th>
@@ -49,17 +48,17 @@
                     <th scope="col">違規類別</th>
                     <th scope="col">違規標題</th>
                     <th scope="col">違規時間</th>
+                    <th scope="col">目前狀態</th>
                 </tr>
             </thead>
             <tbody class="text-center text-light">
                 @if (Model.violateList != null)
                 {
-                    foreach (var item in Model.violateList.Where(m => m.vioProcessTime == null))
+                    foreach (var item in Model.violateList)
                     {
                         <tr>
                             <td>
                                 @item.vioId
-                                @*<input id="vioID1" type="hidden" name="vioID" value="@item.vioId" />*@
                             </td>
                             <td>
                                 @if (Model.violateList != null)
@@ -72,10 +71,8 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CorrespondingEventID)
-                                @*<input id="eventID1" type="hidden" name="eventID" value="@item.CorrespondingEventID" />*@
                             </td>
                             <td>
-                                @*<button id="memViolate" type="button" class="btn btn-link">@item.vioTitle</button>*@
                                 <a href="@Url.Action("ViolationContent", "Adm", new { vioID = item.vioId, eventID = item.CorrespondingEventID, Page = "allList"})">@item.vioTitle</a>
                                 @*@Html.ActionLink(item.vioTitle, "ViolationContent", new { vioID = item.vioId, Page = ViewBag.ID }, new { @class = "btn btn-link" })*@
                                 @*<form method="get" action="@Url.Action("ViolationContent")">
@@ -87,6 +84,16 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.vioReportTime)
                             </td>
+                            <td>
+                                @if (item.vioProcessTime != null)
+                                {
+                                    @:已處理
+                                }
+                                else
+                                {
+                                    @:未處理
+                                }
+                            </td>
                         </tr>
                     }
                 }
@@ -95,7 +102,7 @@
     </div>
     <div class="tab-pane fade show" id="sortList">
         <table class="table table-striped table-hover table-responsive-sm">
-            <caption>搜尋結果</caption>
+            <caption>搜尋結果列表</caption>
             <thead class="thead-dark text-center">
                 <tr>
                     <th scope="col">違規編號</th>
@@ -114,26 +121,19 @@
     <link href="~/Content/MyStyle.css" rel="stylesheet" />
 }
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Scripts/dateFormat.js"></script>
-
 @section scripts{
     <script>
         $('#sorting button').click(function () {
             switch ($(this).attr('id')) {
                 case "sortByReport":
-                    //$('#byReport').removeClass('d-none');
                     if (!$('#byReport').hasClass('d-none'))
                         $('#byReport').addClass('d-none');
                     else
                         $('#byReport').removeClass('d-none');
                     $('#byAct').addClass('d-none');
-                    $('#byId').addClass('d-none');                    
+                    $('#byId').addClass('d-none');
                     break;
                 case "sortByAct":
-                    //$('#byAct').removeClass('d-none');
                     if (!$('#byAct').hasClass('d-none'))
                         $('#byAct').addClass('d-none');
                     else
@@ -142,7 +142,6 @@
                     $('#byId').addClass('d-none');
                     break;
                 case "sortById":
-                    //$('#byId').removeClass('d-none');
                     if (!$('#byId').hasClass('d-none'))
                         $('#byId').addClass('d-none');
                     else
@@ -151,7 +150,6 @@
                     $('#byReport').addClass('d-none');
                     break;
             };
-            
         });
 
         $('#searchById').click(function () {

@@ -22,12 +22,17 @@ namespace JoinFun.Controllers
         //登入
         public ActionResult Login(int? c)
         {
+
+            if (Session["memid"] != null) {
                 if (String.IsNullOrEmpty(Session["memid"].ToString()))
                     return View();
-                if (c==null)
+                if (c == null)
                     return View();
+            }
+                
             
                 return RedirectToAction("Index", "Activity");
+
         }
 
         [HttpPost]
@@ -69,14 +74,21 @@ namespace JoinFun.Controllers
 
             if (reader.Read())
             {
-                if (a.Approved == true)
+                if (a.Approved == true  )
                 {
+                    if (a.Suspend == false)
+                    {
+                        Session["memid"] = reader["memId"].ToString();
+                        Session["nick"] = a.memNick;
 
-                    Session["memid"] = reader["memId"].ToString();
-                    Session["nick"] = a.memNick;
-                    
 
-                    return RedirectToAction("Index", "Activity");
+                        return RedirectToAction("Index", "Activity");
+                    }
+                    else
+                    {
+                        ViewBag.LoginERR = "您的帳號被停權";
+                        return View();
+                    }
                 }
                 else
                 {
