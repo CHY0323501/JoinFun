@@ -51,13 +51,26 @@ body{
   
 }
 
-.bg_carousel {
-    height: 450px;
-    background-size: 100%;
-    background-position: 40% 40%;
-    background-repeat: no-repeat;
+
+@media(min-width:760px),scan {
+    .bg_carousel {
+        height: 260px;
+        background-size: 100%;
+        background-position: 40% 40%;
+        background-repeat: no-repeat;
+    }
 }
 
+
+
+@media(min-width:980px),scan {
+    .bg_carousel {
+        height: 400px;
+        background-size: 100%;
+        /*background-position: 40% 40%;*/
+        background-repeat: no-repeat;
+    }
+}
 #hotholder{
     border:1px solid blue;
 
@@ -122,6 +135,7 @@ body{
         display: inline-block;
         text-align: center;
         border-radius: 10px;
+        z-index:11;
     }
 }
 
@@ -421,4 +435,12 @@ font-weight:900;
 .btnbg {
 background-color:rgba(68, 87, 164, 0.85);
 border:0;
+}
+
+
+.indexsearch{
+
+    display:flex;
+   
+
 }
