@@ -51,13 +51,26 @@ body{
   
 }
 
-.bg_carousel {
-    height: 450px;
-    background-size: 100%;
-    background-position: 40% 40%;
-    background-repeat: no-repeat;
+
+@media(min-width:760px),scan {
+    .bg_carousel {
+        height: 260px;
+        background-size: 100%;
+        background-position: 40% 40%;
+        background-repeat: no-repeat;
+    }
 }
 
+
+
+@media(min-width:980px),scan {
+    .bg_carousel {
+        height: 400px;
+        background-size: 100%;
+        /*background-position: 40% 40%;*/
+        background-repeat: no-repeat;
+    }
+}
 #hotholder{
     border:1px solid blue;
 
@@ -96,9 +109,9 @@ body{
 /*篩選區*/
 #search{
     width:30px;
-    height:30px;
+    /*height:30px;*/
     color:#fff;
-    font-size:25px;
+    font-size:35px;
     position:absolute;
     top:454px;
     right:45px;
@@ -110,10 +123,59 @@ body{
     
    
 }
+@media(max-width:580px),scan {
+    .appearsearch {
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        right: 0px;
+        font-size: 1.5rem;
+        position: absolute;
+        background-color: rgba(172, 78, 78, 0.76);
+        display: inline-block;
+        text-align: center;
+        border-radius: 10px;
+        z-index:11;
+    }
+}
+
+@media(min-width:980px),scan {
+    .appearsearch {
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        top: 60px;
+        right:-200px;
+        font-size: 1.5rem;
+        position: absolute;
+        background-color: rgba(172, 78, 78, 0.76);
+        display: inline-block;
+        text-align: center;
+        border-radius: 10px;
+    }
+}
+
+@media(max-width:980px)and (min-width:580px),scan {
+    .appearsearch {
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        top:0px;
+        right: 0px;
+        font-size: 1.5rem;
+        position: absolute;
+        background-color: rgba(172, 78, 78, 0.76);
+        display: inline-block;
+        text-align: center;
+        border-radius: 10px;
+    }
+}
 #finalchoose{
-   
-    text-align:center;
-    position:relative;
+   margin-left:50%;
+   margin-top:10%;
+    /*text-align:center;*/
+    /*position:relative;*/
+    
 }
 
 .choice{
@@ -121,7 +183,12 @@ body{
     color:#3778bf;
     font-size:15px;
 }
-
+@media (max-width:580px),scan {
+    .sel {
+        width: 100%;
+        display: inline-block;
+    }
+}
 /*菜單*/
 
 a:hover, a:focus {
@@ -342,7 +409,38 @@ a:hover, a:focus {
 				
 .sub{
     font-size:5px;
-    color:#1f0808;
-    font-weight:300;
-    line-height:30px;
+    color:#fff;
+    font-weight:500;
+    
+}
+
+.s-title {
+color:#000;
+font-weight:900;
+
+}
+
+
+
+@media (max-width:960) and (min-width:720), scan {
+    #choosebtn {
+        width: 55px;
+        background-color:rgba(255, 139, 116, 0.7);
+    }
+
+}
+
+
+
+.btnbg {
+background-color:rgba(68, 87, 164, 0.85);
+border:0;
+}
+
+
+.indexsearch{
+
+    display:flex;
+   
+
 }

@@ -2,6 +2,15 @@
     list-style-type:none;
 }
 
+body{
+    width:100%;
+}
+.jb{
+    background-image:url('../Photos/detail/bg1.jpg');
+    background-size:contain;
+    margin-top:-20px;;
+}
+
 .title{
     color:#505050;
     font-size:40px;
@@ -36,11 +45,19 @@
     background-position:center center;
 }
 
-.center{
-    margin-left:25%;
-    margin-top:35px;
-
+#hash{
+color:rgba(48, 109, 160, 0.90);
+font-size:20px;
+text-align:left;
+margin-top:15px;
+  
 }
+
+/*.center{
+  
+    margin-top:2rem;
+
+}*/
 #tag>a{
     color:cornflowerblue;
 }
@@ -56,6 +73,7 @@
     overflow:auto;
     text-align:center;
     padding-right:45px;
+    width:100%;
 }
 
 #act_content1 {
@@ -114,10 +132,18 @@
     opacity:0.5;
 }
 
-#hostId{
-    font-size:25px;
-    color:rgba(48, 109, 160, 0.90);
-    font-weight:600;
-    text-decoration:none;
-   
+/*揪團主*/
+
+
+#hostid {
+    font-size: 1.5rem;
+    color: #2b938d;
+    text-shadow:2px 1px 2px pink;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+
+#memamount{
+    color:rgba(130, 61, 61, 0.88)
 }

@@ -30,7 +30,7 @@
 
                     <td scope="row">@i</td>
                     <td>@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = @item.memId }, "null")</td>
-                    <td> <img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" style="width:60px" /></td>
+                    <td> <img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" style="width:3rem" /></td>
 
                 </tr>
                 i++;

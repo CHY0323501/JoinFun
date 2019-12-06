@@ -124,32 +124,62 @@ namespace JoinFun.Controllers
 
         
 
-        public ActionResult Details(string actId, string memID, string actClassId)
+        public ActionResult Details(string actId/*,  string actClassId*/ /*string memID*/ )
         {
             if (actId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ViewBag.memID = memID;
-            ViewBag.actClassId = actClassId;
-            ViewBag.actId = actId;
-            //ViewBag.memID = memID;
-            ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
-            ActClass ACT = new ActClass()
-            {
-                vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
-                ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
-                MemberList = db.Member.Where(m => m.memId == memID).ToList(),
-                members = db.Member.ToList(),
-                MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
-                ActDetails=db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
 
-            };
-           
-            ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
-            ViewBag.allpic = db.Photos_of_Activities.ToList();
-            ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
-            return View(ACT);
+            string memID = Session["memid"].ToString();
+            if (Session["memid"].ToString() != null)
+            {
+
+                ViewBag.memID = memID;
+                //ViewBag.actClassId = actClassId;
+                ViewBag.actId = actId;
+                //ViewBag.memID = memID;
+                ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
+                ActClass ACT = new ActClass()
+                {
+                    vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
+                    ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
+                    MemberList = db.Member.Where(m => m.memId == memID).ToList(),
+                    members = db.Member.ToList(),
+                    MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
+                    ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
+
+                };
+
+                ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
+                ViewBag.allpic = db.Photos_of_Activities.ToList();
+                //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
+                ViewBag.defaultPic= db.Activity_Class.ToList();
+
+                return View(ACT);
+            }
+            else
+            {
+                ViewBag.actId = actId;
+                ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
+                ActClass ACT = new ActClass()
+                {
+                    vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
+                    ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
+                    //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
+                    members = db.Member.ToList(),
+                    MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
+                    ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
+
+                };
+
+                ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
+                ViewBag.allpic = db.Photos_of_Activities.ToList();
+                //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
+                return View(ACT);
+            }
+
+
         }
         //已參加會員
         public ActionResult MemJoin(string actId, string memID, string actClassId)
@@ -447,7 +477,7 @@ namespace JoinFun.Controllers
 
         public ActionResult Messages(string memID)
         {
-            var message = db.Notification.Where(m => m.ToMemId == memID).ToList();
+            var message = db.Notification.Where(m => m.ToMemId == memID).OrderByDescending(m => m.NotiSerial).ToList();
             return View(message);
         }
 

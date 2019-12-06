@@ -22,6 +22,7 @@ namespace JoinFun.Controllers
         //登入
         public ActionResult Login(int? c)
         {
+
             if (Session["memid"] != null) {
                 if (String.IsNullOrEmpty(Session["memid"].ToString()))
                     return View();
@@ -31,6 +32,7 @@ namespace JoinFun.Controllers
                 
             
                 return RedirectToAction("Index", "Activity");
+
         }
 
         [HttpPost]

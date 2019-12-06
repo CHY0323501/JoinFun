@@ -1,37 +1,76 @@
-﻿@model IEnumerable<JoinFun.Models.Member>
+﻿@model JoinFun.ViewModel.MemberInquireVM
 
 @{
     ViewBag.Title = "會員狀態管理";
 }
-@section CSS {
-    <link href="/CSS/ADMpagedlist.css" rel="stylesheet" />
-}
-
-<h2>會員狀態管理</h2>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.memNick)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.numViolate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Suspend)
-        </th>
-    </tr>
 
-    @*@foreach (var item in Model) {
+<h2 class="center text-warning">會員狀態管理</h2>
+
+<hr />
+@*@using (Html.BeginForm())
+{*@
+<form method="get" action="Inquire">
+    <p>
+        @Html.TextBox("searchString")
+        <input id="Submit1" type="submit" value="查詢" />
+    </p>
+</form>
+
+<form>
+    <table class="table">
+        <thead class="text-white w-25">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.numViolate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Suspend)
-                </td>
+                <th scope="col">會員編號</th>
+                <th scope="col">會員暱稱</th>
+                <th scope="col">違規次數</th>
+                <th scope="col">是否停權</th>
+                <th scope="col">停權天數</th>
+                <th scope="col">管理</th>
             </tr>
-        }*@
+        </thead>
 
-</table>
+
+        @foreach (var i in Model.Member)
+        {
+            //只顯示有違規且停權的人
+            if (i.numViolate != 0 || i.Suspend == true)
+            {
+                <tbody class="text-white">
+                    <tr>
+                        <td><a href="@Url.Action("Info", "Member", new { memID = i.memId })">@i.memId</a></td>
+                        <td>@i.memNick</td>
+                        <td>@i.numViolate 次</td>
+                        <td>@i.Suspend</td>
+                        <td>HAHA</td>
+
+
+                        <td>
+                            <a href="@Url.Action("InquireEdit", "Adm", new { memID = i.memId })" class="text-decoration-none btn btn-danger">編輯</a>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+            else
+            //顯示全部會員
+            {
+                <tbody class="text-white">
+                    <tr>
+                        <td>@i.memId</td>
+                        <td>@i.memNick</td>
+                        <td>@i.Suspend</td>
+                        <td>HAHA</td>
+                        <td>@i.numViolate 次</td>
+                        <td>
+                            <a href="@Url.Action("InquireEdit", "Adm", new { memID = i.memId })" class="text-decoration-none btn btn-info">編輯</a>
+
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        }
+
+    </table>
+</form>
+}
