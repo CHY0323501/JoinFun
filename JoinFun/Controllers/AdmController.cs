@@ -413,6 +413,28 @@ namespace JoinFun.Controllers
 
         }
         //修改違規紀錄
+
+        //public ActionResult InquireEdit(string memID)
+        //{
+        //    var vio = from a in db.Violation select a;
+
+
+
+        //    { 
+        //    MemberInquireVM edit = new MemberInquireVM()
+        //    {
+        //        Member = db.Member.Where(m => m.memId == memID).ToList(),
+        //        MemberRemark = db.Member_Remarks.Where(m => m.FromMemId == memID).ToList(),
+        //        MessageBoard = db.Message_Board.Where(m => m.memId == memID).ToList(),
+        //        Activity = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList(),
+        //        Violation = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList()
+        //    };
+        //    }
+        //    ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
+
+
+        //    return View(edit);
+
         public ActionResult InquireEdit(string memID="M000000003")
         {
             var activityVio = (from a in db.Join_Fun_Activities
@@ -449,6 +471,7 @@ namespace JoinFun.Controllers
 
             return View(edit);
 
+
         }
 
 
@@ -462,6 +485,153 @@ namespace JoinFun.Controllers
             };
             ViewBag.ID = Page;
             return View(manage);
+        }
+
+        public ActionResult SortByReport(string reportStart, string reportEnd)
+        {
+            if (reportStart != "" || reportEnd != "" || reportStart != null || reportEnd != null)
+            {
+                AdmView violation;
+                if (reportStart != "" && reportEnd != "")
+                {
+                    DateTime start = DateTime.Parse(reportStart);
+                    DateTime end = DateTime.Parse(reportEnd);
+                    violation = new AdmView()
+                    {
+                        violateList = db.Violation.Where(m => m.vioReportTime >= start && m.vioReportTime <= end).ToList(),
+                        memList = db.Member.ToList()
+                    };
+                }
+                else if (reportStart != "")
+                {
+                    DateTime start = DateTime.Parse(reportStart);
+                    violation = new AdmView()
+                    {
+                        violateList = db.Violation.Where(m => m.vioReportTime >= start).ToList(),
+                        memList = db.Member.ToList()
+                    };
+
+                }
+                else
+                {
+                    DateTime end = DateTime.Parse(reportEnd);
+                    violation = new AdmView()
+                    {
+                        violateList = db.Violation.Where(m => m.vioReportTime <= end).ToList(),
+                        memList = db.Member.ToList()
+                    };
+
+                }
+                return View(violation);
+            }
+            return RedirectToAction("AllViolations");
+        }
+
+        public ActionResult SortByAct(string actStart, string actEnd)
+        {
+            if (actStart != null || actEnd != null)
+            {
+                if (actStart == "" && actEnd == "")
+                {
+                    return View();
+                }
+                else
+                {
+                    AdmView violation;
+                    if (actStart != "" && actEnd != "")
+                    {
+                        DateTime start = DateTime.Parse(actStart);
+                        DateTime end = DateTime.Parse(actEnd);
+                        var act = db.Join_Fun_Activities.Where(m => m.actTime >= start && m.actTime <= end).ToList();
+                        if (act == null)
+                        {
+                            return View();
+                        }
+                        else
+                        {
+                            violation = new AdmView()
+                            {
+                                actList = db.Join_Fun_Activities.Where(m => m.actTime >= start && m.actTime <= end).ToList(),
+                                violateList = db.Violation.ToList(),
+                                memList = db.Member.ToList()
+                            };
+                        }
+                    }
+                    else if (actStart != "")
+                    {
+                        DateTime start = DateTime.Parse(actStart);
+                        var act = db.Join_Fun_Activities.Where(m => m.actTime >= start).ToList();
+                        if (act == null)
+                        {
+                            return View();
+                        }
+                        else
+                        {
+                            violation = new AdmView()
+                            {
+                                actList = db.Join_Fun_Activities.Where(m => m.actTime >= start).ToList(),
+                                violateList = db.Violation.ToList(),
+                                memList = db.Member.ToList()
+                            };
+                        }
+                    }
+                    else
+                    {
+                        DateTime end = DateTime.Parse(actEnd);
+                        var act = db.Join_Fun_Activities.Where(m => m.actTime <= end).ToList();
+                        if (act == null)
+                        {
+                            return View();
+                        }
+                        else
+                        {
+                            violation = new AdmView()
+                            {
+                                actList = db.Join_Fun_Activities.Where(m => m.actTime <= end).ToList(),
+                                violateList = db.Violation.ToList(),
+                                memList = db.Member.ToList()
+                            };
+                        }
+                    }
+                    return View(violation);
+                }
+            }
+            return RedirectToAction("AllViolations");
+        }
+
+        public ActionResult SortById(string actID)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                var member = db.Member.ToList();
+                Violation violation = db.Violation.Where(m => m.CorrespondingEventID == actID).FirstOrDefault();
+
+                if (violation == null)
+                    return HttpNotFound();
+                string name = "";
+                if (violation.FromAdmID != null)
+                    name = member.Where(m => m.memId == violation.FromAdmID).FirstOrDefault().memNick;
+                else if (violation.FromMemId != null)
+                    name = member.Where(m => m.memId == violation.FromMemId).FirstOrDefault().memNick;
+                string condition = "";
+                if (violation.vioProcessTime == null)
+                    condition = "未處理";
+                else if (violation.vioProcessTime != null)
+                    condition = "已處理";
+                var data = new
+                {
+                    id = violation.vioId,
+                    name,
+                    type = violation.CorrespondingEventID,
+                    title = violation.vioTitle,
+                    vioTime = violation.vioReportTime,
+                    condition
+                };
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+
+            return View();
         }
 
         //依分類顯示管理的違規項目
@@ -655,43 +825,18 @@ namespace JoinFun.Controllers
             //return Json(true, JsonRequestBehavior.AllowGet);
 
         }
-        //[HttpPost]
-        //public ActionResult ActManage(string[] actId, bool[] keepAct, int page = 1)
-        //{
-        //    string id = "";
-        //    for (var i = 0; i < actId.Length; i++) {
-        //        id = actId[i];
-        //        var changeact = db.Join_Fun_Activities.Where(m => m.actId == id).FirstOrDefault();
-        //        changeact.keepAct = keepAct[i];
-        //        db.SaveChanges();
-        //    }
-
-
-        //    var actdetail = db.Join_Fun_Activities.ToList();
-
-        //    int pagesize = 8;
-        //    int pagecurrent = page < 1 ? 1 : page;
-        //    var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
-        //    return View(pagedlist);
-        //}
-
-
         [HttpPost]
-        public ActionResult ActManage(bool[] keepAct, string[] actId, int page = 1)
+        public ActionResult ActManage(string[] actId, bool[] keepAct, int page = 1)
         {
-            //db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct = joinkeep.keepAct;
-            if(keepAct.Length > 0)
+            string id = "";
+            for (var i = 0; i < actId.Length; i++)
             {
-                for(int i=0; i<keepAct.Length; i++)
-                {
-                    var id = actId[i];
-                    var act = db.Join_Fun_Activities.Find(id);
-                    act.keepAct = keepAct[i];
-                    db.SaveChanges();
-                }
+                id = actId[i];
+                var changeact = db.Join_Fun_Activities.Where(m => m.actId == id).FirstOrDefault();
+                changeact.keepAct = keepAct[i];
+                db.SaveChanges();
             }
-            //db.SaveChanges();
-            //var result = db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct;
+
 
             var actdetail = db.Join_Fun_Activities.ToList();
 
@@ -700,6 +845,32 @@ namespace JoinFun.Controllers
             var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
             return View(pagedlist);
         }
+
+
+        //[HttpPost]
+        //public ActionResult ActManage(bool[] keepAct, string[] actId, int page = 1)
+        //{
+        //    //db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct = joinkeep.keepAct;
+        //    if(keepAct.Length > 0)
+        //    {
+        //        for(int i=0; i<keepAct.Length; i++)
+        //        {
+        //            var id = actId[i];
+        //            var act = db.Join_Fun_Activities.Find(id);
+        //            act.keepAct = keepAct[i];
+        //            db.SaveChanges();
+        //        }
+        //    }
+        //db.SaveChanges();
+        //var result = db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct;
+
+        //var actdetail = db.Join_Fun_Activities.ToList();
+
+        //    int pagesize = 8;
+        //    int pagecurrent = page < 1 ? 1 : page;
+        //    var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
+        //    return View(pagedlist);
+        //}
 
 
         public void DeleteAct(string actid) {

@@ -11,7 +11,7 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
     Session["memid"] = "M000000002";
     int i = 0;
-    string actidqq;
+   
     bool keepact;
 }
 
@@ -63,21 +63,32 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.actTopic)
-                </td>
+                @*</td>*@
 
 
-                @*<input id="Checkbox1" type="checkbox" />*@
-            <td id="checkOne">
-
-                @*@Html.CheckBoxFor(modelitem => item.keepAct,new {Value=item.keepAct })*@
-
-                <input type="checkbox" name="keepAct" class="check" />
-                @*@(keepact = item.keepAct)*@
-                <p class="sos">@item.keepAct</p>
-                <input id="@i" type="hidden" value="@item.actId" name="actId" />
-                @*<input class="check1" type="hidden" value="@item.keepAct" />*@
                
-            </td>
+                <td id="checkOne">
+
+                    @*@Html.CheckBoxFor(modelitem => item.keepAct,new {Value=item.keepAct })*@
+                    @if (item.keepAct == true)
+                    {   
+                        
+                        <input type="checkbox" name="keepAct" class="check" checked value="true" />
+                        <input type="hidden" name="keepAct" class="check" value="false" />
+                        
+                    }
+                    else
+                    {  <input type="hidden" name="keepAct" class="check" value="false" />
+                        <input type="checkbox" name="keepAct" class="check" value="false" />
+                        
+                    }
+
+                    @*@(keepact = item.keepAct)*@
+                    @*<p class="sos">@item.keepAct</p>*@
+                    <input id="@i" type="hidden" value="@item.actId" name="actId" />
+                    @*<input class="check1" type="hidden" value="@item.keepAct" />*@
+
+                </td>
 
                 <td>
                     @Html.DisplayFor(modelItem => item.Activity_Class.actClassName)
@@ -114,22 +125,10 @@
 
 @section actscripts{
     <script>
-          Array arr = new Array();
-        $("document").ready(function () {
-            for (var i = 0; i < 8; i++) {
-            console.log($('.sos').text())
-
-                $(".sos").each(function () {
-
-                    arr.push($(this).attr("data"));
-
-
-                })/*("checked", $('.sos').text())*/
-            }
-        })
+      
         
 
-        window.onload = sos;
+        //window.onload = sos;
         @*var check = $('#checkBox').text();
         $(".iskeep").change(function () {
             console.log(check);
@@ -152,26 +151,18 @@
 
         })*@
 
-        function sos() {
-            if ($(".sos").text() == "True") {
-                $(".check").attr("checked", true);
-            } else {
-                 $(".check").attr("checked", false);
-            }
-
-
-        }
+       
 
 
 
 
 
-        function Ischeck() {
-        if ($(".check1").val() == true) {
-            console.log("5555")
-            $(".check").attr("checked", true);
-        }
-        }
+        //function Ischeck() {
+        //if ($(".check1").val() == true) {
+        //    console.log("5555")
+        //    $(".check").attr("checked", true);
+        //}
+        //}
 
         $('#checkOne input[type="checkbox"]').click(function () {
             if ($(this).prop("checked"))

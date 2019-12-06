@@ -257,17 +257,18 @@
                                     <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("Inquire","Adm")"><span class="fas fa-user-alt icon-size "></span>　會員狀態查詢</a>
                                 </li>
                                 <li class="nav-item mt-1 pl-4">
-                                    <a class="nav-link hvr-underline-from-center nav-font" href="#"><span class="fas fa-glass-cheers icon-size" style="width:20px"></span>　揪團管理</a>
+                                    <a class="nav-link hvr-underline-from-center nav-font" href="@Url.Action("ActManage","Adm")"><span class="fas fa-glass-cheers icon-size" style="width:20px"></span>　揪團管理</a>
                                 </li>
-                                <li class="nav-item mt-1 pl-4">
+                                <li class="nav-item mt-1 pl-0">
                                     @*<a class="nav-link nav-font " href="#" id="VioDrop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
-            <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop">
-                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a>
-                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a>
-                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a>
-                <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a>
-            </div>*@
-                                    <a href="#" class="nav-link nav-font vioBtn pb-0"><span class="fas fa-exclamation-circle icon-size"></span>　檢舉管理</a>
+        <div class="dropdown-menu bg-transparent border-0 text-center " aria-labelledby="VioDrop">
+            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 會員檢舉　</a>
+            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 評價檢舉　</a>
+            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 揪團檢舉　</a>
+            <a class="text-decoration-none nav-drop-font  hvr-underline-from-center mb-2 pb-1" href="#"><i class="fas fa-arrow-circle-right icon-size"></i> 留言板檢舉</a>
+        </div>*@
+                                    <a style="position:relative;float:left;line-height:48px;width:30px" class="pl-0 vioBtn pr-0"><span class="fas fa-caret-right icon-size pl-0 pr-0 text-light"></span> </a>
+                                    <a href="@Url.Action("AllViolations", "Adm")" class="nav-link nav-font pb-0 pl-0"><span class="fas fa-exclamation-circle icon-size pl-0"></span>　檢舉管理</a>
                                     @if (!"ManageViolations".Equals(ViewContext.RouteData.Values["Action"].ToString()))
                                     {
                                         <div class="bg-transparent border-0" id="vioArea" style="display:none">
@@ -344,12 +345,14 @@
     @RenderSection("actscripts",required:false)
     <script>
         $('.vioBtn').click(function () {
-            if ($('#vioArea').css('display') == 'none') {
-                $('#vioArea').show();
-            } else {
-                $('#vioArea').hide();
-            }
-        });
+                if ($('#vioArea').css('display') == 'none') {
+                    $('#vioArea').show();
+                    $('.vioBtn span').removeClass('fa-caret-right').addClass('fa-caret-down');
+                } else {
+                    $('#vioArea').hide();
+                    $('.vioBtn span').removeClass('fa-caret-down').addClass('fa-caret-right');
+                }
+            });
         $('.feedBtn').click(function () {
             if ($('#feedback').css('display') == 'none') {
                 $('#feedback').show();

@@ -141,9 +141,7 @@
     <Content Include="Content\MyStyle.css" />
     <Content Include="Content\pgwslideshow.css" />
     <Content Include="Content\Site.css" />
-
     <Content Include="CSS\ActManage.css" />
-
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -185,7 +183,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-
     <Content Include="CSS\ADMpagedlist.css" />
     <Content Include="CSS\ADM_login.css" />
     <Content Include="CSS\bootstrap-datetimepicker.css" />
@@ -265,6 +262,7 @@
     <Content Include="Photos\Activities\P000000004A000000014.jpg" />
     <Content Include="Photos\Activities\枕頭山.jpg" />
     <Content Include="Photos\banner\bg.png" />
+    <Content Include="Photos\banner\christmas.png" />
     <Content Include="Photos\banner\Join Fun %281%29.png" />
     <Content Include="Photos\banner\Join Fun.png" />
     <Content Include="Photos\banner\Just Do It.png" />
@@ -1053,9 +1051,7 @@
     <Content Include="Views\Adm\_Post.cshtml" />
     <Content Include="Views\Member\ActCheck.cshtml" />
     <Content Include="Views\Adm\PostEdit.cshtml" />
-
     <Content Include="Views\Adm\ActManage.cshtml" />
-
     <Content Include="Views\Adm\PostCreate.cshtml" />
     <Content Include="Views\Info\Post.cshtml" />
     <Content Include="Views\Info\_Post.cshtml" />
@@ -1069,6 +1065,8 @@
     <Content Include="Views\Adm\FeedBackReply.cshtml" />
     <Content Include="Views\Adm\AllViolations.cshtml" />
     <Content Include="Views\Adm\InquireEdit.cshtml" />
+    <Content Include="Views\Adm\SortByAct.cshtml" />
+    <Content Include="Views\Adm\SortByReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
