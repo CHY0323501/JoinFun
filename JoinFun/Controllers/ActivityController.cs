@@ -289,8 +289,9 @@ namespace JoinFun.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-          
-            var searchResult = db.vw_Activities.Where(m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword)).ToList();
+            var searchkeep=db.vw_Activities.Where(m => m.keepAct == true);
+            var searchResult = searchkeep.Where((m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword))).ToList();
+            
             Finalchoose fc2 = new Finalchoose()
             {
                 vwActList = searchResult.ToList(),

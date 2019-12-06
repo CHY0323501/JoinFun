@@ -437,7 +437,7 @@
                     traditional: true,
                     data: { MemID: $("#mem").val(), actId: $('#JoinId').val() },
                     success: function () {
-
+                        CheckMemJoin();
                         alert("已成功取消");
                     }
                 });
@@ -450,7 +450,7 @@
                     traditional: true,
                     data: { MemID: $("#mem").val(), actId: $('#JoinId').val() },
                     success: function () {
-
+                        CheckMemJoin();
                         alert("已成功退出");
                     }
                 });
