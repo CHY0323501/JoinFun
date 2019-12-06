@@ -321,7 +321,7 @@ namespace JoinFun.Controllers
             //呼叫Sql系統函數GetActId()取得新增的活動ID
             string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
             act.actId = actId;
-            act.hostId = "M000000003";//Session["memId"].ToString();
+            act.hostId = Session["memId"].ToString();
             //將Dropdown List的值取回 ---start--- 
             act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
             //將Dropdown List的值取回 ---end--- 
