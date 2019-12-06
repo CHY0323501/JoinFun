@@ -489,40 +489,43 @@ namespace JoinFun.Controllers
 
         public ActionResult SortByReport(string reportStart, string reportEnd)
         {
-            if (reportStart != "" || reportEnd != "" || reportStart != null || reportEnd != null)
+            if(reportStart != null || reportEnd != null)
             {
-                AdmView violation;
-                if (reportStart != "" && reportEnd != "")
+                if (reportStart != "" || reportEnd != "")
                 {
-                    DateTime start = DateTime.Parse(reportStart);
-                    DateTime end = DateTime.Parse(reportEnd);
-                    violation = new AdmView()
+                    AdmView violation;
+                    if (reportStart != "" && reportEnd != "")
                     {
-                        violateList = db.Violation.Where(m => m.vioReportTime >= start && m.vioReportTime <= end).ToList(),
-                        memList = db.Member.ToList()
-                    };
-                }
-                else if (reportStart != "")
-                {
-                    DateTime start = DateTime.Parse(reportStart);
-                    violation = new AdmView()
+                        DateTime start = DateTime.Parse(reportStart);
+                        DateTime end = DateTime.Parse(reportEnd);
+                        violation = new AdmView()
+                        {
+                            violateList = db.Violation.Where(m => m.vioReportTime >= start && m.vioReportTime <= end).ToList(),
+                            memList = db.Member.ToList()
+                        };
+                    }
+                    else if (reportStart != "")
                     {
-                        violateList = db.Violation.Where(m => m.vioReportTime >= start).ToList(),
-                        memList = db.Member.ToList()
-                    };
+                        DateTime start = DateTime.Parse(reportStart);
+                        violation = new AdmView()
+                        {
+                            violateList = db.Violation.Where(m => m.vioReportTime >= start).ToList(),
+                            memList = db.Member.ToList()
+                        };
 
-                }
-                else
-                {
-                    DateTime end = DateTime.Parse(reportEnd);
-                    violation = new AdmView()
+                    }
+                    else
                     {
-                        violateList = db.Violation.Where(m => m.vioReportTime <= end).ToList(),
-                        memList = db.Member.ToList()
-                    };
+                        DateTime end = DateTime.Parse(reportEnd);
+                        violation = new AdmView()
+                        {
+                            violateList = db.Violation.Where(m => m.vioReportTime <= end).ToList(),
+                            memList = db.Member.ToList()
+                        };
 
-                }
-                return View(violation);
+                    }
+                    return View(violation);
+                }                
             }
             return RedirectToAction("AllViolations");
         }

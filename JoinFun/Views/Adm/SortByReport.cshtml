@@ -126,17 +126,26 @@
         $('#sorting button').click(function () {
             switch ($(this).attr('id')) {
                 case "sortByReport":
-                    $('#byReport').removeClass('d-none');
+                    if (!$('#byReport').hasClass('d-none'))
+                        $('#byReport').addClass('d-none');
+                    else
+                        $('#byReport').removeClass('d-none');
                     $('#byAct').addClass('d-none');
                     $('#byId').addClass('d-none');
                     break;
                 case "sortByAct":
-                    $('#byAct').removeClass('d-none');
+                    if (!$('#byAct').hasClass('d-none'))
+                        $('#byAct').addClass('d-none');
+                    else
+                        $('#byAct').removeClass('d-none');
                     $('#byReport').addClass('d-none');
                     $('#byId').addClass('d-none');
                     break;
                 case "sortById":
-                    $('#byId').removeClass('d-none');
+                    if (!$('#byId').hasClass('d-none'))
+                        $('#byId').addClass('d-none');
+                    else
+                        $('#byId').removeClass('d-none');
                     $('#byAct').addClass('d-none');
                     $('#byReport').addClass('d-none');
                     break;
