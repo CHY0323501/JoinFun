@@ -74,7 +74,7 @@ namespace JoinFun.Controllers
 
             if (reader.Read())
             {
-                if (a.Approved == true)
+                if (a.Approved == true && a.Suspend==false)
                 {
 
                     Session["memid"] = reader["memId"].ToString();
