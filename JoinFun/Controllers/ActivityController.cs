@@ -46,8 +46,8 @@ namespace JoinFun.Controllers
             //ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
             Finalchoose fc = new Finalchoose()
             {   
-                vwActList = db.vw_Activities.Where(m => m.keepAct == true).ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList(),
+                vwActList = db.vw_Activities.Where(m => m.keepAct == true).OrderByDescending(m => m.actId).ToList(),
+                joinfunlist = db.Join_Fun_Activities.OrderByDescending(m => m.actId).ToList(),
                 post=db.Post.Where(m=>m.ShowInCarousel==true).OrderByDescending(m=>m.postSerial).Take(1).ToList()
             };
             GetSelectList();
@@ -289,8 +289,9 @@ namespace JoinFun.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-          
-            var searchResult = db.vw_Activities.Where(m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword)).ToList();
+            var searchkeep=db.vw_Activities.Where(m => m.keepAct == true);
+            var searchResult = searchkeep.Where((m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword))).ToList();
+            
             Finalchoose fc2 = new Finalchoose()
             {
                 vwActList = searchResult.ToList(),
@@ -321,7 +322,7 @@ namespace JoinFun.Controllers
             //呼叫Sql系統函數GetActId()取得新增的活動ID
             string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
             act.actId = actId;
-            act.hostId = "M000000003";//Session["memId"].ToString();
+            act.hostId = Session["memId"].ToString();
             //將Dropdown List的值取回 ---start--- 
             act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
             //將Dropdown List的值取回 ---end--- 

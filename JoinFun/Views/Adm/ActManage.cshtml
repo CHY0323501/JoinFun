@@ -73,13 +73,13 @@
                     @if (item.keepAct == true)
                     {   
                         
-                        <input type="checkbox" name="keepAct" class="check" checked value="true" />
-                        <input type="hidden" name="keepAct" class="check" value="false" />
+                        <input type="checkbox" class="check" checked value="@item.actId"/>
+                        <input id="@item.actId" type="hidden" name="keepAct" class="check" value="true" />
                         
                     }
                     else
-                    {  <input type="hidden" name="keepAct" class="check" value="false" />
-                        <input type="checkbox" name="keepAct" class="check" value="false" />
+                    {  <input id="@item.actId" name="keepAct" type="hidden" class="check" value="false" />
+                        <input type="checkbox" class="check" value="@item.actId"/>
                         
                     }
 
@@ -165,10 +165,11 @@
         //}
 
         $('#checkOne input[type="checkbox"]').click(function () {
+            var id = $(this).val();
             if ($(this).prop("checked"))
-                $(this).val(true);
+                $('#'+id).val(true);
             else
-                $(this).val(false);
+                $('#'+id).val(false);
         });
 
         //})
