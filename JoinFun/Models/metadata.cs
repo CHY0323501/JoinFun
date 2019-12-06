@@ -138,6 +138,9 @@ namespace JoinFun.Models
     {
         [DisplayName("活動編號")]
         public string actId { get; set; }
+        [DisplayName("活動類別編號")]
+        [Required(ErrorMessage = "請選擇活動類別")]
+        public string actClassId { get; set; }
         [DisplayName("主辦人會員編號")]
         public string hostId { get; set; }
         [DisplayName("活動主題")]
@@ -164,7 +167,8 @@ namespace JoinFun.Models
         [Required(ErrorMessage = "必須輸入活動地址")]
         [DisplayName("鄉/鎮/市/區")]
         public short actDistrict { get; set; }
-        [DisplayName("路名")]
+        [DisplayName("活動地點")]
+        [Required(ErrorMessage = "請輸入活動地點")]
         public string actRoad { get; set; }
         [DisplayName("付款方式")]
         public string paymentTerm { get; set; }
@@ -178,9 +182,7 @@ namespace JoinFun.Models
         [Required(ErrorMessage = "請輸入截止時間")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public System.DateTime actDeadline { get; set; }
-        [DisplayName("活動類別編號")]
-        public string actClassId { get; set; }
+        public System.DateTime actDeadline { get; set; }        
         [JsonIgnore()]
         public virtual ICollection<Activity_Details> Activity_Details { get; set; }
 
