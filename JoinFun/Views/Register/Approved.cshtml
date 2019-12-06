@@ -34,30 +34,28 @@
 
 
 @section scripts{
-    @*<script src="~/sweetalert-master/docs/assets/sweetalert/sweetalert.min.js"></script>*@
+    
     <script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
-    @*<script src="~/reveal/jquery.reveal.js"></script>*@
+   
    
     <script>
         $(document).ready(function () {
             swal({
                 title: "認證成功！",
-                text: "點及登入頁使用其功能",
+                text: "點擊登入頁使用其功能",
                 type: "success",
                 confirmButtonText: "關閉",
             })
-            //    .then(function () {
-            //    $(".confirm").on('click', function () {
-
-            //        window.location.href = "https://blog.miniasp.com/post/2009/03/25/location-href-and-location-replace-in-practice";
-
-            //    });
-            //});
-
+          
+            $('button').click(function () {
+                
+            window.location.href = "http://localhost:54129/Login/Login?c=1";
+            
+        })
 
         });
 
-
+        
 
 
     </script>

@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="row mt-3 mr-4">
-                        <h5 class="text-danger">@ViewBag.LoginErr</h5>
+                        <h5 style="color:#ffb0b7">@ViewBag.LoginErr</h5>
                     </div>
 
                     <div class="col-md-12  ml-4 mt-3">
@@ -141,7 +141,11 @@
         //判斷fb登入的使用者是否已完成註冊
     function checkIsMember(sid,email) {
         window.location.href = "@Url.Action("FbLogin","Login")" +"?ID="+ sid + "&email=" + email;
-    }
+        }
+
+        
+
+
     </script>
 
 }

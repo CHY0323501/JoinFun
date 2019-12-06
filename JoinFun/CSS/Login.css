@@ -12,7 +12,7 @@ body {
     /*top: 70px;*/
     /*position: relative;*/
     padding-top: 60px;
-    overflow-y: hidden;
+   
 }
 
 
@@ -120,4 +120,20 @@ footer {
    background-size:cover;
    background-position:center;
    position:relative;
+}
+
+
+.ForgetPwd-box {
+    width: 420px;
+    height: 500px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    top: 270px;
+    left: 49%;
+    bottom: auto;
+    position: relative;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    box-shadow: 5px 5px 12px 4px rgba(20%,20%,40%,0.5);
+    border-radius: 10px;
 }
