@@ -731,7 +731,7 @@ namespace JoinFun.Controllers
                                 "因您已嚴重違反Join Fun網站規定，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
                         break;
                 }
-                return RedirectToAction("ManageViolations");
+                return RedirectToAction("AllViolations");
             }
             var evtID = db.Violation.Where(m => m.vioId == vioID).FirstOrDefault().CorrespondingEventID;
             var member = db.Member.ToList();

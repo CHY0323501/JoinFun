@@ -78,7 +78,17 @@
                 {
                     <span>留言板編號：</span>
                     <a href="@Url.Action("Details", "Activity", new { actId = Model.actList.Where(m=>m.actId == ActID).FirstOrDefault().actId, memID = Model.mboardList.Where(m=>m.mboardSerial == evtID).FirstOrDefault().memId, actClassId = Model.actList.Where(m=>m.actId == ActID).FirstOrDefault().actClassId})">@Model.violateList.FirstOrDefault().CorrespondingEventID</a>
-                    <button type="button" class="btn btn-warning pull-right" id="hideMessage">隱藏留言</button>
+                    foreach (var item in Model.mboardList.Where(m => m.mboardSerial == evtID))
+                    {
+                        if (item.keepMboard == true)
+                        {
+                            <button type="button" class="btn btn-warning pull-right" id="hideMessage">隱藏留言</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-default pull-right" id="hideMessage" disabled>留言已隱藏</button>
+                        }
+                    }
                     <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
                     <input id="commentID" name="commentID" type="hidden" value="@Model.mboardList.FirstOrDefault().mboardSerial" />
                     <input id="memID" name="memID" type="hidden" value="@Model.mboardList.Where(m=>m.mboardSerial == evtID).FirstOrDefault().memId" />
