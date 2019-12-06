@@ -216,7 +216,9 @@ namespace JoinFun.Controllers
             {
                 if (acc.Account == account && db.Member.Where(m => m.memId == db.Acc_Pass.Where(c => c.Account == account).FirstOrDefault().memId).FirstOrDefault().Email == email)
                 {
+
                     string getEmailID = db.Member.Where(M=>M.memId== db.Acc_Pass.Where(a => a.Account == account).FirstOrDefault().memId).FirstOrDefault().email_ID;
+
                     MessageCenter mes = new MessageCenter();
                     List<string> mailList = new List<string>() { db.Member.Where(m => m.memId == db.Acc_Pass.Where(b => b.Account == account).FirstOrDefault().memId).FirstOrDefault().Email };
                     mes.SendEmail(mailList, "JoinFun權益通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' style='width:25 %'><h2>親愛的會員:</h2></br><h2>請點擊下面連結來重置您的密碼!</h2></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + getEmailID + "'><h2>重置密碼請點擊</h2></a></br>");
