@@ -46,8 +46,8 @@ namespace JoinFun.Controllers
             //ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
             Finalchoose fc = new Finalchoose()
             {   
-                vwActList = db.vw_Activities.Where(m => m.keepAct == true).ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList(),
+                vwActList = db.vw_Activities.Where(m => m.keepAct == true).OrderByDescending(m => m.actId).ToList(),
+                joinfunlist = db.Join_Fun_Activities.OrderByDescending(m => m.actId).ToList(),
                 post=db.Post.Where(m=>m.ShowInCarousel==true).OrderByDescending(m=>m.postSerial).Take(1).ToList()
             };
             GetSelectList();
