@@ -12,20 +12,16 @@
     <button type="button" class="btn btn-outline-primary" id="sortById">依揪團編號</button>
 </div>
 <div class="row d-none ml-1" id="byReport">
-    <form method="get" action="@Url.Action("SortByReport")" class="col-md-8">
-        <label class="row" style="line-height:30pt">
-            檢舉時間：<input id="reportStart" name="reportStart" type="datetime-local" class="form-control col-md-3" />　至　<input id="reportEnd" name="reportEnd" type="datetime-local" class="form-control col-md-3" />
-            <input id="searchByReport" type="submit" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
-        </label>
-    </form>
+    <label class="row" style="line-height:30pt">
+        檢舉時間：<input id="reportStart" name="reportStart" type="datetime-local" class="form-control col-md-4" />　至　<input id="reportEnd" name="reportEnd" type="datetime-local" class="form-control col-md-4" />
+        <input id="searchByReport" type="button" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
+    </label>
 </div>
 <div class="row d-none ml-1" id="byAct">
-    <form method="get" action="@Url.Action("SortByAct")" class="col-md-8">
-        <label class="row" style="line-height:30pt">
-            揪團時間：<input id="actStart" name="actStart" type="datetime-local" class="form-control col-md-3" />　至　<input id="actEnd" name="actEnd" type="datetime-local" class="form-control col-md-3" />
-            <input id="searchByAct" type="submit" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
-        </label>
-    </form>
+    <label class="row" style="line-height:30pt">
+        揪團時間：<input id="actStart" name="actStart" type="datetime-local" class="form-control col-md-4" />　至　<input id="actEnd" name="actEnd" type="datetime-local" class="form-control col-md-4" />
+        <input id="searchByAct" type="button" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
+    </label>
 </div>
 <div class="row d-none ml-1" id="byId">
     <label class="row col-md-8" style="line-height:30pt">
@@ -130,7 +126,10 @@
                     else
                         $('#byReport').removeClass('d-none');
                     $('#byAct').addClass('d-none');
-                    $('#byId').addClass('d-none');                    
+                    $('#byId').addClass('d-none');
+                    $('#actID').val("");
+                    $('#actStart').val('');
+                    $('#actEnd').val('');
                     break;
                 case "sortByAct":
                     //$('#byAct').removeClass('d-none');
@@ -140,6 +139,9 @@
                         $('#byAct').removeClass('d-none');
                     $('#byReport').addClass('d-none');
                     $('#byId').addClass('d-none');
+                    $('#actID').val("");
+                    $('#reportStart').val('');
+                    $('#reportEnd').val('');
                     break;
                 case "sortById":
                     //$('#byId').removeClass('d-none');
@@ -149,24 +151,72 @@
                         $('#byId').removeClass('d-none');
                     $('#byAct').addClass('d-none');
                     $('#byReport').addClass('d-none');
+                    $('#reportStart').val('');
+                    $('#reportEnd').val('');
+                    $('#actStart').val('');
+                    $('#actEnd').val('');
                     break;
             };
-            
+
         });
 
-        $('#searchById').click(function () {
-            console.log($('#actID').val());
+        $('#searchByReport').click(function () {            
+            $.ajax({
+                url: "@Url.Action("SortByReport","Adm")",
+                type: "get",
+                data: { reportStart: $('#reportStart').val(), reportEnd: $('#reportEnd').val() },
+                dataType: "Json",
+                success: function (data) {
+                    $('#sortList tbody').remove();
+                    $('#allList').removeClass('active');
+                    $('#sortList').addClass('active');
+                    $.each(data, function (key, value) {
+                        $('#sortList table').append(`<tbody class="text-center text-light"><td>${value.id}</td><td>${value.name}</td><td>${value.type}</td><td><a href='/Adm/ViolationContent?vioID=${value.id}&eventID=${value.type}&Page=allList'>${value.title}</a></td><td>${$.format.toBrowserTimeZone((new Date(parseInt(value.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td> <td>${value.condition}</td></tbody >`);
+                    });
+                    $('#sortList caption').text('搜尋檢舉時間結果');
+                },
+                error: function () {
+                    alert("搜尋失敗");
+                }
+            });            
+        });
+
+        $('#searchByAct').click(function () {            
+            $.ajax({
+                url: "@Url.Action("SortByAct","Adm")",
+                type: "get",
+                data: { actStart: $('#actStart').val(), actEnd: $('#actEnd').val() },
+                dataType: "Json",
+                success: function (data) {
+                    $('#sortList tbody').remove();
+                    $('#allList').removeClass('active');
+                    $('#sortList').addClass('active');
+                    $.each(data, function (key, value) {
+                        $('#sortList table').append(`<tbody class="text-center text-light"><td>${value.id}</td><td>${value.name}</td><td>${value.type}</td><td><a href='/Adm/ViolationContent?vioID=${value.id}&eventID=${value.type}&Page=allList'>${value.title}</a></td><td>${$.format.toBrowserTimeZone((new Date(parseInt(value.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td> <td>${value.condition}</td></tbody >`);
+                    });
+                    $('#sortList caption').text('搜尋活動時間結果');
+                },
+                error: function () {
+                    alert("搜尋失敗");
+                }
+            });
+        });
+
+
+        $('#searchById').click(function () {            
             $.ajax({
                 url: "@Url.Action("SortById","Adm")",
-                type: "post",
+                type: "get",
                 data: { actID: $('#actID').val() },
                 dataType: "Json",
                 success: function (data) {
-                    console.log(data);
+                    $('#sortList tbody').remove();
                     $('#allList').removeClass('active');
                     $('#sortList').addClass('active');
-                    $('#sortList table').append(`<tbody class="text-center text-light"><td>${data.id}</td><td>${data.name}</td><td>${data.type}</td><td><a href='/Adm/ViolationContent?vioID=${data.id}&eventID=${data.type}&Page=allList'>${data.title}</a></td><td>${$.format.toBrowserTimeZone((new Date(parseInt(data.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td> <td>${data.condition}</td></tbody >`);
-                    $('#actID').val("");
+                    $.each(data, function (key, value) {
+                        $('#sortList table').append(`<tbody class="text-center text-light"><td>${value.id}</td><td>${value.name}</td><td>${value.type}</td><td><a href='/Adm/ViolationContent?vioID=${value.id}&eventID=${value.type}&Page=allList'>${value.title}</a></td><td>${$.format.toBrowserTimeZone((new Date(parseInt(value.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td> <td>${value.condition}</td></tbody >`);
+                    });
+                    $('#sortList caption').text('搜尋活動編號結果');
                 },
                 error: function () {
                     alert("搜尋失敗");

@@ -481,160 +481,246 @@ namespace JoinFun.Controllers
             AdmView manage = new AdmView()
             {
                 violateList = db.Violation.ToList(),
-                memList = db.Member.ToList()
+                memList = db.Member.ToList(),
+                admin = db.Administrator.ToList()
             };
-            ViewBag.ID = Page;
             return View(manage);
         }
 
         public ActionResult SortByReport(string reportStart, string reportEnd)
         {
-            if(reportStart != null || reportEnd != null)
+            List<Object> list = new List<object>();
+            var member = db.Member.ToList();
+            var administrator = db.Administrator.ToList();
+            dynamic data = null;
+            if (reportStart != "" && reportEnd != "")
             {
-                if (reportStart != "" || reportEnd != "")
+                DateTime start = DateTime.Parse(reportStart);
+                DateTime end = DateTime.Parse(reportEnd);
+
+                var violation = db.Violation.Where(m => m.vioReportTime >= start && m.vioReportTime <= end).ToList();
+                foreach (var item in violation)
                 {
-                    AdmView violation;
-                    if (reportStart != "" && reportEnd != "")
+                    string name = "";
+                    if (item.FromAdmID != null)
+                        name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                    else if (item.FromMemId != null)
+                        name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                    string condition = "";
+                    if (item.vioProcessTime == null)
+                        condition = "未處理";
+                    else if (item.vioProcessTime != null)
+                        condition = "已處理";
+                    data = new
                     {
-                        DateTime start = DateTime.Parse(reportStart);
-                        DateTime end = DateTime.Parse(reportEnd);
-                        violation = new AdmView()
-                        {
-                            violateList = db.Violation.Where(m => m.vioReportTime >= start && m.vioReportTime <= end).ToList(),
-                            memList = db.Member.ToList()
-                        };
-                    }
-                    else if (reportStart != "")
-                    {
-                        DateTime start = DateTime.Parse(reportStart);
-                        violation = new AdmView()
-                        {
-                            violateList = db.Violation.Where(m => m.vioReportTime >= start).ToList(),
-                            memList = db.Member.ToList()
-                        };
-
-                    }
-                    else
-                    {
-                        DateTime end = DateTime.Parse(reportEnd);
-                        violation = new AdmView()
-                        {
-                            violateList = db.Violation.Where(m => m.vioReportTime <= end).ToList(),
-                            memList = db.Member.ToList()
-                        };
-
-                    }
-                    return View(violation);
-                }                
+                        id = item.vioId,
+                        name,
+                        type = item.CorrespondingEventID,
+                        title = item.vioTitle,
+                        vioTime = item.vioReportTime,
+                        condition
+                    };
+                    list.Add(data);
+                }
             }
-            return RedirectToAction("AllViolations");
+            else if (reportStart != "")
+            {
+                DateTime start = DateTime.Parse(reportStart);
+                var violation = db.Violation.Where(m => m.vioReportTime >= start).ToList();
+                foreach (var item in violation)
+                {
+                    string name = "";
+                    if (item.FromAdmID != null)
+                        name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                    else if (item.FromMemId != null)
+                        name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                    string condition = "";
+                    if (item.vioProcessTime == null)
+                        condition = "未處理";
+                    else if (item.vioProcessTime != null)
+                        condition = "已處理";
+                    data = new
+                    {
+                        id = item.vioId,
+                        name,
+                        type = item.CorrespondingEventID,
+                        title = item.vioTitle,
+                        vioTime = item.vioReportTime,
+                        condition
+                    };
+                    list.Add(data);
+                }
+            }
+            else
+            {
+                DateTime end = DateTime.Parse(reportEnd);
+
+                var violation = db.Violation.Where(m => m.vioReportTime <= end).ToList();
+                foreach (var item in violation)
+                {
+                    string name = "";
+                    if (item.FromAdmID != null)
+                        name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                    else if (item.FromMemId != null)
+                        name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                    string condition = "";
+                    if (item.vioProcessTime == null)
+                        condition = "未處理";
+                    else if (item.vioProcessTime != null)
+                        condition = "已處理";
+                    data = new
+                    {
+                        id = item.vioId,
+                        name,
+                        type = item.CorrespondingEventID,
+                        title = item.vioTitle,
+                        vioTime = item.vioReportTime,
+                        condition
+                    };
+                    list.Add(data);
+                }
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
+
+
 
         public ActionResult SortByAct(string actStart, string actEnd)
         {
-            if (actStart != null || actEnd != null)
+            List<Object> list = new List<object>();
+            var violation = db.Violation.ToList();
+            var member = db.Member.ToList();
+            var administrator = db.Administrator.ToList();
+            dynamic data = null;
+            if (actStart != "" && actEnd != "")
             {
-                if (actStart == "" && actEnd == "")
+                DateTime start = DateTime.Parse(actStart);
+                DateTime end = DateTime.Parse(actEnd);
+                var act = db.Join_Fun_Activities.Where(m => m.actTime >= start && m.actTime <= end).ToList();
+                foreach (var i in act)
                 {
-                    return View();
-                }
-                else
-                {
-                    AdmView violation;
-                    if (actStart != "" && actEnd != "")
+                    foreach (var item in violation.Where(m => m.CorrespondingEventID == i.actId))
                     {
-                        DateTime start = DateTime.Parse(actStart);
-                        DateTime end = DateTime.Parse(actEnd);
-                        var act = db.Join_Fun_Activities.Where(m => m.actTime >= start && m.actTime <= end).ToList();
-                        if (act == null)
+                        string name = "";
+                        if (item.FromAdmID != null)
+                            name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                        else if (item.FromMemId != null)
+                            name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                        string condition = "";
+                        if (item.vioProcessTime == null)
+                            condition = "未處理";
+                        else if (item.vioProcessTime != null)
+                            condition = "已處理";
+                        data = new
                         {
-                            return View();
-                        }
-                        else
-                        {
-                            violation = new AdmView()
-                            {
-                                actList = db.Join_Fun_Activities.Where(m => m.actTime >= start && m.actTime <= end).ToList(),
-                                violateList = db.Violation.ToList(),
-                                memList = db.Member.ToList()
-                            };
-                        }
+                            id = item.vioId,
+                            name,
+                            type = item.CorrespondingEventID,
+                            title = item.vioTitle,
+                            vioTime = item.vioReportTime,
+                            condition
+                        };
+                        list.Add(data);
                     }
-                    else if (actStart != "")
-                    {
-                        DateTime start = DateTime.Parse(actStart);
-                        var act = db.Join_Fun_Activities.Where(m => m.actTime >= start).ToList();
-                        if (act == null)
-                        {
-                            return View();
-                        }
-                        else
-                        {
-                            violation = new AdmView()
-                            {
-                                actList = db.Join_Fun_Activities.Where(m => m.actTime >= start).ToList(),
-                                violateList = db.Violation.ToList(),
-                                memList = db.Member.ToList()
-                            };
-                        }
-                    }
-                    else
-                    {
-                        DateTime end = DateTime.Parse(actEnd);
-                        var act = db.Join_Fun_Activities.Where(m => m.actTime <= end).ToList();
-                        if (act == null)
-                        {
-                            return View();
-                        }
-                        else
-                        {
-                            violation = new AdmView()
-                            {
-                                actList = db.Join_Fun_Activities.Where(m => m.actTime <= end).ToList(),
-                                violateList = db.Violation.ToList(),
-                                memList = db.Member.ToList()
-                            };
-                        }
-                    }
-                    return View(violation);
                 }
             }
-            return RedirectToAction("AllViolations");
+            else if (actStart != "")
+            {
+                DateTime start = DateTime.Parse(actStart);
+                var act = db.Join_Fun_Activities.Where(m => m.actTime >= start).ToList();
+                foreach (var i in act)
+                {
+                    foreach (var item in violation.Where(m => m.CorrespondingEventID == i.actId))
+                    {
+                        string name = "";
+                        if (item.FromAdmID != null)
+                            name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                        else if (item.FromMemId != null)
+                            name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                        string condition = "";
+                        if (item.vioProcessTime == null)
+                            condition = "未處理";
+                        else if (item.vioProcessTime != null)
+                            condition = "已處理";
+                        data = new
+                        {
+                            id = item.vioId,
+                            name,
+                            type = item.CorrespondingEventID,
+                            title = item.vioTitle,
+                            vioTime = item.vioReportTime,
+                            condition
+                        };
+                        list.Add(data);
+                    }
+                }
+            }
+            else
+            {
+                DateTime end = DateTime.Parse(actEnd);
+                var act = db.Join_Fun_Activities.Where(m => m.actTime <= end).ToList();
+                foreach (var i in act)
+                {
+                    foreach (var item in violation.Where(m => m.CorrespondingEventID == i.actId))
+                    {
+                        string name = "";
+                        if (item.FromAdmID != null)
+                            name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                        else if (item.FromMemId != null)
+                            name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                        string condition = "";
+                        if (item.vioProcessTime == null)
+                            condition = "未處理";
+                        else if (item.vioProcessTime != null)
+                            condition = "已處理";
+                        data = new
+                        {
+                            id = item.vioId,
+                            name,
+                            type = item.CorrespondingEventID,
+                            title = item.vioTitle,
+                            vioTime = item.vioReportTime,
+                            condition
+                        };
+                        list.Add(data);
+                    }
+                };
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SortById(string actID)
         {
-            if (Request.IsAjaxRequest())
-            {
-                var member = db.Member.ToList();
-                Violation violation = db.Violation.Where(m => m.CorrespondingEventID == actID).FirstOrDefault();
+            List<Object> list = new List<object>();
+            var member = db.Member.ToList();
+            var administrator = db.Administrator.ToList();
+            dynamic data = null;
+            var violation = db.Violation.Where(m => m.CorrespondingEventID == actID).ToList();
 
-                if (violation == null)
-                    return HttpNotFound();
+            foreach (var item in violation)
+            {
                 string name = "";
-                if (violation.FromAdmID != null)
-                    name = member.Where(m => m.memId == violation.FromAdmID).FirstOrDefault().memNick;
-                else if (violation.FromMemId != null)
-                    name = member.Where(m => m.memId == violation.FromMemId).FirstOrDefault().memNick;
+                if (item.FromAdmID != null)
+                    name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                else if (item.FromMemId != null)
+                    name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
                 string condition = "";
-                if (violation.vioProcessTime == null)
+                if (item.vioProcessTime == null)
                     condition = "未處理";
-                else if (violation.vioProcessTime != null)
+                else if (item.vioProcessTime != null)
                     condition = "已處理";
-                var data = new
+                data = new
                 {
-                    id = violation.vioId,
+                    id = item.vioId,
                     name,
-                    type = violation.CorrespondingEventID,
-                    title = violation.vioTitle,
-                    vioTime = violation.vioReportTime,
+                    type = item.CorrespondingEventID,
+                    title = item.vioTitle,
+                    vioTime = item.vioReportTime,
                     condition
                 };
-
-                return Json(data, JsonRequestBehavior.AllowGet);
+                list.Add(data);
             }
-
-            return View();
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         //依分類顯示管理的違規項目
@@ -670,7 +756,7 @@ namespace JoinFun.Controllers
 
             AdmView violate = new AdmView()
             {
-                violateList = db.Violation.Where(m => m.vioId == vioID && m.vioProcessTime == null).ToList(),
+                violateList = db.Violation.Where(m => m.vioId == vioID).ToList(),
                 punishList = db.Punishment.ToList(),
                 memList = member,
                 actList = db.Join_Fun_Activities.ToList(),
@@ -749,7 +835,7 @@ namespace JoinFun.Controllers
             mboard.Where(m => m.memId == "B000000001").ToList();
             AdmView violate = new AdmView()
             {
-                violateList = db.Violation.Where(m => m.vioId == vioID && m.vioProcessTime == null).ToList(),
+                violateList = db.Violation.Where(m => m.vioId == vioID).ToList(),
                 memList = member,
                 actList = db.Join_Fun_Activities.ToList(),
                 punishList = db.Punishment.ToList(),

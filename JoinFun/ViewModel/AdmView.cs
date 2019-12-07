@@ -15,5 +15,6 @@ namespace JoinFun.ViewModel
         public List<Punishment> punishList { get; set; }
         public List<Member_Remarks> remarkList { get; set; }
         public List<Message_Board> mboardList { get; set; }
+        public List<Administrator> admin { get; set; }
     }
 }

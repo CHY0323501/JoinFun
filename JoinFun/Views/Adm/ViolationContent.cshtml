@@ -105,18 +105,37 @@
             <div class="card-footer col-md-12">
                 @foreach (var item in Model.punishList)
                 {
-                    <label class="checkLabel">
-                        @item.punishName
-                        @*@Html.RadioButtonFor(modelItem => item.punishId, item.punishName)*@
+                <label class="checkLabel">
+                    @item.punishName
+                    @*@Html.RadioButtonFor(modelItem => item.punishId, item.punishName)*@
+                    @if (Model.violateList.FirstOrDefault().vioProcessTime == null)
+                    {
                         <input id="punishID" type="radio" name="punishID" value="@item.punishId" />
-                        <span class="checkmark">&emsp;</span>
-                    </label>
+                    }
+                    else if (Model.violateList.FirstOrDefault().punishId == item.punishId)
+                    {
+                        <input id="punishID" type="radio" name="punishID" value="@item.punishId" disabled checked />
+                    }
+                    else
+                    {
+                        <input id="punishID" type="radio" name="punishID" value="@item.punishId" disabled />
+                    }
+                    <input id="punishID" type="radio" name="punishID" value="@item.punishId" />
+                    <span class="checkmark">&emsp;</span>
+                </label>
                 }
                 <span id="reminder" class="text-danger"></span>
             </div>
 
             <input id="admID" type="hidden" name="admID" value="adm001" />
-            <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#punishForm" id="sendPunish">送出</button>
+            @if (Model.violateList.Any(m => m.vioProcessTime == null))
+            {
+                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#punishForm" id="sendPunish">送出</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-default btn-block" disabled>已處置</button>
+            }
             <div class="modal fade" id="punishForm" tabindex="-1" role="dialog" aria-labelledby="punishTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -138,7 +157,7 @@
             </div>
             @*<a href="@Url.Action("ManageViolations")" class="text-center">返回揪團檢舉管理頁面</a>*@
         </div>
-        @Html.ActionLink("返回列表", "ManageViolations", new { Page = ViewBag.ID }, new { @class = "text-center btn btn-link mt-2" })
+        @Html.ActionLink("返回列表", "AllViolations", new { Page = ViewBag.ID }, new { @class = "text-center btn btn-link mt-2" })
     </div>
 
 
