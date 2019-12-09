@@ -12,6 +12,7 @@ using X.PagedList;
 using JoinFun.Utilities;
 using JoinFun.ViewModel;
 using System.Web.UI.WebControls;
+using System.Data.Entity.Infrastructure;
 
 namespace JoinFun.Controllers
 {
@@ -741,26 +742,37 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult FeedBackReply(string id, string admId)
+        public ActionResult FeedBackReply(string id, string admId, string Page)
         {
-            var reply = db.Comment.Find(id);
-            var replyId = reply.commentId;
-            var memId = reply.memId;
-            reply.reportTime = DateTime.Now;
-            reply.reportContent = Request["reportContent"];
-            reply.admId = admId;
-            db.SaveChanges();
-            Notification message = new Notification();
-            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-            message.InstanceId = replyId;
-            message.ToMemId = memId;
-            message.NotiTitle = "Re: " + reply.commentTitle;
-            message.NotifContent = Request["reportContent"];
-            message.timeReceived = DateTime.Now;
-            message.keepNotice = true;
-            db.Notification.Add(message);
-            db.SaveChanges();
-            return RedirectToAction("FeedBack");
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var reply = db.Comment.Find(id);
+                    var replyId = reply.commentId;
+                    var memId = reply.memId;
+                    reply.reportTime = DateTime.Now;
+                    reply.reportContent = Request["reportContent"];
+                    reply.admId = admId;
+                    db.SaveChanges();
+                    Notification message = new Notification();
+                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                    message.InstanceId = replyId;
+                    message.ToMemId = memId;
+                    message.NotiTitle = "Re: " + reply.commentTitle;
+                    message.NotifContent = Request["reportContent"];
+                    message.timeReceived = DateTime.Now;
+                    message.keepNotice = true;
+                    db.Notification.Add(message);
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (DbUpdateException)
+                {
+                    transaction.Rollback();
+                }
+            }
+            return RedirectToAction("FeedBack", new { Page = Page });
         }
 
 

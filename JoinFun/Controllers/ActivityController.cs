@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using JoinFun.Models;
 using JoinFun.ViewModel;
+using System.Data.Entity.Infrastructure;
 
 namespace JoinFun.Controllers
 {
@@ -317,67 +318,80 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase[] picture)
+        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase firstPic, HttpPostedFileBase[] picture)
         {
-            //呼叫Sql系統函數GetActId()取得新增的活動ID
-            string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
-            act.actId = actId;
-            act.hostId = Session["memId"].ToString();
-            //將Dropdown List的值取回 ---start--- 
-            act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
-            //將Dropdown List的值取回 ---end--- 
-            act.actTime = DateTime.Parse(Request["actTime"]);
-            act.actDeadline = DateTime.Parse(Request["actDeadline"]);
-            act.keepAct = true;
-            db.Join_Fun_Activities.Add(act);
-            db.SaveChanges();
-            string fileName = "";
-            if (picture[0] != null)
+            using (var transaction = db.Database.BeginTransaction())
             {
-                for (int i = 0; i < picture.Length; i++)
+                try
                 {
-                    HttpPostedFileBase file = picture[i];
-                    Photos_of_Activities photo = new Photos_of_Activities();
-                    if (file != null)
+                    //呼叫Sql系統函數GetActId()取得新增的活動ID
+                    string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
+                    act.actId = actId;
+                    act.actTime = DateTime.Parse(Request["actTime"]);
+                    act.actDeadline = DateTime.Parse(Request["actDeadline"]);
+                    act.hostId = "M000000003";
+                    act.keepAct = true;
+                    db.Join_Fun_Activities.Add(act);
+                    db.SaveChanges();
+                    string fileName = "";
+                    //存入第一張主題照片(預設)
+                    Photos_of_Activities front = new Photos_of_Activities();
+                    if (firstPic != null)
                     {
-                        photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-                        photo.actId = actId;
-                        fileName = photo.PhotoSerial + photo.actId + ".jpg";
-                        // 將檔案儲存到網站的Photos資料夾下
-                        file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
-                        photo.actPics = "~/Photos/Activities/" + fileName;
-                        db.Photos_of_Activities.Add(photo);
+                        front.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                        front.actId = actId;
+                        fileName = front.PhotoSerial + actId + ".jpg";
+                        firstPic.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName));
+                        front.actPics = "~/Photos/Activities/" + fileName;
+                        db.Photos_of_Activities.Add(front);
                         db.SaveChanges();
                     }
                     else
                     {
-                        GetSelectList();
-                        ViewBag.UploadError = "請選擇要上傳的圖片";
-                        return View();
+                        front.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                        front.actId = actId;
+                        switch (act.actClassId)
+                        {
+                            case "cls001":
+                                front.actPics = "~/Photos/ClassIMG/活動.jpg";
+                                break;
+                            case "cls002":
+                                front.actPics = "~/Photos/ClassIMG/休閒.jpg";
+                                break;
+                            case "cls003":
+                                front.actPics = "~/Photos/ClassIMG/商務.jpg";
+                                break;
+                        }
+                        db.Photos_of_Activities.Add(front);
+                        db.SaveChanges();
                     }
+                    //存入上傳的活動內容照片
+                    if (picture[0] != null)
+                    {
+                        for (int i = 0; i < picture.Length; i++)
+                        {
+                            HttpPostedFileBase file = picture[i];
+                            Photos_of_Activities photo = new Photos_of_Activities();
+                            //if (file != null)
+                            //{
+                            photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                            photo.actId = actId;
+                            fileName = photo.PhotoSerial + actId + ".jpg";
+                            // 將檔案儲存到網站的Photos資料夾下
+                            file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
+                            photo.actPics = "~/Photos/Activities/" + fileName;
+                            db.Photos_of_Activities.Add(photo);
+                            db.SaveChanges();
+                        }
+                    }
+                    transaction.Commit();
                 }
-            }
-            else
-            {
-                Photos_of_Activities photo = new Photos_of_Activities();
-                photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-                photo.actId = actId;
-                switch (act.actClassId)
+                catch (DbUpdateException)
                 {
-                    case "cls001":
-                        photo.actPics = "~/Photos/ClassIMG/活動.jpg";
-                        break;
-                    case "cls002":
-                        photo.actPics = "~/Photos/ClassIMG/休閒.jpg";
-                        break;
-                    case "cls003":
-                        photo.actPics = "~/Photos/ClassIMG/商務.jpg";
-                        break;
+                    transaction.Rollback();
                 }
-                db.Photos_of_Activities.Add(photo);
-                db.SaveChanges();
-            }
 
+            }
             return RedirectToAction("Index");
         }
 
