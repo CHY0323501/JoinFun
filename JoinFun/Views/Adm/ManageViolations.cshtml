@@ -276,7 +276,7 @@
                 <tr>
                     <th scope="col">違規編號</th>
                     <th scope="col">檢舉人</th>
-                    <th scope="col">違規類別</th>
+                    <th scope="col">類別編號</th>
                     <th scope="col">違規標題</th>
                     <th scope="col">違規時間</th>
                     <th scope="col">目前狀態</th>
@@ -344,7 +344,7 @@
                         $('#doneList table').append('<tbody class="text-center text-light"><tr><td colspan="7" class="mCenter">無任何紀錄</td></tr></tbody>');
                     else
                         $.each(data, function (key, value) {
-                            $('#doneList table').append(`<tbody class="text-center text-light"><tr><td>${value.id}</td><td>${value.name}</td><td>${value.type}</td><td><a href='/Adm/ViolationContent?vioID=${value.id}&eventID=${value.type}&Page=allList'>${value.title}</a></td>
+                            $('#doneList table').append(`<tbody class="text-center text-light"><tr><td>${value.id}</td><td>${value.name}</td><td>${value.typeId}</td><td><a href='/Adm/ViolationContent?vioID=${value.id}&eventID=${value.type}&Page=${tid}'>${value.title}</a></td>
                                                          <td>${$.format.toBrowserTimeZone((new Date(parseInt(value.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td><td class="text-success">${value.condition}</td>
                                                          <td>${$.format.toBrowserTimeZone((new Date(parseInt(value.doneTime.replace("/Date(", "").replace(")/", ""), 10))))}</td></tr></tbody >`);
                     });

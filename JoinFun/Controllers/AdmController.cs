@@ -743,11 +743,22 @@ namespace JoinFun.Controllers
         [HttpPost]
         public ActionResult FeedBackReply(string id, string admId)
         {
-
             var reply = db.Comment.Find(id);
+            var replyId = reply.commentId;
+            var memId = reply.memId;
             reply.reportTime = DateTime.Now;
             reply.reportContent = Request["reportContent"];
             reply.admId = admId;
+            db.SaveChanges();
+            Notification message = new Notification();
+            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+            message.InstanceId = replyId;
+            message.ToMemId = memId;
+            message.NotiTitle = "Re: " + reply.commentTitle;
+            message.NotifContent = Request["reportContent"];
+            message.timeReceived = DateTime.Now;
+            message.keepNotice = true;
+            db.Notification.Add(message);
             db.SaveChanges();
             return RedirectToAction("FeedBack");
         }
@@ -762,9 +773,6 @@ namespace JoinFun.Controllers
             int pagecurrent = page < 1 ? 1 : page;
             var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
             return View(pagedlist);
-
-
-
         }
 
         public void ActKeepChange(string actId)
@@ -834,7 +842,7 @@ namespace JoinFun.Controllers
         }
 
         //取得檢舉明細清單方法 for Json data
-        public List<Object> getViolations(List<Object> list, dynamic violation)
+        public List<Object> getViolations(List<Object> list, List<Violation> violation)
         {
             var member = db.Member.ToList();
             var administrator = db.Administrator.ToList();
@@ -846,16 +854,35 @@ namespace JoinFun.Controllers
                     name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
                 else if (item.FromMemId != null)
                     name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                string type = "";
+                if (item.CorrespondingEventID.StartsWith("M"))
+                {
+                    type = "會員";
+                }
+                else if (item.CorrespondingEventID.StartsWith("A"))
+                {
+                    type = "揪團活動";
+                }
+                else if (item.CorrespondingEventID.StartsWith("R"))
+                {
+                    type = "會員評價";
+                }
+                else
+                {
+                    type = "留言板";
+                }
                 string condition = "";
                 if (item.vioProcessTime == null)
                     condition = "未處理";
                 else if (item.vioProcessTime != null)
                     condition = "已處理";
+
                 data = new
                 {
                     id = item.vioId,
                     name,
-                    type = item.CorrespondingEventID,
+                    type,
+                    typeId = item.CorrespondingEventID,
                     title = item.vioTitle,
                     vioTime = item.vioReportTime,
                     condition,
