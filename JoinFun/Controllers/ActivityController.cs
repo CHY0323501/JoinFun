@@ -247,6 +247,21 @@ namespace JoinFun.Controllers
         public ActionResult FinalChoose(string actClassId,int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudget, int? paymentTerm, int? actCounty)
         {
             GetSelectList();
+            if (ageRestrict == 1 ) {
+
+                ageRestrict = null;
+            }
+
+            if (gender == 1)
+            {
+
+                gender = null;
+            }
+            if (maxBudget == 1)
+            {
+
+                maxBudget = null;
+            }
             //var vwActivities = fc1.vwActList.Where(m => m.keepAct == true).ToList();
             var vwActivities = db.vw_Activities.Where(m => m.keepAct == true).ToList();
 

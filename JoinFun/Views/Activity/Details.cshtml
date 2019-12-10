@@ -10,8 +10,8 @@
     ViewBag.Title = "活動詳細資訊";
     int count = 0;
     string actid = ViewBag.actId;
-     string actclassid=Model.ActivityList.Where(m => m.actId == actid).FirstOrDefault().actClassId;
-    Layout= "~/Views/Shared/_IndexLayout.cshtml";
+    string actclassid = Model.ActivityList.Where(m => m.actId == actid).FirstOrDefault().actClassId;
+    Layout = "~/Views/Shared/_IndexLayout.cshtml";
 }
 
 @section Detail{
@@ -24,11 +24,11 @@
 @*大螢幕*@
 
 @*<div class="jumbotron jb ">
-    <div class="container ">
-        <h3></h3>
+        <div class="container ">
+            <h3></h3>
 
-    </div>
-</div>*@
+        </div>
+    </div>*@
 
 @*輪播圖*@
 
@@ -56,11 +56,11 @@
                         };
 
                     };
-                
+
                     @if (count == 0)
-                      {  
+                    {
                         @*<img src="@Url.Content(ViewBag.defaultPic) " class="carousel-item active bg_carousel" />*@
-                        <img src=" @Url.Content(defaultpic.Where(m=>m.actClassId==actclassid).FirstOrDefault().Photos)" class="carousel-item active bg_carousel"/>
+                        <img src=" @Url.Content(defaultpic.Where(m=>m.actClassId==actclassid).FirstOrDefault().Photos)" class="carousel-item active bg_carousel" />
                     }
 
 
@@ -174,9 +174,9 @@
 
                 <span class="subtitle">留言板</span>
 
-                <div id="act_content" class="w-100">
+                <div id="act_content" class="w-100 ">
                     @*<h1>留言板區</h1>*@
-                    <div id="commentBoard ">
+                    <div id="commentBoard">
                         @foreach (var item in Model.MBoard)
                         {
                             <div class="mb-4">
@@ -213,7 +213,7 @@
                     @*@Html.TextBoxFor(m => m.MBoard.FirstOrDefault().boardMessage, new { Value = "", @id = "comments" })
 
                         <input id="commentBtn" type="button" value="送出" class="btn btn-info" />*@
-                    <div class="text-center">
+                    <div class="text-center ml-5">
                         <textarea id="comments" rows="6" cols="15" class="form-control col-md-8 mb-4" style="resize:none"></textarea>
                         <input id="commentBtn" type="button" value="送出" class="btn btn-info btn-block mContent" />
                     </div>
@@ -239,10 +239,18 @@
                         <li class="detail_info">報名截止：</li>
                         <span id="actdeadtime">@item.actDeadline</span>
                         <li><strong>性別限制：</strong> <span id="gender">@item.gender</span></li>
-                        <li><strong>預算金額：</strong>   @item.Budget.ToString("NT$#")</li>
+                        if (item.BudgetNo.ToString() == "1")
+                        {
+                            <li><strong>預算金額：</strong>不限</li>
+                        }
+                        else
+                        {
+                            <li><strong>預算金額：</strong>   @item.Budget.ToString("NT$#")</li>
+                        }
+
                         <li><strong>年齡限制：</strong><span id="age">@item.age</span></li>
                         <li><strong>人數限制:</strong>  @item.PeoRestriction 人以下</li>
-                        <li id="peojoin"><strong>已參團人數:</strong> @ViewBag.joinTime          @Html.ActionLink("-", "MemJoin", "Activity", new { actId = ViewBag.actId, memID = ViewBag.memID, actClassId = ViewBag.actClassId }, new { @class = "fa fa-user", id = "memamount" })</li>
+                        <li id="peojoin"><strong>已參團人數:</strong> @ViewBag.joinTime          @Html.ActionLink(" ", "MemJoin", "Activity", new { actId = ViewBag.actId, memID = ViewBag.memID, actClassId = ViewBag.actClassId }, new { @class = "fa fa-user", id = "memamount" })</li>
                         <li><strong>剩餘名額：</strong> <span id="remainpeo"> @(@item.PeoRestriction - @ViewBag.joinTime)</span></li>
                         <li><strong>主辦人:</strong>   @item.memNick</li>
                         <li><strong>付款方式:</strong>   @item.payment</li>
@@ -275,8 +283,8 @@
 
     </div>
     <div class="row justify-content-end mt-4">
-        <div class="col-4 ">
-            @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-danger" })
+        <div class="col-4 delreturnbox ">
+            @Html.ActionLink("返回", "Index", new { actClassId = ViewBag.actClassId }, new { @class = "btn btn-danger", id = "detailreturn" })
         </div>
 
     </div>
@@ -284,38 +292,41 @@
     @*-------------------------------------------------------------------*@
 
 </div>
-
+<br/>
+<br />
+<br />
 @{
 
     //判斷時間(用於定時器)
     foreach (var item in Model.vwActivityList)
     {
-        <span id="time">@item.actDeadline.ToString().Replace("上午", "").Replace("下午", "")</span>
+        <span id="time" class="d-none">@item.actDeadline.ToString().Replace("上午", "").Replace("下午", "")</span>
 
     }
-    <span id="now">@DateTime.Now.ToString().Replace("上午", "").Replace("下午", "")</span>
+    <span id="now" class="d-none">@DateTime.Now.ToString().Replace("上午", "").Replace("下午", "")</span>
 
 
 
 
-    <p id="date">@DateTime.Now</p>
+    <p id="date" class="d-none">@DateTime.Now</p>
 
 
-    <p id="ismem">@ViewBag.memID</p>
+    <p id="ismem" class="d-none">@ViewBag.memID</p>
 
 
     //判斷當前會員性別
 
-    if (Session["memid"].ToString()!="")
+    if (Session["memid"].ToString() != "")
     {
 
         @*<p id="gendercompare">@Model.members.Where(m => m.memId == Session["memid"]).FirstOrDefault().Sex</p>*@
 
-        <p id="gendercompare">@Model.MemberList.FirstOrDefault().Sex</p>
+        <p id="gendercompare ">@Model.MemberList.FirstOrDefault().Sex</p>
 
         //判斷年齡
 
         var memage = (DateTime.Now.Year - Model.MemberList.FirstOrDefault().Birthday.Year);
+
 
         @*<p id="agecompare">@memage</p>*@
         <input id="agecompare" type="hidden" value="@memage" />

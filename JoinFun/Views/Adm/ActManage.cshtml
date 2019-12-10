@@ -23,110 +23,114 @@
 @*<p>
         @Html.ActionLink("Create New", "Create")
     </p>*@
-<form method="post" action="/Adm/ActManage" id="keep">
+<form action="~/Adm/Key" method="get" class="form-row mb-3 mt-3">
+    <input id="key" type="text" placeholder="請輸入活動編號或主題" name="keyword" class="form-control" />
+    <input id="keysub" type="submit" value="提交" class="btn btn-outline-warning ml-2 " />
+</form>
+    <form method="post" action="/Adm/ActManage" id="keep">
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayName("活動編號")
-            </th>
-            <th>
-                @Html.DisplayName("主辦人編號")
-            </th>
-            <th>
-                @Html.DisplayName("主題")
-            </th>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("活動編號")
+                </th>
+                <th>
+                    @Html.DisplayName("主辦人編號")
+                </th>
+                <th>
+                    @Html.DisplayName("主題")
+                </th>
 
-            <th>
-                @Html.DisplayName("是否保留")
-            </th>
+                <th>
+                    @Html.DisplayName("是否保留")
+                </th>
 
-            <th>
-                @Html.DisplayName("活動類別")
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-
-
-            <tr id="@i">
-                <td>
-                    <span id="checkBox">
-                        @item.actId
-                    </span>
-
-                </td>
-                <td>
-                    @item.hostId
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.actTopic)
-                @*</td>*@
-
-
-               
-                <td id="checkOne">
-
-                    @*@Html.CheckBoxFor(modelitem => item.keepAct,new {Value=item.keepAct })*@
-                    @if (item.keepAct == true)
-                    {   
-                        
-                        <input type="checkbox" class="check" checked value="@item.actId"/>
-                        <input id="@item.actId" type="hidden" name="keepAct" class="check" value="true" />
-                        
-                    }
-                    else
-                    {  <input id="@item.actId" name="keepAct" type="hidden" class="check" value="false" />
-                        <input type="checkbox" class="check" value="@item.actId"/>
-                        
-                    }
-
-                    @*@(keepact = item.keepAct)*@
-                    @*<p class="sos">@item.keepAct</p>*@
-                    <input id="@i" type="hidden" value="@item.actId" name="actId" />
-                    @*<input class="check1" type="hidden" value="@item.keepAct" />*@
-
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Activity_Class.actClassName)
-                </td>
-
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.actId }) |*@
-                    @Html.ActionLink("詳情", "Details", "Activity", new { actId = item.actId, memID = Session["memid"], actClassId = item.actClassId }, new { @class = "btn btn-warning" }) |
-                    @Html.ActionLink("刪除", "DeleteAct", new { id = item.actId }, new { onclick = "return confirm('確定要刪除嗎,團主在後面很火!')" ,@class="btn btn-danger"})
-
-
-                </td>
+                <th>
+                    @Html.DisplayName("活動類別")
+                </th>
+                <th></th>
             </tr>
 
+            @foreach (var item in Model)
+            {
 
-        }
 
-    </table>
-   
+                <tr id="@i">
+                    <td>
+                        <span id="checkBox">
+                            @item.actId
+                        </span>
+
+                    </td>
+                    <td>
+                        @item.hostId
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.actTopic)
+                        @*</td>*@
+
+
+
+                    <td id="checkOne">
+
+                        @*@Html.CheckBoxFor(modelitem => item.keepAct,new {Value=item.keepAct })*@
+                        @if (item.keepAct == true)
+                        {
+
+                            <input type="checkbox" class="check" checked value="@item.actId" />
+                            <input id="@item.actId" type="hidden" name="keepAct" class="check" value="true" />
+
+                        }
+                        else
+                        { <input id="@item.actId" name="keepAct" type="hidden" class="check" value="false" />
+                            <input type="checkbox" class="check" value="@item.actId" />
+
+                        }
+
+                        @*@(keepact = item.keepAct)*@
+                        @*<p class="sos">@item.keepAct</p>*@
+                        <input id="@i" type="hidden" value="@item.actId" name="actId" />
+                        @*<input class="check1" type="hidden" value="@item.keepAct" />*@
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Activity_Class.actClassName)
+                    </td>
+
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.actId }) |*@
+                        @Html.ActionLink("詳情", "Details", "Activity", new { actId = item.actId, memID = Session["memid"], actClassId = item.actClassId }, new { @class = "btn btn-warning" }) |
+                        @Html.ActionLink("刪除", "DeleteAct", new { id = item.actId }, new { onclick = "return confirm('確定要刪除嗎,團主在後面很火!')", @class = "btn btn-danger" })
+
+
+                    </td>
+                </tr>
+
+
+            }
+
+        </table>
+
         <div class="row">
             <div class="col-2 ml-auto mt-5">
                 <input id="Submit" type="submit" value="提交" class=" btn btn-outline-success  " />
             </div>
         </div>
-   
-</form>
-<div class="pagecss" >
-    @Html.PagedListPager(Model, page => Url.Action("ActManage", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
 
-</div>
+    </form>
+    <div class="pagecss">
+        @Html.PagedListPager(Model, page => Url.Action("ActManage", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
 
-
+    </div>
 
 
-@section actscripts{
-    <script>
-      
-        
+
+
+    @section actscripts{
+        <script>
+
+
 
         //window.onload = sos;
         @*var check = $('#checkBox').text();
@@ -151,7 +155,7 @@
 
         })*@
 
-       
+
 
 
 
@@ -176,5 +180,5 @@
 
 
 
-    </script>
-}
+        </script>
+    }

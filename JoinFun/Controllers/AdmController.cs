@@ -818,31 +818,13 @@ namespace JoinFun.Controllers
             return View(pagedlist);
         }
 
-
-        //[HttpPost]
-        //public ActionResult ActManage(bool[] keepAct, string[] actId, int page = 1)
-        //{
-        //    //db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct = joinkeep.keepAct;
-        //    if(keepAct.Length > 0)
-        //    {
-        //        for(int i=0; i<keepAct.Length; i++)
-        //        {
-        //            var id = actId[i];
-        //            var act = db.Join_Fun_Activities.Find(id);
-        //            act.keepAct = keepAct[i];
-        //            db.SaveChanges();
-        //        }
-        //    }
-        //db.SaveChanges();
-        //var result = db.Join_Fun_Activities.Where(m => m.actId == joinkeep.actId).FirstOrDefault().keepAct;
-
-        //var actdetail = db.Join_Fun_Activities.ToList();
-
-        //    int pagesize = 8;
-        //    int pagecurrent = page < 1 ? 1 : page;
-        //    var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
-        //    return View(pagedlist);
-        //}
+        public ActionResult key(string keyword,int page=1) {
+            var result=db.Join_Fun_Activities.Where(m => m.actId.Contains(keyword) || m.actTopic.Contains(keyword));
+            int pagesize = 8;
+            int pagecurrent = page < 1 ? 1 : page;
+            var pagedlist = result.ToPagedList(pagecurrent, pagesize);
+            return View(pagedlist);
+        }
 
 
         public void DeleteAct(string actid) {
