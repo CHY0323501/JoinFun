@@ -3,7 +3,7 @@
 @{
     var co = (IEnumerable<JoinFun.Models.County>)ViewBag.County;
     var dis = (IEnumerable<JoinFun.Models.District>)ViewBag.District;
-    ViewBag.Title = "Register";
+    ViewBag.Title = "會員註冊";
 }
 
 @section Register{
@@ -15,10 +15,10 @@
     <link href="~/CSS/DatetimePickerUse.css" rel="stylesheet" />
 }
 
-<div class="container register-box " style="min-height: 100vh">
+<div class="container " style="min-height: 100vh">
 
 
-    <h3 class="mt-3 display-4 text-center font-weight-bold">註冊</h3>
+    <h3 class="mt-4 display-4 text-center font-weight-bold">註冊</h3>
 
     @using (Html.BeginForm())
     {
@@ -28,8 +28,8 @@
 
             <div class="row justify-content-around">
 
-                <div class="col-md-4 col-sm-6 ">
-                    <div class="form-group col-md-12 ">
+                <div class="col-md-4 col-sm-6 register-box1">
+                    <div class="form-group col-md-12 offset-2 mt-5 ">
                         @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
 
@@ -43,7 +43,7 @@
 
                     </div>
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-12" })
@@ -54,7 +54,7 @@
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new {  @style="color:#ffb0b7" })
                         <div></div>
                     </div>
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-12" })
@@ -67,14 +67,14 @@
                     </div>
 
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
                         @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
                         @Html.ValidationMessageFor(model => model.memNick, "", new { @style="color:#ffb0b7"})
                         <div> </div>
                     </div>
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2 ">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
 
 
@@ -86,7 +86,7 @@
 
                     </div>
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
                         @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
                         @Html.ValidationMessageFor(model => model.memCounty, "", new {  @style="color:#ffb0b7" })
@@ -100,7 +100,7 @@
                     </div>
 
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })
                         @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
                         @Html.ValidationMessageFor(model => model.memDistrict, "", new {  @style="color:#ffb0b7" })
@@ -115,7 +115,7 @@
 
 
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })
                         @*<input type="text" id="Birthday" class="form-control">*@
                         @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
@@ -125,7 +125,7 @@
 
 
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })
 
                         @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -139,8 +139,8 @@
                 </div>
 
 
-                <div class="col-md-4  col-sm-6">
-                    <div class="form-group col-md-12 ">
+                <div class="col-md-4  col-sm-6 register-box1">
+                    <div class="form-group col-md-12  offset-2 mt-5">
 
                         @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-12" })
                         <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
@@ -149,7 +149,7 @@
 
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 offset-2">
 
                         @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-12" })
 
@@ -159,7 +159,7 @@
 
                     </div>
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-12" })
                         <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
                         @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@

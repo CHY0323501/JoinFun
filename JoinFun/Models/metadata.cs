@@ -837,4 +837,6 @@ namespace JoinFun.Models
         [DisplayName("審核狀態")]
         public bool appvStatus { get; set; }
     }
+
+
 }
