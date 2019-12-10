@@ -318,10 +318,10 @@ namespace JoinFun.Controllers
 
         public ActionResult Create()
         {
-            //if (Session["memid"] == null)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            if (Session["memid"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             //ViewBag.Drop = GetDropList();
             GetSelectList();
             return View();
@@ -339,7 +339,7 @@ namespace JoinFun.Controllers
                     act.actId = actId;
                     act.actTime = DateTime.Parse(Request["actTime"]);
                     act.actDeadline = DateTime.Parse(Request["actDeadline"]);
-                    act.hostId = "M000000003";
+                    act.hostId = Session["memid"].ToString();
                     act.keepAct = true;
                     db.Join_Fun_Activities.Add(act);
                     db.SaveChanges();
@@ -407,10 +407,10 @@ namespace JoinFun.Controllers
 
         public ActionResult Edit(string actId)
         {
-            //if (Session["memId"] == null)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
             if (act == null)
             {
@@ -447,13 +447,21 @@ namespace JoinFun.Controllers
 
         public ActionResult Delete(string actId)
         {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
             act.keepAct = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
         public ActionResult Report(string id, string reporterID)
-        { 
+        {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             if (db.Member.Any(m => m.memId == id))
             {
                 ViewBag.Type = "會員";
@@ -485,13 +493,16 @@ namespace JoinFun.Controllers
                 ViewBag.AdmID = reporterID;
             }
 
-
             return View();
         }
 
         [HttpPost]
         public ActionResult Report(Violation violate)
         {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             violate.vioId = db.Database.SqlQuery<string>("Select dbo.GetVioId()").FirstOrDefault();
             violate.vioReportTime = DateTime.Now;
             db.Violation.Add(violate);
@@ -502,6 +513,10 @@ namespace JoinFun.Controllers
 
         public ActionResult Messages(string memID)
         {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             var message = db.Notification.Where(m => m.ToMemId == memID).OrderByDescending(m => m.NotiSerial).ToList();
             return View(message);
         }
