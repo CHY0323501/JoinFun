@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using JoinFun.Models;
 using JoinFun.ViewModel;
+using System.Data.Entity.Infrastructure;
 
 namespace JoinFun.Controllers
 {
@@ -131,10 +132,10 @@ namespace JoinFun.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            string memID = Session["memid"].ToString();
+            //string memID = Session["memid"].ToString();
             if (Session["memid"].ToString() != null)
             {
-
+                string memID = Session["memid"].ToString();
                 ViewBag.memID = memID;
                 //ViewBag.actClassId = actClassId;
                 ViewBag.actId = actId;
@@ -169,8 +170,8 @@ namespace JoinFun.Controllers
                     //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
                     members = db.Member.ToList(),
                     MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
-                    ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
-
+                    //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
+                    ActDetails = db.Activity_Details.Where(m => m.actId == actId).ToList()
                 };
 
                 ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
@@ -199,43 +200,68 @@ namespace JoinFun.Controllers
         [HttpPost]
         public ActionResult AddComment(string id, string memID, string comment)
         {
-            Message_Board board = new Message_Board();
-            string serial = db.Database.SqlQuery<string>("Select dbo.GetMBoardSerial()").FirstOrDefault();
-            board.actId = id;
-            board.mboardSerial = serial;
-            board.memId = memID;
-            board.boardMessage = comment;
-            board.messageTime = DateTime.Now;
-            board.keepMboard = true;
-            db.Message_Board.Add(board);
-            db.SaveChanges();
-
-            //發出通知訊息給被標記的會員
-            var member = db.Member.ToList();
-            foreach (var item in member)
+            using (var transaction = db.Database.BeginTransaction())
             {
-                if (comment.StartsWith("@" + item.memNick))
+                try
                 {
-                    Notification message = new Notification();
-                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-                    message.InstanceId = serial;
-                    message.ToMemId = item.memId;
-                    message.NotiTitle = "留言板訊息";
-                    message.NotifContent = comment;
-                    message.timeReceived = DateTime.Now;
-                    message.keepNotice = true;
-                    db.Notification.Add(message);
+                    Message_Board board = new Message_Board();
+                    string serial = db.Database.SqlQuery<string>("Select dbo.GetMBoardSerial()").FirstOrDefault();
+                    board.actId = id;
+                    board.mboardSerial = serial;
+                    board.memId = memID;
+                    board.boardMessage = comment;
+                    board.messageTime = DateTime.Now;
+                    board.keepMboard = true;
+                    db.Message_Board.Add(board);
                     db.SaveChanges();
+
+                    //發出通知訊息給被標記的會員
+                    var member = db.Member.ToList();
+                    foreach (var item in member)
+                    {
+                        if (comment.StartsWith("@" + item.memNick))
+                        {
+                            Notification message = new Notification();
+                            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                            message.InstanceId = serial;
+                            message.ToMemId = item.memId;
+                            message.NotiTitle = "留言板訊息";
+                            message.NotifContent = comment;
+                            message.timeReceived = DateTime.Now;
+                            message.keepNotice = true;
+                            db.Notification.Add(message);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                catch(DbUpdateException)
+                {
+                    transaction.Rollback();
                 }
             }
-            //new { mid = serial }
+
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
 
-        public ActionResult FinalChoose(string actClassId,int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudge, int? paymentTerm, int? actCounty)
+        public ActionResult FinalChoose(string actClassId,int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudget, int? paymentTerm, int? actCounty)
         {
             GetSelectList();
+            if (ageRestrict == 1 ) {
+
+                ageRestrict = null;
+            }
+
+            if (gender == 1)
+            {
+
+                gender = null;
+            }
+            if (maxBudget == 1)
+            {
+
+                maxBudget = null;
+            }
             //var vwActivities = fc1.vwActList.Where(m => m.keepAct == true).ToList();
             var vwActivities = db.vw_Activities.Where(m => m.keepAct == true).ToList();
 
@@ -255,9 +281,9 @@ namespace JoinFun.Controllers
             {
                 vwActivities = vwActivities.Where(m => m.peoSerial == maxNumPeople).ToList();
             }
-            if (maxBudge != null)
+            if (maxBudget != null)
             {
-                vwActivities = vwActivities.Where(m => m.BudgetNo == maxBudge).ToList();
+                vwActivities = vwActivities.Where(m => m.BudgetNo == maxBudget).ToList();
             }
             if (paymentTerm != null)
             {
@@ -289,8 +315,9 @@ namespace JoinFun.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-          
-            var searchResult = db.vw_Activities.Where(m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword)).ToList();
+            var searchkeep=db.vw_Activities.Where(m => m.keepAct == true);
+            var searchResult = searchkeep.Where((m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword))).ToList();
+            
             Finalchoose fc2 = new Finalchoose()
             {
                 vwActList = searchResult.ToList(),
@@ -306,86 +333,99 @@ namespace JoinFun.Controllers
 
         public ActionResult Create()
         {
-            //if (Session["memid"] == null)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            if (Session["memid"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             //ViewBag.Drop = GetDropList();
             GetSelectList();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase[] picture)
+        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase firstPic, HttpPostedFileBase[] picture)
         {
-            //呼叫Sql系統函數GetActId()取得新增的活動ID
-            string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
-            act.actId = actId;
-            act.hostId = Session["memId"].ToString();
-            //將Dropdown List的值取回 ---start--- 
-            act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
-            //將Dropdown List的值取回 ---end--- 
-            act.actTime = DateTime.Parse(Request["actTime"]);
-            act.actDeadline = DateTime.Parse(Request["actDeadline"]);
-            act.keepAct = true;
-            db.Join_Fun_Activities.Add(act);
-            db.SaveChanges();
-            string fileName = "";
-            if (picture[0] != null)
+            using (var transaction = db.Database.BeginTransaction())
             {
-                for (int i = 0; i < picture.Length; i++)
+                try
                 {
-                    HttpPostedFileBase file = picture[i];
-                    Photos_of_Activities photo = new Photos_of_Activities();
-                    if (file != null)
+                    //呼叫Sql系統函數GetActId()取得新增的活動ID
+                    string actId = db.Database.SqlQuery<string>("Select dbo.GetActId()").FirstOrDefault();
+                    act.actId = actId;
+                    act.actTime = DateTime.Parse(Request["actTime"]);
+                    act.actDeadline = DateTime.Parse(Request["actDeadline"]);
+                    act.hostId = Session["memid"].ToString();
+                    act.keepAct = true;
+                    db.Join_Fun_Activities.Add(act);
+                    db.SaveChanges();
+                    string fileName = "";
+                    //存入第一張主題照片(預設)
+                    Photos_of_Activities front = new Photos_of_Activities();
+                    if (firstPic != null)
                     {
-                        photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-                        photo.actId = actId;
-                        fileName = photo.PhotoSerial + photo.actId + ".jpg";
-                        // 將檔案儲存到網站的Photos資料夾下
-                        file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
-                        photo.actPics = "~/Photos/Activities/" + fileName;
-                        db.Photos_of_Activities.Add(photo);
+                        front.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                        front.actId = actId;
+                        fileName = front.PhotoSerial + actId + ".jpg";
+                        firstPic.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName));
+                        front.actPics = "~/Photos/Activities/" + fileName;
+                        db.Photos_of_Activities.Add(front);
                         db.SaveChanges();
                     }
                     else
                     {
-                        GetSelectList();
-                        ViewBag.UploadError = "請選擇要上傳的圖片";
-                        return View();
+                        front.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                        front.actId = actId;
+                        switch (act.actClassId)
+                        {
+                            case "cls001":
+                                front.actPics = "~/Photos/ClassIMG/活動.jpg";
+                                break;
+                            case "cls002":
+                                front.actPics = "~/Photos/ClassIMG/休閒.jpg";
+                                break;
+                            case "cls003":
+                                front.actPics = "~/Photos/ClassIMG/商務.jpg";
+                                break;
+                        }
+                        db.Photos_of_Activities.Add(front);
+                        db.SaveChanges();
                     }
+                    //存入上傳的活動內容照片
+                    if (picture[0] != null)
+                    {
+                        for (int i = 0; i < picture.Length; i++)
+                        {
+                            HttpPostedFileBase file = picture[i];
+                            Photos_of_Activities photo = new Photos_of_Activities();
+                            //if (file != null)
+                            //{
+                            photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
+                            photo.actId = actId;
+                            fileName = photo.PhotoSerial + actId + ".jpg";
+                            // 將檔案儲存到網站的Photos資料夾下
+                            file.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName)); //存入Photos資料夾
+                            photo.actPics = "~/Photos/Activities/" + fileName;
+                            db.Photos_of_Activities.Add(photo);
+                            db.SaveChanges();
+                        }
+                    }
+                    transaction.Commit();
                 }
-            }
-            else
-            {
-                Photos_of_Activities photo = new Photos_of_Activities();
-                photo.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
-                photo.actId = actId;
-                switch (act.actClassId)
+                catch (DbUpdateException)
                 {
-                    case "cls001":
-                        photo.actPics = "~/Photos/ClassIMG/活動.jpg";
-                        break;
-                    case "cls002":
-                        photo.actPics = "~/Photos/ClassIMG/休閒.jpg";
-                        break;
-                    case "cls003":
-                        photo.actPics = "~/Photos/ClassIMG/商務.jpg";
-                        break;
+                    transaction.Rollback();
                 }
-                db.Photos_of_Activities.Add(photo);
-                db.SaveChanges();
-            }
 
+            }
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(string actId)
         {
-            //if (Session["memId"] == null)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
             if (act == null)
             {
@@ -422,13 +462,21 @@ namespace JoinFun.Controllers
 
         public ActionResult Delete(string actId)
         {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
             act.keepAct = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
         public ActionResult Report(string id, string reporterID)
-        { 
+        {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             if (db.Member.Any(m => m.memId == id))
             {
                 ViewBag.Type = "會員";
@@ -460,13 +508,16 @@ namespace JoinFun.Controllers
                 ViewBag.AdmID = reporterID;
             }
 
-
             return View();
         }
 
         [HttpPost]
         public ActionResult Report(Violation violate)
         {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             violate.vioId = db.Database.SqlQuery<string>("Select dbo.GetVioId()").FirstOrDefault();
             violate.vioReportTime = DateTime.Now;
             db.Violation.Add(violate);
@@ -477,6 +528,10 @@ namespace JoinFun.Controllers
 
         public ActionResult Messages(string memID)
         {
+            if (Session["memId"] == null)
+            {
+                return RedirectToAction("Index");
+            }
             var message = db.Notification.Where(m => m.ToMemId == memID).OrderByDescending(m => m.NotiSerial).ToList();
             return View(message);
         }
@@ -537,14 +592,17 @@ namespace JoinFun.Controllers
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var item in budget)
             {
-                list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+                if (item.Budget == 0)
+                    list.Add(new SelectListItem() { Text = "不限", Value = item.BudgetNo.ToString() });
+                else
+                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
             }
             ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName");
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age");
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender");
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction");
-            ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget");
-            ViewBag.Budget_Restrict = list;
+            //ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget");
+            ViewBag.maxBudget = list;
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment");
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName");
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName");
@@ -558,16 +616,26 @@ namespace JoinFun.Controllers
             foreach (var item in budget)
             {
                 if (item.BudgetNo == act.maxBudget)
-                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString(), Selected = true });
+                {
+                    if (item.Budget == 0)
+                        list.Add(new SelectListItem() { Text = "不限", Value = item.BudgetNo.ToString(), Selected = true });
+                    else
+                        list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString(), Selected = true });
+                }
                 else
-                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+                {
+                    if (item.Budget == 0)
+                        list.Add(new SelectListItem() { Text = item.Budget.ToString(), Value = item.BudgetNo.ToString() });
+                    else
+                        list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+                }
             }
             ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName", act.actClassId);
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age", act.ageRestrict);
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender", act.gender);
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction", act.maxNumPeople);
-            ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget", act.maxBudget);
-            ViewBag.Budget_Restrict = list;
+            //ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget", act.maxBudget);
+            ViewBag.maxBudget = list;
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment", act.paymentTerm);
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName", act.actCounty);
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName", act.actDistrict);

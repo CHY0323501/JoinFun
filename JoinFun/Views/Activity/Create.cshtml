@@ -34,18 +34,17 @@
             <label class="col-md-6 col-xs-6 control-label pl-0 font-weight-bold">
                 請選擇活動類別 <span class="text-danger">*</span>
             </label>
-            <div class="col col-md-10 col-xs-12 pl-0 mt-3" id="test">
+            <div class="col col-md-10 col-xs-12 pl-0 mt-3" id="classId">
                 <nav class="navbar navbar-expand-sm navbar-light pl-0 justify-content-center">
                     <ul class="nav navbar-nav" id="classUl">
                         <li class="nav-item mr-3 mb-2 rounded-pill bg-light formLi" id="cls001">活動</li>
                         <li class="nav-item mr-3 mb-2 rounded-pill bg-light formLi" id="cls002">休閒</li>
                         <li class="nav-item mr-3 mb-2 rounded-pill bg-light formLi" id="cls003">商務</li>
-                        @Html.EditorFor(model => model.actClassId, new { htmlAttributes = new { @class = "form-control", @type = "Hidden", @id = "classId" } })
-
                     </ul>
+                    @Html.EditorFor(model => model.actClassId, new { htmlAttributes = new { @class = "form-control", @type = "Hidden" } })
                 </nav>
-            </div>
-            @Html.ValidationMessageFor(model => model.actClassId, "", new { @class = "text-danger validation" })
+                <span class="text-danger validation"></span>
+            </div>            
         </div>
 
         <div class="col col-md-12 col-xs-6 pl-0">
@@ -118,7 +117,7 @@
                 <label class="col col-md-3 col-xs-12 pl-0">
                     <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
                     @*@Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })*@
-                    @Html.DropDownList("Budget_Restrict", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("maxBudget", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
                 </label>
                 <label class="col col-md-3 col-xs-12 pl-0">
@@ -151,7 +150,7 @@
 
                 <label class="col col-md-4 col-sx-12 pl-0">
                     <label class="pl-0"><i class="fas fa-home">地址</i></label>
-                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger ml-4 validation" })
+                    @Html.ValidationMessageFor(model => model.actRoad, "", new { @class = "text-danger validation pull-right" })
                     @Html.EditorFor(model => model.actRoad, new { htmlAttributes = new { @class = "form-control col col-md-12" } })
                 </label>
             </li>
@@ -240,16 +239,13 @@
     <script src="~/Scripts/ActivityScripts.js"></script>
     <script>
         $('#createAct').click(function () {
-            var ValidStatus = $('#newApply').valid();
-            console.log(ValidStatus);
-            if (ValidStatus == false) {
-                return false;
+            if ($('#actRoad').val() == "") {
+                $('#actRoad').addClass("is-invalid");
             }
-        });
-
-        $('#buildUp').click(function () {
-            //alert("請確認填寫的資料是否正確，揪團建立後僅有【揪團主題】、【揪團內容】、【付款方式】、【預算上限】可供編輯，若需刪除揪團請聯繫管理員！");
-
+            if ($('#actClassId').val() == "") {
+                $('#actClassId').addClass("is-invalid");
+                $('#classId>span').text('請選擇活動類別');
+            }
             if ($('#datepicker').val() == "") {
                 $('#datepicker').addClass("is-invalid");
                 $('#datepicker').prev().addClass('createTime').text('請選擇活動日期');
@@ -279,14 +275,17 @@
             } else {
                 $('#timepicker2').removeClass("is-invalid").addClass("is-valid");
                 $('#timepicker2').prev().text("");
-            }
-            if ($('#actRoad').val() == "") {
-                $('#actRoad').addClass("is-invalid");
-            }
+            }            
+
+            
             if ($('#actDescription').val() == "") {
                 $('#actDescription').addClass("is-invalid");
             }
-        });
+            var ValidStatus = $('#newApply').valid();
+            if (ValidStatus == false || $('#actClassId').val() == "") {
+                return false;
+            }
+        });       
 
         $('#actRoad').keyup(function () {
             if ($('#actRoad').val() != "") {

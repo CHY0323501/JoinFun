@@ -36,6 +36,10 @@ input[type="text"] {
     font-size: 15pt;
 }
 
+.warning {
+    display: none;
+}
+
 .formLi {
     width: 350px;
     font-size: 14pt;
@@ -56,6 +60,16 @@ input[type="text"] {
     font-weight: bold;
     height: 30px;
     line-height: 30px;
+}
+
+.createTime {
+    margin-left: 60px;
+}
+
+.validation {
+    font-family: 微軟正黑體;
+    font-size: 12pt;
+    font-weight: bold;
 }
 
 /*For message center*/

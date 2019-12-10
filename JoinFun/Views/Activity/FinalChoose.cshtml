@@ -7,6 +7,8 @@
     //var host = (IEnumerable < Test.Models.Member >)ViewBag.host;
     ViewBag.Title = "揪團活動列表";
     //var agelist = (IEnumerable<JoinFun.Models.Age_Restriction>)ViewBag.age;
+    Layout = "~/Views/Shared/_IndexLayout.cshtml";
+}
 }
 
 @section indexcss {
@@ -76,7 +78,8 @@
                 </div>
                 <div class="col-12 col-lg-auto  col-md-3 ">
                     <label class="choice ">預算上限</label><br />
-                    @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm sel" })
+                    @*@Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm sel" })*@
+                    @Html.DropDownList("maxBudget", null, htmlAttributes: new { @class = "form-control-sm sel" })
                 </div>
                 <div class="col-12 col-lg-auto  col-md-3 ">
                     <label class="choice ">付款方式</label><br />
@@ -96,13 +99,13 @@
     </div>
 
     <div>
-        <h2 id="index_title" class=" pl-2 mt-1">揪團活動</h2>
-        <form class="form-inline form-row mt-2 justify-content-center " method="get" action="/Activity/Search">
+        <h2 id="index_title" class="pl-2 mt-1">揪團活動</h2>
 
-            <input class="form-control col-md-auto col-7 ml-md-auto " type="search" placeholder="查詢活動關鍵字" name="keyword">
-            <button class="btn btn-outline-secondary col-offset-3 col-md-auto col-3 ml-3 " type="submit">Search</button>
-
+        <form class="form-inline form-row  mt-2" method="get" action="/Activity/Search">
+            <input class="form-control  col-5 ml-auto indexsearch " type="search" placeholder="查詢活動關鍵字" name="keyword">
+            <button class="btn btn-outline-secondary   col-2 ml-1 " type="submit">查詢</button>
         </form>
+
     </div>
 
     <article class="main w-75">
@@ -139,7 +142,7 @@
 
                             }
 
-
+                            <div id="f-title">@item.actTopic</div>
                             <div class="mask">
 
                                 <h2>@Html.ActionLink(item.actTopic, "Details", new { actId = item.actId, memID = Session["memid"] })</h2>
