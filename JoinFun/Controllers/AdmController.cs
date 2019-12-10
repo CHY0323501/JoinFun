@@ -148,6 +148,7 @@ namespace JoinFun.Controllers
 
                 //Session["admid"] = "adm007";
                 Session["AdmAccount"] = AccountAdmEdit;
+                ViewBag.Nick = AdmMIdEdit.admNick;
                 return View();
             }
             return RedirectToAction("Index", "Adm");

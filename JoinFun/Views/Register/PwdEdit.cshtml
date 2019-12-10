@@ -25,15 +25,14 @@
             <div class="form-horizontal">
 
 
-                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-                @*@Html.HiddenFor(model => model.Account)*@
+               
                 <div class="row mt-2">
                     <div class=" col col-md-12 ">
                         <div class=" form-group ">
 
-                            @*@Html.LabelFor(model => model.memId, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                           
                             <span class="control-label  mr-2  ">會員編號</span>
-                            @*<input id="memId" name="memId" type="text" class="form-control" value="@Model.memId" readonly />*@
+                           
                             @Html.EditorFor(model => model.memId, new { htmlAttributes = new { @class = "form-control mr-auto ", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.memId, "", new { @class = "text-danger" })
 
@@ -70,8 +69,7 @@
                     <div class=" col col-md-12 ">
                         <div class=" form-group ">
                             <span class="control-label   mr-2 ">新密碼&nbsp;&nbsp;&nbsp;</span>
-                            @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control  ", type = "password", id = "Password", placeholder = "英文字、數字最少8字" } })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+                           
                             <input id="Password" name="Password" type="password" class="form-control d-inline" />
                             <div></div>
 
@@ -86,8 +84,7 @@
                     <div class=" col col-md-12 ">
                         <div class=" form-group ">
                             <span class="control-label   mr-2  ">確認密碼</span>
-                            @*@Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @class = "form-control ", type = "password", id = "PasswordConfirm" } })
-                                @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { @class = "text-danger" })*@
+                            
                             <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control d-inline " onkeyup="checkPwd()" required />
                             <div></div>
 
@@ -100,10 +97,10 @@
                 <div class="row  mt-3 ">
                     <div class=" col col-md-11 offset-2">
 
-                        @*<h4 class=" text-center mr-5  mt-2" style="color:#ff9cb3">@ViewBag.PwdEditErr</h4>*@
+                        
                         <input type="submit" value="儲存" class="btn btn-success  w-75 mt-3" />
 
-                        @*@Html.ActionLink("返回我的資訊", "Info", "Member", new { @class = "btn btn-outline-info  w-75 mt-3" ,style="font-weight:bold"})*@
+                        
                     </div>
 
 
@@ -114,6 +111,110 @@
 
     </div>
 </div>
+
+
+@*<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title " id="exampleModalCenterTitle">修改密碼</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm(new { id = "pwdEdit" }))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                     
+                        <div class="row mt-2">
+                            <div class=" col col-md-12 ">
+                                <div class=" form-group ">                                   
+                                    <span class="control-label   col-md-8 offset-2 ">會員編號</span>                                   
+                                    @Html.EditorFor(model => model.memId, new { htmlAttributes = new { @class = "form-control mr-auto col-md-8 offset-2 ", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.memId, "", new { @class = "text-danger col-md-8 offset-2" })
+
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class=" col col-md-12 ">
+                                <div class=" form-group ">
+                                    @Html.LabelFor(model => model.Account, htmlAttributes: new { @class = "control-label   col-md-8 offset-2" })
+                                    @Html.EditorFor(model => model.Account, new { htmlAttributes = new { @class = "form-control  mr-auto col-md-8 offset-2", @readonly = "readonly", @Value = Session["Account"] } })
+                                    @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger col-md-8 offset-2" })
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class=" col col-md-12 ">
+                                <div class=" form-group ">
+
+                                    <span class="control-label   col-md-8 offset-2 ">舊密碼&nbsp;&nbsp;&nbsp;</span>
+
+                                    <input id="OldPassword" name="OldPassword" type="password" class="form-control mr-auto col-md-8 offset-2" />
+                                    <span class=" text-center col-md-8 offset-2" style="color:#ff9cb3">@ViewBag.PwdEditErr</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row mt-3">
+                            <div class=" col col-md-12 ">
+                                <div class=" form-group ">
+                                    <span class="control-label   col-md-8 offset-2 ">新密碼&nbsp;&nbsp;&nbsp;</span>
+                                  
+                                    <input id="Password" name="Password" type="password" class="form-control d-inline col-md-8 offset-2" />
+                                    <div></div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="row  mt-3 ">
+                            <div class=" col col-md-12 ">
+                                <div class=" form-group ">
+                                    <span class="control-label   col-md-8 offset-2  ">確認密碼</span>
+                                   
+                                    <input id="PasswordConfirm" name="PasswordConfirm" type="password" class="form-control d-inline col-md-8 offset-2" onkeyup="checkPwd()" required />
+                                    <div></div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row  mt-3 ">
+                            <div class=" col col-md-11 offset-2">
+
+                               
+                                <input type="submit" value="儲存" class="btn btn-success  w-75 mt-3 col-md-8  pl-1" />
+
+                               
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+           
+        </div>
+    </div>
+</div>*@
+
 
 
 
