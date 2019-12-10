@@ -129,6 +129,7 @@ body{
         height: 40px;
         color: #fff;
         right: 0px;
+        top:200px;
         font-size: 1.5rem;
         position: absolute;
         background-color: rgba(172, 78, 78, 0.76);
@@ -161,7 +162,7 @@ body{
         height: 40px;
         color: #fff;
         top:0px;
-        right: 0px;
+        right: -15px;
         font-size: 1.5rem;
         position: absolute;
         background-color: rgba(172, 78, 78, 0.76);
@@ -170,14 +171,22 @@ body{
         border-radius: 10px;
     }
 }
-#finalchoose{
-   margin-left:50%;
-   margin-top:10%;
-    /*text-align:center;*/
-    /*position:relative;*/
-    
+/*@media (max-width:580px),scan {
+    #finalchoose {
+        margin-left: 50%;
+        margin-top: 10%;
+        display:none;
+    }
+}*/
+@media (max-width:580px),scan {
+    #form {
+        display: none;
+    }
 }
-
+#finalchoose {
+    margin-left: 50%;
+    margin-top: 10%;
+}
 .choice{
     font-weight:800;
     color:#3778bf;
@@ -190,6 +199,13 @@ body{
     }
 }
 /*菜單*/
+
+#f-title{
+    background-color:rgba(108, 43, 43, 0.37);
+    color:#fff;
+    z-index:999;
+
+}
 
 a:hover, a:focus {
     text-decoration: none;
