@@ -78,7 +78,8 @@
                 </div>
                 <div class="col-12 col-lg-auto  col-md-3 ">
                     <label class="choice ">預算上限</label><br />
-                    @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm sel" })
+                    @*@Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm sel" })*@
+                    @Html.DropDownList("maxBudget", null, htmlAttributes: new { @class = "form-control-sm sel" })
                 </div>
                 <div class="col-12 col-lg-auto  col-md-3 ">
                     <label class="choice ">付款方式</label><br />

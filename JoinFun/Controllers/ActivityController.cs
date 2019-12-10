@@ -132,10 +132,10 @@ namespace JoinFun.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            string memID = Session["memid"].ToString();
+            //string memID = Session["memid"].ToString();
             if (Session["memid"].ToString() != null)
             {
-
+                string memID = Session["memid"].ToString();
                 ViewBag.memID = memID;
                 //ViewBag.actClassId = actClassId;
                 ViewBag.actId = actId;
@@ -170,8 +170,8 @@ namespace JoinFun.Controllers
                     //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
                     members = db.Member.ToList(),
                     MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
-                    ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
-
+                    //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
+                    ActDetails = db.Activity_Details.Where(m => m.actId == actId).ToList()
                 };
 
                 ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
@@ -200,41 +200,51 @@ namespace JoinFun.Controllers
         [HttpPost]
         public ActionResult AddComment(string id, string memID, string comment)
         {
-            Message_Board board = new Message_Board();
-            string serial = db.Database.SqlQuery<string>("Select dbo.GetMBoardSerial()").FirstOrDefault();
-            board.actId = id;
-            board.mboardSerial = serial;
-            board.memId = memID;
-            board.boardMessage = comment;
-            board.messageTime = DateTime.Now;
-            board.keepMboard = true;
-            db.Message_Board.Add(board);
-            db.SaveChanges();
-
-            //發出通知訊息給被標記的會員
-            var member = db.Member.ToList();
-            foreach (var item in member)
+            using (var transaction = db.Database.BeginTransaction())
             {
-                if (comment.StartsWith("@" + item.memNick))
+                try
                 {
-                    Notification message = new Notification();
-                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-                    message.InstanceId = serial;
-                    message.ToMemId = item.memId;
-                    message.NotiTitle = "留言板訊息";
-                    message.NotifContent = comment;
-                    message.timeReceived = DateTime.Now;
-                    message.keepNotice = true;
-                    db.Notification.Add(message);
+                    Message_Board board = new Message_Board();
+                    string serial = db.Database.SqlQuery<string>("Select dbo.GetMBoardSerial()").FirstOrDefault();
+                    board.actId = id;
+                    board.mboardSerial = serial;
+                    board.memId = memID;
+                    board.boardMessage = comment;
+                    board.messageTime = DateTime.Now;
+                    board.keepMboard = true;
+                    db.Message_Board.Add(board);
                     db.SaveChanges();
+
+                    //發出通知訊息給被標記的會員
+                    var member = db.Member.ToList();
+                    foreach (var item in member)
+                    {
+                        if (comment.StartsWith("@" + item.memNick))
+                        {
+                            Notification message = new Notification();
+                            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                            message.InstanceId = serial;
+                            message.ToMemId = item.memId;
+                            message.NotiTitle = "留言板訊息";
+                            message.NotifContent = comment;
+                            message.timeReceived = DateTime.Now;
+                            message.keepNotice = true;
+                            db.Notification.Add(message);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                catch(DbUpdateException)
+                {
+                    transaction.Rollback();
                 }
             }
-            //new { mid = serial }
+
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
 
-        public ActionResult FinalChoose(string actClassId,int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudge, int? paymentTerm, int? actCounty)
+        public ActionResult FinalChoose(string actClassId,int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudget, int? paymentTerm, int? actCounty)
         {
             GetSelectList();
             //var vwActivities = fc1.vwActList.Where(m => m.keepAct == true).ToList();
@@ -256,9 +266,9 @@ namespace JoinFun.Controllers
             {
                 vwActivities = vwActivities.Where(m => m.peoSerial == maxNumPeople).ToList();
             }
-            if (maxBudge != null)
+            if (maxBudget != null)
             {
-                vwActivities = vwActivities.Where(m => m.BudgetNo == maxBudge).ToList();
+                vwActivities = vwActivities.Where(m => m.BudgetNo == maxBudget).ToList();
             }
             if (paymentTerm != null)
             {
@@ -558,8 +568,8 @@ namespace JoinFun.Controllers
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age");
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender");
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction");
-            ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget");
-            ViewBag.Budget_Restrict = list;
+            //ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget");
+            ViewBag.maxBudget = list;
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment");
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName");
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName");
@@ -581,8 +591,8 @@ namespace JoinFun.Controllers
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age", act.ageRestrict);
             ViewBag.Gender_Restriction = new SelectList(db.Gender_Restriction, "genderSerial", "gender", act.gender);
             ViewBag.People_Restriction = new SelectList(db.People_Restriction, "peoSerial", "PeoRestriction", act.maxNumPeople);
-            ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget", act.maxBudget);
-            ViewBag.Budget_Restrict = list;
+            //ViewBag.Budget_Restriction = new SelectList(db.Budget_Restriction, "BudgetNo", "Budget", act.maxBudget);
+            ViewBag.maxBudget = list;
             ViewBag.Payment_Restriction = new SelectList(db.Payment_Restriction, "paymentSerial", "payment", act.paymentTerm);
             ViewBag.County = new SelectList(db.County, "CountyNo", "CountyName", act.actCounty);
             ViewBag.District = new SelectList(db.District, "DistrictSerial", "DistrictName", act.actDistrict);

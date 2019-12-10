@@ -117,7 +117,8 @@ namespace JoinFun.Models
 
         [DisplayName("預算限制")]
         [Required(ErrorMessage = "預算限制為必填")]
-        [Range(double.Epsilon, double.MaxValue, ErrorMessage = "預算不可小於0")]
+        //[Range(double.Epsilon, double.MaxValue, ErrorMessage = "預算不可小於0")]
+        [DisplayFormat(DataFormatString = "{0:NT$#}", ApplyFormatInEditMode = true)]
         public decimal Budget { get; set; }
 
     }
@@ -161,6 +162,7 @@ namespace JoinFun.Models
         [DisplayName("人數限制")]
         public short maxNumPeople { get; set; }
         [DisplayName("預算上限")]
+        [DisplayFormat(DataFormatString = "{0:NT$#}", ApplyFormatInEditMode = true)]
         public decimal maxBudget { get; set; }
         [DisplayName("縣/市")]
         public short actCounty { get; set; }
@@ -319,6 +321,7 @@ namespace JoinFun.Models
         [DisplayName("人數上限")]
         public int PeoRestriction { get; set; }
         [DisplayName("預算")]
+        [DisplayFormat(DataFormatString = "{0:NT$#}", ApplyFormatInEditMode = true)]
         public decimal Budget { get; set; }
         [DisplayName("縣/市")]
         public string CountyName { get; set; }

@@ -117,7 +117,7 @@
                 <label class="col col-md-3 col-xs-12 pl-0">
                     <label class="ml-1"><i class="fas fa-money-bill-alt">預算上限</i></label>
                     @*@Html.DropDownListFor(m => m.maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control" })*@
-                    @Html.DropDownList("Budget_Restrict", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("maxBudget", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.maxBudget, "", new { @class = "text-danger" })
                 </label>
                 <label class="col col-md-3 col-xs-12 pl-0">
