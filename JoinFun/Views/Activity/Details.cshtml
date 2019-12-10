@@ -11,6 +11,7 @@
     int count = 0;
     string actid = ViewBag.actId;
      string actclassid=Model.ActivityList.Where(m => m.actId == actid).FirstOrDefault().actClassId;
+    Layout= "~/Views/Shared/_IndexLayout.cshtml";
 }
 
 @section Detail{
@@ -22,12 +23,12 @@
 
 @*大螢幕*@
 
-<div class="jumbotron jb ">
+@*<div class="jumbotron jb ">
     <div class="container ">
         <h3></h3>
 
     </div>
-</div>
+</div>*@
 
 @*輪播圖*@
 

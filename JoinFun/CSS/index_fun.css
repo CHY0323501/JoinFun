@@ -200,12 +200,7 @@ body{
 }
 /*菜單*/
 
-#f-title{
-    background-color:rgba(108, 43, 43, 0.37);
-    color:#fff;
-    z-index:999;
 
-}
 
 a:hover, a:focus {
     text-decoration: none;
@@ -306,6 +301,26 @@ a:hover, a:focus {
 
 
     /*卡片*/
+#f-title {
+    background-color: rgba(194, 101, 163, 0.55);
+    font-weight:700;
+    color: black;
+    position: absolute;
+    bottom: 0px;
+    font-size: 1.5rem;
+    height: 30px;
+    width: 100%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+   
+    /*border-top: 1px solid #f3bcbc;*/
+    
+}
+
+#act {
+    position: relative;
+
+}
 .nodata {
    
     width:100%;
