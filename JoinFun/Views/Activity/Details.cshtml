@@ -11,6 +11,7 @@
     int count = 0;
     string actid = ViewBag.actId;
      string actclassid=Model.ActivityList.Where(m => m.actId == actid).FirstOrDefault().actClassId;
+    Layout= "~/Views/Shared/_IndexLayout.cshtml";
 }
 
 @section Detail{
@@ -22,12 +23,12 @@
 
 @*大螢幕*@
 
-<div class="jumbotron jb ">
+@*<div class="jumbotron jb ">
     <div class="container ">
         <h3></h3>
 
     </div>
-</div>
+</div>*@
 
 @*輪播圖*@
 
@@ -238,7 +239,7 @@
                         <li class="detail_info">報名截止：</li>
                         <span id="actdeadtime">@item.actDeadline</span>
                         <li><strong>性別限制：</strong> <span id="gender">@item.gender</span></li>
-                        <li><strong>預算金額：</strong>   @item.Budget</li>
+                        <li><strong>預算金額：</strong>   @item.Budget.ToString("NT$#")</li>
                         <li><strong>年齡限制：</strong><span id="age">@item.age</span></li>
                         <li><strong>人數限制:</strong>  @item.PeoRestriction 人以下</li>
                         <li id="peojoin"><strong>已參團人數:</strong> @ViewBag.joinTime          @Html.ActionLink("-", "MemJoin", "Activity", new { actId = ViewBag.actId, memID = ViewBag.memID, actClassId = ViewBag.actClassId }, new { @class = "fa fa-user", id = "memamount" })</li>

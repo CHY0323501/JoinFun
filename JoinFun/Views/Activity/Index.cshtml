@@ -55,6 +55,7 @@
 
     </header>
     <span class="appearsearch"><span class="fa fa-search"></span></span>
+
     <div id="finalchoose ">
 
         @using (Html.BeginForm("FinalChoose", "Activity", FormMethod.Get, htmlAttributes: new { @id = "form" }))
@@ -78,7 +79,8 @@
                 </div>
                 <div class="col-12 col-lg-auto  col-md-3 ">
                     <label class="choice ">預算上限</label><br />
-                    @Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm sel" })
+                    @*@Html.DropDownListFor(m => m.joinfunlist.FirstOrDefault().maxBudget, ViewBag.Budget_Restriction as SelectList, htmlAttributes: new { @class = "form-control-sm sel" })*@
+                    @Html.DropDownList("maxBudget", null, htmlAttributes: new { @class = "form-control-sm sel" })
                 </div>
                 <div class="col-12 col-lg-auto  col-md-3 ">
                     <label class="choice ">付款方式</label><br />
@@ -109,7 +111,7 @@
        
             <form class="form-inline form-row  mt-2" method="get" action="/Activity/Search">
                 <input class="form-control  col-5 ml-auto indexsearch " type="search" placeholder="查詢活動關鍵字" name="keyword">
-                <button class="btn btn-outline-secondary   col-2 ml-1 " type="submit">Search</button>
+                <button class="btn btn-outline-secondary   col-2 ml-1 " type="submit">查詢</button>
             </form>
        
     </div>
@@ -135,6 +137,7 @@
 
                         }
 
+                        <div id="f-title">@item.actTopic</div>
 
                     <div class="mask">
 

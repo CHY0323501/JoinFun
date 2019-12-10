@@ -11,21 +11,17 @@
     <button type="button" class="btn btn-outline-primary" id="sortByAct">依揪團時間</button>
     <button type="button" class="btn btn-outline-primary" id="sortById">依揪團編號</button>
 </div>
-<div class="row d-none ml-1" id="byReport">
-    <form method="get" action="@Url.Action("SortByReport")" class="col-md-8">
-        <label class="row" style="line-height:30pt">
-            檢舉時間：<input id="reportStart" name="reportStart" type="datetime-local" class="form-control col-md-3" />　至　<input id="reportEnd" name="reportEnd" type="datetime-local" class="form-control col-md-3" />
-            <input id="searchByReport" type="submit" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
-        </label>
-    </form>
+<div class="row d-none ml-1 col-md-8" id="byReport">
+    <label class="row" style="line-height:30pt">
+        檢舉時間：<input id="reportStart" name="reportStart" type="datetime-local" class="form-control col-md-4" />　至　<input id="reportEnd" name="reportEnd" type="datetime-local" class="form-control col-md-4" />
+        <input id="searchByReport" type="button" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
+    </label>
 </div>
-<div class="row d-none ml-1" id="byAct">
-    <form method="get" action="@Url.Action("SortByAct")" class="col-md-8">
-        <label class="row" style="line-height:30pt">
-            揪團時間：<input id="actStart" name="actStart" type="datetime-local" class="form-control col-md-3" />　至　<input id="actEnd" name="actEnd" type="datetime-local" class="form-control col-md-3" />
-            <input id="searchByAct" type="submit" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
-        </label>
-    </form>
+<div class="row d-none ml-1 col-md-8" id="byAct">
+    <label class="row" style="line-height:30pt">
+        揪團時間：<input id="actStart" name="actStart" type="datetime-local" class="form-control col-md-4" />　至　<input id="actEnd" name="actEnd" type="datetime-local" class="form-control col-md-4" />
+        <input id="searchByAct" type="button" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
+    </label>
 </div>
 <div class="row d-none ml-1" id="byId">
     <label class="row col-md-8" style="line-height:30pt">
@@ -33,9 +29,6 @@
         <input id="searchById" type="button" value="搜尋" class="btn btn-warning ml-5" style="height:40px" />
     </label>
 </div>
-
-
-
 
 <div class="tab-content mt-2">
     <input id="load" type="hidden" value="@ViewBag.ID" />
@@ -49,6 +42,7 @@
                     <th scope="col">違規類別</th>
                     <th scope="col">違規標題</th>
                     <th scope="col">違規時間</th>
+                    <th scope="col">目前狀態</th>
                 </tr>
             </thead>
             <tbody class="text-center text-light">
@@ -56,44 +50,42 @@
                 {
                     foreach (var item in Model.violateList.Where(m => m.vioProcessTime == null))
                     {
-                        <tr>
-                            <td>
-                                @item.vioId
-                                @*<input id="vioID1" type="hidden" name="vioID" value="@item.vioId" />*@
-                            </td>
-                            <td>
-                                @if (Model.violateList != null)
-                                {
-                                    foreach (var m in Model.memList.Where(x => x.memId == item.FromMemId))
-                                    {
-                                        @m.memNick
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CorrespondingEventID)
-                                @*<input id="eventID1" type="hidden" name="eventID" value="@item.CorrespondingEventID" />*@
-                            </td>
-                            <td>
-                                @*<button id="memViolate" type="button" class="btn btn-link">@item.vioTitle</button>*@
-                                <a href="@Url.Action("ViolationContent", "Adm", new { vioID = item.vioId, eventID = item.CorrespondingEventID, Page = "allList"})">@item.vioTitle</a>
-                                @*@Html.ActionLink(item.vioTitle, "ViolationContent", new { vioID = item.vioId, Page = ViewBag.ID }, new { @class = "btn btn-link" })*@
-                                @*<form method="get" action="@Url.Action("ViolationContent")">
-                                        <input id="vioID" name="vioID" type="hidden" value="@item.vioId" />
-                                        <input id="Page" name="Page" type="hidden" value="memList" />
-                                        <input id="vioContent" type="submit" value="@item.vioTitle" class="btn btn-link" />
-                                    </form>*@
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.vioReportTime)
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        @item.vioId
+                    </td>
+                    <td>
+                        @if (Model.violateList != null)
+                        {
+                            foreach (var m in Model.memList.Where(x => x.memId == item.FromMemId))
+                            {
+                                @m.memNick
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CorrespondingEventID)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ViolationContent", "Adm", new { vioID = item.vioId, eventID = item.CorrespondingEventID, Page = "allList"})">@item.vioTitle</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.vioReportTime)
+                    </td>
+                    <td class="text-danger">未處理</td>
+                </tr>
                     }
                 }
             </tbody>
         </table>
     </div>
     <div class="tab-pane fade show" id="sortList">
+        <div id="classify">
+            @Html.ActionLink("< 返回檢舉列表", "AllViolations", "Adm")
+            <button type="button" class="btn btn-outline-success pull-right" id="dealt">已處理</button>
+            <button type="button" class="btn btn-outline-danger pull-right" id="undealt">未處理</button>
+            <button type="button" class="btn btn-outline-primary pull-right" id="all">顯示全部</button>
+        </div>
         <table class="table table-striped table-hover table-responsive-sm">
             <caption>搜尋結果</caption>
             <thead class="thead-dark text-center">
@@ -101,9 +93,11 @@
                     <th scope="col">違規編號</th>
                     <th scope="col">檢舉人</th>
                     <th scope="col">違規類別</th>
+                    <th scope="col">類別編號</th>
                     <th scope="col">違規標題</th>
                     <th scope="col">違規時間</th>
                     <th scope="col">目前狀態</th>
+                    <th scope="col">處置時間</th>
                 </tr>
             </thead>
 
@@ -130,7 +124,10 @@
                     else
                         $('#byReport').removeClass('d-none');
                     $('#byAct').addClass('d-none');
-                    $('#byId').addClass('d-none');                    
+                    $('#byId').addClass('d-none');
+                    $('#actID').val("");
+                    $('#actStart').val('');
+                    $('#actEnd').val('');
                     break;
                 case "sortByAct":
                     //$('#byAct').removeClass('d-none');
@@ -140,6 +137,9 @@
                         $('#byAct').removeClass('d-none');
                     $('#byReport').addClass('d-none');
                     $('#byId').addClass('d-none');
+                    $('#actID').val("");
+                    $('#reportStart').val('');
+                    $('#reportEnd').val('');
                     break;
                 case "sortById":
                     //$('#byId').removeClass('d-none');
@@ -149,29 +149,105 @@
                         $('#byId').removeClass('d-none');
                     $('#byAct').addClass('d-none');
                     $('#byReport').addClass('d-none');
+                    $('#reportStart').val('');
+                    $('#reportEnd').val('');
+                    $('#actStart').val('');
+                    $('#actEnd').val('');
                     break;
             };
-            
+
         });
 
+        $('#searchByReport').click(function () {
+            var link = "@Url.Action("SortByReport","Adm")";
+            getRecords(link, $('#reportStart').val(), $('#reportEnd').val());
+        });
+
+        $('#searchByAct').click(function () {           
+            var link = "@Url.Action("SortByAct","Adm")";
+            getRecords(link, $('#actStart').val(), $('#actEnd').val());
+        });
+
+
         $('#searchById').click(function () {
-            console.log($('#actID').val());
+            var link = "@Url.Action("SortById","Adm")";
+            getRecords(link, $('#actID').val(), "act");
+        });
+
+        $('#classify').find(':button').click(function () {
+            $('.condition').each(function () {
+                console.log($(this).text());
+            });
+            switch ($(this).attr('id')) {
+                case "dealt":
+                    $('.condition').each(function () {
+                        if ($(this).text() == "未處理")
+                            $(this).parent().addClass('d-none');
+                        else if ($(this).text() == "已處理")
+                            $(this).parent().removeClass('d-none');
+                            $('#sortList caption').text('已處理會員違規紀錄');
+                    });                    
+                    break;
+                case "undealt":
+                    $('.condition').each(function () {
+                        if ($(this).text() == "已處理")
+                            $(this).parent().addClass('d-none');
+                        else if ($(this).text() == "未處理")
+                            $(this).parent().removeClass('d-none');
+                            $('#sortList caption').text('未處理會員違規紀錄');
+                    });
+                    break;
+                case "all":
+                    $('.condition').each(function () {
+                        $(this).parent().removeClass('d-none');
+                        $('#sortList caption').text('會員違規紀錄搜尋結果')
+                    });
+                    break;
+            }
+        });
+
+        function getRecords(link, start, end) {
+            var param = "";
+            if (end == "act") {
+                param = {
+                    actID: start
+                };
+            }
+            else {
+                param = {
+                    startDate: start,
+                    endDate: end
+                };
+            }
             $.ajax({
-                url: "@Url.Action("SortById","Adm")",
-                type: "post",
-                data: { actID: $('#actID').val() },
+                url: link,
+                type: "get",
+                data: param,
                 dataType: "Json",
                 success: function (data) {
                     console.log(data);
+                    $('#sortList tbody').remove();
                     $('#allList').removeClass('active');
                     $('#sortList').addClass('active');
-                    $('#sortList table').append(`<tbody class="text-center text-light"><td>${data.id}</td><td>${data.name}</td><td>${data.type}</td><td><a href='/Adm/ViolationContent?vioID=${data.id}&eventID=${data.type}&Page=allList'>${data.title}</a></td><td>${$.format.toBrowserTimeZone((new Date(parseInt(data.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td> <td>${data.condition}</td></tbody >`);
-                    $('#actID').val("");
+                    if (data == "")
+                        $('#sortList table').append('<tbody class="text-center text-light"><tr><td colspan="7" class="mCenter">無任何紀錄</td></tr></tbody>');
+                    else
+                        $.each(data, function (key, value) {
+                            if (value.doneTime == null)
+                                $('#sortList table').append(`<tbody class="text-center text-light"><tr><td>${value.id}</td><td>${value.name}</td><td>${value.type}</td><td>${value.typeId}</td><td><a href='/Adm/ViolationContent?vioID=${value.id}&eventID=${value.typeId}&Page=allList'>${value.title}</a></td>
+                                                            <td>${$.format.toBrowserTimeZone((new Date(parseInt(value.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td><td class="text-danger condition">${value.condition}</td>
+                                                            <td>無</td></tr></tbody >`);
+                            else
+                                $('#sortList table').append(`<tbody class="text-center text-light"><tr><td>${value.id}</td><td>${value.name}</td><td>${value.type}</td><td>${value.typeId}</td><td><a href='/Adm/ViolationContent?vioID=${value.id}&eventID=${value.typeId}&Page=allList'>${value.title}</a></td>
+                                                            <td>${$.format.toBrowserTimeZone((new Date(parseInt(value.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td><td class="text-success condition">${value.condition}</td>
+                                                            <td>${$.format.toBrowserTimeZone((new Date(parseInt(value.doneTime.replace("/Date(", "").replace(")/", ""), 10))))}</td></tr></tbody >`);
+                        });                    
+                    $('#sortList caption').text('會員違規紀錄搜尋結果');
                 },
                 error: function () {
-                    alert("搜尋失敗");
+                    $('#sortList table').append('<tbody class="text-center text-light"><tr><td colspan="7" class="mCenter">無任何紀錄</td></tr></tbody>');
                 }
             });
-        });
+        };
     </script>
 }
