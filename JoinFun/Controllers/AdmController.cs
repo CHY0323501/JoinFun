@@ -564,7 +564,8 @@ namespace JoinFun.Controllers
             AdmView manage = new AdmView()
             {
                 violateList = db.Violation.Where(m => m.vioProcessTime == null).ToList(),
-                memList = db.Member.ToList()
+                memList = db.Member.ToList(),
+                admin = db.Administrator.ToList()
             };
             ViewBag.ID = Page;
             return View(manage);
