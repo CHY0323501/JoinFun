@@ -39,7 +39,7 @@ $('#classUl>li').click(function (e) {
             });
         }
     });
-    $('#classId').val(value);
+    $('#actClassId').val(value);
     if (e.target.id == "cls001") {
         $('#classUl>li').removeClass('bg-warning').addClass('bg-light');
         $("#cls001").removeClass('bg-light').addClass("bg-warning");
