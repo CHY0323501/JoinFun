@@ -562,7 +562,10 @@ namespace JoinFun.Controllers
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var item in budget)
             {
-                list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+                if (item.Budget == 0)
+                    list.Add(new SelectListItem() { Text = "不限", Value = item.BudgetNo.ToString() });
+                else
+                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
             }
             ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName");
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age");
@@ -583,9 +586,19 @@ namespace JoinFun.Controllers
             foreach (var item in budget)
             {
                 if (item.BudgetNo == act.maxBudget)
-                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString(), Selected = true });
+                {
+                    if (item.Budget == 0)
+                        list.Add(new SelectListItem() { Text = "不限", Value = item.BudgetNo.ToString(), Selected = true });
+                    else
+                        list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString(), Selected = true });
+                }
                 else
-                    list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+                {
+                    if (item.Budget == 0)
+                        list.Add(new SelectListItem() { Text = item.Budget.ToString(), Value = item.BudgetNo.ToString() });
+                    else
+                        list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
+                }
             }
             ViewBag.Activity_Class = new SelectList(db.Activity_Class, "actClassId", "actClassName", act.actClassId);
             ViewBag.Age_Restriction = new SelectList(db.Age_Restriction, "serial", "age", act.ageRestrict);
