@@ -361,7 +361,7 @@ namespace JoinFun.Controllers
         public ActionResult Search(string search) {
             if (!String.IsNullOrEmpty(search)) {
                 var SearchResult = from mem in db.Member
-                                   where mem.memId == search || mem.memNick.Contains(search)
+                                   where mem.memId.Contains(search) || mem.memNick.Contains(search)
                                    select mem;
                 ViewBag.SearchContent = search;
                 return View(SearchResult);
@@ -386,23 +386,44 @@ namespace JoinFun.Controllers
         public ActionResult Random(string Number)
         {
             List<int> arrayold = Number.Split(',').Select(int.Parse).ToList();
-            List<int> arraynew = arrayold;
+            List<int> arraynew = new List<int>();
+            bool randomOrNot = false;
+            int round = 0,result=0;
 
-            int Temp = 0, ran = 0, check = 0;
-            Random R = new Random();
-            for (int j = 0; j < arraynew.Count(); j++)
+            do
             {
-                check = j;
-                ran = R.Next(0, arraynew.Count());
-                Temp = arraynew[j];
-                arraynew[j] = arraynew[ran];
-                arraynew[ran] = Temp;
-
-                if (arraynew[j] == arrayold[j])
+                Random r = new Random();
+                result = r.Next(round, arrayold.Count);
+                if (result != round)
                 {
-                    j = check;
+                    if (round == arrayold.Count - 1)
+                    {
+                        arraynew[result] = arrayold[round];
+                        randomOrNot = true;
+                    }
+                    else
+                    {
+                        arraynew.Add(arrayold[round]);
+                        round++;
+                    }
                 }
-            }
+            } while (randomOrNot == false);
+
+            //int Temp = 0, ran = 0, check = 0;
+            //Random R = new Random();
+            //for (int j = 0; j < arraynew.Count(); j++)
+            //{
+            //    check = j;
+            //    ran = R.Next(0, arraynew.Count());
+            //    Temp = arraynew[j];
+            //    arraynew[j] = arraynew[ran];
+            //    arraynew[ran] = Temp;
+
+            //    if (arraynew[j] == arrayold[j])
+            //    {
+            //        j = check;
+            //    }
+            //}
 
 
             return Json(arraynew, JsonRequestBehavior.AllowGet);
