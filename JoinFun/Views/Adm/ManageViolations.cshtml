@@ -293,6 +293,8 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            if ($('#load').val() == "")
+                $('#memList').addClass('show').addClass('active')
             var loading = $('#load').val();
             $('#vioArea').show();
             $('#' + loading).addClass('show').addClass('active');

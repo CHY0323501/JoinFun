@@ -185,6 +185,7 @@
                             $(this).parent().addClass('d-none');
                         else if ($(this).text() == "已處理")
                             $(this).parent().removeClass('d-none');
+                            $('#sortList caption').text('已處理會員違規紀錄');
                     });                    
                     break;
                 case "undealt":
@@ -193,11 +194,13 @@
                             $(this).parent().addClass('d-none');
                         else if ($(this).text() == "未處理")
                             $(this).parent().removeClass('d-none');
+                            $('#sortList caption').text('未處理會員違規紀錄');
                     });
                     break;
                 case "all":
                     $('.condition').each(function () {
                         $(this).parent().removeClass('d-none');
+                        $('#sortList caption').text('會員違規紀錄搜尋結果')
                     });
                     break;
             }
@@ -239,7 +242,7 @@
                                                             <td>${$.format.toBrowserTimeZone((new Date(parseInt(value.vioTime.replace("/Date(", "").replace(")/", ""), 10))))}</td><td class="text-success condition">${value.condition}</td>
                                                             <td>${$.format.toBrowserTimeZone((new Date(parseInt(value.doneTime.replace("/Date(", "").replace(")/", ""), 10))))}</td></tr></tbody >`);
                         });                    
-                    $('#sortList caption').text('已處理會員違規紀錄');
+                    $('#sortList caption').text('會員違規紀錄搜尋結果');
                 },
                 error: function () {
                     $('#sortList table').append('<tbody class="text-center text-light"><tr><td colspan="7" class="mCenter">無任何紀錄</td></tr></tbody>');
