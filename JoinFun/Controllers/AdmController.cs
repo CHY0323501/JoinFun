@@ -212,22 +212,24 @@ namespace JoinFun.Controllers
         //查看公告
         public ActionResult Post(string PostNo, int page = 1)
         {
-            if (!String.IsNullOrEmpty(PostNo))
-                ViewBag.PostNo = PostNo;
-            ////判斷url的page有無輸入正確頁數
-            //int TotalCount = db.Post.ToList().Count();
-            //if (page > getTotalPages(TotalCount))
-            //    return RedirectToRoute(new { page = 1 });
             Session["admid"] = "adm002";
+            if (Session["admid"] != null) {
+                if (!String.IsNullOrEmpty(PostNo))
+                    ViewBag.PostNo = PostNo;
+                ////判斷url的page有無輸入正確頁數
+                //int TotalCount = db.Post.ToList().Count();
+                //if (page > getTotalPages(TotalCount))
+                //    return RedirectToRoute(new { page = 1 });
 
-            return View();
+                return View();
+            }
+            return RedirectToAction("Login","Adm");
+            
         }
         //新增公告
         public ActionResult PostCreate()
         {
-
             Session["admid"] = "adm002";
-
             if (Session["admid"] != null)
             {
                 string session = Session["admid"].ToString();
@@ -237,14 +239,11 @@ namespace JoinFun.Controllers
                 return View(post);
             }
 
-            return RedirectToAction("Post");
+            return RedirectToAction("Login", "Adm");
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult PostCreate(Post post, HttpPostedFileBase postPics)
         {
-
-            Session["admid"] = "adm002";
-
             if (post != null)
             {
                 string getPostid = db.Database.SqlQuery<string>("Select [dbo].[GetPostId]()").FirstOrDefault();
@@ -340,10 +339,13 @@ namespace JoinFun.Controllers
 
         public ActionResult PostEdit(string PostNo)
         {
-            Post post = db.Post.Where(m => m.postSerial == PostNo).FirstOrDefault();
-            ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick", post.admId);
-            ViewBag.ShowInCarouselState = post.ShowInCarousel;
-            return View(post);
+            if (Session["admid"] != null) {
+                Post post = db.Post.Where(m => m.postSerial == PostNo).FirstOrDefault();
+                ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick", post.admId);
+                ViewBag.ShowInCarouselState = post.ShowInCarousel;
+                return View(post);
+            }
+            return RedirectToAction("Login", "Adm");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -360,17 +362,20 @@ namespace JoinFun.Controllers
         //刪除公告
         public ActionResult PostDelete(string PostNo)
         {
-            var post = db.Post.Find(PostNo);
-            if (!String.IsNullOrEmpty(PostNo) && post != null)
-            {
-                //刪除原公告圖檔
-                string filename = post.postPics;
-                System.IO.File.Delete(Server.MapPath("~/Photos/Posts/") + filename);
+            if (Session["admid"] != null) {
+                var post = db.Post.Find(PostNo);
+                if (!String.IsNullOrEmpty(PostNo) && post != null)
+                {
+                    //刪除原公告圖檔
+                    string filename = post.postPics;
+                    System.IO.File.Delete(Server.MapPath("~/Photos/Posts/") + filename);
 
-                db.Post.Remove(post);
-                db.SaveChanges();
+                    db.Post.Remove(post);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Post");
             }
-            return RedirectToAction("Post");
+            return RedirectToAction("Login", "Adm");
         }
 
         ////計算總頁數
@@ -380,7 +385,6 @@ namespace JoinFun.Controllers
         //}
 
         //查詢會員狀態
-
         public ActionResult Inquire(string searchString)
         {
 
