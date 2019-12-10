@@ -55,6 +55,7 @@
 
     </header>
     <span class="appearsearch"><span class="fa fa-search"></span></span>
+
     <div id="finalchoose ">
 
         @using (Html.BeginForm("FinalChoose", "Activity", FormMethod.Get, htmlAttributes: new { @id = "form" }))
@@ -109,7 +110,7 @@
        
             <form class="form-inline form-row  mt-2" method="get" action="/Activity/Search">
                 <input class="form-control  col-5 ml-auto indexsearch " type="search" placeholder="查詢活動關鍵字" name="keyword">
-                <button class="btn btn-outline-secondary   col-2 ml-1 " type="submit">Search</button>
+                <button class="btn btn-outline-secondary   col-2 ml-1 " type="submit">查詢</button>
             </form>
        
     </div>
@@ -135,6 +136,7 @@
 
                         }
 
+                        <span id="f-title">@item.actTopic</span>
 
                     <div class="mask">
 
