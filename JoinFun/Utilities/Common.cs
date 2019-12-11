@@ -66,11 +66,17 @@ namespace JoinFun.Utilities
             //將會員、留言板、評價、揪團違規查詢結果合併
             var AllVio = activityVio.Union(RemarkVio).Union(BoardVio).Union(MemberVio);
 
-            var Result_stop5 = AllVio.OrderByDescending(m => m.vioId).Where(m => m.punishId== "pmt0000004").OrderByDescending(m=>m.vioId).Take(1).FirstOrDefault();
-            var Result_stop3 = AllVio.OrderByDescending(m => m.vioId).Where(m => m.punishId== "pmt0000003").OrderByDescending(m=>m.vioId).Take(1).FirstOrDefault();
-            if (Result_stop5 != null)
+            var Result_stop5 = AllVio.Where(m => m.punishId== "pmt0000004").OrderByDescending(m=>m.vioProcessTime).Take(1).FirstOrDefault();
+            var Result_stop3 = AllVio.Where(m => m.punishId== "pmt0000003").OrderByDescending(m=>m.vioProcessTime).Take(1).FirstOrDefault();
+
+            if (Result_stop5 != null && Result_stop3 != null) {
+                if (Result_stop5.vioProcessTime.Value.AddDays(5) > Result_stop3.vioProcessTime.Value.AddDays(3))
+                    return (DateTime)Result_stop5.vioProcessTime.Value.AddDays(5);
+                return (DateTime)Result_stop3.vioProcessTime.Value.AddDays(3);
+            }
+            else if (Result_stop5 != null && Result_stop3 == null)
                 return (DateTime)Result_stop5.vioProcessTime.Value.AddDays(5);
-            if (Result_stop3 != null)
+            else if (Result_stop5 == null && Result_stop3 != null)
                 return (DateTime)Result_stop3.vioProcessTime.Value.AddDays(3);
 
             //若查無停權五天及停權三天紀錄時，回傳DateTime.MinValue;

@@ -1,0 +1,92 @@
+﻿@model JoinFun.ViewModel.MemberInquireVM
+
+@{
+    ViewBag.Title = "會員狀態管理";
+}
+
+<h2 class="text-warning">@(ViewBag.nick) 會員狀態管理</h2>
+
+<hr />
+
+<input id="Hidden1" type="hidden" value=""/>
+@foreach (var i in Model.Violation)
+{
+
+
+        <div class="border mb-4 animated slideInUp pic1">
+            <div class="row mb-1 align-items-center ">
+
+                <div class="col col-10 col-md-10 b-top  ">
+                    <div class="row text-center mt-3 ">
+                        <div class="col-12 col-md-6 ">
+                            <div class="row">
+                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">違規編號</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@i.vioId</span></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 ">
+                            <div class="row">
+                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">違規類型</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning ">@Html.DisplayFor(modelItem => i.Type_of_Violate.vioClass)</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center mt-md-3">
+                        <div class="col-12 col-md-6 ">
+                            <div class="row">
+                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">違規事項編號</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@i.CorrespondingEventID</span></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6  ">
+                            <div class="row ">
+                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">違規標題</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0 "><span class="text-warning p-2">@i.vioTitle</span></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row text-center mt-md-3">
+
+                        <div class="col-12 col-md-6  ">
+                            <div class="row ">
+                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">處置方式</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@Html.DisplayFor(modelItem => i.Punishment.punishName)</span></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6  ">
+                            <div class="row ">
+                                <div class="col col-12 col-md-4 mb-2 mb-md-0"><span class="text-white">處置時間</span></div>
+                                <div class="col col-12 col-md-8 mb-2 mb-md-0"><span class="text-warning p-2">@(i.vioProcessTime.HasValue ? i.vioProcessTime.Value.ToString("yyyy-MM-dd　HH:mm:ss") : "")</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col col-2 col-md-2">
+                    <div class="row text-center mt-md-3">
+                        <div><span class="text-white">處理人員</span></div>
+                        <div><span class="text-warning p-2">　@Html.DisplayFor(modelItem => i.Administrator.admNick)</span></div>
+
+
+                    </div>
+
+
+                    <div class="row col col-md-12  mt-md-3">
+                        <div class="btn btn-warning"><a href="@Url.Action("InquireEdit","Adm", new { vioID = i.vioId, memId = Request.QueryString["memID"]})" class="text-danger">編輯</a></div>
+
+
+                    </div>
+                    
+                </div>
+            </div>
+         </div>
+        
+        }
+
+        <div class="btn btn-warning"><a href="@Url.Action("Inquire","Adm")">返回列表</a></div>
+        }
