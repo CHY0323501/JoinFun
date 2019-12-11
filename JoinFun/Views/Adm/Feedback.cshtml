@@ -103,6 +103,8 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            if ($('#load').val() == "")
+                $('#unprocessed').addClass('show').addClass('active')
             var loading = $('#load').val();
             $('#feedback').show();
             $('#' + loading).addClass('show').addClass('active');

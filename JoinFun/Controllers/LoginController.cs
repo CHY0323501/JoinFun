@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using JoinFun.Utilities;
 
 namespace JoinFun.Controllers
 {
@@ -23,15 +24,16 @@ namespace JoinFun.Controllers
         public ActionResult Login(int? c)
         {
 
-            if (Session["memid"] != null) {
+            if (Session["memid"] != null)
+            {
                 if (String.IsNullOrEmpty(Session["memid"].ToString()))
                     return View();
                 if (c == null)
                     return View();
             }
-                
-            
-                return RedirectToAction("Index", "Activity");
+
+
+            return RedirectToAction("Index", "Activity");
 
         }
 
@@ -42,8 +44,8 @@ namespace JoinFun.Controllers
 
             //使用Linq查詢取得帳號(加密)
             var getAcc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
-            
-            
+
+
 
             if (getAcc == null)
             {
@@ -74,7 +76,7 @@ namespace JoinFun.Controllers
 
             if (reader.Read())
             {
-                if (a.Approved == true  )
+                if (a.Approved == true)
                 {
                     if (a.Suspend == false)
                     {
@@ -110,17 +112,20 @@ namespace JoinFun.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Activity");
         }
-        
-        public ActionResult FbLogin(string ID,string email) {
-            var Smember=db.Social_Net_ID.Where(m => m.socialId == ID).FirstOrDefault();
-            
-            if (Smember == null) {
-                
+
+        public ActionResult FbLogin(string ID, string email)
+        {
+            var Smember = db.Social_Net_ID.Where(m => m.socialId == ID).FirstOrDefault();
+
+            if (Smember == null)
+            {
+
                 //Session["SocialID"] = ID;
                 //Session["email"] = email;
-                return RedirectToAction("FBRegister",new { SocialID = ID , email = email });
+                return RedirectToAction("FBRegister", new { SocialID = ID, email = email });
             }
-            else {
+            else
+            {
                 var mem = db.Member.Where(m => m.memId == Smember.memId).FirstOrDefault();
                 if (mem.Suspend == false)
                 {
@@ -131,10 +136,28 @@ namespace JoinFun.Controllers
 
                     return RedirectToAction("Index", "Activity");
                 }
+                else {
+                    //判斷停權天數是否已到
+                    Common com = new Common();
+                    DateTime CheckResult = com.CheckMemberSuspend(mem.memId);
+                    if (DateTime.Now > CheckResult)
+                    {
+                        mem.Suspend = false;
+                        db.SaveChanges();
+
+                        Session["memid"] = mem.memId;
+                        Session["nick"] = mem.memNick;
+                    }
+                    else {
+                        TempData["LoginERR"] = "很抱歉，您的帳戶已被停權";
+                        return RedirectToAction("Login", new { c = 1 });
+                    }
+                }
+                
             }
-            return RedirectToAction("Login",new { c=1});
+            return RedirectToAction("Login", new { c = 1 });
         }
-        public ActionResult FBRegister(string SocialID,string email)
+        public ActionResult FBRegister(string SocialID, string email)
         {
 
             ViewBag.County = db.County.ToList();
@@ -147,7 +170,7 @@ namespace JoinFun.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FBRegister(Member mem, string Introduction, string Habit, string Dietary_Preference,string SocialID)
+        public ActionResult FBRegister(Member mem, string Introduction, string Habit, string Dietary_Preference, string SocialID)
         {
             string getmmId = db.Database.SqlQuery<string>("select [dbo].[GetMemId]()").FirstOrDefault();
 
@@ -180,7 +203,7 @@ namespace JoinFun.Controllers
             db.Social_Net_ID.Add(social);
             db.SaveChanges();
 
-            return RedirectToAction("FbLogin",new { ID= SocialID,email=mem.Email });
+            return RedirectToAction("FbLogin", new { ID = SocialID, email = mem.Email });
 
         }
     }

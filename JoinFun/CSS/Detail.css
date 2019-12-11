@@ -74,7 +74,14 @@ margin-top:15px;
     text-align:center;
     padding-right:45px;
     width:100%;
+    padding-bottom:15px;
+    padding-top:15px;
 }
+#commentBoard{
+    margin:0 auto;
+
+}
+
 
 #act_content1 {
     height: 200px;
@@ -146,4 +153,19 @@ margin-top:15px;
 
 #memamount{
     color:rgba(130, 61, 61, 0.88)
+}
+
+.delreturnbox{
+    position:relative;
+
+}
+
+@media (min-width:920px), scan {
+    #detailreturn {
+        top:0;
+        right:0;
+        position:absolute;
+       
+    }
+
 }
