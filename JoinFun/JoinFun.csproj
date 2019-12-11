@@ -825,6 +825,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountAPIController.cs" />
@@ -911,6 +912,7 @@
     <Compile Include="Models\Join_Fun_Activities.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginRule.cs" />
     <Compile Include="Models\Member.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>

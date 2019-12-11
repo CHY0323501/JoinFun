@@ -16,6 +16,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace JoinFun.Controllers
 {
+    [LoginRule]
     public class AdmController : Controller
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
@@ -213,34 +214,30 @@ namespace JoinFun.Controllers
         //查看公告
         public ActionResult Post(string PostNo, int page = 1)
         {
-            Session["admid"] = "adm002";
-            if (Session["admid"] != null) {
+            //Session["admid"] = "adm002";
+            //if (Session["admid"] != null) {
                 if (!String.IsNullOrEmpty(PostNo))
                     ViewBag.PostNo = PostNo;
-                ////判斷url的page有無輸入正確頁數
-                //int TotalCount = db.Post.ToList().Count();
-                //if (page > getTotalPages(TotalCount))
-                //    return RedirectToRoute(new { page = 1 });
+                
 
                 return View();
-            }
-            return RedirectToAction("Login","Adm");
+            //}
+            
             
         }
         //新增公告
         public ActionResult PostCreate()
         {
-            Session["admid"] = "adm002";
-            if (Session["admid"] != null)
-            {
+            
+            
                 string session = Session["admid"].ToString();
                 Post post = new Post();
                 post.postTime = DateTime.Now;
                 ViewBag.admNick = db.Administrator.Where(m => m.admId == session).FirstOrDefault().admNick;
                 return View(post);
-            }
+           
 
-            return RedirectToAction("Login", "Adm");
+            
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult PostCreate(Post post, HttpPostedFileBase postPics)
@@ -340,13 +337,12 @@ namespace JoinFun.Controllers
 
         public ActionResult PostEdit(string PostNo)
         {
-            if (Session["admid"] != null) {
+            
                 Post post = db.Post.Where(m => m.postSerial == PostNo).FirstOrDefault();
                 ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick", post.admId);
                 ViewBag.ShowInCarouselState = post.ShowInCarousel;
                 return View(post);
-            }
-            return RedirectToAction("Login", "Adm");
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -363,7 +359,7 @@ namespace JoinFun.Controllers
         //刪除公告
         public ActionResult PostDelete(string PostNo)
         {
-            if (Session["admid"] != null) {
+            
                 var post = db.Post.Find(PostNo);
                 if (!String.IsNullOrEmpty(PostNo) && post != null)
                 {
@@ -375,8 +371,7 @@ namespace JoinFun.Controllers
                     db.SaveChanges();
                 }
                 return RedirectToAction("Post");
-            }
-            return RedirectToAction("Login", "Adm");
+            
         }
 
         ////計算總頁數
