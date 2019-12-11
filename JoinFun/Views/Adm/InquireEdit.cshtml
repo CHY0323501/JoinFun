@@ -9,7 +9,7 @@
 
 
 @foreach (var i in Model.Violation)
-{<input id="F_punid" type="hidden" name="F_punid" vlaue="@i.punishId" />
+{@*<input id="F_punid" type="hidden" name="F_punid" vlaue="@i.punishId" />*@
     <div class="container">
         <div class="form-horizontal">
             <hr />
@@ -45,6 +45,7 @@
             <hr />
             <h4 class="text-warning">請在以下框內選擇需變更之動作</h4>
             <div class="border">
+                <input id="oldvalue" type="hidden" name="oldvalue" value="@ViewBag.oldpunid"/>
 
                 <table class="table">
                     <thead class="text-white w-50">
@@ -101,6 +102,9 @@
 
 @section scripts{
     <script>
-
+        $(document).ready(function () {
+            $('#oldvalue').val()=$('#F_punid').val();
+        })
+        
     </script>
 }

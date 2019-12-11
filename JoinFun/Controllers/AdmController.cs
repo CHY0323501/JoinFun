@@ -456,15 +456,17 @@ namespace JoinFun.Controllers
                 punishment=db.Punishment.ToList()
             };
             ViewBag.vioId = db.Violation.Where(m => m.vioId == vioId).Select(m => m.vioId).FirstOrDefault();
+            ViewBag.oldpunid = db.Violation.Where(m => m.vioId == vioId).FirstOrDefault().punishId;
 
             return View(edit);
         }
 
         [HttpPost]
-        public ActionResult InquireEdit(int approved, string vioId,string memId,string punId,string F_punid)
+        public ActionResult InquireEdit(string vioId,string memId,string punId,string oldvalue)
         {
             var editVio = db.Violation.Find(vioId);
-            var editmember = db.Member.Find(memId);
+            //var editmember = db.Member.Find(memId);
+            var editmember = db.Member.Where(m=>m.memId== memId).FirstOrDefault();
 
 
             MessageCenter mail = new MessageCenter();
@@ -472,16 +474,37 @@ namespace JoinFun.Controllers
 
             Session["admid"] = "adm004";
 
-            if (F_punid == "pmt0000001")
+            if (oldvalue == "pmt0000001")
             {
                 switch (punId)
                 {
                     case "pmt0000002":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        if (editmember.numViolate < 3)
+                        {
+                            editmember.numViolate = Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
                     case "pmt0000003":
                     case "pmt0000004":
                         editVio.punishId = punId;
                         editVio.implement_admId = Session["admid"].ToString();
                         editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
                         db.SaveChanges();
                         if (editmember.numViolate < 3)
                         {
@@ -513,7 +536,7 @@ namespace JoinFun.Controllers
             }
             else 
             {
-                editmember.numViolate = Convert.ToInt16(editmember.numViolate - 1);
+                editmember.numViolate = Convert.ToInt16(editmember.numViolate-1);
                 editmember.Suspend = false;
                 switch (punId)
                 {
@@ -524,11 +547,32 @@ namespace JoinFun.Controllers
                         db.SaveChanges();
                         break;
                     case "pmt0000002":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        if (editmember.numViolate < 3)
+                        {
+                            editmember.numViolate = Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
                     case "pmt0000003":
                     case "pmt0000004":
                         editVio.punishId = punId;
                         editVio.implement_admId = Session["admid"].ToString();
                         editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
                         db.SaveChanges();
                         if (editmember.numViolate <= 3)
                         {
