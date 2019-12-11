@@ -383,8 +383,6 @@ namespace JoinFun.Controllers
         //查詢會員狀態
         public ActionResult Inquire(string searchString)
         {
-
-
             var member = from a in db.Member select a;
 
             if (!string.IsNullOrEmpty(searchString))
@@ -398,45 +396,17 @@ namespace JoinFun.Controllers
             }
             else
             {
-
                 MemberInquireVM read = new MemberInquireVM()
                 {
                     Member = db.Member.ToList(),
                     Violation = db.Violation.ToList(),
                     Punishment = db.Punishment.ToList()
-
-
                 };
                 return View(read);
             }
-
-
-
         }
-        //修改違規紀錄
-
-        //public ActionResult InquireEdit(string memID)
-        //{
-        //    var vio = from a in db.Violation select a;
-
-
-
-        //    { 
-        //    MemberInquireVM edit = new MemberInquireVM()
-        //    {
-        //        Member = db.Member.Where(m => m.memId == memID).ToList(),
-        //        MemberRemark = db.Member_Remarks.Where(m => m.FromMemId == memID).ToList(),
-        //        MessageBoard = db.Message_Board.Where(m => m.memId == memID).ToList(),
-        //        Activity = db.Join_Fun_Activities.Where(m => m.hostId == memID).ToList(),
-        //        Violation = db.Violation.Where(m => m.CorrespondingEventID == memID).ToList()
-        //    };
-        //    }
-        //    ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
-
-
-        //    return View(edit);
-
-        public ActionResult InquireEdit(string memID="M000000003")
+        //查看詳細違規紀錄
+        public ActionResult InquireDetail(string memID="M000000003")
         {
             var activityVio = (from a in db.Join_Fun_Activities
                                         join b in db.Violation
@@ -461,18 +431,174 @@ namespace JoinFun.Controllers
             //將會員、留言板、評價、揪團違規查詢結果合併
             var AllVio = activityVio.Union(RemarkVio).Union(BoardVio).Union(MemberVio);
 
-
-
-            MemberInquireVM edit = new MemberInquireVM()
+            MemberInquireVM detail = new MemberInquireVM()
             {
                 Violation = AllVio.OrderByDescending(m => m.vioId).Where(m=>m.implement_admId!=null),
             };
             
             ViewBag.nick = db.Member.Where(m => m.memId == memID).Select(m => m.memNick).FirstOrDefault();
 
+            return View(detail);
+        }
+
+        //編輯違規項目
+        public ActionResult InquireEdit(string vioId)
+        {
+            MemberInquireVM edit = new MemberInquireVM()
+            {
+                Member=db.Member.ToList(),
+                Violation=db.Violation.Where(m=>m.vioId==vioId),
+                punishment=db.Punishment.ToList()
+            };
+            ViewBag.vioId = db.Violation.Where(m => m.vioId == vioId).Select(m => m.vioId).FirstOrDefault();
+            ViewBag.oldpunid = db.Violation.Where(m => m.vioId == vioId).FirstOrDefault().punishId;
+
             return View(edit);
+        }
+
+        [HttpPost]
+        public ActionResult InquireEdit(string vioId,string memId,string punId,string oldvalue)
+        {
+            var editVio = db.Violation.Find(vioId);
+            //var editmember = db.Member.Find(memId);
+            var editmember = db.Member.Where(m=>m.memId== memId).FirstOrDefault();
 
 
+            MessageCenter mail = new MessageCenter();
+            List<string> mailList = new List<string> { editmember.Email };
+
+            Session["admid"] = "adm004";
+
+            if (oldvalue == "pmt0000001")
+            {
+                switch (punId)
+                {
+                    case "pmt0000002":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        if (editmember.numViolate < 3)
+                        {
+                            editmember.numViolate = Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
+                    case "pmt0000003":
+                    case "pmt0000004":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
+                        db.SaveChanges();
+                        if (editmember.numViolate < 3)
+                        {
+                            editmember.numViolate =Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
+                    case "pmt0000005":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
+                        db.SaveChanges();
+                        mail.SendEmail(mailList, "違規停權通知",
+                               "親愛的Join Fun會員您好：　" +
+                               "因您已嚴重違反Join Fun網站規定，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        break;
+                }
+            }
+            else 
+            {
+                editmember.numViolate = Convert.ToInt16(editmember.numViolate-1);
+                editmember.Suspend = false;
+                switch (punId)
+                {
+                    case "pmt0000001":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        break;
+                    case "pmt0000002":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        if (editmember.numViolate < 3)
+                        {
+                            editmember.numViolate = Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
+                    case "pmt0000003":
+                    case "pmt0000004":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
+                        db.SaveChanges();
+                        if (editmember.numViolate <= 3)
+                        {
+                            editmember.numViolate = Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
+                    case "pmt0000005":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
+                        db.SaveChanges();
+                        mail.SendEmail(mailList, "違規停權通知",
+                               "親愛的Join Fun會員您好：　" +
+                               "因您已嚴重違反Join Fun網站規定，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        break;
+                }
+            }
+                db.SaveChanges();
+            return RedirectToAction("Inquire","Adm");
         }
 
 
@@ -676,6 +802,9 @@ namespace JoinFun.Controllers
                         punish.punishId = punishID;
                         punish.implement_admId = admID;
                         punish.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+
+                        db.Member.Where(m => m.memId == memID).FirstOrDefault().Suspend = true;
                         db.SaveChanges();
                         mail.SendEmail(mailList, "違規停權通知",
                                 "親愛的Join Fun會員您好：　" +

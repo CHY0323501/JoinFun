@@ -9,8 +9,7 @@
 <h2 class="center text-warning">會員狀態管理</h2>
 
 <hr />
-@*@using (Html.BeginForm())
-{*@
+
 <form method="get" action="Inquire">
     <p>
         @Html.TextBox("searchString")
@@ -47,7 +46,7 @@
 
 
                         <td>
-                            <a href="@Url.Action("InquireEdit", "Adm", new { memID = i.memId })" class="text-decoration-none btn btn-danger">編輯</a>
+                            <a href="@Url.Action("InquireDetail", "Adm", new { memID = i.memId})" class="text-decoration-none btn btn-danger">詳細資料</a>
                         </td>
                     </tr>
                 </tbody>
@@ -63,7 +62,7 @@
                         <td>HAHA</td>
                         <td>@i.numViolate 次</td>
                         <td>
-                            <a href="@Url.Action("InquireEdit", "Adm", new { memID = i.memId })" class="text-decoration-none btn btn-info">編輯</a>
+                            <a href="@Url.Action("InquireDetail", "Adm", new { memID = i.memId})" class="text-decoration-none btn btn-info">詳細資料</a>
 
                         </td>
                     </tr>
