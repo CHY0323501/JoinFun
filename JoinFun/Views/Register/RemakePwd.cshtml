@@ -1,60 +1,137 @@
 ﻿@model JoinFun.Models.Acc_Pass
 
 @{
-    ViewBag.Title = "RemakePwd";
-     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "重置密碼";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Register{
+
+
+<link href="~/CSS/Register .css" rel="stylesheet" />
 }
 
 
-<div class="container">
-    <div class="col-md-8 offset-2">
 
-        @using (Html.BeginForm("RemakePwd","Register",FormMethod.Post))
+@*<div class="container mt-5 just ">
+
+    <div class="row ">
+        <div class="col-md-12">
+            <h2 class="text-center mt-5">重置密碼</h2>
+        </div>
+
+        @using (Html.BeginForm("RemakePwd", "Register", FormMethod.Post))
         {
-            @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4 class="mt-5">重置密碼</h4>
+        <div class="form-horizontal ">
+
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            
-        <input id="email_ID" type="hidden"  value="@ViewBag.emailid" name="email_ID"/>
+
+            <input id="email_ID" type="hidden" value="@ViewBag.emailid" name="email_ID" />
 
 
 
             <div class="form-group">
 
-                @Html.LabelFor(model => model.Password, "新密碼", htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.LabelFor(model => model.Password, "新密碼", htmlAttributes: new { @class = "control-label " })
 
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
+
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
             </div>
 
 
 
             <div class="form-group">
 
-                @Html.LabelFor(model => model.PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-4" })
-            </div>
-            <div class="col-md-8">
+                @Html.LabelFor(model => model.PasswordConfirm, htmlAttributes: new { @class = "control-label " })
+
+
                 @Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "password" } })
                 @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { @class = "text-danger" })
             </div>
 
         </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-success" />
-                </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
+        </div>
 
         }
 
-        <div>
-            @*@Html.ActionLink("返回會員登入", "Login", "Login")*@
-        </div>
+
+
+
+
     </div>
-</div>
+</div>*@
+
+@*<div style="min-height:100vh">
+    *@
+    @*<div class="row justify-content-center ml-1 ">
+        *@
+        <div class=" RemakePwd-box">
+            @using (Html.BeginForm())
+            {
+            @Html.AntiForgeryToken()
+                <div class="mb-2"></div>
+
+            <h3 class="mt-5 text-center mb-4">重置密碼</h3>
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <input id="email_ID" type="hidden" value="@ViewBag.emailid" name="email_ID" />
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+
+            <div class="form-group ">
+
+                @Html.LabelFor(model => model.Password, "新密碼", htmlAttributes: new { @class = "control-label col-md-8 offset-2 mt-3" })
+
+
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control col-md-8 offset-2", type = "password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = " col-md-8 offset-2", @style = "color:#ffb0b7" })
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-8 offset-2" })
+
+
+                @Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @class = "form-control col-md-8 offset-2", type = "password" } })
+                @Html.ValidationMessageFor(model => model.PasswordConfirm, "", new { @class = " col-md-8 offset-2", @style = "color:#ffb0b7" })
+            </div>
+
+
+
+
+
+            <div class="form-group ">
+
+
+
+                <input type="submit" value="Save" class="btn btn-success col-md-8 offset-2 " />
+            </div>
+
+
+
+
+            }
+
+        </div>
+        @*
+    </div>*@
+    @*
+</div>*@

@@ -58,10 +58,13 @@ body {
     left: calc(38%);
 }
 
-.register-box {
+.register-box1 {
+    width: 300px;
+    height: 860px;
     background: rgba(0,0,0,0.6);
     color: #fff;
-    
+    border-radius: 20px;
+    top: 0px;
 }
 
 .pwdEdit-box {
@@ -95,6 +98,19 @@ footer {
     background-color: #3b5998;
 }
 
-
+.RemakePwd-box {
+    width: 450px;
+    height: 400px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    top: 310px;
+    left: 49%;
+    bottom: auto;
+    position: relative;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    box-shadow: 5px 5px 12px 4px rgba(20%,20%,40%,0.5);
+    border-radius: 10px;
+}
 
 

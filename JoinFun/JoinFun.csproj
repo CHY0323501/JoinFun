@@ -1069,6 +1069,7 @@
     <Content Include="Views\Shared\_IndexLayout.cshtml" />
     <Content Include="Views\Adm\SortByAct.cshtml" />
     <Content Include="Views\Adm\SortByReport.cshtml" />
+    <Content Include="Views\Adm\key.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
