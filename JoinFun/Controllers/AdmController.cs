@@ -16,7 +16,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace JoinFun.Controllers
 {
-    [LoginRule]
+
     public class AdmController : Controller
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
@@ -909,7 +909,7 @@ namespace JoinFun.Controllers
 
         public ActionResult ActManage(int page = 1)
         {
-            var actdetail = db.Join_Fun_Activities.ToList();
+            var actdetail = db.Join_Fun_Activities.OrderByDescending(m=>m.actId).ToList();
 
             int pagesize = 8;
             int pagecurrent = page < 1 ? 1 : page;
