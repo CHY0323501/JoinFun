@@ -16,6 +16,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace JoinFun.Controllers
 {
+    [LoginRule]
     public class AdmController : Controller
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
@@ -85,19 +86,19 @@ namespace JoinFun.Controllers
         //註冊管理員
         public ActionResult AdmRegister(string admId)
         {
-            var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
-            if (admId == null)
-            {
-                return RedirectToAction("Login", "Adm");
-            }
-            else
-            {
-                if (Session["admid"].ToString() == admId)
-                {
+            //var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
+            //if (admId == null)
+            //{
+            //    return RedirectToAction("Login", "Adm");
+            //}
+            //else
+            //{
+            //    if (Session["admid"].ToString() == admId)
+            //    {
                     return View();
-                }
-                return RedirectToAction("Login", "Adm");
-            }
+            //    }
+            //    return RedirectToAction("Login", "Adm");
+            //}
         }
 
         [HttpPost]
@@ -213,34 +214,30 @@ namespace JoinFun.Controllers
         //查看公告
         public ActionResult Post(string PostNo, int page = 1)
         {
-            Session["admid"] = "adm002";
-            if (Session["admid"] != null) {
+            //Session["admid"] = "adm002";
+            //if (Session["admid"] != null) {
                 if (!String.IsNullOrEmpty(PostNo))
                     ViewBag.PostNo = PostNo;
-                ////判斷url的page有無輸入正確頁數
-                //int TotalCount = db.Post.ToList().Count();
-                //if (page > getTotalPages(TotalCount))
-                //    return RedirectToRoute(new { page = 1 });
+                
 
                 return View();
-            }
-            return RedirectToAction("Login","Adm");
+            //}
+            
             
         }
         //新增公告
         public ActionResult PostCreate()
         {
-            Session["admid"] = "adm002";
-            if (Session["admid"] != null)
-            {
+            
+            
                 string session = Session["admid"].ToString();
                 Post post = new Post();
                 post.postTime = DateTime.Now;
                 ViewBag.admNick = db.Administrator.Where(m => m.admId == session).FirstOrDefault().admNick;
                 return View(post);
-            }
+           
 
-            return RedirectToAction("Login", "Adm");
+            
         }
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult PostCreate(Post post, HttpPostedFileBase postPics)
@@ -340,13 +337,12 @@ namespace JoinFun.Controllers
 
         public ActionResult PostEdit(string PostNo)
         {
-            if (Session["admid"] != null) {
+            
                 Post post = db.Post.Where(m => m.postSerial == PostNo).FirstOrDefault();
                 ViewBag.admId = new SelectList(db.Administrator, "admId", "admNick", post.admId);
                 ViewBag.ShowInCarouselState = post.ShowInCarousel;
                 return View(post);
-            }
-            return RedirectToAction("Login", "Adm");
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -363,7 +359,7 @@ namespace JoinFun.Controllers
         //刪除公告
         public ActionResult PostDelete(string PostNo)
         {
-            if (Session["admid"] != null) {
+            
                 var post = db.Post.Find(PostNo);
                 if (!String.IsNullOrEmpty(PostNo) && post != null)
                 {
@@ -375,8 +371,7 @@ namespace JoinFun.Controllers
                     db.SaveChanges();
                 }
                 return RedirectToAction("Post");
-            }
-            return RedirectToAction("Login", "Adm");
+            
         }
 
         ////計算總頁數
@@ -456,15 +451,17 @@ namespace JoinFun.Controllers
                 punishment=db.Punishment.ToList()
             };
             ViewBag.vioId = db.Violation.Where(m => m.vioId == vioId).Select(m => m.vioId).FirstOrDefault();
+            ViewBag.oldpunid = db.Violation.Where(m => m.vioId == vioId).FirstOrDefault().punishId;
 
             return View(edit);
         }
 
         [HttpPost]
-        public ActionResult InquireEdit(int approved, string vioId,string memId,string punId,string F_punid)
+        public ActionResult InquireEdit(string vioId,string memId,string punId,string oldvalue)
         {
             var editVio = db.Violation.Find(vioId);
-            var editmember = db.Member.Find(memId);
+            //var editmember = db.Member.Find(memId);
+            var editmember = db.Member.Where(m=>m.memId== memId).FirstOrDefault();
 
 
             MessageCenter mail = new MessageCenter();
@@ -472,16 +469,37 @@ namespace JoinFun.Controllers
 
             Session["admid"] = "adm004";
 
-            if (F_punid == "pmt0000001")
+            if (oldvalue == "pmt0000001")
             {
                 switch (punId)
                 {
                     case "pmt0000002":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        if (editmember.numViolate < 3)
+                        {
+                            editmember.numViolate = Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
                     case "pmt0000003":
                     case "pmt0000004":
                         editVio.punishId = punId;
                         editVio.implement_admId = Session["admid"].ToString();
                         editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
                         db.SaveChanges();
                         if (editmember.numViolate < 3)
                         {
@@ -513,7 +531,7 @@ namespace JoinFun.Controllers
             }
             else 
             {
-                editmember.numViolate = Convert.ToInt16(editmember.numViolate - 1);
+                editmember.numViolate = Convert.ToInt16(editmember.numViolate-1);
                 editmember.Suspend = false;
                 switch (punId)
                 {
@@ -524,11 +542,32 @@ namespace JoinFun.Controllers
                         db.SaveChanges();
                         break;
                     case "pmt0000002":
+                        editVio.punishId = punId;
+                        editVio.implement_admId = Session["admid"].ToString();
+                        editVio.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        if (editmember.numViolate < 3)
+                        {
+                            editmember.numViolate = Convert.ToInt16(editmember.numViolate + 1);
+                            db.SaveChanges();
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punId).FirstOrDefault().punishName
+                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        else
+                        {
+                            mail.SendEmail(mailList, "違規停權通知",
+                                "親愛的Join Fun會員您好：　" +
+                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                        }
+                        break;
                     case "pmt0000003":
                     case "pmt0000004":
                         editVio.punishId = punId;
                         editVio.implement_admId = Session["admid"].ToString();
                         editVio.vioProcessTime = DateTime.Now;
+                        editmember.Suspend = true;
                         db.SaveChanges();
                         if (editmember.numViolate <= 3)
                         {

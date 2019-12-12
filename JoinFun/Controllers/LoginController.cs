@@ -78,6 +78,7 @@ namespace JoinFun.Controllers
             {
                 if (a.Approved == true)
                 {
+                    
                     if (a.Suspend == false)
                     {
                         Session["memid"] = reader["memId"].ToString();
@@ -88,8 +89,23 @@ namespace JoinFun.Controllers
                     }
                     else
                     {
-                        ViewBag.LoginERR = "您的帳號被停權";
-                        return View();
+                        var mem = db.Member.Where(m => m.memId == getAcc.memId).FirstOrDefault();
+                        //判斷停權天數是否已到
+                        Common com = new Common();
+                        DateTime CheckResult = com.CheckMemberSuspend(mem.memId);
+                        if (DateTime.Now > CheckResult)
+                        {
+                            mem.Suspend = false;
+                            db.SaveChanges();
+
+                            Session["memid"] = mem.memId;
+                            Session["nick"] = mem.memNick;
+                        }
+                        else
+                        {
+                            TempData["LoginERR"] = "很抱歉，您的帳戶已被停權";
+                            return RedirectToAction("Login", new { c = 1 });
+                        }
                     }
                 }
                 else
