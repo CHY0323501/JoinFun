@@ -138,8 +138,7 @@ namespace JoinFun.Controllers
 
 
 
-            if (Session["admId"].ToString() == admId)
-            {
+           
                 var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
                 //var AccountAdmEdit = db.Administrator.Find().admAcc;
 
@@ -151,8 +150,8 @@ namespace JoinFun.Controllers
                 Session["AdmAccount"] = AccountAdmEdit;
                 ViewBag.Nick = AdmMIdEdit.admNick;
                 return View();
-            }
-            return RedirectToAction("Index", "Adm");
+            //}
+            //return RedirectToAction("Index", "Adm");
 
         }
 
