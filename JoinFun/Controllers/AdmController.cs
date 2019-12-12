@@ -149,7 +149,7 @@ namespace JoinFun.Controllers
                 //Session["admid"] = "adm007";
                 Session["AdmAccount"] = AccountAdmEdit;
                 ViewBag.Nick = AdmMIdEdit.admNick;
-                return View();
+                return View(AdmMIdEdit);
             //}
             //return RedirectToAction("Index", "Adm");
 
@@ -188,19 +188,16 @@ namespace JoinFun.Controllers
 
                     db.SaveChanges();
 
-
-                    return RedirectToAction("Index", "Adm");
-
-
+                    return Content("<script>alert('修改成功');window.location='/Adm/Index';</script>");
                 }
                 else
                 {
                     ViewBag.AdmPwdEditErr = "舊密碼未填或有誤!";
-                    return View();
+                    return View(accPwd);
                 }
 
             }
-            return View();
+            return View(accPwd);
         }
 
         public ActionResult Index()
