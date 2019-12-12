@@ -458,7 +458,7 @@ namespace JoinFun.Controllers
             act.maxNumPeople = maxNumPeople;
             act.gender = gender;
             //將Dropdown List的值取回 ---start--- 
-            act.maxBudget = Int16.Parse(Request["Budget_Restrict"]);
+            act.maxBudget = Int16.Parse(Request["maxBudget"]);
             //將Dropdown List的值取回 ---end--- 
             db.SaveChanges();
             return RedirectToAction("Index");
