@@ -93,7 +93,7 @@
 
                         @Html.LabelFor(model => model.admId, htmlAttributes: new { @class = "control-label  " })
 
-                        @Html.EditorFor(model => model.admId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["admid"] } })
+                        @Html.EditorFor(model => model.admId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"@*, @Value = Session["admid"]*@ } })
                         @Html.ValidationMessageFor(model => model.admId, "", new { @style = "color:#ffb0b7" })
 
 
@@ -102,7 +102,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.admAcc, htmlAttributes: new { @class = "control-label " })
 
-                        @Html.EditorFor(model => model.admAcc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = Session["AdmAccount"] } })
+                        @Html.EditorFor(model => model.admAcc, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"@*, @Value = Session["AdmAccount"]*@ } })
                         @Html.ValidationMessageFor(model => model.admAcc, "", new { @style = "color:#ffb0b7" })
 
                     </div>
@@ -110,7 +110,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.admNick, htmlAttributes: new { @class = "control-label " })
 
-                        @Html.EditorFor(model => model.admNick, new { htmlAttributes = new { @class = "form-control",@Value=ViewBag.Nick } })
+                        @Html.EditorFor(model => model.admNick, new { htmlAttributes = new { @class = "form-control"@*,@Value=ViewBag.Nick*@ } })
                         @Html.ValidationMessageFor(model => model.admNick, "", new { @style = "color:#ffb0b7" })
                     </div>
 

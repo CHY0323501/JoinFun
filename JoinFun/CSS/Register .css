@@ -170,3 +170,23 @@ footer {
 .u-gapLeft {
     margin-left: 15px;
 }
+.c-progressBar__item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 18px;
+    color: grey;
+}
+.c-progressBar__item--line::before {
+    content: '';
+    width: 130px;
+    height: 0;
+    margin: 0 15px;
+    border-bottom: 1px solid #dadada;
+}
+.l-promptBlock {
+    padding: 20px;
+    background-color: #ffe6f1;
+}
+.c-link--gn {
+}

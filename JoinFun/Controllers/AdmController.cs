@@ -149,7 +149,7 @@ namespace JoinFun.Controllers
                 //Session["admid"] = "adm007";
                 Session["AdmAccount"] = AccountAdmEdit;
                 ViewBag.Nick = AdmMIdEdit.admNick;
-                return View();
+                return View(AdmMIdEdit);
             //}
             //return RedirectToAction("Index", "Adm");
 
@@ -188,19 +188,16 @@ namespace JoinFun.Controllers
 
                     db.SaveChanges();
 
-
-                    return RedirectToAction("Index", "Adm");
-
-
+                    return Content("<script>alert('修改成功');window.location='/Adm/Index';</script>");
                 }
                 else
                 {
                     ViewBag.AdmPwdEditErr = "舊密碼未填或有誤!";
-                    return View();
+                    return View(accPwd);
                 }
 
             }
-            return View();
+            return View(accPwd);
         }
 
         public ActionResult Index()
@@ -615,72 +612,128 @@ namespace JoinFun.Controllers
 
         public ActionResult SortByReport(string startDate, string endDate)
         {
-            List<Object> list = new List<object>();
+            //List<Object> list = new List<object>();
+            dynamic list = null;
             if (startDate != "" && endDate != "")
             {
                 DateTime start = DateTime.Parse(startDate);
                 DateTime end = DateTime.Parse(endDate);
 
                 var violation = db.Violation.Where(m => m.vioReportTime >= start && m.vioReportTime <= end).ToList();
-                getViolations(list, violation);
+                list = getViolations(violation);
             }
             else if (startDate != "")
             {
                 DateTime start = DateTime.Parse(startDate);
                 var violation = db.Violation.Where(m => m.vioReportTime >= start).ToList();
-                getViolations(list, violation);
+                list = getViolations(violation);
             }
             else
             {
                 DateTime end = DateTime.Parse(endDate);
 
                 var violation = db.Violation.Where(m => m.vioReportTime <= end).ToList();
-                getViolations(list, violation);
+                list = getViolations(violation);
             }
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SortByAct(string startDate, string endDate)
         {
-            List<Object> list = new List<object>();
+            List<Object> list = new List<Object>();
+            List<string> id = new List<string>();
             var violation = db.Violation.ToList();
             if (startDate != "" && endDate != "")
             {
                 DateTime start = DateTime.Parse(startDate);
                 DateTime end = DateTime.Parse(endDate);
                 var act = db.Join_Fun_Activities.Where(m => m.actTime >= start && m.actTime <= end).ToList();
-                foreach (var i in act)
-                {
-                    getViolations(list, violation.Where(m => m.CorrespondingEventID == i.actId).ToList());
-                }
+                id = getList(act);
+                list = getViolations(list, violation, id);
             }
             else if (startDate != "")
             {
                 DateTime start = DateTime.Parse(startDate);
                 var act = db.Join_Fun_Activities.Where(m => m.actTime >= start).ToList();
-                foreach (var i in act)
-                {
-                    getViolations(list, violation.Where(m => m.CorrespondingEventID == i.actId).ToList());
-                }
+                id = getList(act);
+                list = getViolations(list, violation, id);
             }
             else
             {
                 DateTime end = DateTime.Parse(endDate);
                 var act = db.Join_Fun_Activities.Where(m => m.actTime <= end).ToList();
-                foreach (var i in act)
-                {
-                    getViolations(list, violation.Where(m => m.CorrespondingEventID == i.actId).ToList());
-                };
+                id = getList(act);
+                list = getViolations(list, violation, id);
             }
             return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public List<string> getList(List<Join_Fun_Activities> act)
+        {
+            List<string> id = new List<string>();
+            foreach (var item in act)
+            {
+                id.Add(item.actId);
+                if (db.Activity_Details.Any(a => a.actId == item.actId))
+                {
+                    var detail = db.Activity_Details.Where(a => a.actId == item.actId).ToList();
+                    foreach (var i in detail)
+                    {
+                        id.Add(db.Member.Where(m => m.memId == i.memId).FirstOrDefault().memId);
+                    }
+                }
+                if (db.Message_Board.Any(b => b.actId == item.actId))
+                {
+                    var board = db.Message_Board.Where(b => b.actId == item.actId).ToList();
+                    foreach (var i in board)
+                    {
+                        id.Add(i.mboardSerial);
+                    }
+                }
+                if (db.Member_Remarks.Any(r => r.actId == item.actId))
+                {
+                    var remark = db.Member_Remarks.Where(r => r.actId == item.actId).ToList();
+                    foreach (var i in remark)
+                    {
+                        id.Add(i.remarkSerial);
+                    }
+                }
+            }
+            return id;
         }
 
         public ActionResult SortById(string actID)
         {
             List<Object> list = new List<object>();
-            var violation = db.Violation.Where(m => m.CorrespondingEventID == actID).ToList();
-            getViolations(list, violation);
-            return Json(list, JsonRequestBehavior.AllowGet);
+            var violation = db.Violation.ToList();
+            List<string> id = new List<string>();
+            if (db.Join_Fun_Activities.Any(a => a.actId == actID))
+                id.Add(actID);
+            if (db.Activity_Details.Any(a => a.actId == actID))
+            {
+                var detail = db.Activity_Details.Where(a => a.actId == actID).ToList();
+                foreach (var i in detail)
+                {
+                    id.Add(db.Member.Where(m => m.memId == i.memId).FirstOrDefault().memId);
+                }
+            }
+            if (violation.Any(v => v.CorrespondingEventID.StartsWith("B")))
+            {
+                var board = db.Message_Board.Where(b => b.actId == actID).ToList();
+                foreach (var item in board)
+                {
+                    id.Add(item.mboardSerial);
+                }
+            }
+            if (db.Member_Remarks.Any(r => r.actId == actID))
+            {
+                var remark = db.Member_Remarks.Where(r => r.actId == actID).ToList();
+                foreach (var item in remark)
+                {
+                    id.Add(item.remarkSerial);
+                }
+            }
+            return Json(getViolations(list, violation, id), JsonRequestBehavior.AllowGet);
         }
 
         //依分類顯示管理的違規項目
@@ -700,31 +753,31 @@ namespace JoinFun.Controllers
         public ActionResult ShowByMonths(string type, int month)
         {
             var date = DateTime.Now.AddMonths(month);
-            List<Object> list = new List<object>();
+            //List<Object> list = new List<object>();
+            dynamic list = null;
             var violation = db.Violation.ToList();
             switch (type)
             {
                 case "memList":
                     violation = violation.Where(m => m.CorrespondingEventID.StartsWith("M") && m.vioProcessTime != null && m.vioProcessTime >= date).ToList();
-                    getViolations(list, violation);
+                    list = getViolations(violation);
                     break;
                 case "remarkList":
                     violation = violation.Where(m => m.CorrespondingEventID.StartsWith("R") && m.vioProcessTime != null && m.vioProcessTime >= date).ToList();
-                    getViolations(list, violation);
+                    list = getViolations(violation);
                     break;
                 case "actList":
                     violation = violation.Where(m => m.CorrespondingEventID.StartsWith("A") && m.vioProcessTime != null && m.vioProcessTime >= date).ToList();
-                    getViolations(list, violation);
+                    list = getViolations(violation);
                     break;
                 case "commentList":
                     violation = violation.Where(m => m.CorrespondingEventID.StartsWith("B") && m.vioProcessTime != null && m.vioProcessTime >= date).ToList();
-                    getViolations(list, violation);
+                    list = getViolations(violation);
                     break;
             }
 
             return Json(list, JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult ViolationContent(string vioID)
         {
             var evtID = db.Violation.Where(m => m.vioId == vioID).FirstOrDefault().CorrespondingEventID;
@@ -965,54 +1018,75 @@ namespace JoinFun.Controllers
 
         }
 
+        public System.Collections.IEnumerable getViolations(List<Violation> violation)
+        {
+            var list = (from v in violation
+                        select new
+                        {
+                            id = v.vioId,
+                            name = v.FromMemId != null ? (from m in db.Member where m.memId == v.FromMemId select m.memNick).FirstOrDefault() : (from a in db.Administrator where a.admId == v.FromAdmID select a.admNick).FirstOrDefault(),
+                            type = v.CorrespondingEventID.StartsWith("M") ? "會員" : v.CorrespondingEventID.StartsWith("A") ? "揪團活動" : v.CorrespondingEventID.StartsWith("R") ? "會員評價" : "留言板",
+                            typeId = v.CorrespondingEventID,
+                            title = v.vioTitle,
+                            vioTime = v.vioReportTime,
+                            condition = v.vioProcessTime == null ? "未處理" : "已處理",
+                            doneTime = v.vioProcessTime
+                        }).ToList();
+
+            return list;
+        }
+
         //取得檢舉明細清單方法 for Json data
-        public List<Object> getViolations(List<Object> list, List<Violation> violation)
+        public List<Object> getViolations(List<Object> list, List<Violation> violation, List<string> id)
         {
             var member = db.Member.ToList();
             var administrator = db.Administrator.ToList();
             dynamic data = null;
-            foreach (var item in violation)
+            foreach (var i in id)
             {
-                string name = "";
-                if (item.FromAdmID != null)
-                    name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
-                else if (item.FromMemId != null)
-                    name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
-                string type = "";
-                if (item.CorrespondingEventID.StartsWith("M"))
+                foreach (var item in violation.Where(v => v.CorrespondingEventID == i))
                 {
-                    type = "會員";
-                }
-                else if (item.CorrespondingEventID.StartsWith("A"))
-                {
-                    type = "揪團活動";
-                }
-                else if (item.CorrespondingEventID.StartsWith("R"))
-                {
-                    type = "會員評價";
-                }
-                else
-                {
-                    type = "留言板";
-                }
-                string condition = "";
-                if (item.vioProcessTime == null)
-                    condition = "未處理";
-                else if (item.vioProcessTime != null)
-                    condition = "已處理";
+                    string name = "";
+                    if (item.FromAdmID != null)
+                        name = administrator.Where(m => m.admId == item.FromAdmID).FirstOrDefault().admNick;
+                    else if (item.FromMemId != null)
+                        name = member.Where(m => m.memId == item.FromMemId).FirstOrDefault().memNick;
+                    string type = "";
+                    if (item.CorrespondingEventID.StartsWith("M"))
+                    {
+                        type = "會員";
+                    }
+                    else if (item.CorrespondingEventID.StartsWith("A"))
+                    {
+                        type = "揪團活動";
+                    }
+                    else if (item.CorrespondingEventID.StartsWith("R"))
+                    {
+                        type = "會員評價";
+                    }
+                    else
+                    {
+                        type = "留言板";
+                    }
+                    string condition = "";
+                    if (item.vioProcessTime == null)
+                        condition = "未處理";
+                    else if (item.vioProcessTime != null)
+                        condition = "已處理";
 
-                data = new
-                {
-                    id = item.vioId,
-                    name,
-                    type,
-                    typeId = item.CorrespondingEventID,
-                    title = item.vioTitle,
-                    vioTime = item.vioReportTime,
-                    condition,
-                    doneTime = item.vioProcessTime
-                };
-                list.Add(data);
+                    data = new
+                    {
+                        id = item.vioId,
+                        name,
+                        type,
+                        typeId = item.CorrespondingEventID,
+                        title = item.vioTitle,
+                        vioTime = item.vioReportTime,
+                        condition,
+                        doneTime = item.vioProcessTime
+                    };
+                    list.Add(data);
+                }
             }
             return list;
         }
