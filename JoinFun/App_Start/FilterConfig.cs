@@ -10,7 +10,7 @@ namespace JoinFun
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new LoginRule());
+            filters.Add(new LoginRule() { Front = true,isVisiter=false});
         }
     }
 }

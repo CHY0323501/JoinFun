@@ -36,7 +36,7 @@ namespace JoinFun.Controllers
         //    };
         //    return View(classList);
         //}
-
+        [LoginRule(isVisiter =true, Front = true)]
         public ActionResult Index()
         {
             if (Session["memid"] == null) {
@@ -337,10 +337,10 @@ namespace JoinFun.Controllers
 
         public ActionResult Create()
         {
-            if (Session["memid"] == null)
-            {
-                return RedirectToAction("Index");
-            }
+            //if (Session["memid"] == null)
+            //{
+            //    return RedirectToAction("Index");
+            //}
             //ViewBag.Drop = GetDropList();
             GetSelectList();
             return View();
