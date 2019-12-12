@@ -775,6 +775,16 @@ namespace JoinFun.Controllers
                         db.SaveChanges();
                         break;
                     case "pmt0000002":
+                        punish.punishId = punishID;
+                        punish.implement_admId = admID;
+                        punish.vioProcessTime = DateTime.Now;
+                        db.SaveChanges();
+                        mail.SendEmail(mailList, "違規警告通知",
+                                "<p> 親愛的Join Fun會員您好：</p><br/><p>　　因您已違反Join Fun網站規定，" +
+                                "經查證後因違規情節輕微，本站依規定記警告一次，違規次數若超過三次將被停權，" +
+                                "，敬請注意；如您有任何疑問，請與本站客服人員聯絡．感謝您對Join Fun的愛護與支持．</p><br /><br />" +
+                                "<span>Join Fun全體人員敬上．</span>");
+                        break;
                     case "pmt0000003":
                     case "pmt0000004":
                         punish.punishId = punishID;
@@ -786,15 +796,17 @@ namespace JoinFun.Controllers
                             violateMem.numViolate = Convert.ToInt16(violateMem.numViolate + 1);
                             db.SaveChanges();
                             mail.SendEmail(mailList, "違規停權通知",
-                                "親愛的Join Fun會員您好：　" +
-                                "因您已違反Join Fun網站規定，本站依規定將此帳號" + db.Punishment.Where(m => m.punishId == punishID).FirstOrDefault().punishName
-                                + "，如有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                                "<p> 親愛的Join Fun會員您好：</p><br/><p>　　因您已違反Join Fun網站規定，本站依規定將此帳號"
+                                + db.Punishment.Where(m => m.punishId == punishID).FirstOrDefault().punishName +
+                                "；如有任何疑問，請與本站客服人員聯絡．感謝您對Join Fun的愛護與支持．</p><br /><br />" +
+                                "<span>Join Fun全體人員敬上．</span>");
                         }
                         else
                         {
                             mail.SendEmail(mailList, "違規停權通知",
-                                "親愛的Join Fun會員您好：　" +
-                                "因您已違反Join Fun網站規定，且違規次數已達3次，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                                "<p> 親愛的Join Fun會員您好：</p><br/><p>　　因您已違反Join Fun網站規定，" +
+                                "且違規次數已達3次，本站依規定將此帳號永久停權；如您有任何疑問，請與本站客服人員聯絡．感謝您對Join Fun的愛護與支持．</p><br /><br />" +
+                                "<span>Join Fun全體人員敬上．</span>");
                         }
                         break;
                     case "pmt0000005":
@@ -802,12 +814,12 @@ namespace JoinFun.Controllers
                         punish.implement_admId = admID;
                         punish.vioProcessTime = DateTime.Now;
                         db.SaveChanges();
-
-                        db.Member.Where(m => m.memId == memID).FirstOrDefault().Suspend = true;
+                        violateMem.Suspend = true;
                         db.SaveChanges();
                         mail.SendEmail(mailList, "違規停權通知",
-                                "親愛的Join Fun會員您好：　" +
-                                "因您已嚴重違反Join Fun網站規定，本站依規定將此帳號永久停權，如您有任何疑問請與本站客服人員聯絡． 感謝您對Join Fun的支持，Join Fun全體人員敬上．");
+                                "<p> 親愛的Join Fun會員您好：</p><br/><p>　　因您已違反Join Fun網站規定，" +
+                                "本站依規定將此帳號永久停權；如您有任何疑問請與本站客服人員聯絡．感謝您對Join Fun的愛護與支持．</p><br /><br />" +
+                                "<span>Join Fun全體人員敬上．</span>");
                         break;
                 }
                 return RedirectToAction("AllViolations");
@@ -871,37 +883,26 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult FeedBackReply(string id, string admId, string Page)
+        public ActionResult FeedBackReply(string id, string admId, string Page, string content)
         {
-            using (var transaction = db.Database.BeginTransaction())
+            if (content != null)
             {
-                try
-                {
-                    var reply = db.Comment.Find(id);
-                    var replyId = reply.commentId;
-                    var memId = reply.memId;
-                    reply.reportTime = DateTime.Now;
-                    reply.reportContent = Request["reportContent"];
-                    reply.admId = admId;
-                    db.SaveChanges();
-                    Notification message = new Notification();
-                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-                    message.InstanceId = replyId;
-                    message.ToMemId = memId;
-                    message.NotiTitle = "Re: " + reply.commentTitle;
-                    message.NotifContent = Request["reportContent"];
-                    message.timeReceived = DateTime.Now;
-                    message.keepNotice = true;
-                    db.Notification.Add(message);
-                    db.SaveChanges();
-                    transaction.Commit();
-                }
-                catch (DbUpdateException)
-                {
-                    transaction.Rollback();
-                }
+                //db.sp_updateComment(id, content, admId, id, content);
+                SqlParameter[] param = new SqlParameter[] {
+                    new SqlParameter("@id", id),
+                    new SqlParameter("@content", content),
+                    new SqlParameter("@admId", admId),
+                    new SqlParameter("@instanceId", id),
+                    new SqlParameter("@notiContent", content)
+                };
+                db.Database.ExecuteSqlCommand("exec dbo.sp_updateComment @id, @content, @admId, @instanceId, @notiContent", param);
+                db.SaveChanges();
+
+                return RedirectToAction("FeedBack", new { Page = Page });
             }
-            return RedirectToAction("FeedBack", new { Page = Page });
+            Comment reply = db.Comment.Find(id);
+            ViewBag.Page = Page;
+            return View(reply);
         }
 
 
