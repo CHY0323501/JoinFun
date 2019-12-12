@@ -36,24 +36,25 @@
     <div class="row">
         <div class="col-md-6 ">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    @for (var i = 0; i <= pic.Count(); i++)
+                @*<ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    @for (var i = 0; i < pic.Count(); i++)
                     {
-                        <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="@i"  class="active" ></li>
                     }
 
-                </ol>
+                </ol>*@
                 <div class="carousel-inner">
 
-                    @foreach (var i in allpic)
-                    {
+                    @foreach (var i in pic)
+                            {
+                                count += 1;
+                                var active = count == 1 ? "active" : " ";
 
-                        if (i.actId == ViewBag.actId)
-                        {
-                            count += 1;
 
-                            <img src="@Url.Content(pic.FirstOrDefault().actPics)" class="carousel-item active bg_carousel" />
-                        };
+                        <div class=" carousel-item @active" id="firstimg">
+                            <img src="@Url.Content(i.actPics)" class="bg_carousel" />
+                        </div>
 
                     };
 
