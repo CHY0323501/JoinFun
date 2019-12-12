@@ -720,7 +720,7 @@ namespace JoinFun.Controllers
                 memList = db.Member.ToList(),
                 admin = db.Administrator.ToList()
             };
-            ViewBag.ID = Page;
+            ViewBag.Page = Page;
             return View(manage);
         }
 
@@ -781,7 +781,7 @@ namespace JoinFun.Controllers
                 remarkList = remark,
                 mboardList = mboard
             };
-            ViewBag.ID = Request["Page"];
+            ViewBag.Page = Request["Page"];
             return View(violate);
         }
 
