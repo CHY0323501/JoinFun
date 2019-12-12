@@ -454,7 +454,7 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(string actId, short paymentTerm, short maxNumPeople, short gender)
+        public ActionResult Edit(string actId, short paymentTerm, short maxNumPeople, short gender, string description, string hash)
         {
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
             act.paymentTerm = paymentTerm;
@@ -463,6 +463,8 @@ namespace JoinFun.Controllers
             //將Dropdown List的值取回 ---start--- 
             act.maxBudget = Int16.Parse(Request["maxBudget"]);
             //將Dropdown List的值取回 ---end--- 
+            act.actDescription = description;
+            act.hashTag = hash;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -632,7 +634,7 @@ namespace JoinFun.Controllers
                 else
                 {
                     if (item.Budget == 0)
-                        list.Add(new SelectListItem() { Text = item.Budget.ToString(), Value = item.BudgetNo.ToString() });
+                        list.Add(new SelectListItem() { Text = "不限", Value = item.BudgetNo.ToString() });
                     else
                         list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
                 }
