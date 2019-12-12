@@ -634,7 +634,7 @@ namespace JoinFun.Controllers
                 else
                 {
                     if (item.Budget == 0)
-                        list.Add(new SelectListItem() { Text = item.Budget.ToString(), Value = item.BudgetNo.ToString() });
+                        list.Add(new SelectListItem() { Text = "不限", Value = item.BudgetNo.ToString() });
                     else
                         list.Add(new SelectListItem() { Text = item.Budget.ToString("NT$#"), Value = item.BudgetNo.ToString() });
                 }
