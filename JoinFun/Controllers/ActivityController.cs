@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using JoinFun.Models;
 using JoinFun.ViewModel;
 using System.Data.Entity.Infrastructure;
+using JoinFun.Utilities;
 
 namespace JoinFun.Controllers
 {
@@ -39,6 +40,8 @@ namespace JoinFun.Controllers
 
         public ActionResult Index()
         {
+            sendTimeAct();
+
             if (Session["memid"] == null) {
                 Session["memid"] = "";
             }
@@ -690,6 +693,37 @@ namespace JoinFun.Controllers
                 return base.File(image2, "image2/jpg");
         }
 
+
+
+        public void sendTimeAct()
+        {
+            Common sendmemnotice = new Common();
+            DateTime afhour = DateTime.Now.AddDays(1);
+            DateTime now = DateTime.Now;
+            var comingAct = db.Join_Fun_Activities.Where(model => model.actTime <= afhour && model.actTime > now).ToList();
+            //var comingAct = db.Join_Fun_Activities.Where(model => model.actTime-DateTime.Now).ToList();
+            List<string> mem = new List<string>();
+
+            foreach (var i in comingAct)
+            {
+
+                var memact = db.Activity_Details.Where(model => model.actId == i.actId && model.appvStatus == true);
+                foreach (var q in memact)
+                {
+                    if (!(db.Notification.Any(m => m.InstanceId == i.actId && m.ToMemId == q.memId)))
+                    {
+
+                        var memid = q.memId;
+                        //mem.Add(memid);
+                        sendmemnotice.CreateNoti(false, i.actId, memid, "活動即將開始", "您參與的活動即將來臨，請盡量提早前往等候。");
+
+                    }
+
+                }
+
+            }
+
+        }
 
     }
 }
