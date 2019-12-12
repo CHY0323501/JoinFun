@@ -50,8 +50,8 @@ namespace JoinFun.Controllers
             //ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
             Finalchoose fc = new Finalchoose()
             {   
-                vwActList = db.vw_Activities.Where(m => m.keepAct == true).OrderByDescending(m => m.actId).ToList(),
-                joinfunlist = db.Join_Fun_Activities.OrderByDescending(m => m.actId).ToList(),
+                vwActList = db.vw_Activities.Where(m => m.keepAct == true).OrderByDescending(m => m.clickTimes).ToList(),
+                joinfunlist = db.Join_Fun_Activities.OrderByDescending(m => m.clickTimes).ToList(),
                 post=db.Post.Where(m=>m.ShowInCarousel==true).OrderByDescending(m=>m.postSerial).Take(1).ToList()
             };
             GetSelectList();
@@ -144,6 +144,10 @@ namespace JoinFun.Controllers
                 ViewBag.actId = actId;
                 //ViewBag.memID = memID;
                 ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
+                //增加該活動點擊次數
+                var act = db.Join_Fun_Activities.Find(actId);
+                act.clickTimes += 1;
+                db.SaveChanges();
                 ActClass ACT = new ActClass()
                 {
                     vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),

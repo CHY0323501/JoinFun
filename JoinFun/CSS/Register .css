@@ -58,10 +58,11 @@ body {
     left: calc(38%);
 }
 
-.register-box {
+.register-box1 {
     background: rgba(0,0,0,0.6);
     color: #fff;
-    
+    border-radius: 20px;
+    top: 0px;
 }
 
 .pwdEdit-box {
@@ -95,6 +96,97 @@ footer {
     background-color: #3b5998;
 }
 
+.RemakePwd-box {
+    width: 450px;
+    height: 400px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    top: 310px;
+    left: 49%;
+    bottom: auto;
+    position: relative;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    box-shadow: 5px 5px 12px 4px rgba(20%,20%,40%,0.5);
+    border-radius: 10px;
+}
 
 
 
+
+.l-main {
+    box-sizing: border-box;
+    padding: 0px;
+    background-color: #f0f0f0;
+}
+
+.content-side {
+    width: 1330px;
+    margin: 0px auto;
+    background-color: #fdfdfd;
+    padding-top: 15px;
+}
+
+.l-signInPage__progressBar {
+    padding-bottom:30px;
+}
+
+.c-progressBar {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    margin: 0;
+    padding: 15px 0;
+}
+
+.c-progressBar__item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 18px;
+    color: grey;
+}
+.c-progressBar__circle {
+    background-color: #30a651;
+    border: 1px solid #30a651;
+    color: #fff;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 700;
+}
+.c-progressBar__text {
+    color: #111;
+    font-weight: 700;
+}
+.u-gapLeft {
+    margin-left: 15px;
+}
+.c-progressBar__item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 18px;
+    color: grey;
+}
+.c-progressBar__item--line::before {
+    content: '';
+    width: 130px;
+    height: 0;
+    margin: 0 15px;
+    border-bottom: 1px solid #dadada;
+}
+.l-promptBlock {
+    padding: 20px;
+    background-color: #ffe6f1;
+}
+.c-link--gn {
+}

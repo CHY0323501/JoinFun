@@ -3,22 +3,19 @@
 @{
     var co = (IEnumerable<JoinFun.Models.County>)ViewBag.County;
     var dis = (IEnumerable<JoinFun.Models.District>)ViewBag.District;
-    ViewBag.Title = "Register";
+    ViewBag.Title = "會員註冊";
 }
 
 @section Register{
-
-    @*<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="//jqueryui.com/resources/demos/style.css">*@
 
     <link href="~/CSS/Register .css" rel="stylesheet" />
     <link href="~/CSS/DatetimePickerUse.css" rel="stylesheet" />
 }
 
-<div class="container register-box " style="min-height: 100vh">
+@*<div class="container register-box1" style="min-height: 100vh">
 
 
-    <h3 class="mt-3 display-4 text-center font-weight-bold">註冊</h3>
+    <h3 class="mt-4 display-4 text-center font-weight-bold">會員註冊</h3>
 
     @using (Html.BeginForm())
     {
@@ -29,10 +26,8 @@
             <div class="row justify-content-around">
 
                 <div class="col-md-4 col-sm-6 ">
-                    <div class="form-group col-md-12 ">
-                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-
-
+                    <div class="form-group col-md-12 offset-2 mt-5 ">
+                      
                         @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
 
                         @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "account", name = "account" } })
@@ -43,7 +38,7 @@
 
                     </div>
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-12" })
@@ -54,7 +49,7 @@
                         @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new {  @style="color:#ffb0b7" })
                         <div></div>
                     </div>
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-12" })
@@ -67,28 +62,26 @@
                     </div>
 
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
                         @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
                         @Html.ValidationMessageFor(model => model.memNick, "", new { @style="color:#ffb0b7"})
                         <div> </div>
                     </div>
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2 ">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
 
 
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new {  @style="color:#ffb0b7"})
-                        @*<input id="Email" type="email" class="form-control" />*@
-
-                        <div></div>
+                       
+                       <div></div>
 
                     </div>
 
-                    <div class="form-group col-md-12 ">
-                        @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
-                        @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
+                    <div class="form-group col-md-12 offset-2">
+                        @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })                       
                         @Html.ValidationMessageFor(model => model.memCounty, "", new {  @style="color:#ffb0b7" })
                         <select id="memCounty" name="memCounty" class="form-control">
                             @foreach (var i in co)
@@ -100,9 +93,8 @@
                     </div>
 
 
-                    <div class="form-group col-md-12">
-                        @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })
-                        @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
+                    <div class="form-group col-md-12 offset-2">
+                        @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })                      
                         @Html.ValidationMessageFor(model => model.memDistrict, "", new {  @style="color:#ffb0b7" })
                         <select id="memDistrict" name="memDistrict" class="form-control ">
                             @foreach (var i in dis)
@@ -115,9 +107,8 @@
 
 
 
-                    <div class="form-group col-md-12 ">
-                        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })
-                        @*<input type="text" id="Birthday" class="form-control">*@
+                    <div class="form-group col-md-12 offset-2">
+                        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })                       
                         @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
                         @Html.ValidationMessageFor(model => model.Birthday, "", new { @style="color:#ffb0b7"})
 
@@ -125,10 +116,8 @@
 
 
 
-                    <div class="form-group col-md-12 ">
-                        @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })
-
-                        @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <div class="form-group col-md-12 offset-2">
+                        @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })                      
                         @Html.ValidationMessageFor(model => model.Sex, "", new { @style="color:#ffb0b7"})
                         <select id="Sex" name="Sex" class="form-control">
                             <option selected>男</option>
@@ -139,30 +128,26 @@
                 </div>
 
 
-                <div class="col-md-4  col-sm-6">
-                    <div class="form-group col-md-12 ">
+                <div class="col-md-4  col-sm-6 ">
+                    <div class="form-group col-md-12  offset-2 mt-5">
 
                         @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-12" })
-                        <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>                      
                         @Html.ValidationMessageFor(model => model.Introduction, "", new { @style="color:#ffb0b7" })
 
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 offset-2">
 
                         @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-12" })
-
-                        <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>                      
                         @Html.ValidationMessageFor(model => model.Habit, "", new {  @style="color:#ffb0b7" })
 
                     </div>
 
-                    <div class="form-group col-md-12 ">
+                    <div class="form-group col-md-12 offset-2">
                         @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-12" })
-                        <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>                        
                         @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new {  @style="color:#ffb0b7" })
 
                     </div>
@@ -176,19 +161,39 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
-
-
-
-
     }
+</div>*@
 
+<main class="l-main" style="min-height:771.5px">
+    <div class="content-side" style="display: block">
+        <h3 class="  font-weight-bold"  style="font-size:30px">會員註冊</h3>
+        <div class="signInPage" style="display: block">
+            <div class="l-signInPage__progressBar" style="display: block">
+                <ul class="c-progressBar">
+                    <li class="c-progressBar__item is-active">
+                        <div class="c-progressBar__circle"><span>1</span></div>
+                        <div class="c-progressBar__text u-gapLeft">輸入資料</div>
+                    </li>
+                    <li class="c-progressBar__item c-progressBar__item--line">
+                        <div class="c-progressBar__circle"><span>2</span></div>
+                        <div class="c-progressBar__text u-gapLeft">完成並驗證</div>
+                    </li>
+                    <li class="c-progressBar__item c-progressBar__item--line">
+                        <div class="c-progressBar__circle"><span>3</span></div>
+                        <div class="c-progressBar__text u-gapLeft">完成帳號啟用</div>
+                    </li>
 
+                </ul>               
+            </div>
+            <div class="l-promptBlock">
+                在您註冊之前,請先閱讀本站的<a href="#"class="c-link--gn" style="cursor: pointer;text-decoration: none; outline: 0;background-color: transparent;">服務條款</a>
+            </div>
+        </div>
+    </div>
 
+</main>
 
-</div>
 
 
 
