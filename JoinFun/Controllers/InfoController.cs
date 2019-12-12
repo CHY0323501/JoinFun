@@ -25,7 +25,7 @@ namespace JoinFun.Views.Info
             //int TotalCount = db.Post.ToList().Count();
             //if (page > getTotalPages(TotalCount))
             //    return RedirectToRoute(new { page = 1 });
-            Session["admid"] = "adm002";
+            //Session["admid"] = "adm002";
 
             return View();
         }

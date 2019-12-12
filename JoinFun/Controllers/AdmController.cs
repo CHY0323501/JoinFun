@@ -16,7 +16,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace JoinFun.Controllers
 {
-
+    [LoginRule(Front = false)]
     public class AdmController : Controller
     {
         SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
