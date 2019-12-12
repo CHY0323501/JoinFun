@@ -21,6 +21,7 @@ namespace JoinFun
             {
                 return;
             }
+
             LoginCheck(HttpContext.Current);
         }
 

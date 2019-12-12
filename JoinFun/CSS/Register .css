@@ -126,3 +126,47 @@ footer {
     background-color: #fdfdfd;
     padding-top: 15px;
 }
+
+.l-signInPage__progressBar {
+    padding-bottom:30px;
+}
+
+.c-progressBar {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    margin: 0;
+    padding: 15px 0;
+}
+
+.c-progressBar__item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 18px;
+    color: grey;
+}
+.c-progressBar__circle {
+    background-color: #30a651;
+    border: 1px solid #30a651;
+    color: #fff;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 700;
+}
+.c-progressBar__text {
+    color: #111;
+    font-weight: 700;
+}
+.u-gapLeft {
+    margin-left: 15px;
+}
