@@ -85,19 +85,19 @@ namespace JoinFun.Controllers
         //註冊管理員
         public ActionResult AdmRegister(string admId)
         {
-            var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
-            if (admId == null)
-            {
-                return RedirectToAction("Login", "Adm");
-            }
-            else
-            {
-                if (Session["admid"].ToString() == admId)
-                {
+            //var AdmMIdEdit = db.Administrator.Where(m => m.admId == admId).FirstOrDefault();
+            //if (admId == null)
+            //{
+            //    return RedirectToAction("Login", "Adm");
+            //}
+            //else
+            //{
+            //    if (Session["admid"].ToString() == admId)
+            //    {
                     return View();
-                }
-                return RedirectToAction("Login", "Adm");
-            }
+            //    }
+            //    return RedirectToAction("Login", "Adm");
+            //}
         }
 
         [HttpPost]
