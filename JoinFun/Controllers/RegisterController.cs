@@ -178,9 +178,9 @@ namespace JoinFun.Controllers
                 accPwd.PasswordConfirm = hashString;
 
                 db.SaveChanges();
-                    
 
-                return RedirectToAction("Index", "Activity");
+                    return Content("<script>alert('修改成功');window.location='/Register/Index';</script>");
+                    //return RedirectToAction("Index", "Activity");
 
 
                }
@@ -273,8 +273,8 @@ namespace JoinFun.Controllers
             accPwd.Password = hashString;
             accPwd.PasswordConfirm = hashString;
             db.SaveChanges();
-
-            return RedirectToAction("Login", "Login");
+            return Content("<script>alert('修改成功');window.location='/Login/Login';</script>");
+            //return RedirectToAction("Login", "Login");
         }
 
 
