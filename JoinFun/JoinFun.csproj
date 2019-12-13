@@ -248,6 +248,7 @@
     <Content Include="JS\FriendManage.js" />
     <Content Include="JS\jquery.validate.plus.js" />
     <Content Include="JS\MemberEdit.js" />
+    <Content Include="JS\stars.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>JoinfunNEW.edmx</DependentUpon>
