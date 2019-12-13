@@ -72,7 +72,7 @@ namespace JoinFun.Controllers
 
 
 
-
+        [LoginRule(isVisiter = true, Front = true)]
         //
         public ActionResult GetActdetail(string actId, string MemID)
         {
@@ -86,8 +86,8 @@ namespace JoinFun.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-
-        public ActionResult AddActdetail(string actId, string MemID)
+        [LoginRule(isVisiter = true, Front = true)]
+        public ActionResult AddActdetail(string actId,string MemID)
         {
             m.actId = actId;
             m.memId = MemID;
@@ -127,8 +127,7 @@ namespace JoinFun.Controllers
 
         //}
 
-
-
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Details(string actId/*,  string actClassId*/ /*string memID*/ )
         {
             if (actId == null)
@@ -193,6 +192,7 @@ namespace JoinFun.Controllers
 
 
         }
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //已參加會員
         public ActionResult MemJoin(string actId, string memID, string actClassId)
         {
@@ -328,7 +328,7 @@ namespace JoinFun.Controllers
 
 
 
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Create()
         {
             //if (Session["memid"] == null)
@@ -417,7 +417,7 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Edit(string actId)
         {
             if (Session["memId"] == null)
@@ -459,7 +459,6 @@ namespace JoinFun.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         public ActionResult Delete(string actId)
         {
             if (Session["memId"] == null)
@@ -471,6 +470,7 @@ namespace JoinFun.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Report(string id, string reporterID)
         {
             if (Session["memId"] == null)
@@ -526,7 +526,7 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Messages(string memID)
         {
             if (Session["memId"] == null)
@@ -573,7 +573,7 @@ namespace JoinFun.Controllers
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult MContent(string serial)
         {
             if (serial != null && Session["memid"] != null)

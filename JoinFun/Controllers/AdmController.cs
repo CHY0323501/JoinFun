@@ -378,28 +378,24 @@ namespace JoinFun.Controllers
         //}
 
         //查詢會員狀態
-        public ActionResult Inquire(string searchString)
+        public ActionResult Inquire(string searchString,int page=1)
         {
             var member = from a in db.Member select a;
-
+             int pagesize = 10;
+            int pagecurrent = page < 1 ? 1 : page;
             if (!string.IsNullOrEmpty(searchString))
             {
-                //member = member.Where(m => m.memId.Contains(searchString));
-                MemberInquireVM model = new MemberInquireVM()
-                {
-                    Member = db.Member.Where(s => s.memId.Contains(searchString) || s.memNick.Contains(searchString)).ToList()
-                };
-                return View(model);
+                var QueryMember = db.Member.Where(s => s.memId.Contains(searchString) || s.memNick.Contains(searchString)).ToList();
+                
+                return View(QueryMember);
             }
             else
             {
-                MemberInquireVM read = new MemberInquireVM()
-                {
-                    Member = db.Member.ToList(),
-                    Violation = db.Violation.ToList(),
-                    Punishment = db.Punishment.ToList()
-                };
-                return View(read);
+                var QueryMember2 = db.Member.ToList();
+                
+                var pagelist = QueryMember2.ToPagedList(pagecurrent, pagesize);
+
+                return View(pagelist);
             }
         }
         //查看詳細違規紀錄
@@ -439,7 +435,7 @@ namespace JoinFun.Controllers
         }
 
         //編輯違規項目
-        public ActionResult InquireEdit(string vioId)
+        public ActionResult InquireEdit(string vioId,string memId)
         {
             MemberInquireVM edit = new MemberInquireVM()
             {
@@ -449,7 +445,7 @@ namespace JoinFun.Controllers
             };
             ViewBag.vioId = db.Violation.Where(m => m.vioId == vioId).Select(m => m.vioId).FirstOrDefault();
             ViewBag.oldpunid = db.Violation.Where(m => m.vioId == vioId).FirstOrDefault().punishId;
-
+            ViewBag.sus = db.Member.Where(m => m.memId == memId).FirstOrDefault().Suspend;
             return View(edit);
         }
 

@@ -21,6 +21,7 @@ namespace JoinFun.Controllers
             return View();
         }
         //登入
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Login(int? c)
         {
 
