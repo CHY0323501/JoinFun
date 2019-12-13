@@ -61,10 +61,13 @@ namespace JoinFun.Controllers
             }
             else
             {
-                //下拉式選單用
-                ViewBag.county_drop = db.County.ToList();
-                ViewBag.district_drop = db.District.ToList();
-                return View(member);
+                if (Session["memid"].ToString() == memID) {
+                    //下拉式選單用
+                    ViewBag.county_drop = db.County.ToList();
+                    ViewBag.district_drop = db.District.ToList();
+                    return View(member);
+                }
+                return RedirectToAction("Info", "Member", new { memID = Session["memid"].ToString() });
             }
         }
         [HttpPost]
@@ -254,10 +257,9 @@ namespace JoinFun.Controllers
             }
             else
             {
-                //try
-                //{
-                //if (Session["memid"].ToString() == memID)
-                //{
+                
+                if (Session["memid"].ToString() == memID)
+                {
                     //好友相關資料
                     FriendManagementVW FDvw = new FriendManagementVW()
                         {
@@ -267,15 +269,9 @@ namespace JoinFun.Controllers
 
                         ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
                         return View(FDvw);
-                //}
-                //    else {
-                //        return RedirectToAction("Index", "Activity");
-                //    }
-                //}
-                //catch {
-                //    return RedirectToAction("Index", "Activity");
-                //}
+                }
 
+                return RedirectToAction("Info","Member", new { memID = Session["memid"] });
             }
         }
         //加入黑名單

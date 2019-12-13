@@ -186,10 +186,9 @@
 
 
 
-                    @if (Session["memid"]==null)
-                    {
-                        //if (Session["memid"].ToString() == "")
-                        //{
+                    
+                        @if (Session["memid"].ToString() == "")
+                        {
                             <li class="nav-item text-center ml-2">
                                 <a class="nav-link hvr-underline-from-center" href="@Url.Action("Login", "Login",new { c=1})"><i class="fas fa-sign-in-alt"></i> 登入</a>
                             </li>
@@ -200,9 +199,9 @@
                                 <a class="nav-link hvr-underline-from-center text-center" href="@Url.Action("Post", "Info",new { PostNo=""})"><i class="fas fa-bullhorn"></i> 公告</a>
                             </li>
 
-                        //}
+                        }
 
-                    }
+                    
                     @if (Session["memid"] != null)
                     {
                         if (Session["memid"].ToString() != "")
