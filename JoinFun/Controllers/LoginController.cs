@@ -24,16 +24,16 @@ namespace JoinFun.Controllers
         public ActionResult Login(int? c)
         {
 
-            if (Session["memid"] != null)
-            {
-                if (String.IsNullOrEmpty(Session["memid"].ToString()))
+            //if (Session["memid"] != null)
+            //{
+                //if (String.IsNullOrEmpty(Session["memid"].ToString()))
                     return View();
-                if (c == null)
-                    return View();
-            }
+                //if (c == null)
+                //    return View();
+            //}
 
 
-            return RedirectToAction("Index", "Activity");
+            //return RedirectToAction("Index", "Activity");
 
         }
 
@@ -128,16 +128,13 @@ namespace JoinFun.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Activity");
         }
-
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult FbLogin(string ID, string email)
         {
             var Smember = db.Social_Net_ID.Where(m => m.socialId == ID).FirstOrDefault();
 
             if (Smember == null)
             {
-
-                //Session["SocialID"] = ID;
-                //Session["email"] = email;
                 return RedirectToAction("FBRegister", new { SocialID = ID, email = email });
             }
             else

@@ -128,6 +128,10 @@ input[type="text"] {
     padding-bottom: 30%;
 }
 
+.report {
+    background-image: url('../Photos/InfoBG.jpg');
+}
+
 .mContent {
     margin: auto;
 }
