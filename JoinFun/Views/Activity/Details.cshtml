@@ -37,19 +37,19 @@
         <div class="col-md-6 ">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 @*<ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    @for (var i = 0; i < pic.Count(); i++)
-                    {
-                        <li data-target="#carouselExampleIndicators" data-slide-to="@i"  class="active" ></li>
-                    }
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        @for (var i = 0; i < pic.Count(); i++)
+                        {
+                            <li data-target="#carouselExampleIndicators" data-slide-to="@i"  class="active" ></li>
+                        }
 
-                </ol>*@
+                    </ol>*@
                 <div class="carousel-inner">
 
                     @foreach (var i in pic)
-                            {
-                                count += 1;
-                                var active = count == 1 ? "active" : " ";
+                    {
+                        count += 1;
+                        var active = count == 1 ? "active" : " ";
 
 
                         <div class=" carousel-item @active" id="firstimg">
@@ -164,7 +164,7 @@
                     @foreach (var item in Model.vwActivityList)
                     {
                         <input id="age" type="hidden" value="@item.serial" />
-                        <pre id="text" class="text-center mt-4"> @item.actDescription</pre>
+                        <div id="text" class="text-center mt-4">@Html.Raw(@item.actDescription.ToString().Replace("\n","<br>"))</div>
 
                     }
                 </div>
@@ -175,12 +175,12 @@
 
                 <span class="subtitle">留言板</span>
 
-                <div id="act_content" class="w-100 ">
+                <div id="act_content2" class="w-100 ">
                     @*<h1>留言板區</h1>*@
                     <div id="commentBoard">
                         @foreach (var item in Model.MBoard)
                         {
-                            <div class="mb-4">
+                            <div class="mb-4" id="user">
                                 <a href="@Url.Action("info", "Member", new { memID = item.memId })" class="fa fas fa-user"></a>
                                 <label id="@item.memId">@Model.members.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
                                 <span id="messageTime">(@item.messageTime)</span>
@@ -210,12 +210,12 @@
                     @Html.TextBoxFor(m => m.ActivityList.FirstOrDefault().actId, new { type = "hidden", @id = "actID" })
                     @Html.TextBoxFor(m => m.members.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memId, new { type = "hidden", @id = "member" })
                     @Html.TextBoxFor(m => m.members.Where(model => model.memId == Session["memid"].ToString()).FirstOrDefault().memNick, new { type = "hidden", id = "nick" })
-                    <div class="highlighter"><span></span></div>
+                    @*<div class="highlighter"><span></span></div>*@
                     @*@Html.TextBoxFor(m => m.MBoard.FirstOrDefault().boardMessage, new { Value = "", @id = "comments" })
 
                         <input id="commentBtn" type="button" value="送出" class="btn btn-info" />*@
                     <div class="text-center ml-5">
-                        <textarea id="comments" rows="6" cols="15" class="form-control col-md-8 mb-4" style="resize:none"></textarea>
+                        <textarea id="comments" rows="6" cols="15" class="form-control col-md-12 mb-4" style="resize:none"></textarea>
                         <input id="commentBtn" type="button" value="送出" class="btn btn-info btn-block mContent" />
                     </div>
                 </div>
@@ -227,8 +227,8 @@
         </div>
         <div class="col-lg-6 order-md-2 order-1">
             <span class="subtitle">活動資訊</span>
-            <div id="act_info" class="w-100 text-md-center">
-                <ul>
+            <div id="act_info" class="w-100 text-lg-left text-md-center ">
+                <ul class="ml-lg-5">
                     @foreach (var item in Model.vwActivityList)
                     {
                         var address = item.CountyName + item.DistrictName + item.actRoad;
@@ -263,18 +263,19 @@
 
             @*<div class="col-md-6">*@
             <span class="subtitle">關於揪團主</span>
-            <div id="act_info" class="w-100 ">
+            <div id="act_info" class="w-100  ">
                 <br />
-                @foreach (var item in Model.vwActivityList)
-                {
+                <div class="pl-lg-5 ml-lg-4 text-md-center text-lg-left">
+                    @foreach (var item in Model.vwActivityList)
+                    {
 
-                    <a href="@Url.Action("Info", "Member", new { memID = item.hostId })"><img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid mb-2" style="width:2.3rem" /></a>
+                        <a href="@Url.Action("Info", "Member", new { memID = item.hostId })"><img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid mb-2" style="width:2.3rem" /></a>
 
-                    <span id="hostId">@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, new { id = "hostid", })</span>
+                        <span id="hostId">@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, new { id = "hostid", })</span>
 
 
-                }
-
+                    }
+                </div>
                 <br />
 
 
@@ -293,7 +294,7 @@
     @*-------------------------------------------------------------------*@
 
 </div>
-<br/>
+<br />
 <br />
 <br />
 @{
@@ -322,7 +323,7 @@
 
         @*<p id="gendercompare">@Model.members.Where(m => m.memId == Session["memid"]).FirstOrDefault().Sex</p>*@
 
-        <p id="gendercompare "class="d-none">@Model.MemberList.FirstOrDefault().Sex</p>
+        <p id="gendercompare " class="d-none">@Model.MemberList.FirstOrDefault().Sex</p>
 
         //判斷年齡
 
@@ -334,8 +335,6 @@
 
     }
 }
-
-
 
 
 @section work{
@@ -569,7 +568,7 @@
             url: "@Url.Action("AddComment", "Activity")",
             method: "post",
             traditional: true,
-            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val() },
+            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val(), receiver: $('#user label').attr('id') },
             success: function () {
                 alert("留言新增成功");
                 //$.ajax({
@@ -598,7 +597,8 @@
                 var target = "@@" + $(this).text() + " ";
                 timer = setTimeout(function () {
                     $('#comments').val(target);
-                    $('.highlighter span').text(target);
+                    $('#comments').addClass('font-weight-bold text-primary');
+                    //$('.highlighter span').text(target);
                 }, 800);
             }
         }).on("mouseup", function () {
@@ -608,8 +608,8 @@
 
 
     $('#comments').keyup(function () {
-        if ($(this).val().length <= $('.highlighter span').text().length)
-            $('.highlighter span').text("");
+        if ($(this).val().length <= 0)
+            $('#comments').removeClass('font-weight-bold text-primary');
     });
     </script>
 }

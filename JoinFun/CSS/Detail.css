@@ -95,6 +95,20 @@ margin-top:15px;
     padding-right: 45px;
 }
 
+#act_content2 {
+    height: 400px;
+    border-top: 3px solid;
+    border-bottom: 3px solid;
+    border-top-color: #c73030;
+    border-bottom-color: #c73030;
+    color: #514949;
+    overflow: auto;
+    text-align: center;
+    padding-right: 45px;
+    width: 100%;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
 .subtitle {
     font-family: 'Microsoft YaHei UI';
     color: #630e0e;
@@ -157,6 +171,7 @@ margin-top:15px;
 
 .delreturnbox{
     position:relative;
+    margin-bottom:20px;
 
 }
 
