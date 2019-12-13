@@ -1,75 +1,85 @@
-﻿@model JoinFun.ViewModel.MemberInquireVM
+﻿@*@model JoinFun.ViewModel.MemberInquireVM*@
+@using X.PagedList;
+@using X.PagedList.Mvc;
+@using X.PagedList.Mvc.Common;
+@using X.PagedList.Mvc.Bootstrap4;
+@model X.PagedList.PagedList<JoinFun.Models.Member>
+
 
 @{
     ViewBag.Title = "會員狀態管理";
+    <link href="~/CSS/ADMpagedlist.css" rel="stylesheet" />
+
 }
 
+<div class="container">
+    <h2 class="center text-warning">會員狀態管理</h2>
+
+    <hr />
+
+    <form method="get" action="Inquire">
+        <p>
+            @Html.TextBox("searchString")
+            <button id="Submit1" type="submit"  class="btn btn-success">查詢</button>
+        </p>
+    </form>
+
+    <form>
+        <table class="table">
+            <thead class="text-white w-25">
+                <tr>
+                    <th scope="col">會員編號</th>
+                    <th scope="col">會員暱稱</th>
+                    <th scope="col">違規次數</th>
+                    <th scope="col">是否停權</th>
+                    <th scope="col">管理</th>
+                </tr>
+            </thead>
 
 
-<h2 class="center text-warning">會員狀態管理</h2>
-
-<hr />
-
-<form method="get" action="Inquire">
-    <p>
-        @Html.TextBox("searchString")
-        <input id="Submit1" type="submit" value="查詢" />
-    </p>
-</form>
-
-<form>
-    <table class="table">
-        <thead class="text-white w-25">
-            <tr>
-                <th scope="col">會員編號</th>
-                <th scope="col">會員暱稱</th>
-                <th scope="col">違規次數</th>
-                <th scope="col">是否停權</th>
-                <th scope="col">停權天數</th>
-                <th scope="col">管理</th>
-            </tr>
-        </thead>
-
-
-        @foreach (var i in Model.Member)
-        {
-            //只顯示有違規且停權的人
-            if (i.numViolate != 0 || i.Suspend == true)
+            @foreach (var i in Model)
             {
-                <tbody class="text-white">
-                    <tr>
-                        <td><a href="@Url.Action("Info", "Member", new { memID = i.memId })">@i.memId</a></td>
-                        <td>@i.memNick</td>
-                        <td>@i.numViolate 次</td>
-                        <td>@i.Suspend</td>
-                        <td>HAHA</td>
+                //只顯示有違規且停權的人
+                if (i.numViolate != 0 || i.Suspend == true)
+                {
+                    <tbody class=" bg-white">
+                        <tr>
+                            <td><a href="@Url.Action("Info", "Member", new { memID = i.memId })">@i.memId</a></td>
+                            <td>@i.memNick</td>
+                            <td>@i.numViolate 次</td>
+                            <td>@i.Suspend</td>
 
 
-                        <td>
-                            <a href="@Url.Action("InquireDetail", "Adm", new { memID = i.memId})" class="text-decoration-none btn btn-danger">詳細資料</a>
-                        </td>
-                    </tr>
-                </tbody>
+                            <td>
+                                <a href="@Url.Action("InquireDetail", "Adm", new { memID = i.memId})" class="text-decoration-none btn btn-danger">詳細資料</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+                else
+                //顯示全部會員
+                {
+                    <tbody class="text-white">
+                        <tr>
+                            <td><a href="@Url.Action("Info", "Member", new { memID = i.memId })">@i.memId</a></td>
+                            <td>@i.memNick</td>
+                            <td>@i.numViolate 次</td>
+                            <td>@i.Suspend</td>
+
+                            <td>
+                                <a href="@Url.Action("InquireDetail", "Adm", new { memID = i.memId})" class="text-decoration-none btn btn-info">詳細資料</a>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                }
             }
-            else
-            //顯示全部會員
-            {
-                <tbody class="text-white">
-                    <tr>
-                        <td>@i.memId</td>
-                        <td>@i.memNick</td>
-                        <td>@i.Suspend</td>
-                        <td>HAHA</td>
-                        <td>@i.numViolate 次</td>
-                        <td>
-                            <a href="@Url.Action("InquireDetail", "Adm", new { memID = i.memId})" class="text-decoration-none btn btn-info">詳細資料</a>
 
-                        </td>
-                    </tr>
-                </tbody>
-            }
-        }
+        </table>
+    </form>
+    }
+</div>
 
-    </table>
-</form>
-}
+<div class="w-100 text-center" style="padding-left:35%">
+    @Html.PagedListPager(Model, page => Url.Action("Inquire", new { page }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast))
+</div>

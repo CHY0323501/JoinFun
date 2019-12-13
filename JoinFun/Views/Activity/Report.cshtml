@@ -11,7 +11,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div class="form-horizontal report w-75">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -61,18 +61,21 @@
                 @Html.ValidationMessageFor(model => model.vioContent, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="檢舉" class="btn btn-warning" />
+        <div class="form-group col-md-12">
+            <div class="col-md-8" style="margin:auto">
+                <input type="submit" value="檢舉" class="btn btn-warning mb-2" />
             </div>
         </div>
+        
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返回", "Details", new { actId = ViewBag.ID})
 </div>
+@section topCSS{
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+}
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

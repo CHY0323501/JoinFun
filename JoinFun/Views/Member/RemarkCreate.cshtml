@@ -6,93 +6,78 @@
     ViewBag.Title = "新增會員評價";
 }
 
-<h2>新增會員評價</h2>
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="container">
         <div class="form-horizontal">
-            <h4>新增@(ViewBag.actTop)活動會員評價</h4>
-            <hr />
 
-            @*評價編號後端自動生成*@
-            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.remarkSerial, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.remarkSerial, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.remarkSerial, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
+            <h2 class="text-center  text-warning">新增@(ViewBag.actTop)活動會員評價</h2>
+            <div class="">
+                <div class="card d-inline">
+                    <div class="card p-3 Remarkcard border-0 mb-4  pic1">
+                        @*背景框線*@
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.actId, "活動編號", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <label>@ViewBag.actid</label>
-                </div>
-            </div>
+                        <div class="row mb-1 align-items-center "> @*align-items https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-items*@
 
-            @*@Html.DropDownList("actId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.actId, "", new { @class = "text-danger" })*@
+                        @*連動相片欄位*@
+                        <div class="col col-md-4 border-right">
+                            <div class="text-center">
+                                我是相片
+                            </div>
+                        </div>
+
+                        @*填寫資料欄*@
+                        <div class="col col-12 col-md-8 b-top">
+
+                            <div class="form-group">
+                                <label class="text-success">請選擇會員</label>
+
+                                <div class="">
+                                    @Html.DropDownListFor(model => model.ToMemId, ViewBag.MemList as SelectList, htmlAttributes: new { @class = "form-control" })
+                                </div>
+
+                            </div>
 
 
+                            <div class="form-group">
+                                <label class="text-success">評價</label>
+                                <div class="">
+                                    <select id="remarkStar" name="remarkStar">
+                                        <option value="1">1分</option>
+                                        <option value="2">2分</option>
+                                        <option value="3">3分</option>
+                                        <option value="4">4分</option>
+                                        <option value="5">5分</option>
+                                    </select>
+                                </div>
+                            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.ToMemId, "請選擇選單內會員進行評論", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.ToMemId, ViewBag.MemList as SelectList, htmlAttributes: new { @class = "form-control" })
-                    @*@Html.DropDownList("MemList", null, htmlAttributes: new { @class = "form-control" })*@
-                    @Html.ValidationMessageFor(model => model.ToMemId, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                            <div class="form-group">
+                                <label class="text-success ">評價內容</label>
 
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.keepRemark, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.keepRemark)
-                            @Html.ValidationMessageFor(model => model.keepRemark, "", new { @class = "text-danger" })
+                                <div class="">
+                                    @Html.TextArea("remarkContent", "", new { @class = "form-control", style = "resize:none" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    @*<button>取消</button>*@
+                                    <button type="submit" class="btn btn-info">新增評論</button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </div>*@
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.remarkStar, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <select id="remarkStar" name="remarkStar">
-                        <option value="1">1分</option>
-                        <option value="2">2分</option>
-                        <option value="3">3分</option>
-                        <option value="4">4分</option>
-                        <option value="5">5分</option>
-                    </select>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.remarkContent, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextArea("remarkContent", "來寫些東西吧~",  new { @class = "form-control" , style = "resize:none" })
-                </div>
-            </div>
-
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
             </div>
         </div>
     </div>
+</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
