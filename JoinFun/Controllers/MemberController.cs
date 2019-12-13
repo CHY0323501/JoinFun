@@ -25,9 +25,7 @@ namespace JoinFun.Controllers
         SqlCommand cmd = new SqlCommand();
         Common comm = new Common();
 
-
         public ActionResult Info(string memID)
-
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             //當會員編號不存在時執行
@@ -37,7 +35,6 @@ namespace JoinFun.Controllers
             }
             else
             {
-                //Session["memid"] = "M000000002";
                 MemberViewModel Minfo = new MemberViewModel()
                 {
                     Member = db.Member.Where(m => m.memId == memID).ToList(),
@@ -51,14 +48,6 @@ namespace JoinFun.Controllers
                     vw_HostHistory = db.vw_HostHistory.Where(m => m.hostId == memID).ToList(),
                     vw_PartHistory = db.vw_PartHistory.Where(m => m.memId == memID).ToList()
                 };
-                //MessageCenter mes = new MessageCenter();
-                //List<string> mailList = new List<string>() {
-                //    "bowbow19@gmail.com","ych4101861@gmail.com"
-                //};
-                //for (int i = 0; i < 100; i++)
-                //{
-                //    mes.SendEmail(mailList, "JoinFun緊急公告", "會員：吳芳飴女士，您已危害到工程師生存，請立刻停止攻擊，否則不排除提告！JoinFun營運團隊");
-                //}
                 
                 return View(Minfo);
             }
@@ -72,25 +61,10 @@ namespace JoinFun.Controllers
             }
             else
             {
-                try
-                {
-                    if (Session["memid"].ToString() == memID)
-                    {
-                        //下拉式選單用
-                        //ViewBag.county_drop = new SelectList(db.County, "CountyNo", "CountyName");
-                        //ViewBag.district_drop = new SelectList(db.District, "DistrictSerial", "DistrictName");
-                        ViewBag.county_drop = db.County.ToList();
-                        ViewBag.district_drop = db.District.ToList();
-                        return View(member);
-
-                    }
-                    //未登入時無法編輯並轉至首頁
-                    return RedirectToAction("Index", "Activity");
-                }
-                catch
-                {
-                    return RedirectToAction("Index", "Activity");
-                }
+                //下拉式選單用
+                ViewBag.county_drop = db.County.ToList();
+                ViewBag.district_drop = db.District.ToList();
+                return View(member);
             }
         }
         [HttpPost]
@@ -280,12 +254,12 @@ namespace JoinFun.Controllers
             }
             else
             {
-                try
-                {
-                    if (Session["memid"].ToString() == memID)
-                    {
-                        //好友相關資料
-                        FriendManagementVW FDvw = new FriendManagementVW()
+                //try
+                //{
+                //if (Session["memid"].ToString() == memID)
+                //{
+                    //好友相關資料
+                    FriendManagementVW FDvw = new FriendManagementVW()
                         {
                             Member = db.Member.Where(m => m.memId == memID).ToList(),
                             vw_FriendShip = db.vw_FriendShip.Where(m => m.memId == memID).ToList()
@@ -293,15 +267,15 @@ namespace JoinFun.Controllers
 
                         ViewBag.FdManagementMemNick = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
                         return View(FDvw);
-                    }
-                    else {
-                        return RedirectToAction("Index", "Activity");
-                    }
-                }
-                catch {
-                    return RedirectToAction("Index", "Activity");
-                }
-                
+                //}
+                //    else {
+                //        return RedirectToAction("Index", "Activity");
+                //    }
+                //}
+                //catch {
+                //    return RedirectToAction("Index", "Activity");
+                //}
+
             }
         }
         //加入黑名單
@@ -370,7 +344,7 @@ namespace JoinFun.Controllers
         }
 
         //我的收藏
-        public ActionResult Bookmark(string memID) {
+        public ActionResult Bookmark(string memID= "M000000002") {
             List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
             return View(Bookmark);
         }

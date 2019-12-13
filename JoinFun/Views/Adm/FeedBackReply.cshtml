@@ -52,6 +52,7 @@
             <div class="form-group">
                 <div class="col-md-12 text-center">
                     @Html.TextBoxFor(m => m.admId, new { Value = "adm001", @type = "hidden" })
+                    <input id="Page" name="Page" type="hidden" value="unprocessed" />
                     <input type="submit" value="送出" class="btn btn-primary" />
                 </div>
             </div>

@@ -8,187 +8,422 @@
 
 @section Register{
 
-    @*<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="//jqueryui.com/resources/demos/style.css">*@
-
     <link href="~/CSS/Register .css" rel="stylesheet" />
     <link href="~/CSS/DatetimePickerUse.css" rel="stylesheet" />
 }
 
-<div class="container " style="min-height: 100vh">
+@*<div class="container register-box1" style="min-height: 100vh">
 
 
-    <h3 class="mt-4 display-4 text-center font-weight-bold">註冊</h3>
+        <h3 class="mt-4 display-4 text-center font-weight-bold">會員註冊</h3>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-horizontal  ">
+            <div class="form-horizontal  ">
 
-            <div class="row justify-content-around">
+                <div class="row justify-content-around">
 
-                <div class="col-md-4 col-sm-6 register-box1">
-                    <div class="form-group col-md-12 offset-2 mt-5 ">
-                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                    <div class="col-md-4 col-sm-6 ">
+                        <div class="form-group col-md-12 offset-2 mt-5 ">
 
+                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
 
-                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
-
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "account", name = "account" } })
+                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = "form-control ", id = "account", name = "account" } })
 
 
-                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new {  @style="color:#ffb0b7"})
-                        <div id="prompt"></div>
+                            @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new {  @style="color:#ffb0b7"})
+                            <div id="prompt"></div>
 
+                        </div>
+
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password", id = "Password" } })
+
+
+                            @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new {  @style="color:#ffb0b7" })
+                            <div></div>
+                        </div>
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                            @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "password", id = "PasswordConfirm" } })
+
+
+                            @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new {  @style="color:#ffb0b7" })
+
+                        </div>
+
+
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
+                            @Html.ValidationMessageFor(model => model.memNick, "", new { @style="color:#ffb0b7"})
+                            <div> </div>
+                        </div>
+
+                        <div class="form-group col-md-12 offset-2 ">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+
+
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new {  @style="color:#ffb0b7"})
+
+                           <div></div>
+
+                        </div>
+
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.ValidationMessageFor(model => model.memCounty, "", new {  @style="color:#ffb0b7" })
+                            <select id="memCounty" name="memCounty" class="form-control">
+                                @foreach (var i in co)
+                                {
+                                    <option value="@i.CountyNo">@i.CountyName</option>
+                                }
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.ValidationMessageFor(model => model.memDistrict, "", new {  @style="color:#ffb0b7" })
+                            <select id="memDistrict" name="memDistrict" class="form-control ">
+                                @foreach (var i in dis)
+                                {
+                                    <option value="@i.DistrictSerial">@i.DistrictName</option>
+                                }
+                            </select>
+
+                        </div>
+
+
+
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                            @Html.ValidationMessageFor(model => model.Birthday, "", new { @style="color:#ffb0b7"})
+
+                        </div>
+
+
+
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.ValidationMessageFor(model => model.Sex, "", new { @style="color:#ffb0b7"})
+                            <select id="Sex" name="Sex" class="form-control">
+                                <option selected>男</option>
+                                <option>女</option>
+                            </select>
+
+                        </div>
                     </div>
 
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-4  col-sm-6 ">
+                        <div class="form-group col-md-12  offset-2 mt-5">
 
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control", type = "password", id = "Password" } })
+                            @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
+                            @Html.ValidationMessageFor(model => model.Introduction, "", new { @style="color:#ffb0b7" })
 
+                        </div>
 
-                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new {  @style="color:#ffb0b7" })
-                        <div></div>
-                    </div>
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group col-md-12 offset-2">
 
-                        @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-12" })
+                            <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>
+                            @Html.ValidationMessageFor(model => model.Habit, "", new {  @style="color:#ffb0b7" })
 
-                        @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control", type = "password", id = "PasswordConfirm" } })
+                        </div>
 
+                        <div class="form-group col-md-12 offset-2">
+                            @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-12" })
+                            <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
+                            @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new {  @style="color:#ffb0b7" })
 
-                        @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new {  @style="color:#ffb0b7" })
+                        </div>
 
-                    </div>
-
-
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
-                        @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control", id = "memNick" } })
-                        @Html.ValidationMessageFor(model => model.memNick, "", new { @style="color:#ffb0b7"})
-                        <div> </div>
-                    </div>
-
-                    <div class="form-group col-md-12 offset-2 ">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
-
-
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", id = "Email" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new {  @style="color:#ffb0b7"})
-                        @*<input id="Email" type="email" class="form-control" />*@
-
-                        <div></div>
-
-                    </div>
-
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
-                        @*@Html.DropDownList("memCounty", null, htmlAttributes: new { @class = "form-control" })*@
-                        @Html.ValidationMessageFor(model => model.memCounty, "", new {  @style="color:#ffb0b7" })
-                        <select id="memCounty" name="memCounty" class="form-control">
-                            @foreach (var i in co)
-                            {
-                                <option value="@i.CountyNo">@i.CountyName</option>
-                            }
-                        </select>
-
-                    </div>
-
-
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })
-                        @*@Html.DropDownList("memDistrict", null, htmlAttributes: new { @class = "form-control" })*@
-                        @Html.ValidationMessageFor(model => model.memDistrict, "", new {  @style="color:#ffb0b7" })
-                        <select id="memDistrict" name="memDistrict" class="form-control ">
-                            @foreach (var i in dis)
-                            {
-                                <option value="@i.DistrictSerial">@i.DistrictName</option>
-                            }
-                        </select>
-
-                    </div>
-
-
-
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })
-                        @*<input type="text" id="Birthday" class="form-control">*@
-                        @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
-                        @Html.ValidationMessageFor(model => model.Birthday, "", new { @style="color:#ffb0b7"})
-
-                    </div>
-
-
-
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })
-
-                        @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Sex, "", new { @style="color:#ffb0b7"})
-                        <select id="Sex" name="Sex" class="form-control">
-                            <option selected>男</option>
-                            <option>女</option>
-                        </select>
-
-                    </div>
-                </div>
-
-
-                <div class="col-md-4  col-sm-6 register-box1">
-                    <div class="form-group col-md-12  offset-2 mt-5">
-
-                        @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-12" })
-                        <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Introduction, "", new { @style="color:#ffb0b7" })
-
-                    </div>
-
-                    <div class="form-group col-md-12 offset-2">
-
-                        @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-12" })
-
-                        <textarea id="Habit" name="Habit" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Habit, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Habit, "", new {  @style="color:#ffb0b7" })
-
-                    </div>
-
-                    <div class="form-group col-md-12 offset-2">
-                        @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-12" })
-                        <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8"> </textarea>
-                        @*@Html.EditorFor(model => model.Dietary_Preference, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new {  @style="color:#ffb0b7" })
-
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <div class="form-group">
-                            <div class="col-12 align-self-end ">
-                                <input id="submit" name="submit" type="submit" value="送出資料" class="btn btn-success " />
+                        <div class="row justify-content-center">
+                            <div class="form-group">
+                                <div class="col-12 align-self-end ">
+                                    <input id="submit" name="submit" type="submit" value="送出資料" class="btn btn-success " />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        }
+    </div>*@
+
+
+<div class="content-side col-md-10 col-sm-10">
+    <h3 class="  font-weight-bold ml-2" style="font-size:30px">會員註冊</h3>
+    <div class="signInPage" style="display: block">
+        <div class="l-signInPage__progressBar " style="display: block">
+            <div class="row justify-content-center">
+                <ul class="c-progressBar ">
+                    <li class="c-progressBar__item is-active ml-5">
+                        <div class="c-progressBar__circle">
+                            <span>1</span>
+                        </div>
+                        <div class="c-progressBar__text u-gapLeft">輸入資料</div>
+                    </li>
+                    <li class="c-progressBar__item c-progressBar__item--line ml-5">
+                        <div class="c-progressBar__circle_none">
+                            <span>2</span>
+                        </div>
+                        <div class="c-progressBar__text u-gapLeft">信箱驗證</div>
+                    </li>
+                    <li class="c-progressBar__item c-progressBar__item--line ml-5">
+                        <div class="c-progressBar__circle_none">
+                            <span>3</span>
+                        </div>
+                        <div class="c-progressBar__text u-gapLeft">完成帳號啟用</div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="l-promptBlock">
+            在您註冊之前,請先閱讀本站的
+            <a href="#" class="c-link--dpink" style="cursor: pointer;text-decoration: none; outline: 0;background-color: transparent;" data-toggle="modal" data-target="#myModal">服務條款</a>，請勿使用真實姓名、注音、表情符號做為帳號名稱。
 
         </div>
-
-
-
-
-
-    }
-
-
-
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h4>會員帳號、密碼及安全</h4>
+                        <h5>
+                            完成本服務的登記程序之後，您將收到一個密碼及帳號。維持密碼及帳號及身份證字號的機密安全，是您的責任。 利用該密碼及帳號及身份證字號所進行的一切行動，您將負完全的責任。您並同意以下事項：
+                            •	您的密碼或帳號遭到盜用或有其他任何安全問題發生時，您將立即通知「JoinFun」。
+                            •	每次連線完畢，均結束您的帳號使用。
+                        </h5>
+                        <h4>兒童及青少年之保護</h4>
+                        <h5>
+                            為確保兒童及青少年使用網路的安全，並避免隱私權受到侵犯，家長（或監護人）應盡到下列義務：未滿十二歲之兒童使用「JoinFun」功能時，應全程在旁陪伴，十二歲以上未滿十八歲之青少年上網前亦應斟酌是否給予同意。
+                            使用者的守法義務及承諾
+                            您承諾絕不為任何非法目的或以任何非法方式使用「JoinFun」，並承諾遵守中華民國相關法規及一切使用網際網路之國際慣例。 您若係中華民國以外之使用者，並同意遵守所屬國家或地域之法令。您同意並保證不得利用本服務從事侵害他人權益或違法之行為，包括但不限於：
+                            •	公布或傳送任何誹謗、侮辱、具威脅性、攻擊性、不雅、猥褻、不實、違反公共秩序或善良風俗或其他不法之文字、圖片或任何形式的檔案
+                            •	侵害他人名譽、隱私權、營業秘密、商標權、著作權、專利權、其他智慧財產權及其他權利
+                            •	違反依法律或契約所應負之保密義務
+                            •	冒用他人名義使用本服務
+                            •	傳輸或散佈電腦病毒
+                            •	濫發廣告郵件
+                            •	其他「JoinFun」有正當理由認為不適當之行為
+                            JoinFun」得依實際執行情形，增加、修改或終止相關活動，並選擇最適方式告知會員。
+                        </h5>
+                        <h4>發生下列情形之一時，「JoinFun」有權可以停止、中斷提供服務 </h4>
+                        <h5>
+                            •	「JoinFun」網站電子通信設備進行必要之保養及施工時發生突發性之電子通信設備故障時
+                            •	「JoinFun」網站申請之電子通信服務被停止，無法提供服務時
+                            •	由於天災等不可抗力之因素致使「JoinFun」網站無法提供服務時</h5>
+    拒絕或終止您的使用
+    您同意「JoinFun」得基於維護交易安全之考量，因任何理由，包含但不限於缺乏使用，或違反本服務條款的明文規定及精神，終止您的密碼、帳號（或其任何部分）或本服務之使用，並將本服務內任何「會員內容」加以移除並刪除，亦得已通知之情形下，隨時終止本服務或任何部分。此外，您同意若本服務之使用被終止，「JoinFun」對您或任何第三人均不承擔責任。
+    準據法與管轄法院
 
 </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div @*class="u-gapNextV--lg"*@>
+            <div @*class="l-signInPage__content"*@>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal  ">
+
+                        <div class="row justify-content-around">
+
+                            <div class="col-md-6 ">
+                                <div class="form-group  mt-5  col-md-12 offset-2 ">
+
+                                    @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
+
+                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = " form-control-small ", id = "account", name = "account", placeholder = "英文字母最多10個" } })
+
+
+                                    @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @style = "color:#f36868" })
+                                    <div></div>
+                                    <div id="prompt"></div>
+
+                                </div>
+
+                                <div class="form-group col-md-12 offset-2">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                    @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control-small", type = "password", id = "Password" } })
+
+
+                                    @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @style = "color:#f36868" })
+                                    <div></div>
+                                </div>
+                                <div class="form-group col-md-12 offset-2">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                    @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-12" })
+
+                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control-small", type = "password", id = "PasswordConfirm" } })
+
+
+                                    @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new { @style = "color:#f36868" })
+
+                                </div>
+
+
+                                <div class="form-group col-md-12 offset-2">
+                                    @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
+                                    @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control-small", id = "memNick" } })
+                                    @Html.ValidationMessageFor(model => model.memNick, "", new { @style = "color:#f36868" })
+                                    <div> </div>
+                                </div>
+
+                                <div class="form-group col-md-12 offset-2 ">
+                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+
+
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control-small", id = "Email" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @style = "color:#f36868" })
+
+                                    <div></div>
+
+                                </div>
+
+                                <div class="form-group col-md-12 offset-2">
+                                    @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
+                                    @Html.ValidationMessageFor(model => model.memCounty, "", new { @style = "color:#f36868" })
+                                    <select id="memCounty" name="memCounty" class="form-control-small">
+                                        @foreach (var i in co)
+                                        {
+                                            <option value="@i.CountyNo">@i.CountyName</option>
+                                        }
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group col-md-12 offset-2">
+                                    @Html.LabelFor(model => model.memDistrict, htmlAttributes: new { @class = "control-label col-md-12" })
+                                    @Html.ValidationMessageFor(model => model.memDistrict, "", new { @style = "color:#f36868" })
+                                    <select id="memDistrict" name="memDistrict" class="form-control-small ">
+                                        @foreach (var i in dis)
+                                        {
+                                            <option value="@i.DistrictSerial">@i.DistrictName</option>
+                                        }
+                                    </select>
+
+                                </div>
+
+
+
+                                <div class="form-group col-md-12 offset-2">
+                                    @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-12" })
+                                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control-small", @type = "text" } })
+                                    @Html.ValidationMessageFor(model => model.Birthday, "", new { @style = "color:#f36868" })
+
+                                </div>
+
+
+
+                                <div class="form-group col-md-12 offset-2">
+                                    @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-12" })
+                                    @Html.ValidationMessageFor(model => model.Sex, "", new { @style = "color:#f36868" })
+                                    <select id="Sex" name="Sex" class="form-control-small ">
+                                        <option selected>男</option>
+                                        <option>女</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-6 ">
+                                <div class="row justify-content-center">
+                                    <div class="form-group   mt-5   ">
+
+                                        @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <textarea id="Introduction" name="Introduction" style="resize:none" class="form-control " rows="8" cols="29"> </textarea>
+                                        @Html.ValidationMessageFor(model => model.Introduction, "", new { @style = "color:#f36868" })
+
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="form-group ">
+
+                                        @Html.LabelFor(model => model.Habit, "興趣愛好", htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <textarea id="Habit" name="Habit" style="resize:none" class="form-control" rows="8" cols="29"> </textarea>
+                                        @Html.ValidationMessageFor(model => model.Habit, "", new { @style = "color:#f36868" })
+
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="form-group ">
+                                        @Html.LabelFor(model => model.Dietary_Preference, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <textarea id="Dietary_Preference" name="Dietary_Preference" style="resize:none" class="form-control " rows="8" cols="29"> </textarea>
+                                        @Html.ValidationMessageFor(model => model.Dietary_Preference, "", new { @style = "color:#f36868" })
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="form-group col-12">
+                                    <label class=" col-md-12">註冊確認</label>
+                                    <div class="col-md-12">
+
+                                        <input id="checkbox" type="checkbox" @*class="c-checkbox__input"*@ />
+
+                                        <span class="col-md-12 col-sm-8">我已經閱讀服務條款並且同意註冊為會員，<a href="#" class="c-link--dpink">按這裡檢視本站的服務條款</a></span>
+
+
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="col-12 offset-10 ">
+                                        <input id="submit" name="submit" type="submit" value="送出資料" class="btn btn-success " />
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*<div class="row justify-content-center">
+
+                            </div>*@
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
@@ -234,7 +469,7 @@
         $('#Password').keyup(function () {
             if ($('#Password').val().length < 8) {
                 $('#Password').addClass("is-invalid");
-                $('#Password~div').addClass("invalid-feedback").text('至少8個字元!!').css({ "color": "#fd9e9e", "font-size": "12pt" });
+                $('#Password~div').addClass("invalid-feedback").text('至少8個字元!!').css({ "color": "#f36868", "font-size": "12pt" });
                 flag = false;
             }
             else {
@@ -265,7 +500,7 @@
                             var n = str.search(data[i]);
                             if (n != -1) {
                                 console.log("帳號重複");
-                                $('#prompt').text("帳號重複").css("color", "#fd9e9e");
+                                $('#prompt').text("帳號重複").css("color", "#f36868");
                                 break;
                             } else {
                                 i++;
@@ -276,7 +511,7 @@
 
                         if (i == data.length) {
                             console.log("驗證成功");
-                            $('#prompt').text("此帳號可使用").css("color", "#a2fba2");
+                            $('#prompt').text("此帳號可使用").css("color", "#459645");
                         }
                     }
 
@@ -310,6 +545,14 @@
             maxDate: max,
 
         });
+
+
+                                    //$(document).ready(function () {
+                                    //    $(window).resize(function () {
+                                    //        wdth = $(window).width();
+                                    //       if
+                                    //    });
+                                    //});
 
     </script>
 

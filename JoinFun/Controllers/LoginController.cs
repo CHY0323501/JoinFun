@@ -24,16 +24,16 @@ namespace JoinFun.Controllers
         public ActionResult Login(int? c)
         {
 
-            if (Session["memid"] != null)
-            {
-                if (String.IsNullOrEmpty(Session["memid"].ToString()))
+            //if (Session["memid"] != null)
+            //{
+                //if (String.IsNullOrEmpty(Session["memid"].ToString()))
                     return View();
-                if (c == null)
-                    return View();
-            }
+                //if (c == null)
+                //    return View();
+            //}
 
 
-            return RedirectToAction("Index", "Activity");
+            //return RedirectToAction("Index", "Activity");
 
         }
 
@@ -78,6 +78,7 @@ namespace JoinFun.Controllers
             {
                 if (a.Approved == true)
                 {
+                    
                     if (a.Suspend == false)
                     {
                         Session["memid"] = reader["memId"].ToString();
@@ -88,8 +89,23 @@ namespace JoinFun.Controllers
                     }
                     else
                     {
-                        ViewBag.LoginERR = "您的帳號被停權";
-                        return View();
+                        var mem = db.Member.Where(m => m.memId == getAcc.memId).FirstOrDefault();
+                        //判斷停權天數是否已到
+                        Common com = new Common();
+                        DateTime CheckResult = com.CheckMemberSuspend(mem.memId);
+                        if (DateTime.Now > CheckResult)
+                        {
+                            mem.Suspend = false;
+                            db.SaveChanges();
+
+                            Session["memid"] = mem.memId;
+                            Session["nick"] = mem.memNick;
+                        }
+                        else
+                        {
+                            TempData["LoginERR"] = "很抱歉，您的帳戶已被停權";
+                            return RedirectToAction("Login", new { c = 1 });
+                        }
                     }
                 }
                 else
@@ -112,16 +128,13 @@ namespace JoinFun.Controllers
             Session.Clear();
             return RedirectToAction("Index", "Activity");
         }
-
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult FbLogin(string ID, string email)
         {
             var Smember = db.Social_Net_ID.Where(m => m.socialId == ID).FirstOrDefault();
 
             if (Smember == null)
             {
-
-                //Session["SocialID"] = ID;
-                //Session["email"] = email;
                 return RedirectToAction("FBRegister", new { SocialID = ID, email = email });
             }
             else

@@ -101,9 +101,9 @@
                     <td>
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.actId }) |*@
                         @Html.ActionLink("詳情", "Details", "Activity", new { actId = item.actId, memID = Session["memid"], actClassId = item.actClassId }, new { @class = "btn btn-warning" }) |
-                        @Html.ActionLink("刪除", "DeleteAct", new { id = item.actId }, new { onclick = "return confirm('確定要刪除嗎,團主在後面很火!')", @class = "btn btn-danger" })
 
-
+                        @Html.ActionLink("刪除", "DeleteAct", new { actid = item.actId }, new { onclick = "return confirm('確定要刪除嗎,團主在後面很火!')", @class = "btn btn-danger" })
+                   
                     </td>
                 </tr>
 
