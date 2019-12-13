@@ -18,6 +18,7 @@ namespace JoinFun.Controllers
             return View(db.Member.ToList());
         }
         //註冊會員
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Register()
         {
            
@@ -195,6 +196,7 @@ namespace JoinFun.Controllers
         }
 
         //忘記密碼(填信箱頁面)
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult ForgetPwd()
         {
 

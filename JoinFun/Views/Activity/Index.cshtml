@@ -139,28 +139,28 @@
 
                         <div id="f-title">@item.actTopic</div>
 
-                    <div class="mask">
+                        <div class="mask">
 
-                        <h2>@Html.ActionLink(item.actTopic, "Details", new { actId = item.actId, memID = Session["memid"] })</h2>
-                        @*<span class="sub">活動時間：@Html.DisplayFor(modelItem => item.actTime)</span>*@
-                        <span class="s-title d-block">活動時間：@item.actTime.ToShortDateString()</span>
-                        @*<span class="sub">截止時間：@Html.DisplayFor(modelItem => item.actDeadline)</span>*@
-                        <span class="s-title d-block mt-2">截止時間：@item.actDeadline.ToShortDateString()</span>
-                        <span class="s-title w-100 d-block mt-2">地點：@address</span>
-                        
-                                
+                            <h2>@Html.ActionLink(item.actTopic, "Details", new { actId = item.actId })</h2>
+                            @*<span class="sub">活動時間：@Html.DisplayFor(modelItem => item.actTime)</span>*@
+                            <span class="s-title d-block">活動時間：@item.actTime.ToShortDateString()</span>
+                            @*<span class="sub">截止時間：@Html.DisplayFor(modelItem => item.actDeadline)</span>*@
+                            <span class="s-title d-block mt-2">截止時間：@item.actDeadline.ToShortDateString()</span>
+                            <span class="s-title w-100 d-block mt-2">地點：@address</span>
 
-                        @if (Session["memid"].ToString().IsEmpty())
-                        {
+
+
+                            @*@if (Session["memid"].ToString().IsEmpty())
+                            {
+                                @Html.ActionLink("詳情", "Details", new { actId = item.actId }, new { @class = "btn btn-secondary btnbg" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("詳情", "Details", new { actId = item.actId, memID = Session["memid"] }, new { @class = "btn btn-secondary btnbg" })
+
+                            }*@
                             @Html.ActionLink("詳情", "Details", new { actId = item.actId }, new { @class = "btn btn-secondary btnbg" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("詳情", "Details", new { actId = item.actId, memID = Session["memid"] }, new { @class = "btn btn-secondary btnbg" })
-
-                        }
-
-                    </div>
+                        </div>
                     </div>
 
                 </div>
