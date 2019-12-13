@@ -146,6 +146,7 @@
 
                         <div class="mask">
 
+
                             <h2>@Html.ActionLink(item.actTopic, "Details", new { actId = item.actId, memID = Session["memid"] })</h2>
                             @*<span class="sub">活動時間：@Html.DisplayFor(modelItem => item.actTime)</span>*@
                             <span class="s-title d-block">活動時間：@item.actTime.ToShortDateString()</span>
@@ -164,6 +165,7 @@
                                 @Html.ActionLink("詳情", "Details", new { actId = item.actId, memID = Session["memid"] }, new { @class = "btn btn-secondary btnbg mt-3 " })
 
                             }
+
 
                         </div>
                     </div>

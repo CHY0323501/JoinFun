@@ -21,12 +21,7 @@ namespace JoinFun.Views.Info
         {
             if (!String.IsNullOrEmpty(PostNo))
                 ViewBag.PostNo = PostNo;
-            ////判斷url的page有無輸入正確頁數
-            //int TotalCount = db.Post.ToList().Count();
-            //if (page > getTotalPages(TotalCount))
-            //    return RedirectToRoute(new { page = 1 });
-            //Session["admid"] = "adm002";
-
+            
             return View();
         }
         [ChildActionOnly]

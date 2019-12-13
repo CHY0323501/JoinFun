@@ -18,8 +18,8 @@ namespace JoinFun.Controllers
     {
         JoinFunEntities db = new JoinFunEntities();
         Activity_Details m = new Activity_Details();
-        
-    
+
+
         // GET: Activity (原)
         //public ActionResult Index(string hostId, string actId, string actClassId = "cls001")
         //{
@@ -37,22 +37,23 @@ namespace JoinFun.Controllers
         //    };
         //    return View(classList);
         //}
-        [LoginRule(isVisiter =true, Front = true)]
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Index()
         {
             sendTimeAct();
 
-            if (Session["memid"] == null) {
+            if (Session["memid"] == null)
+            {
                 Session["memid"] = "";
             }
             ViewBag.age = db.Age_Restriction.ToList();
             DropAct();
             //ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
             Finalchoose fc = new Finalchoose()
-            {   
+            {
                 vwActList = db.vw_Activities.Where(m => m.keepAct == true).OrderByDescending(m => m.clickTimes).ToList(),
                 joinfunlist = db.Join_Fun_Activities.OrderByDescending(m => m.clickTimes).ToList(),
-                post=db.Post.Where(m=>m.ShowInCarousel==true).OrderByDescending(m=>m.postSerial).Take(1).ToList()
+                post = db.Post.Where(m => m.ShowInCarousel == true).OrderByDescending(m => m.postSerial).Take(1).ToList()
             };
             GetSelectList();
             //var vwAct = fc;
@@ -71,21 +72,21 @@ namespace JoinFun.Controllers
 
 
 
-
+        [LoginRule(isVisiter = true, Front = true)]
         //
         public ActionResult GetActdetail(string actId, string MemID)
         {
-            if (db.Activity_Details.Any(m=>m.actId == actId && m.memId == MemID))
+            if (db.Activity_Details.Any(m => m.actId == actId && m.memId == MemID))
             {
                 var onlyDetail = (db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault().appvStatus).ToString();
 
                 return Json(new { status = onlyDetail }, JsonRequestBehavior.AllowGet);
             }
-                
+
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult AddActdetail(string actId,string MemID)
         {
             m.actId = actId;
@@ -100,7 +101,7 @@ namespace JoinFun.Controllers
         //{
         //    bool appv=db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault().appvStatus;
         //    bool changeappv = !appv;
-            
+
 
 
 
@@ -108,8 +109,8 @@ namespace JoinFun.Controllers
 
         public ActionResult DelActdetail(string actId, string MemID)
         {
-           var delact= db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault();
-          
+            var delact = db.Activity_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault();
+
             db.Activity_Details.Remove(delact);
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
@@ -126,8 +127,7 @@ namespace JoinFun.Controllers
 
         //}
 
-        
-
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Details(string actId/*,  string actClassId*/ /*string memID*/ )
         {
             if (actId == null)
@@ -145,8 +145,11 @@ namespace JoinFun.Controllers
                 //ViewBag.memID = memID;
                 ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
                 //增加該活動點擊次數
-                var act = db.Join_Fun_Activities.Find(actId);
-                act.clickTimes += 1;
+                if (actId.StartsWith("A"))
+                {
+                    var act = db.Join_Fun_Activities.Find(actId);
+                    act.clickTimes += 1;
+                }
                 db.SaveChanges();
                 ActClass ACT = new ActClass()
                 {
@@ -162,7 +165,7 @@ namespace JoinFun.Controllers
                 ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
                 ViewBag.allpic = db.Photos_of_Activities.ToList();
                 //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
-                ViewBag.defaultPic= db.Activity_Class.ToList();
+                ViewBag.defaultPic = db.Activity_Class.ToList();
 
                 return View(ACT);
             }
@@ -189,6 +192,7 @@ namespace JoinFun.Controllers
 
 
         }
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //已參加會員
         public ActionResult MemJoin(string actId, string memID, string actClassId)
         {
@@ -205,56 +209,43 @@ namespace JoinFun.Controllers
 
         //留言action
         [HttpPost]
-        public ActionResult AddComment(string id, string memID, string comment)
+        public ActionResult AddComment(string id, string memID, string comment, string receiver)
         {
-            using (var transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    Message_Board board = new Message_Board();
-                    string serial = db.Database.SqlQuery<string>("Select dbo.GetMBoardSerial()").FirstOrDefault();
-                    board.actId = id;
-                    board.mboardSerial = serial;
-                    board.memId = memID;
-                    board.boardMessage = comment;
-                    board.messageTime = DateTime.Now;
-                    board.keepMboard = true;
-                    db.Message_Board.Add(board);
-                    db.SaveChanges();
+            Message_Board board = new Message_Board();
+            string serial = db.Database.SqlQuery<string>("Select dbo.GetMBoardSerial()").FirstOrDefault();
+            board.actId = id;
+            board.mboardSerial = serial;
+            board.memId = memID;
+            board.boardMessage = comment;
+            board.messageTime = DateTime.Now;
+            board.keepMboard = true;
+            db.Message_Board.Add(board);
+            db.SaveChanges();
 
-                    //發出通知訊息給被標記的會員
-                    var member = db.Member.ToList();
-                    foreach (var item in member)
-                    {
-                        if (comment.StartsWith("@" + item.memNick))
-                        {
-                            Notification message = new Notification();
-                            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-                            message.InstanceId = serial;
-                            message.ToMemId = item.memId;
-                            message.NotiTitle = "留言板訊息";
-                            message.NotifContent = comment;
-                            message.timeReceived = DateTime.Now;
-                            message.keepNotice = true;
-                            db.Notification.Add(message);
-                            db.SaveChanges();
-                        }
-                    }
-                }
-                catch(DbUpdateException)
-                {
-                    transaction.Rollback();
-                }
-            }
+            //發通知給收到訊息的會員
+            string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
+
+            Notification message = new Notification();
+            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+            message.InstanceId = serial;
+            message.ToMemId = receiver;
+            message.NotiTitle = "留言板訊息";
+            message.NotifContent = talker + "說：\n\n" + comment;
+            message.timeReceived = DateTime.Now;
+            message.readYet = false;
+            message.keepNotice = true;
+            db.Notification.Add(message);
+            db.SaveChanges();
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
 
-        public ActionResult FinalChoose(string actClassId,int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudget, int? paymentTerm, int? actCounty)
+        public ActionResult FinalChoose(string actClassId, int? ageRestrict, int? gender, int? maxNumPeople, int? maxBudget, int? paymentTerm, int? actCounty)
         {
             GetSelectList();
-            if (ageRestrict == 1 ) {
+            if (ageRestrict == 1)
+            {
 
                 ageRestrict = null;
             }
@@ -300,15 +291,15 @@ namespace JoinFun.Controllers
             {
                 vwActivities = vwActivities.Where(m => m.CountyNo == actCounty).ToList();
             }
-          
-           
+
+
             Finalchoose fc1 = new Finalchoose()
             {
                 vwActList = vwActivities.ToList(),
                 joinfunlist = db.Join_Fun_Activities.ToList(),
                 post = db.Post.Where(m => m.ShowInCarousel == true).OrderByDescending(m => m.postSerial).Take(1).ToList()
             };
-          
+
             return View(fc1);
 
 
@@ -323,9 +314,9 @@ namespace JoinFun.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-            var searchkeep=db.vw_Activities.Where(m => m.keepAct == true);
+            var searchkeep = db.vw_Activities.Where(m => m.keepAct == true);
             var searchResult = searchkeep.Where((m => m.actTopic.Contains(keyword) || m.actDescription.Contains(keyword) || m.CountyName.Contains(keyword) || m.DistrictName.Contains(keyword) || m.actRoad.Contains(keyword) || m.hashTag.Contains(keyword) || m.memNick.Contains(keyword))).ToList();
-            
+
             Finalchoose fc2 = new Finalchoose()
             {
                 vwActList = searchResult.ToList(),
@@ -339,7 +330,7 @@ namespace JoinFun.Controllers
 
 
 
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Create()
         {
             //if (Session["memid"] == null)
@@ -428,7 +419,7 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Edit(string actId)
         {
             if (Session["memId"] == null)
@@ -441,7 +432,7 @@ namespace JoinFun.Controllers
                 return HttpNotFound();
             }
             GetSelectList(actId);
-            if(act.acceptDrop == true)
+            if (act.acceptDrop == true)
             {
                 ViewBag.Drop = "是";
             }
@@ -470,7 +461,6 @@ namespace JoinFun.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         public ActionResult Delete(string actId)
         {
             if (Session["memId"] == null)
@@ -482,6 +472,7 @@ namespace JoinFun.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Report(string id, string reporterID)
         {
             if (Session["memId"] == null)
@@ -507,6 +498,7 @@ namespace JoinFun.Controllers
             {
                 ViewBag.Type = "留言板";
                 ViewBag.TypeID = "vcls0004";
+                ViewBag.actID = db.Message_Board.Find(id).actId;
             }
 
             ViewBag.ID = id;
@@ -536,7 +528,7 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Messages(string memID)
         {
             if (Session["memId"] == null)
@@ -583,7 +575,7 @@ namespace JoinFun.Controllers
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult MContent(string serial)
         {
             if (serial != null && Session["memid"] != null)
@@ -696,9 +688,9 @@ namespace JoinFun.Controllers
                 return base.File(image, "image/jpeg");
             }
             string classphoto = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
-                string path2 = Server.MapPath(classphoto);
-                byte[] image2 = System.IO.File.ReadAllBytes(path2);
-                return base.File(image2, "image2/jpg");
+            string path2 = Server.MapPath(classphoto);
+            byte[] image2 = System.IO.File.ReadAllBytes(path2);
+            return base.File(image2, "image2/jpg");
         }
 
 

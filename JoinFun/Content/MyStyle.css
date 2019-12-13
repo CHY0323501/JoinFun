@@ -9,7 +9,7 @@
 
 body {
     font-family: 微軟正黑體;
-    background-color: whitesmoke;
+    background-color: whitesmoke;    
 }
 
 #container {
@@ -139,16 +139,16 @@ input[type="text"] {
 /*for comment board in Details.cshtml*/
 /*.highlighter, #comments {
     width:400px;
-    height: 38px;
+    height: 200px;
     font-size: 12pt;
     font-family: 微軟正黑體;
 }
 
 .highlighter {
     position: absolute;
-    padding: 7px 0 0 12px;
+    padding: 7px 0 0 50px;
     margin-left: 1px;
-    color: red;
+    color: transparent;
     font-weight:bold;
 }
 

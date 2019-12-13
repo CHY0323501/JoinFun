@@ -42,9 +42,9 @@
                     }
                     <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
                     <input id="memID" name="memID" type="hidden" value="@Model.actList.Where(m=>m.actId == evtID).FirstOrDefault().hostId" />
-                    if (ViewBag.ID == null)
+                    if (ViewBag.Page == null)
                     {
-                        ViewBag.ID = "actList";
+                        ViewBag.Page = "actList";
                     }
                     <hr />
                 }
@@ -54,9 +54,9 @@
                     <a href="@Url.Action("Info", "Member", new { memID = evtID })">@Model.violateList.FirstOrDefault().CorrespondingEventID</a>
                     <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
                     <input id="memID" name="memID" type="hidden" value="@evtID" />
-                    if (ViewBag.ID == null)
+                    if (ViewBag.Page == null)
                     {
-                        ViewBag.ID = "memList";
+                        ViewBag.Page = "memList";
                     }
 
                     <hr />
@@ -67,9 +67,9 @@
                     <a href="@Url.Action("Remarks", "Member", new { memID = Model.remarkList.Where(m=>m.remarkSerial == evtID).FirstOrDefault().ToMemId})">@Model.violateList.FirstOrDefault().CorrespondingEventID</a>
                     <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
                     <input id="memID" name="memID" type="hidden" value="@Model.remarkList.Where(m=>m.remarkSerial == evtID).FirstOrDefault().FromMemId" />
-                    if (ViewBag.ID == null)
+                    if (ViewBag.Page == null)
                     {
-                        ViewBag.ID = "remarkList";
+                        ViewBag.Page = "remarkList";
                     }
 
                     <hr />
@@ -92,9 +92,9 @@
                     <input id="vioID" name="vioID" type="hidden" value="@Model.violateList.FirstOrDefault().vioId" />
                     <input id="commentID" name="commentID" type="hidden" value="@Model.mboardList.FirstOrDefault().mboardSerial" />
                     <input id="memID" name="memID" type="hidden" value="@Model.mboardList.Where(m=>m.mboardSerial == evtID).FirstOrDefault().memId" />
-                    if (ViewBag.ID == null)
+                    if (ViewBag.Page == null)
                     {
-                        ViewBag.ID = "commentList";
+                        ViewBag.Page = "commentList";
                     }
                     <hr />
                 }
@@ -105,24 +105,24 @@
             <div class="card-footer col-md-12">
                 @foreach (var item in Model.punishList)
                 {
-                <label class="checkLabel">
-                    @item.punishName
-                    @*@Html.RadioButtonFor(modelItem => item.punishId, item.punishName)*@
-                    @if (Model.violateList.FirstOrDefault().vioProcessTime == null)
-                    {
+                    <label class="checkLabel">
+                        @item.punishName
+                        @*@Html.RadioButtonFor(modelItem => item.punishId, item.punishName)*@
+                        @if (Model.violateList.FirstOrDefault().vioProcessTime == null)
+                        {
+                            <input id="punishID" type="radio" name="punishID" value="@item.punishId" />
+                        }
+                        else if (Model.violateList.FirstOrDefault().punishId == item.punishId)
+                        {
+                            <input id="punishID" type="radio" name="punishID" value="@item.punishId" disabled checked />
+                        }
+                        else
+                        {
+                            <input id="punishID" type="radio" name="punishID" value="@item.punishId" disabled />
+                        }
                         <input id="punishID" type="radio" name="punishID" value="@item.punishId" />
-                    }
-                    else if (Model.violateList.FirstOrDefault().punishId == item.punishId)
-                    {
-                        <input id="punishID" type="radio" name="punishID" value="@item.punishId" disabled checked />
-                    }
-                    else
-                    {
-                        <input id="punishID" type="radio" name="punishID" value="@item.punishId" disabled />
-                    }
-                    <input id="punishID" type="radio" name="punishID" value="@item.punishId" />
-                    <span class="checkmark">&emsp;</span>
-                </label>
+                        <span class="checkmark">&emsp;</span>
+                    </label>
                 }
                 <span id="reminder" class="text-danger"></span>
             </div>
@@ -157,7 +157,14 @@
             </div>
             @*<a href="@Url.Action("ManageViolations")" class="text-center">返回揪團檢舉管理頁面</a>*@
         </div>
-        @Html.ActionLink("返回列表", "AllViolations", new { Page = ViewBag.ID }, new { @class = "text-center btn btn-link mt-2" })
+        @if (ViewBag.Page == "allList")
+        {
+            @Html.ActionLink("返回列表", "AllViolations", new { Page = ViewBag.Page }, new { @class = "text-center btn btn-link mt-2" })
+        }
+        else
+        {
+            @Html.ActionLink("返回列表", "ManageViolations", new { Page = ViewBag.Page }, new { @class = "text-center btn btn-link mt-2" })
+        }
     </div>
 
 

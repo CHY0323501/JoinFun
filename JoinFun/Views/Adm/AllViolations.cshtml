@@ -245,6 +245,9 @@
                     $('#sortList caption').text('會員違規紀錄搜尋結果');
                 },
                 error: function () {
+                    $('#sortList tbody').remove();
+                    $('#allList').removeClass('active');
+                    $('#sortList').addClass('active');
                     $('#sortList table').append('<tbody class="text-center text-light"><tr><td colspan="7" class="mCenter">無任何紀錄</td></tr></tbody>');
                 }
             });
