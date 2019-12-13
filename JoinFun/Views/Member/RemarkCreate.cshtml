@@ -1,7 +1,35 @@
 ﻿@model JoinFun.Models.Member_Remarks
 @section memberRemarks{
     <link href="~/CSS/Remark.css" rel="stylesheet" />
+
 }
+@section css{
+    <style>
+        .remarkStar {
+            float: left;
+        }
+
+        .score {
+            float: left;
+            position: relative;
+            width: 100px;
+            margin-top: 5px;
+            margin-left: 10px;
+        }
+
+        .span {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .scoreDisplay {
+            display: block;
+        }
+    </style>
+}
+
 @{
     ViewBag.Title = "新增會員評價";
 }
@@ -19,41 +47,50 @@
                     <div class="card p-3 Remarkcard border-0 mb-4  pic1">
                         @*背景框線*@
 
-                        <div class="row mb-1 align-items-center "> @*align-items https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-items*@
+                        <div class="row mb-1 align-items-center ">
+                            @*align-items https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-items*@
 
-                        @*連動相片欄位*@
-                        <div class="col col-md-4 border-right">
-                            <div class="text-center">
-                                我是相片
+                            @*連動相片欄位*@
+                            <div class="col col-md-4 border-right">
+                                <div class="text-center">
+                                    我是相片
+                                </div>
                             </div>
-                        </div>
 
-                        @*填寫資料欄*@
+                            @*填寫資料欄*@
                         <div class="col col-12 col-md-8 b-top">
 
+                            @*選擇會員*@
                             <div class="form-group">
                                 <label class="text-success">請選擇會員</label>
-
                                 <div class="">
                                     @Html.DropDownListFor(model => model.ToMemId, ViewBag.MemList as SelectList, htmlAttributes: new { @class = "form-control" })
                                 </div>
-
                             </div>
-
-
+                            @*選擇星等*@
                             <div class="form-group">
                                 <label class="text-success">評價</label>
-                                <div class="">
-                                    <select id="remarkStar" name="remarkStar">
-                                        <option value="1">1分</option>
-                                        <option value="2">2分</option>
-                                        <option value="3">3分</option>
-                                        <option value="4">4分</option>
-                                        <option value="5">5分</option>
-                                    </select>
+                                <div id="remarkStar" name="remarkStar">
+
+                                    @*放置星星容器*@
+                                    @*<div class="star">
+                                        <img src="~/Photos/star2.png" alt="" width="50" />
+                                        <img src="~/Photos/star2.png" alt="" width="50" />
+                                        <img src="~/Photos/star2.png" alt="" width="50" />
+                                        <img src="~/Photos/star2.png" alt="" width="50" />
+                                        <img src="~/Photos/star2.png" alt="" width="50" />
+                                    </div>*@
+                                    @*放星等名稱*@
+                                    @*<div class="score">
+                                        <span>1</span>
+                                        <span>2</span>
+                                        <span>3</span>
+                                        <span>4</span>
+                                        <span>5</span>
+                                    </div>*@
                                 </div>
                             </div>
-
+                            @*填寫內容*@
                             <div class="form-group">
                                 <label class="text-success ">評價內容</label>
 
@@ -69,16 +106,56 @@
                             </div>
 
                         </div>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
 
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@*@section scripts{
+    <script>
+        var img = $(".star img");
+        var span = $(".score span");
+        var i, j, k;
+        k = -1;
+        img.mouseenter(function () {
+            span.remoreClass("scoreDisplay");
+            img.attr("src", ".Photos/star2.png");
+
+            i = img.index(this);
+            for (j = 0; j <= i; j) {
+                img.eq(j).attr("src", ".Photos/star (1).png");
+            }
+
+            span.eq(i).addClass("scoreDisplay");
+        }).mouseleave(function () {
+            span.remoreClass("scoreDisplay");
+            img.attr("src", ".Photos/star2.png")
+            for (j = 0; j <= k; j) {
+                img.eq(j).attr("src", ".Photos/star (1).png");
+            }
+
+            if (k = -1) {
+                span.removeClass("scoreDisplay");
+            }
+
+            else {
+                span.eq(k).addClass("scoreDisplay");
+
+            }
+        });
+
+        $("img").click(function () {
+            k = img.index(this);
+
+        });
+
+    </script>
+}*@
