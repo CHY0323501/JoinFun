@@ -52,6 +52,7 @@ namespace JoinFun.Controllers
                 return View(Minfo);
             }
         }
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Edit(string memID)
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
@@ -92,7 +93,7 @@ namespace JoinFun.Controllers
             //編輯完畢時回到個人資訊頁
             return RedirectToAction("Info", new { memID = Session["memid"] });
         }
-
+        [LoginRule(isVisiter = true, Front = true)]
         //會員評價
         public ActionResult Remarks(string memID)
         {
@@ -122,6 +123,7 @@ namespace JoinFun.Controllers
                 return View(MRemark);
             }
         }
+
         //新增會員評價
         public ActionResult RemarkCreate(string actID, string FromMemID)
         {
@@ -169,6 +171,7 @@ namespace JoinFun.Controllers
             return RedirectToAction("History",new { memID=Session["memid"]});
 
         }
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //目前開團&參團清單
         public ActionResult MyActivities(string memID)
         {
@@ -179,17 +182,22 @@ namespace JoinFun.Controllers
             }
             else
             {
-                MyActivitiesVM MyActivity = new MyActivitiesVM()
-                {
-                    Host_Now = db.Host_Now.Where(m => m.hostId == memID).ToList(),
-                    Part_Now = db.Part_Now.Where(m => m.memId == memID).ToList(),
-                    Photos_of_Activities = db.Photos_of_Activities.ToList(),
-                    Activity_Details = db.Activity_Details.ToList(),
-                    Activity_Class = db.Activity_Class.ToList()
-                };
-                return View(MyActivity);
+                if (Session["memid"].ToString()==memID) {
+                    MyActivitiesVM MyActivity = new MyActivitiesVM()
+                    {
+                        Host_Now = db.Host_Now.Where(m => m.hostId == memID).ToList(),
+                        Part_Now = db.Part_Now.Where(m => m.memId == memID).ToList(),
+                        Photos_of_Activities = db.Photos_of_Activities.ToList(),
+                        Activity_Details = db.Activity_Details.ToList(),
+                        Activity_Class = db.Activity_Class.ToList()
+                    };
+                    return View(MyActivity);
+                }
+
+                return RedirectToAction("Info", "Member", new { memID = Session["memid"].ToString() });
             }
         }
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //主辦人審核
         public ActionResult ActCheck(string FromMemID, string actid,string memid)
         {
@@ -217,9 +225,9 @@ namespace JoinFun.Controllers
                
             }
         }
-        
 
 
+        [LoginRule(isVisiter = true, Front = true)]
         //揪團歷史
         public ActionResult History(string memID)
         {
@@ -327,6 +335,7 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index", "Activity");
         }
+        [LoginRule(isVisiter = true, Front = true)]
         //會員搜尋
         public ActionResult Search(string search) {
             if (!String.IsNullOrEmpty(search)) {
@@ -338,14 +347,14 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index", "Activity");
         }
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //我的收藏
-        public ActionResult Bookmark(string memID= "M000000002") {
+        public ActionResult Bookmark(string memID="M000000002") {
             List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
             return View(Bookmark);
         }
 
-
+        [LoginRule(hasEmptyStr =true,Front =true,isVisiter =false)]
         //小工具
         public ActionResult Widget()
         {
