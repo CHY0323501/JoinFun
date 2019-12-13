@@ -10,6 +10,7 @@ namespace JoinFun
     {
         public bool Front { get; set; }
         public bool isVisiter { get; set; }
+        public bool hasEmptyStr { get; set; }
         void AdmLoginCheck(HttpContext context)
         {
             if (context.Session["admid"] == null)
@@ -18,6 +19,12 @@ namespace JoinFun
         void UserLoginCheck(HttpContext context)
         {
             if (context.Session["memid"] == null)
+                context.Response.Redirect("/Login/Login?c=1");
+        }
+        void UserHasEmptyStrLoginCheck(HttpContext context)
+        {
+            if (context.Session["memid"] != null)
+                if(context.Session["memid"].ToString()=="")
                 context.Response.Redirect("/Login/Login?c=1");
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -30,8 +37,14 @@ namespace JoinFun
                     {
                         return;
                     }
+                    else if (hasEmptyStr) {
+                        UserHasEmptyStrLoginCheck(HttpContext.Current);
+                    }
+                    else {
+                        UserLoginCheck(HttpContext.Current);
+                    }
 
-                    UserLoginCheck(HttpContext.Current);
+                    
                 }
             }
             else {

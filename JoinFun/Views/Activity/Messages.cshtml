@@ -48,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody id="activeTbody">
-                    @foreach (var item in Model.Where(m => m.keepNotice == true).OrderByDescending(m=>m.NotiSerial))
+                    @foreach (var item in Model.Where(m => m.keepNotice == true).OrderByDescending(m => m.NotiSerial))
                     {
                         <tr class="@item.NotiSerial ">
                             <td class="text-center">
@@ -82,7 +82,7 @@
                                 else if (item.InstanceId.StartsWith("A"))
                                 {
 
-                                   
+
 
                                     <span>活動訊息</span>
 
@@ -101,7 +101,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="tab-pane fade" id="recycleOne">
             @*<nav class="navbar navbar-light bg-transparent navbar-expand-md">*@
             <ul class="messageLi mt-2 mb-0 pl-0" id="delStatus">
@@ -132,7 +132,7 @@
                     </tr>
                 </thead>
                 <tbody id="delTbody">
-                    @foreach (var item in Model.Where(m => m.keepNotice == false).OrderByDescending(m=>m.NotiSerial))
+                    @foreach (var item in Model.Where(m => m.keepNotice == false).OrderByDescending(m => m.NotiSerial))
                     {
                         <tr class="@item.NotiSerial ">
                             <td class="text-center">
@@ -165,7 +165,7 @@
                                 else if (item.InstanceId.StartsWith("A"))
                                 {
 
-                                    
+
 
                                     <span>活動訊息</span>
 
@@ -308,40 +308,51 @@ $('#mList>li').click(function () {
         $('#delStatus>li').click(function () {
             switch ($(this).attr("id")) {
                 case "restoreBtn":
-                    $('input[name="clickOne"]:checked').each(function () {
-                        let mid = $(this).val();
-                        $.ajax({
-                            url: "@Url.Action("RemoveMessage","Activity")",
-                            method: "post",
-                            traditional: true,
-                            data: { serial: $(this).val(), keep: true },
-                            success: function () {
-                                $('#activeTbody').append($('.' + mid));
-                            }
+                    if ($('#delTbody').children().length > 0) {
+                        $('input[name="clickOne"]:checked').each(function () {
+                            let mid = $(this).val();
+                            $.ajax({
+                                url: "@Url.Action("RemoveMessage","Activity")",
+                                method: "post",
+                                traditional: true,
+                                data: { serial: $(this).val(), keep: true },
+                                success: function () {
+                                    $('#activeTbody').append($('.' + mid));
+                                }
+                            });
                         });
-                    });
-                    alert("訊息已還原!!")
-                    $("input[name='clickOne']").prop("checked", false)
-                    $("input[name='delClkAll']").prop("checked", false)
+                        alert("訊息已還原!!")
+                        $("input[name='clickOne']").prop("checked", false)
+                        $("input[name='delClkAll']").prop("checked", false)
+                    } else {
+                        alert("資源回收桶內已無訊息!!")
+                    }
+
                     break;
                 case "delBtn":
-                    $('input[name="clickOne"]:checked').each(function () {
-                        let mid = $(this).val();
-                        $.ajax({
-                            url: "@Url.Action("DeleteMessage","Activity")",
-                            method: "post",
-                            dataType: "text",
-                            traditional: true,
-                            data: { serial: $(this).val() },
-                            success: function () {
-                                alert("訊息已成功從系統內刪除!!")
-                                $('.' + mid).remove();
-                            },
-                            error: function () {
-                                alert('訊息刪除失敗!');
-                            }
+                    if ($('#delTbody').children().length > 0) {
+                        $('input[name="clickOne"]:checked').each(function () {
+                            let mid = $(this).val();
+                            $.ajax({
+                                url: "@Url.Action("DeleteMessage","Activity")",
+                                method: "post",
+                                dataType: "text",
+                                traditional: true,
+                                data: { serial: $(this).val() },
+                                success: function () {
+                                    $('.' + mid).remove();
+                                },
+                                error: function () {
+                                    alert('訊息刪除失敗!');
+                                }
+                            });
+                            alert("訊息已成功從系統內刪除!!")
+                            $("input[name='clickOne']").prop("checked", false)
+                            $("input[name='clickAll']").prop("checked", false)
                         });
-                    });
+                    } else {
+                        alert("資源回收桶內已無訊息!!")
+                    }
                     break;
             }
         });
