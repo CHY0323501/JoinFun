@@ -55,3 +55,9 @@
 .pic1 {
     background-color: rgba(255, 255, 255, 0.5);
 }
+
+.score {
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 10px;
+}

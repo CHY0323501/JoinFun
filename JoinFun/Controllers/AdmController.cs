@@ -386,8 +386,11 @@ namespace JoinFun.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 var QueryMember = db.Member.Where(s => s.memId.Contains(searchString) || s.memNick.Contains(searchString)).ToList();
-                
-                return View(QueryMember);
+
+                var pagelist = QueryMember.ToPagedList(pagecurrent, pagesize);
+
+
+                return View(pagelist);
             }
             else
             {
