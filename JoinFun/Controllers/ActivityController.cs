@@ -305,7 +305,8 @@ namespace JoinFun.Controllers
             Finalchoose fc1 = new Finalchoose()
             {
                 vwActList = vwActivities.ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList()
+                joinfunlist = db.Join_Fun_Activities.ToList(),
+                post = db.Post.Where(m => m.ShowInCarousel == true).OrderByDescending(m => m.postSerial).Take(1).ToList()
             };
           
             return View(fc1);
@@ -328,7 +329,8 @@ namespace JoinFun.Controllers
             Finalchoose fc2 = new Finalchoose()
             {
                 vwActList = searchResult.ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList()
+                joinfunlist = db.Join_Fun_Activities.ToList(),
+                post = db.Post.Where(m => m.ShowInCarousel == true).OrderByDescending(m => m.postSerial).Take(1).ToList()
             };
 
 

@@ -98,6 +98,11 @@
 
     </div>
 
+    <div class=" bg-dark text-white mb-4 mt-1 rounded p-3" style="" id="post">
+        <div class="mb-1 text-warning font-weight-bolder " style="" id="post-title"><i class="fas fa-bullhorn" style="font-size:1.5rem;line-height:1.5rem"></i>　@Model.post.FirstOrDefault().postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)　最新公告：</div>
+        <a href="@Url.Action("Post","Info",new { PostNo=Model.post.FirstOrDefault().postSerial})" class="text-white"><marquee direction="left" behavior="scroll" scrollamount="10" style="font-size:1.5rem;line-height:1.5rem;cursor:pointer;letter-spacing:5px">@Model.post.FirstOrDefault().postTitle</marquee></a>
+    </div>
+
     <div>
         <h2 id="index_title" class="pl-2 mt-1">揪團活動</h2>
 
@@ -156,11 +161,11 @@
 
                                 @if (Session["memid"].ToString().IsEmpty())
                                 {
-                                    @Html.ActionLink("詳情", "Details", new { actId = item.actId }, new { @class = "btn btn-secondary btnbg" })
+                                    @Html.ActionLink("詳情", "Details", new { actId = item.actId }, new { @class = "btn btn-secondary btnbg mt-3" })
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("詳情", "Details", new { actId = item.actId, memID = Session["memid"] }, new { @class = "btn btn-secondary btnbg" })
+                                    @Html.ActionLink("詳情", "Details", new { actId = item.actId, memID = Session["memid"] }, new { @class = "btn btn-secondary btnbg mt-3" })
 
                                 }
 
@@ -175,6 +180,10 @@
     </article>
 
 </div>
+<br />
+<br />
+<br />
+<br />
 
 
 
