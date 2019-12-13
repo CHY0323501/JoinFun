@@ -343,7 +343,7 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase firstPic, HttpPostedFileBase[] picture)
+        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase firstPic)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -391,11 +391,12 @@ namespace JoinFun.Controllers
                         db.SaveChanges();
                     }
                     //存入上傳的活動內容照片
-                    if (picture[0] != null)
+                    IList<HttpPostedFileBase> photograph = Request.Files.GetMultiple("photograph");
+                    if (photograph != null)
                     {
-                        for (int i = 0; i < picture.Length; i++)
+                        foreach(var item in photograph)
                         {
-                            HttpPostedFileBase file = picture[i];
+                            HttpPostedFileBase file = item;
                             Photos_of_Activities photo = new Photos_of_Activities();
                             //if (file != null)
                             //{

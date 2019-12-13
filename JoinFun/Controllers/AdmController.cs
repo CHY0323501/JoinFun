@@ -907,17 +907,17 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult FeedBackReply(string id, string admId, string Page, string content)
+        public ActionResult FeedBackReply(string id, string admId, string Page, string reportContent)
         {
-            if (content != null)
+            if (reportContent != null)
             {
                 //db.sp_updateComment(id, content, admId, id, content);
                 SqlParameter[] param = new SqlParameter[] {
                     new SqlParameter("@id", id),
-                    new SqlParameter("@content", content),
+                    new SqlParameter("@content", reportContent),
                     new SqlParameter("@admId", admId),
                     new SqlParameter("@instanceId", id),
-                    new SqlParameter("@notiContent", content)
+                    new SqlParameter("@notiContent", reportContent)
                 };
                 db.Database.ExecuteSqlCommand("exec dbo.sp_updateComment @id, @content, @admId, @instanceId, @notiContent", param);
                 db.SaveChanges();
