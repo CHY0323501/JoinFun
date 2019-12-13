@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Report";
+    string id = ViewBag.ID;
 }
 
 <h2 class="mt-5 font-weight-bold">檢舉違規</h2>
@@ -11,7 +12,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal report w-75">
+    <div class="form-horizontal w-75">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -66,15 +67,30 @@
                 <input type="submit" value="檢舉" class="btn btn-warning mb-2" />
             </div>
         </div>
-        
+
     </div>
 }
 
 <div>
-    @Html.ActionLink("返回", "Details", new { actId = ViewBag.ID})
+    @if (id.StartsWith("A"))
+    {
+        @Html.ActionLink("返回", "Details", new { actId = ViewBag.ID })
+    }
+    else if (id.StartsWith("B"))
+    {
+        @Html.ActionLink("返回", "Details", new { actId = ViewBag.actID })
+    }
+    else if (id.StartsWith("M"))
+    {
+        @Html.ActionLink("返回", "Info", new { memID = ViewBag.ID })
+    }
+    else
+    {
+        @Html.ActionLink("返回", "Remarks", new { memID = ViewBag.ID })
+    }
 </div>
 @section topCSS{
-    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+    <link href="~/CSS/ReportCSS.css" rel="stylesheet" />
 }
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>

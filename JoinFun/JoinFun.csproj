@@ -210,6 +210,7 @@
     <Content Include="CSS\Register .css" />
     <Content Include="CSS\Login.css" />
     <Content Include="CSS\Remark.css" />
+    <Content Include="CSS\ReportCSS.css" />
     <Content Include="CSS\SwitchButton.css" />
     <Content Include="CSS\time\htmleaf-demo.css" />
     <Content Include="CSS\time\normalize.css" />
@@ -1067,19 +1068,16 @@
     <Content Include="Views\Adm\Feedback.cshtml" />
     <Content Include="Views\Adm\FeedBackReply.cshtml" />
     <Content Include="Views\Adm\AllViolations.cshtml" />
-
     <Content Include="Views\Adm\InquireDetail.cshtml" />
     <Content Include="Views\Shared\_IndexLayout.cshtml" />
     <Content Include="Views\Adm\SortByAct.cshtml" />
     <Content Include="Views\Adm\SortByReport.cshtml" />
     <Content Include="Views\Adm\InquireEdit.cshtml" />
-
     <Content Include="Views\Adm\InquireEdit.cshtml" />
     <Content Include="Views\Shared\_IndexLayout.cshtml" />
     <Content Include="Views\Adm\SortByAct.cshtml" />
     <Content Include="Views\Adm\SortByReport.cshtml" />
     <Content Include="Views\Adm\key.cshtml" />
-
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
