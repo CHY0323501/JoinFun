@@ -224,18 +224,24 @@ namespace JoinFun.Controllers
 
             //發通知給收到訊息的會員
             string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
-
-            Notification message = new Notification();
-            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-            message.InstanceId = serial;
-            message.ToMemId = receiver;
-            message.NotiTitle = "留言板訊息";
-            message.NotifContent = talker + "說：\n\n" + comment;
-            message.timeReceived = DateTime.Now;
-            message.readYet = false;
-            message.keepNotice = true;
-            db.Notification.Add(message);
-            db.SaveChanges();
+            var member = db.Member.ToList();
+            foreach (var item in member)
+            {
+                if (comment.Contains("@" + item.memNick))
+                {
+                    Notification message = new Notification();
+                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                    message.InstanceId = serial;
+                    message.ToMemId = item.memId;
+                    message.NotiTitle = "留言板訊息";
+                    message.NotifContent = talker + "說：\n\n" + comment;
+                    message.timeReceived = DateTime.Now;
+                    message.readYet = false;
+                    message.keepNotice = true;
+                    db.Notification.Add(message);
+                    db.SaveChanges();
+                }
+            }
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
@@ -296,7 +302,8 @@ namespace JoinFun.Controllers
             Finalchoose fc1 = new Finalchoose()
             {
                 vwActList = vwActivities.ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList()
+                joinfunlist = db.Join_Fun_Activities.ToList(),
+                post = db.Post.Where(m => m.ShowInCarousel == true).OrderByDescending(m => m.postSerial).Take(1).ToList()
             };
 
             return View(fc1);
@@ -319,7 +326,8 @@ namespace JoinFun.Controllers
             Finalchoose fc2 = new Finalchoose()
             {
                 vwActList = searchResult.ToList(),
-                joinfunlist = db.Join_Fun_Activities.ToList()
+                joinfunlist = db.Join_Fun_Activities.ToList(),
+                post = db.Post.Where(m => m.ShowInCarousel == true).OrderByDescending(m => m.postSerial).Take(1).ToList()
             };
 
 
@@ -341,7 +349,7 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase firstPic, HttpPostedFileBase[] picture)
+        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase firstPic)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -389,11 +397,12 @@ namespace JoinFun.Controllers
                         db.SaveChanges();
                     }
                     //存入上傳的活動內容照片
-                    if (picture[0] != null)
+                    IList<HttpPostedFileBase> photograph = Request.Files.GetMultiple("photograph");
+                    if (photograph != null)
                     {
-                        for (int i = 0; i < picture.Length; i++)
+                        foreach(var item in photograph)
                         {
-                            HttpPostedFileBase file = picture[i];
+                            HttpPostedFileBase file = item;
                             Photos_of_Activities photo = new Photos_of_Activities();
                             //if (file != null)
                             //{

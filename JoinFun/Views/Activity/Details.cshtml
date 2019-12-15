@@ -164,7 +164,7 @@
                     @foreach (var item in Model.vwActivityList)
                     {
                         <input id="age" type="hidden" value="@item.serial" />
-                        <pre id="text" class="text-center mt-4"> @item.actDescription</pre>
+                        <div id="text" class="text-center mt-4">@Html.Raw(@item.actDescription.ToString().Replace("\n","<br>"))</div>
 
                     }
                 </div>
@@ -175,7 +175,7 @@
 
                 <span class="subtitle">留言板</span>
 
-                <div id="act_content" class="w-100 ">
+                <div id="act_content2" class="w-100 ">
                     @*<h1>留言板區</h1>*@
                     <div id="commentBoard">
                         @foreach (var item in Model.MBoard)
@@ -227,8 +227,8 @@
         </div>
         <div class="col-lg-6 order-md-2 order-1">
             <span class="subtitle">活動資訊</span>
-            <div id="act_info" class="w-100 text-md-center">
-                <ul>
+            <div id="act_info" class="w-100 text-lg-left text-md-center ">
+                <ul class="ml-lg-5">
                     @foreach (var item in Model.vwActivityList)
                     {
                         var address = item.CountyName + item.DistrictName + item.actRoad;
@@ -263,18 +263,19 @@
 
             @*<div class="col-md-6">*@
             <span class="subtitle">關於揪團主</span>
-            <div id="act_info" class="w-100 ">
+            <div id="act_info" class="w-100  ">
                 <br />
-                @foreach (var item in Model.vwActivityList)
-                {
+                <div class="pl-lg-5 ml-lg-4 text-md-center text-lg-left">
+                    @foreach (var item in Model.vwActivityList)
+                    {
 
-                    <a href="@Url.Action("Info", "Member", new { memID = item.hostId })"><img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid mb-2" style="width:2.3rem" /></a>
+                        <a href="@Url.Action("Info", "Member", new { memID = item.hostId })"><img src="~/Photos/@(item.Sex == "M" ? "male.png" : "female.png")" class="img-fluid mb-2" style="width:2.3rem" /></a>
 
-                    <span id="hostId">@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, new { id = "hostid", })</span>
+                        <span id="hostId">@Html.ActionLink(@item.memNick, "Info", "Member", new { memID = item.hostId }, new { id = "hostid", })</span>
 
 
-                }
-
+                    }
+                </div>
                 <br />
 
 

@@ -20,9 +20,10 @@ a{
 }
 .main{
 	position:relative;
+   
     /*width:980px;*/
     margin: 0 auto;
-    
+  
 }
 h1{
 	margin:0px;

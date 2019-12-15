@@ -248,6 +248,7 @@
     <Content Include="JS\FriendManage.js" />
     <Content Include="JS\jquery.validate.plus.js" />
     <Content Include="JS\MemberEdit.js" />
+    <Content Include="JS\stars.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>JoinfunNEW.edmx</DependentUpon>
@@ -326,7 +327,9 @@
     <Content Include="Photos\memphis-colorful.png" />
     <Content Include="Photos\no_results_found.png" />
     <Content Include="Photos\sorry.gif" />
+    <Content Include="Photos\star %281%29.png" />
     <Content Include="Photos\star.png" />
+    <Content Include="Photos\star2.png" />
     <Content Include="Photos\system.png" />
     <Content Include="Photos\title.png" />
     <Content Include="Photos\title2.png" />
