@@ -95,7 +95,7 @@ namespace JoinFun.Controllers
         }
         [LoginRule(isVisiter = true, Front = true)]
         //會員評價
-        public ActionResult Remarks(string memID="M000000064")
+        public ActionResult Remarks(string memID)
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null )
@@ -119,8 +119,11 @@ namespace JoinFun.Controllers
                 //取得平均星等
                 var host_star = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).FirstOrDefault();
                 var Part_star = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).FirstOrDefault();
-                if (host_star != null && Part_star != null)
-                    ViewBag.avgStar = Math.Round(db.vw_Host_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar) + db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
+                if (host_star != null && Part_star != null) {
+                    var h = db.vw_Host_Remarks.Where(m => m.ToMemId == memID);
+                    var p = db.vw_Participant_Remarks.Where(m => m.ToMemId == memID);
+                    ViewBag.avgStar = Math.Round(((double)(h.Sum(m => m.remarkStar) + p.Sum(m => m.remarkStar))/(h.Count()+p.Count())), 0);
+                }
                 else if (host_star == null)
                     ViewBag.avgStar = Math.Round(db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
                 else if (Part_star == null)
