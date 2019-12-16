@@ -4,17 +4,15 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<div class="container text-white ">
-    <h2 class="text-center my-5 ">JoinFun後台系統</h2>
-    <div class="w-100 adm-subtitle">目前時間　<span id="nowtime"></span></div>
-    
-        <p class="adm-subtitle">
-            最新公告：@Model.postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)　
+    <div class="container text-white ">
+        <h2 class="text-center my-5 ">JoinFun後台系統</h2>
+        <div class="w-100 adm-subtitle">目前時間　<span id="nowtime"></span></div>
+
+        <p class="adm-subtitle mt-3">
+            最新公告：@Model.postTime.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
             @Model.postTitle
         </p>
-    
-
-</div>
+    </div>
 
 
 @section scripts{

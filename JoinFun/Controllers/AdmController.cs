@@ -386,8 +386,11 @@ namespace JoinFun.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 var QueryMember = db.Member.Where(s => s.memId.Contains(searchString) || s.memNick.Contains(searchString)).ToList();
-                
-                return View(QueryMember);
+
+                var pagelist = QueryMember.ToPagedList(pagecurrent, pagesize);
+
+
+                return View(pagelist);
             }
             else
             {
@@ -907,17 +910,17 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult FeedBackReply(string id, string admId, string Page, string content)
+        public ActionResult FeedBackReply(string id, string admId, string Page, string reportContent)
         {
-            if (content != null)
+            if (reportContent != null)
             {
                 //db.sp_updateComment(id, content, admId, id, content);
                 SqlParameter[] param = new SqlParameter[] {
                     new SqlParameter("@id", id),
-                    new SqlParameter("@content", content),
+                    new SqlParameter("@content", reportContent),
                     new SqlParameter("@admId", admId),
                     new SqlParameter("@instanceId", id),
-                    new SqlParameter("@notiContent", content)
+                    new SqlParameter("@notiContent", reportContent)
                 };
                 db.Database.ExecuteSqlCommand("exec dbo.sp_updateComment @id, @content, @admId, @instanceId, @notiContent", param);
                 db.SaveChanges();
@@ -933,8 +936,8 @@ namespace JoinFun.Controllers
 
         public ActionResult ActManage(int page = 1)
         {
-            var actdetail = db.Join_Fun_Activities.OrderByDescending(m=>m.actId).ToList();
-
+            
+            var actdetail = db.Join_Fun_Activities.OrderByDescending(m => m.actId).ToList();
             int pagesize = 8;
             int pagecurrent = page < 1 ? 1 : page;
             var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
@@ -964,7 +967,7 @@ namespace JoinFun.Controllers
             }
 
 
-            var actdetail = db.Join_Fun_Activities.ToList();
+            var actdetail = db.Join_Fun_Activities.OrderByDescending(m => m.actId).ToList();
 
             int pagesize = 8;
             int pagecurrent = page < 1 ? 1 : page;

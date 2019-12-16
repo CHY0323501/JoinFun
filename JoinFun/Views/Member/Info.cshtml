@@ -99,12 +99,12 @@
                                                 <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit">
                                                     @if (Model.vw_FollowUp.Where(m=>m.FoMemId==session&&m.memId==i.memId).Count()==0)
                                                     {
-                                                        <i class="fol fo-yes"></i>@:　追蹤他
+                                                        <i class="fas fa-heart"></i>@:　追蹤他
                                                     }
                                                     else
                                                     {
 
-                                                        <i class="fol fo-delete"></i>@:　取消追蹤
+                                                        <i class="fas fa-heart-broken"></i>@:　取消追蹤
                                                     }
 
                                                 </button>
@@ -422,7 +422,7 @@
                 url: "http://localhost:54129/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
                 success: function () {
                     console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
-                    $('#FollowBtn').html('<i class="fol fo-delete"></i>　取消追蹤');
+                    $('#FollowBtn').html('<i class="fas fa-heart-broken"></i>　取消追蹤');
                 },
                 error: function () {
                     console.log("失敗");
@@ -436,7 +436,7 @@
                 url: "http://localhost:54129/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
                 success: function () {
                     console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
-                   $('#FollowBtn').html('<i class="fol fo-yes"></i>　追蹤他');
+                   $('#FollowBtn').html('<i class="fas fa-heart"></i>　追蹤他');
                 },
                 error: function () {
                     console.log("失敗");
