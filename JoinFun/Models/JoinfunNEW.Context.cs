@@ -67,5 +67,6 @@ namespace JoinFun.Models
         public virtual DbSet<vw_PartHistory> vw_PartHistory { get; set; }
         public virtual DbSet<vw_Participant_Remarks> vw_Participant_Remarks { get; set; }
         public virtual DbSet<vw_Host_Remarks> vw_Host_Remarks { get; set; }
+        public virtual DbSet<ChatRoom> ChatRoom { get; set; }
     }
 }

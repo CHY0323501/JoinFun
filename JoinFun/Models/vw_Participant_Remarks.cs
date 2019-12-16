@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(Metavw_Participant_Remarks))]
-
     public partial class vw_Participant_Remarks
     {
         public string remarkSerial { get; set; }

@@ -25,18 +25,30 @@ namespace JoinFun.Controllers
             JoinFunEntities db = new JoinFunEntities();
             string _fromMemID;
             string _toMemID;
-            static WebSocketCollection _chatClients = new WebSocketCollection();
 
+            //key為發送對象，value為WebSocketCollection
+            static Dictionary<string, WebSocketCollection> _chatRooms = new Dictionary<string, WebSocketCollection>();
             public ChatWebSocketHandler(string fromMemID,string toMemID)
             {
                 _fromMemID = fromMemID;
                 _toMemID = toMemID;
             }
+
+
             //覆寫OnOpen事件，鑄造新的ChatWebSocketHandler時觸發
             public override void OnOpen()
             {
-                _chatClients.Add(this);                 //加入目前連進來的人到chatclients中
+                if (_chatRooms.ContainsKey(_toMemID))
+                {
+                    //自己目前不在這個聊天對話中才加入
+                    if (!_chatRooms[_toMemID].Any(a => ((ChatWebSocketHandler)a)._fromMemID == _fromMemID))
+                        _chatRooms[_toMemID].Add(this);
+                }
+                else
+                    _chatRooms[_toMemID] = new WebSocketCollection() { this };
             }
+
+
             //覆寫OnMessage事件，前端send時觸發，被觸發後會回頭觸發前端的onmessage事件
             public override void OnMessage(string message)
             {
@@ -57,7 +69,7 @@ namespace JoinFun.Controllers
 
                 //推送對話給聊天對象
                 string fromMemNick = db.Member.Find(_fromMemID).memNick;
-                _chatClients.Broadcast(fromMemNick + " " + message);
+                _chatRooms[_toMemID].Broadcast(fromMemNick + " " + message+ " " + DateTime.Now);
             }
 
         }

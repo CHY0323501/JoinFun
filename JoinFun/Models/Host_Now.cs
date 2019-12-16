@@ -11,7 +11,8 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-   
+    
+
     public partial class Host_Now
     {
         public string actId { get; set; }

@@ -14,7 +14,6 @@ namespace JoinFun.Models
     using System.ComponentModel.DataAnnotations;
 
     [MetadataType(typeof(MetaViolation))]
-
     public partial class Violation
     {
         public string vioId { get; set; }

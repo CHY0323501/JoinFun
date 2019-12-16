@@ -876,6 +876,9 @@
     <Compile Include="Models\Budget_Restriction.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChatRoom.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Chat_Records.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
@@ -1086,6 +1089,7 @@
     <Content Include="Views\Adm\SortByAct.cshtml" />
     <Content Include="Views\Adm\SortByReport.cshtml" />
     <Content Include="Views\Adm\key.cshtml" />
+    <Content Include="Views\ChatList\ChatHistory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1096,7 +1100,6 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ChatList\" />
     <Folder Include="Views\Chat\" />
     <Folder Include="Views\Post\" />
   </ItemGroup>
