@@ -933,8 +933,8 @@ namespace JoinFun.Controllers
 
         public ActionResult ActManage(int page = 1)
         {
-            var actdetail = db.Join_Fun_Activities.OrderByDescending(m=>m.actId).ToList();
-
+            
+            var actdetail = db.Join_Fun_Activities.OrderByDescending(m => m.actId).ToList();
             int pagesize = 8;
             int pagecurrent = page < 1 ? 1 : page;
             var pagedlist = actdetail.ToPagedList(pagecurrent, pagesize);
@@ -964,7 +964,7 @@ namespace JoinFun.Controllers
             }
 
 
-            var actdetail = db.Join_Fun_Activities.ToList();
+            var actdetail = db.Join_Fun_Activities.OrderByDescending(m => m.actId).ToList();
 
             int pagesize = 8;
             int pagecurrent = page < 1 ? 1 : page;
