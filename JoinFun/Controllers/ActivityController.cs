@@ -87,7 +87,7 @@ namespace JoinFun.Controllers
         }
 
         [LoginRule(isVisiter = true, Front = true)]
-        public ActionResult AddActdetail(string actId,string MemID)
+        public ActionResult AddActdetail(string actId, string MemID)
         {
             m.actId = actId;
             m.memId = MemID;
@@ -224,24 +224,18 @@ namespace JoinFun.Controllers
 
             //發通知給收到訊息的會員
             string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
-            var member = db.Member.ToList();
-            foreach (var item in member)
-            {
-                if (comment.Contains("@" + item.memNick))
-                {
-                    Notification message = new Notification();
-                    message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-                    message.InstanceId = serial;
-                    message.ToMemId = item.memId;
-                    message.NotiTitle = "留言板訊息";
-                    message.NotifContent = talker + "說：\n\n" + comment;
-                    message.timeReceived = DateTime.Now;
-                    message.readYet = false;
-                    message.keepNotice = true;
-                    db.Notification.Add(message);
-                    db.SaveChanges();
-                }
-            }
+
+            Notification message = new Notification();
+            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+            message.InstanceId = serial;
+            message.ToMemId = receiver;
+            message.NotiTitle = "留言板訊息";
+            message.NotifContent = talker + "說：\n\n" + comment;
+            message.timeReceived = DateTime.Now;
+            message.readYet = false;
+            message.keepNotice = true;
+            db.Notification.Add(message);
+            db.SaveChanges();
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
@@ -400,7 +394,7 @@ namespace JoinFun.Controllers
                     IList<HttpPostedFileBase> photograph = Request.Files.GetMultiple("photograph");
                     if (photograph != null)
                     {
-                        foreach(var item in photograph)
+                        foreach (var item in photograph)
                         {
                             HttpPostedFileBase file = item;
                             Photos_of_Activities photo = new Photos_of_Activities();
