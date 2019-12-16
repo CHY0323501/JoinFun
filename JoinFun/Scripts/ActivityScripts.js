@@ -56,14 +56,14 @@ $('#classUl>li').click(function (e) {
 
 //點圖上傳圖片
 $('#uploadMain').click(function () {
-    $('#picture').click();
+    $('#topPic').click();
 });
 $('#addPic').click(function () {
     $('#contentPic').click();
 });
 
 //預覽主題圖片
-$('#picture').on("change", function () {
+$('#topPic').on("change", function () {
     var file = this.files[0];
     if (this.files && file) {
         var reader = new FileReader();

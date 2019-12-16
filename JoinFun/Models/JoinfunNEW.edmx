@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JoinFunModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Acc_Pass">
           <Key>
             <PropertyRef Name="Account" />
@@ -1671,8 +1671,7 @@
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JoinFunModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2241,37 +2240,6 @@
           <Property Name="memId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_Host_Remarks">
-          <Key>
-            <PropertyRef Name="remarkSerial" />
-            <PropertyRef Name="actId" />
-            <PropertyRef Name="FromMemId" />
-            <PropertyRef Name="ToMemId" />
-            <PropertyRef Name="keepRemark" />
-            <PropertyRef Name="remarkStar" />
-            <PropertyRef Name="remarkTime" />
-            <PropertyRef Name="memNick" />
-            <PropertyRef Name="Sex" />
-            <PropertyRef Name="actTopic" />
-            <PropertyRef Name="CountyName" />
-            <PropertyRef Name="DistrictName" />
-            <PropertyRef Name="hostId" />
-          </Key>
-          <Property Name="remarkSerial" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="actId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="FromMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ToMemId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
-          <Property Name="remarkStar" Type="Int16" Nullable="false" />
-          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="memNick" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="actTopic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CountyName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DistrictName" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="hostId" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="vw_HostHistory">
           <Key>
@@ -2977,7 +2945,6 @@
           <EntitySet Name="vw_FansNew" EntityType="Self.vw_FansNew" />
           <EntitySet Name="vw_FollowUp" EntityType="Self.vw_FollowUp" />
           <EntitySet Name="vw_FriendShip" EntityType="Self.vw_FriendShip" />
-          <EntitySet Name="vw_Host_Remarks" EntityType="Self.vw_Host_Remarks" />
           <EntitySet Name="vw_HostHistory" EntityType="Self.vw_HostHistory" />
           <EntitySet Name="vw_Member_Join" EntityType="Self.vw_Member_Join" />
           <EntitySet Name="vw_Member_Remarks" EntityType="Self.vw_Member_Remarks" />
@@ -3124,7 +3091,39 @@
             <End Role="Type_of_Violate" EntitySet="Type_of_Violate" />
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
+          <EntitySet Name="vw_Host_Remarks" EntityType="JoinFunModel.vw_Host_Remarks" />
         </EntityContainer>
+        <EntityType Name="vw_Host_Remarks">
+          <Key>
+            <PropertyRef Name="remarkSerial" />
+            <PropertyRef Name="actId" />
+            <PropertyRef Name="FromMemId" />
+            <PropertyRef Name="ToMemId" />
+            <PropertyRef Name="keepRemark" />
+            <PropertyRef Name="remarkStar" />
+            <PropertyRef Name="remarkTime" />
+            <PropertyRef Name="memNick" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="actTopic" />
+            <PropertyRef Name="CountyName" />
+            <PropertyRef Name="DistrictName" />
+            <PropertyRef Name="hostId" />
+          </Key>
+          <Property Name="remarkSerial" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="actId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="FromMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ToMemId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="keepRemark" Type="Boolean" Nullable="false" />
+          <Property Name="remarkStar" Type="Int16" Nullable="false" />
+          <Property Name="remarkContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="remarkTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memNick" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="actTopic" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3578,26 +3577,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vw_Host_Remarks">
-            <EntityTypeMapping TypeName="JoinFunModel.vw_Host_Remarks">
-              <MappingFragment StoreEntitySet="vw_Host_Remarks">
-                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
-                <ScalarProperty Name="actId" ColumnName="actId" />
-                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
-                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
-                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
-                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
-                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
-                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
-                <ScalarProperty Name="memNick" ColumnName="memNick" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
-                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
-                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
-                <ScalarProperty Name="hostId" ColumnName="hostId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vw_HostHistory">
             <EntityTypeMapping TypeName="JoinFunModel.vw_HostHistory">
               <MappingFragment StoreEntitySet="vw_HostHistory">
@@ -3748,6 +3727,26 @@
                 <ScalarProperty Name="CountyName" ColumnName="CountyName" />
                 <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
                 <ScalarProperty Name="hostId" ColumnName="hostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Host_Remarks">
+            <EntityTypeMapping TypeName="JoinFunModel.vw_Host_Remarks">
+              <MappingFragment StoreEntitySet="vw_Host_Remarks">
+                <ScalarProperty Name="hostId" ColumnName="hostId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="actTopic" ColumnName="actTopic" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="memNick" ColumnName="memNick" />
+                <ScalarProperty Name="remarkTime" ColumnName="remarkTime" />
+                <ScalarProperty Name="remarkContent" ColumnName="remarkContent" />
+                <ScalarProperty Name="remarkStar" ColumnName="remarkStar" />
+                <ScalarProperty Name="keepRemark" ColumnName="keepRemark" />
+                <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
+                <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
+                <ScalarProperty Name="actId" ColumnName="actId" />
+                <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

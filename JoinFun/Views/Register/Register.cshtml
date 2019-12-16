@@ -169,7 +169,7 @@
 <div class="content-side col-md-10 col-sm-10">
     <h3 class="  font-weight-bold ml-2" style="font-size:30px">會員註冊</h3>
     <div class="signInPage" style="display: block">
-        <div class="l-signInPage__progressBar " style="display: block">
+        <div class="l-signInPage__progressBar  " style="display: block">
             <div class="row justify-content-center">
                
                 <ul class="c-progressBar ">
@@ -402,7 +402,7 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="form-group col-12">
-                                    <label class=" col-md-12">註冊確認</label>
+                                    @*<label class=" col-md-12">註冊確認</label>*@
                                     <div class="col-md-12">
 
                                         @*<input id="checkRegister" type="checkbox" name="Checkbox[]" />
@@ -424,7 +424,7 @@
                                                         @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p id="error">您尚未勾選<span class="text-danger">註冊確認</span></p>
+                                                        <p id="error">您尚未勾選<span class="text-danger">註冊確認</span><br />您若欲使用本網站所提供的服務，請閱讀並勾選服務條款</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
@@ -591,12 +591,12 @@
         });
 
 
-        $(document).ready(function () {
-            $(window).resize(function () {
-                wdth = $(window).width();
-               if(wdth<1030)
-            });
-        });
+        //$(document).ready(function () {
+        //    $(window).resize(function () {
+        //        wdth = $(window).width();
+        //       if(wdth<1030)
+        //    });
+        //});
 
 
      
