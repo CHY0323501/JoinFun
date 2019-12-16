@@ -228,7 +228,7 @@
 
                             <li class="nav-item text-center">
                                 <input id="mid" type="hidden" value="@Session["memid"].ToString()" />
-                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages", "Activity", new { memID = Session["memid"] })"><i class="far fa-bell"></i> 通知中心<span class="badge badge-light number"></span></a>
+                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages", "Activity", new { memID = Session["memid"] })"><i class="fas fa-bell"></i> 通知中心<span class="badge badge-light number"></span></a>
                             </li>
 
 
@@ -240,7 +240,7 @@
 
                                     @*<a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　我的資訊</a>*@
                                     <a class="dropdown-item" href="@Url.Action("MyActivities", "Member", new { memID = Session["memid"] })"><i class="fas fa-glass-cheers"></i>　我的揪團</a>
-                                    <a class="dropdown-item" href="@Url.Action("Bookmark", "Member", new { memID = Session["memid"] })"><i class="far fa-heart"></i>　我的收藏</a>
+                                    @*<a class="dropdown-item" href="@Url.Action("Bookmark", "Member", new { memID = Session["memid"] })"><i class="far fa-heart"></i>　我的收藏</a>*@
                                     <a class="dropdown-item" href="@Url.Action("FriendManagement", "Member", new { memID = Session["memid"] })"><i class="fas fa-user-friends"></i>　好友管理</a>
                                     <a class="dropdown-item " href="@Url.Action("BlockManage", "Member", new { memID = Session["memid"] })"><i class="fas fa-user-lock"></i>　封鎖管理</a>
                                     <a class="dropdown-item" href="@Url.Action("PwdEdit", "Register", new { memId = Session["memid"] })"><i class="fas fa-key"></i>　修改密碼</a>

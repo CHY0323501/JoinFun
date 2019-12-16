@@ -97,6 +97,7 @@ namespace JoinFun.Controllers
             return View();
         }
         //帳號啟用
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Approved(string email_ID)
         {
             var approved = db.Member.Where(m => m.email_ID == email_ID).FirstOrDefault();
