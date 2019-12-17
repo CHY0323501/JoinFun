@@ -1,0 +1,20 @@
+﻿@model IEnumerable<JoinFun.Models.Chat_Records>
+
+    @{
+        ViewBag.Title = "聊天室";
+    }
+
+    <h2>聊天室</h2>
+    <div class="container">
+        @foreach (var i in Model)
+        {
+
+        }
+    </div>
+
+            @*@Html.DisplayNameFor(model => model.ToMemId)
+        
+            @Html.DisplayFor(model => model.ToMemId)*@
+    <p>
+        @Html.ActionLink("返回聊天室", "Index")
+    </p>

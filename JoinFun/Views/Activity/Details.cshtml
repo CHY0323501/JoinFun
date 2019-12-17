@@ -216,6 +216,7 @@
                         <input id="commentBtn" type="button" value="送出" class="btn btn-info" />*@
                     <div class="text-center ml-5">
                         <textarea id="comments" rows="6" cols="15" class="form-control col-md-12 mb-4" style="resize:none"></textarea>
+                        <input id="receiverID" type="hidden" />
                         <input id="commentBtn" type="button" value="送出" class="btn btn-info btn-block mContent" />
                     </div>
                 </div>
@@ -568,7 +569,7 @@
             url: "@Url.Action("AddComment", "Activity")",
             method: "post",
             traditional: true,
-            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val(), receiver: $('#user label').attr('id') },
+            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val(), receiver: $('#receiverID').val() },
             success: function () {
                 alert("留言新增成功");
                 //$.ajax({
@@ -594,6 +595,8 @@
         var timer;
         $('#commentBoard label').on("mousedown", function () {
             if ($('#member').val() != $(this).attr("id")) {
+                console.log($(this).attr("id"));
+                $('#receiverID').val($(this).attr("id"));
                 var target = "@@" + $(this).text() + " ";
                 timer = setTimeout(function () {
                     $('#comments').val(target);

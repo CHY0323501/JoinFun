@@ -11,21 +11,19 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataType(typeof(MetaPunishment))]
-    public partial class Punishment
+    
+    public partial class ChatRoom
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Punishment()
+        public ChatRoom()
         {
-            this.Violation = new HashSet<Violation>();
+            this.Chat_Records = new HashSet<Chat_Records>();
         }
     
-        public string punishId { get; set; }
-        public string punishName { get; set; }
+        public int ChatRoom1 { get; set; }
+        public Nullable<System.DateTime> LastChatTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Violation> Violation { get; set; }
+        public virtual ICollection<Chat_Records> Chat_Records { get; set; }
     }
 }

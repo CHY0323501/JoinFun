@@ -23,7 +23,9 @@ namespace JoinFun.Models
         public string chatContent { get; set; }
         public System.DateTime Time { get; set; }
         public bool ReadYet { get; set; }
+        public Nullable<int> ChatRoom { get; set; }
     
         public virtual Member Member { get; set; }
+        public virtual ChatRoom ChatRoom1 { get; set; }
     }
 }
