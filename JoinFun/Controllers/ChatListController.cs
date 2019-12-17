@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +14,9 @@ namespace JoinFun.Controllers
         [LoginRule(isVisiter = true, Front = true)]
         public ActionResult ChatHistory(string memID="M000000002")
         {
+            ////把memid參數拿掉，換成session
+
+
             Session["memid"] = "M000000002";
             //找出每位會員的最新一筆聊天記錄
             var chatList = (from a in db.Chat_Records
@@ -31,11 +35,24 @@ namespace JoinFun.Controllers
             ViewBag.ReadYetCount = ReadYetCount;
             return View(chatList);
         }
-        public ActionResult Chat(string fromMemID) {
+        public ActionResult Chat(string fromMemID= "M000000001") {
+            Session["memid"] = "M000000002";
             string session = Session["memid"].ToString();
-            var chat = db.Chat_Records.Where(m=>(m.ToMemId== session && m.FromMemId==fromMemID)||m.FromMemId== session && m.ToMemId==fromMemID);
+            //找出聊天室房號
+            int roomID = (int)(db.Chat_Records.Where(m => (m.ToMemId == session && m.FromMemId == fromMemID) || m.FromMemId == session && m.ToMemId == fromMemID).FirstOrDefault().ChatRoom);
 
-            return View();
+            //已讀所有未讀訊息
+            string UpdateString = "Update Chat_Records set ReadYet=1 where chatroom=@chatroom";
+            db.Database.ExecuteSqlCommand(UpdateString, new SqlParameter("@chatroom", roomID));
+
+
+            //取得所有歷史記錄
+            var chat = db.Chat_Records.Where(m => m.ChatRoom == roomID).OrderByDescending(m=>m.Time).ToList().OrderBy(m=>m.Time);
+
+
+            ViewBag.Nick = db.Member.Find(fromMemID).memNick;
+
+            return View(chat);
         }
     }
 }

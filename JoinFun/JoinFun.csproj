@@ -1090,6 +1090,7 @@
     <Content Include="Views\Adm\SortByReport.cshtml" />
     <Content Include="Views\Adm\key.cshtml" />
     <Content Include="Views\ChatList\ChatHistory.cshtml" />
+    <Content Include="Views\ChatList\Chat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

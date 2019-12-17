@@ -1,0 +1,38 @@
+﻿@model IEnumerable<JoinFun.Models.Chat_Records>
+
+@{
+    ViewBag.Title = "Chat";
+}
+
+<h2 class="font-weight-bold text-warning p-2">@ViewBag.Nick</h2>
+
+<table class="table">
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ToMemId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.chatContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReadYet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Member.memNick)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChatRoom1.ChatRoom1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.chatSerial }) |
+            @Html.ActionLink("Details", "Details", new { id=item.chatSerial }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.chatSerial })
+        </td>
+    </tr>
+}
+
+</table>
