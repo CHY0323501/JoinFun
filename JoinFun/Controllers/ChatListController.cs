@@ -13,16 +13,22 @@ namespace JoinFun.Controllers
         [LoginRule(isVisiter = true, Front = true)]
         public ActionResult ChatHistory(string memID="M000000002")
         {
-
+            Session["memid"] = "M000000002";
             //找出每位會員的最新一筆聊天記錄
             var chatList = (from a in db.Chat_Records
                             where a.Time == (from r in db.Chat_Records
-                                             where a.FromMemId == r.FromMemId
+                                             where a.ChatRoom == r.ChatRoom
                                              select r.Time).Max()
                                              && a.ToMemId == memID ||a.FromMemId==memID
                             select a).ToList();
 
-
+            List<int> ReadYetCount = new List<int>();
+            foreach (var c in chatList.OrderByDescending(m=>m.Time))
+            {
+                int count = db.Chat_Records.Where(m => m.ChatRoom == c.ChatRoom&&m.ReadYet==false).Count();
+                ReadYetCount.Add(count);
+            }
+            ViewBag.ReadYetCount = ReadYetCount;
             return View(chatList);
         }
         public ActionResult Chat(string fromMemID) {
