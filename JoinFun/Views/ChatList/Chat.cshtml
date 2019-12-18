@@ -7,31 +7,84 @@
 }
 @section CSS{
     <style>
+        body {
+            overflow: hidden !important;
+        }
+
         .timestyle {
             font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
         }
 
-        .bubble {
+        .borderStyle {
+            border-left: 8px solid #ffc107;
+        }
+
+        .bubble, .bubble2 {
             background: rgba(128, 128, 128, 0.81);
             border-radius: 10px;
+            max-width: 40vw;
+            display: inline-block;
+            border-radius: 4px;
+            margin: 10px 0 10px 10px;
+            position: relative;
         }
+
+            .bubble2:before {
+                content: '';
+                position: absolute;
+                right: 100%;
+                top: 0px;
+                width: 16px;
+                height: 16px;
+                border-width: 0;
+                border-style: solid;
+                border-color: transparent;
+                border-bottom-width: 10px;
+                border-bottom-color: currentColor;
+                border-radius: 0 0 0 30px;
+                color: rgba(128, 128, 128, 0.81);
+            }
+
+            .bubble::after {
+                content: '';
+                position: absolute;
+                left: 100%;
+                top: 0px;
+                width: 16px;
+                height: 16px;
+                border-width: 0;
+                border-style: solid;
+                border-color: transparent;
+                border-bottom-width: 10px;
+                border-bottom-color: currentColor;
+                border-radius: 0 0 32px 0;
+                color: rgba(128, 128, 128, 0.81);
+            }
     </style>
 }
 <input id="roomID" type="hidden" value="" />
-<div class="container w-75 ">
-    <a href="@Url.Action("Info","Member",new { memID=Request.QueryString["fromMemID"]})" class="text-decoration-none text-warning "><h2 class="font-weight-bold p-2 border-left" style="border-left:8px solid #ffc107!important;letter-spacing:5px;">@ViewBag.Nick</h2></a>
-    <div class="overflow-auto" style="max-height:800px">
+<div class="container w-75 mt-2">
+    <div class="row">
+        <div class="col-10">
+            <a href="@Url.Action("Info","Member",new { memID=Request.QueryString["fromMemID"]})" class="text-decoration-none text-warning"><h2 class="font-weight-bold p-2 borderStyle" style="letter-spacing:5px;">@ViewBag.Nick</h2></a>
+        </div>
+        <div class="col-2">
+            <a href="@Url.Action("ChatHistory","ChatList",new { memID=Session["memid"].ToString()})" class="btn btn-outline-secondary mt-1 pt-2"><i class="fas fa-chevron-left " style="letter-spacing:2px;"><span style="font-family:Consolas;font-size:1.2rem" id="back">　Back</span></i></a>
+        </div>
+    </div>
+    
+    <div class="overflow-auto border borderStyle mt-3" style="max-height:55vh;min-height:40vh;border-radius:10px" id="messageArea">
         @if (ViewBag.chat != null)
         {
             foreach (var item in chat)
             {
-                <div class="card mb-2 border-0">
+                <div class="card mb-2 border-0 mx-auto">
                     @if (item.FromMemId == Request.QueryString["fromMemID"])
                     {
                         <div class="card-body">
                             <div class="text-info font-weight-bold rounded-circle" style="font-size:1.5rem;width:50px;height:50px;background-color:#c4e1e1;line-height:50px;padding-left:0.75rem">@item.Member.memNick.Substring(0, 1)</div>
-                            <p class="m-3 ml-5">
-                                <span class="text-white p-2 bubble">@Html.DisplayFor(modelItem => item.chatContent)</span>
+                            <p class="m-1 ml-5">
+                                <span class="text-white p-2 pt-0 bubble2">@Html.DisplayFor(modelItem => item.chatContent)</span>
                                 <span class="ml-2 text-secondary timestyle">@item.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)</span>
                             </p>
                         </div>
@@ -40,11 +93,42 @@
                     {
                         <div class="card-body text-right">
                             <span class="timestyle mr-2 text-secondary">@item.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)</span>
-                            <span class="bubble text-white p-2">@Html.DisplayFor(modelItem => item.chatContent)</span>
+                            <span class="bubble text-white p-2 text-left">@Html.DisplayFor(modelItem => item.chatContent)</span>
                         </div>
                     }
                 </div>
             }
         }
     </div>
+    <div class="row mt-2">
+        <div class="col-12 ">
+            <div class="input-group justify-content-md-end  justify-content-center ">
+                <input type="text" class="form-control" placeholder="輸入訊息" aria-label="輸入訊息" aria-describedby="basic-addon2" style="min-width:80%">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            //將聊天室窗拉到最下方
+            $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
+
+            $(window).resize(function () {
+                wdth = $(window).width();
+                if (wdth < 1160){
+                    $('#back').hide();
+                }
+                else if(wdth >1160)
+                    $('#back').show();
+
+                $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
+            });
+        })
+    </script>    
+}
