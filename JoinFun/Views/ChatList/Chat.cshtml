@@ -1,38 +1,50 @@
-﻿@model IEnumerable<JoinFun.Models.Chat_Records>
-
+﻿@*@model IEnumerable<JoinFun.Models.Chat_Records>*@
+@using JoinFun.Models;
 @{
-    ViewBag.Title = "Chat";
+    ViewBag.Title = ViewBag.Nick;
+    JoinFunEntities db = new JoinFunEntities();
+    var chat = (IEnumerable<Chat_Records>)ViewBag.chat;
 }
+@section CSS{
+    <style>
+        .timestyle {
+            font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+        }
 
-<h2 class="font-weight-bold text-warning p-2">@ViewBag.Nick</h2>
-
-<table class="table">
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ToMemId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.chatContent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReadYet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Member.memNick)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChatRoom1.ChatRoom1)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.chatSerial }) |
-            @Html.ActionLink("Details", "Details", new { id=item.chatSerial }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.chatSerial })
-        </td>
-    </tr>
+        .bubble {
+            background: rgba(128, 128, 128, 0.81);
+            border-radius: 10px;
+        }
+    </style>
 }
-
-</table>
+<input id="roomID" type="hidden" value="" />
+<div class="container w-75 ">
+    <a href="@Url.Action("Info","Member",new { memID=Request.QueryString["fromMemID"]})" class="text-decoration-none text-warning "><h2 class="font-weight-bold p-2 border-left" style="border-left:8px solid #ffc107!important;letter-spacing:5px;">@ViewBag.Nick</h2></a>
+    <div class="overflow-auto" style="max-height:800px">
+        @if (ViewBag.chat != null)
+        {
+            foreach (var item in chat)
+            {
+                <div class="card mb-2 border-0">
+                    @if (item.FromMemId == Request.QueryString["fromMemID"])
+                    {
+                        <div class="card-body">
+                            <div class="text-info font-weight-bold rounded-circle" style="font-size:1.5rem;width:50px;height:50px;background-color:#c4e1e1;line-height:50px;padding-left:0.75rem">@item.Member.memNick.Substring(0, 1)</div>
+                            <p class="m-3 ml-5">
+                                <span class="text-white p-2 bubble">@Html.DisplayFor(modelItem => item.chatContent)</span>
+                                <span class="ml-2 text-secondary timestyle">@item.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)</span>
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-body text-right">
+                            <span class="timestyle mr-2 text-secondary">@item.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)</span>
+                            <span class="bubble text-white p-2">@Html.DisplayFor(modelItem => item.chatContent)</span>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>

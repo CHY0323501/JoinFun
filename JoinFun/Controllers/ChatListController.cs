@@ -35,24 +35,64 @@ namespace JoinFun.Controllers
             ViewBag.ReadYetCount = ReadYetCount;
             return View(chatList);
         }
-        public ActionResult Chat(string fromMemID= "M000000001") {
+        [LoginRule(isVisiter = true, Front = true)]
+        public ActionResult Chat(string fromMemID= "M000000005") {
             Session["memid"] = "M000000002";
             string session = Session["memid"].ToString();
             //找出聊天室房號
-            int roomID = (int)(db.Chat_Records.Where(m => (m.ToMemId == session && m.FromMemId == fromMemID) || m.FromMemId == session && m.ToMemId == fromMemID).FirstOrDefault().ChatRoom);
+            var findRecord = db.Chat_Records.Where(m => (m.ToMemId == session && m.FromMemId == fromMemID) || m.FromMemId == session && m.ToMemId == fromMemID).FirstOrDefault();
+            int roomID;
+            //判斷是否已有聊天記錄
+            if (findRecord == null)
+            {
 
-            //已讀所有未讀訊息
-            string UpdateString = "Update Chat_Records set ReadYet=1 where chatroom=@chatroom";
-            db.Database.ExecuteSqlCommand(UpdateString, new SqlParameter("@chatroom", roomID));
+                //判斷是否有空房可用
+                //select* from chatroom as a left join Chat_Records as b on a.chatroom = b.chatroom where b.chatroom is null
+                var EmptyRoom = (from a in db.ChatRoom
+                                 join b in db.Chat_Records
+                                 on a.ChatRoom1 equals b.ChatRoom
+                                 into groupjoin
+                                 from c in groupjoin.DefaultIfEmpty()
+                                 where c.chatSerial == null
+                                 select a).ToList();
+                bool getRoom = false;
 
+                while (getRoom==false) {
+                    if (EmptyRoom.Count() > 0)
+                    {
+                        roomID = (int)EmptyRoom.FirstOrDefault().ChatRoom1;
+                        getRoom = true;
+                    }
+                    else
+                    {
+                        //新建房間
+                        DateTime now = DateTime.Now;
+                        ChatRoom R = new ChatRoom()
+                        {
+                            LastChatTime = now
+                        };
+                        db.ChatRoom.Add(R);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            else {
+                //取得原房號
+                roomID = (int)(findRecord.ChatRoom);
+
+                //已讀所有未讀訊息
+                string UpdateString = "Update Chat_Records set ReadYet=1 where chatroom=@chatroom";
+                db.Database.ExecuteSqlCommand(UpdateString, new SqlParameter("@chatroom", roomID));
+
+                ViewBag.chat = db.Chat_Records.Where(m => m.ChatRoom == roomID).OrderByDescending(m => m.Time).ToList().OrderBy(m => m.Time);
+
+            }
 
             //取得所有歷史記錄
-            var chat = db.Chat_Records.Where(m => m.ChatRoom == roomID).OrderByDescending(m=>m.Time).ToList().OrderBy(m=>m.Time);
-
 
             ViewBag.Nick = db.Member.Find(fromMemID).memNick;
 
-            return View(chat);
+            return View();
         }
     }
 }
