@@ -191,7 +191,7 @@
                             <div class="mb-4" id="user">
                                 <a href="@Url.Action("info", "Member", new { memID = item.memId })" class="fa fas fa-user"></a>
                                 <label id="@item.memId">@Model.members.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
-                                <span id="messageTime">(@item.messageTime)</span>
+                                <span id="messageTime">(@item.messageTime.ToString("yyyy/MM/dd HH:mm:ss"))</span>
                                 @if (Session["memid"] != null)
                                 {
                                     if (Session["memid"].ToString() != item.memId)
@@ -346,6 +346,7 @@
     }
 }
 
+<script src="~/Scripts/dateFormat.js"></script>
 
 @section work{
     <script>
@@ -576,6 +577,7 @@
             var upload = $('#comments').val().replace(/\n/g, '<br/>');
             if ($('#receiverID').val() == null)
                 $('#receiverID').val("");
+            var time = $.format.toBrowserTimeZone((new Date()));
         $.ajax({
             url: "@Url.Action("AddComment", "Activity")",
             method: "post",
@@ -591,9 +593,8 @@
                 //           + $('#nick').val() + '</label>' + '<span>' + '  (' + d[0] + ')' + '</span><div class="mt-2 ml-3 onFocus">' + d[1] + '</div></div>');
                 //    },
                 //});
-                $('#messageTime').text(new Date());
                 $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
-                    + $('#nick').val() + '</label>' + '<span>' + '  (' + $('#messageTime').text() + ')' + '</span><div class="mt-2 ml-3 onFocus">' + upload + '</div></div>');
+                    + $('#nick').val() + '</label>' + '<span>' + '  (' + time + ')' + '</span><div class="mt-2 ml-3 onFocus">' + upload + '</div></div>');
                 $('#comments').val("");
                 $('.highlighter span').text("");
             },

@@ -21,7 +21,7 @@ namespace JoinFun.Controllers
     {
         
         JoinFunEntities db = new JoinFunEntities();
-        SqlConnection Conn = new SqlConnection("Data Source=MCSDD108212;Initial Catalog=JoinFun;persist security info=True;user id=joinfunadmin;password=joinfun123456;&quot;");
+        SqlConnection Conn = new SqlConnection("data Source=MCSDD108212;Initial Catalog=JoinFun;MultipleActiveResultSets=True;persist security info=True;user id=joinfunadmin;password=joinfun123456;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
         Common comm = new Common();
         [LoginRule(isVisiter = true, Front = true)]

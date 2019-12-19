@@ -224,6 +224,7 @@ namespace JoinFun.Controllers
             db.SaveChanges();
 
             //發通知給收到訊息的會員
+            var sendTime = DateTime.Now;
             if (receiver != "")
             {
                 string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
@@ -234,7 +235,7 @@ namespace JoinFun.Controllers
                 message.ToMemId = receiver;
                 message.NotiTitle = "留言板訊息";
                 message.NotifContent = talker + "說：\n\n" + comment;
-                message.timeReceived = DateTime.Now;
+                message.timeReceived = sendTime;
                 message.readYet = false;
                 message.keepNotice = true;
                 db.Notification.Add(message);
