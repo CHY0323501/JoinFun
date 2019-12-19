@@ -136,8 +136,29 @@ namespace JoinFun.Controllers
             }
 
             //string memID = Session["memid"].ToString();
-            if (Session["memid"].ToString() != null)
+
+            if (Session["memid"] == null)
             {
+                ViewBag.actId = actId;
+                ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
+                ActClass ACT = new ActClass()
+                {
+                    vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
+                    ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
+                    //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
+                    members = db.Member.ToList(),
+                    MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
+                    //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
+                    ActDetails = db.Activity_Details.Where(m => m.actId == actId).ToList()
+                };
+
+                ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
+                ViewBag.allpic = db.Photos_of_Activities.ToList();
+                //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
+                return View(ACT);
+            }
+            else
+            {               
                 string memID = Session["memid"].ToString();
                 ViewBag.memID = memID;
                 //ViewBag.actClassId = actClassId;
@@ -167,26 +188,6 @@ namespace JoinFun.Controllers
                 //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
                 ViewBag.defaultPic = db.Activity_Class.ToList();
 
-                return View(ACT);
-            }
-            else
-            {
-                ViewBag.actId = actId;
-                ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
-                ActClass ACT = new ActClass()
-                {
-                    vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
-                    ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
-                    //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
-                    members = db.Member.ToList(),
-                    MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
-                    //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
-                    ActDetails = db.Activity_Details.Where(m => m.actId == actId).ToList()
-                };
-
-                ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
-                ViewBag.allpic = db.Photos_of_Activities.ToList();
-                //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
                 return View(ACT);
             }
 
@@ -223,20 +224,23 @@ namespace JoinFun.Controllers
             db.SaveChanges();
 
             //發通知給收到訊息的會員
-            string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
+            if (receiver != "")
+            {
+                string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
 
-            Notification message = new Notification();
-            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-            message.InstanceId = serial;
-            message.ToMemId = receiver;
-            message.NotiTitle = "留言板訊息";
-            message.NotifContent = talker + "說：\n\n" + comment;
-            message.timeReceived = DateTime.Now;
-            message.readYet = false;
-            message.keepNotice = true;
-            db.Notification.Add(message);
-            db.SaveChanges();
-
+                Notification message = new Notification();
+                message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                message.InstanceId = serial;
+                message.ToMemId = receiver;
+                message.NotiTitle = "留言板訊息";
+                message.NotifContent = talker + "說：\n\n" + comment;
+                message.timeReceived = DateTime.Now;
+                message.readYet = false;
+                message.keepNotice = true;
+                db.Notification.Add(message);
+                db.SaveChanges();
+            }           
+            
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
