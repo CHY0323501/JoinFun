@@ -86,6 +86,15 @@
           <Property Name="chatContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Time" Type="datetime" Nullable="false" />
           <Property Name="ReadYet" Type="bit" Nullable="false" />
+          <Property Name="ChatRoom" Type="int" />
+        </EntityType>
+        <EntityType Name="ChatRoom">
+          <Key>
+            <PropertyRef Name="ChatRoom" />
+          </Key>
+          <Property Name="ChatRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="RoomUsed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -878,6 +887,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Chat_Reco__ChatR__7FD5EEA5">
+          <End Role="ChatRoom" Type="Self.ChatRoom" Multiplicity="0..1" />
+          <End Role="Chat_Records" Type="Self.Chat_Records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatRoom">
+              <PropertyRef Name="ChatRoom" />
+            </Principal>
+            <Dependent Role="Chat_Records">
+              <PropertyRef Name="ChatRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Chat_Reco__FromM__6E01572D">
           <End Role="Member" Type="Self.Member" Multiplicity="1" />
           <End Role="Chat_Records" Type="Self.Chat_Records" Multiplicity="*" />
@@ -1236,6 +1257,7 @@
           <EntitySet Name="Bookmark_Details" EntityType="Self.Bookmark_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Budget_Restriction" EntityType="Self.Budget_Restriction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Chat_Records" EntityType="Self.Chat_Records" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatRoom" EntityType="Self.ChatRoom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="County" EntityType="Self.County" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
@@ -1554,6 +1576,10 @@
             <End Role="Member" EntitySet="Member" />
             <End Role="Bookmark_Details" EntitySet="Bookmark_Details" />
           </AssociationSet>
+          <AssociationSet Name="FK__Chat_Reco__ChatR__7FD5EEA5" Association="Self.FK__Chat_Reco__ChatR__7FD5EEA5">
+            <End Role="ChatRoom" EntitySet="ChatRoom" />
+            <End Role="Chat_Records" EntitySet="Chat_Records" />
+          </AssociationSet>
           <AssociationSet Name="FK__Chat_Reco__FromM__6E01572D" Association="Self.FK__Chat_Reco__FromM__6E01572D">
             <End Role="Member" EntitySet="Member" />
             <End Role="Chat_Records" EntitySet="Chat_Records" />
@@ -1769,6 +1795,8 @@
           <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ReadYet" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Member" Relationship="Self.FK__Chat_Reco__FromM__6E01572D" FromRole="Chat_Records" ToRole="Member" />
+          <Property Name="ChatRoom" Type="Int32" />
+          <NavigationProperty Name="ChatRoom1" Relationship="JoinFunModel.FK__Chat_Reco__ChatR__7FD5EEA5" FromRole="Chat_Records" ToRole="ChatRoom" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -3092,6 +3120,11 @@
             <End Role="Violation" EntitySet="Violation" />
           </AssociationSet>
           <EntitySet Name="vw_Host_Remarks" EntityType="JoinFunModel.vw_Host_Remarks" />
+          <EntitySet Name="ChatRoom" EntityType="JoinFunModel.ChatRoom" />
+          <AssociationSet Name="FK__Chat_Reco__ChatR__7FD5EEA5" Association="JoinFunModel.FK__Chat_Reco__ChatR__7FD5EEA5">
+            <End Role="ChatRoom" EntitySet="ChatRoom" />
+            <End Role="Chat_Records" EntitySet="Chat_Records" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="vw_Host_Remarks">
           <Key>
@@ -3124,6 +3157,27 @@
           <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="hostId" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
+        <EntityType Name="ChatRoom">
+          <Key>
+            <PropertyRef Name="ChatRoom1" />
+          </Key>
+          <Property Name="ChatRoom1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RoomUsed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Chat_Records" Relationship="JoinFunModel.FK__Chat_Reco__ChatR__7FD5EEA5" FromRole="ChatRoom" ToRole="Chat_Records" />
+        </EntityType>
+        <Association Name="FK__Chat_Reco__ChatR__7FD5EEA5">
+          <End Type="JoinFunModel.ChatRoom" Role="ChatRoom" Multiplicity="0..1" />
+          <End Type="JoinFunModel.Chat_Records" Role="Chat_Records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatRoom">
+              <PropertyRef Name="ChatRoom1" />
+            </Principal>
+            <Dependent Role="Chat_Records">
+              <PropertyRef Name="ChatRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3209,6 +3263,7 @@
           <EntitySetMapping Name="Chat_Records">
             <EntityTypeMapping TypeName="JoinFunModel.Chat_Records">
               <MappingFragment StoreEntitySet="Chat_Records">
+                <ScalarProperty Name="ChatRoom" ColumnName="ChatRoom" />
                 <ScalarProperty Name="chatSerial" ColumnName="chatSerial" />
                 <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
                 <ScalarProperty Name="ToMemId" ColumnName="ToMemId" />
@@ -3747,6 +3802,15 @@
                 <ScalarProperty Name="FromMemId" ColumnName="FromMemId" />
                 <ScalarProperty Name="actId" ColumnName="actId" />
                 <ScalarProperty Name="remarkSerial" ColumnName="remarkSerial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatRoom">
+            <EntityTypeMapping TypeName="JoinFunModel.ChatRoom">
+              <MappingFragment StoreEntitySet="ChatRoom">
+                <ScalarProperty Name="RoomUsed" ColumnName="RoomUsed" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ChatRoom1" ColumnName="ChatRoom" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

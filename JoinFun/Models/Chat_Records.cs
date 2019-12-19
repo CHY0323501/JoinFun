@@ -11,10 +11,7 @@ namespace JoinFun.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataType(typeof(MetaChat_Records))]
-
+    
     public partial class Chat_Records
     {
         public string chatSerial { get; set; }
@@ -23,7 +20,9 @@ namespace JoinFun.Models
         public string chatContent { get; set; }
         public System.DateTime Time { get; set; }
         public bool ReadYet { get; set; }
+        public Nullable<int> ChatRoom { get; set; }
     
         public virtual Member Member { get; set; }
+        public virtual ChatRoom ChatRoom1 { get; set; }
     }
 }
