@@ -3,7 +3,7 @@ $('#county').change(function () {
     $('#district').empty();
     $.ajax({
         type: "Get",
-        url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#county').val(),
+        url: "http://twhome217.asuscomm.com/api/getDistrict?countyNo=" + $('#county').val(),
         success: function (d) {
             d.forEach(function (currentValue, index, array) {
                 if (index % 2 != 0) {
@@ -31,7 +31,7 @@ $('#classUl>li').click(function (e) {
     }
     $.ajax({
         type: "Get",
-        url: "http://localhost:54129/api/getClassDescription?id=" + value,
+        url: "http://twhome217.asuscomm.com/api/getClassDescription?id=" + value,
         success: function (d) {
             console.log(d);
             d.forEach(function (currentValue) {

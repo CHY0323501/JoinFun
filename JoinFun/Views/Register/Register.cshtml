@@ -484,7 +484,7 @@
             $('#memDistrict').empty();
             $.ajax({
                 type: "Get",
-                url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#memCounty').val(),
+                url: "http://twhome217.asuscomm.com/api/getDistrict?countyNo=" + $('#memCounty').val(),
                 success: function (d) {
                     console.log(d);
                     d.forEach(function (currentValue, index, array) {
@@ -535,7 +535,7 @@
             if ($('#account').val() != '') {
                 $.ajax({
                     type: "Get",
-                    url: "http://localhost:54129/api/AccountAPI",
+                    url: "http://twhome217.asuscomm.com/api/AccountAPI",
                     success: function (data) {
                         //console.log(data[0]);
                         var str = $('#account').val();

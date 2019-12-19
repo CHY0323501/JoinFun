@@ -3,7 +3,7 @@ $('#memCounty').change(function () {
     $('#memDistrict').empty();
     $.ajax({
         type: "Get",
-        url: "http://localhost:54129/api/getDistrict?countyNo=" + $('#memCounty').val(),
+        url: "http://twhome217.asuscomm.com/api/getDistrict?countyNo=" + $('#memCounty').val(),
         success: function (d) {
             console.log(d);
             d.forEach(function (currentValue, index, array) {

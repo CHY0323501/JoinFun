@@ -80,7 +80,7 @@ namespace JoinFun.Controllers
 
             MessageCenter mes = new MessageCenter();
             List<string> mailList = new List<string>() { mem.Email };
-            mes.SendEmail(mailList, "JoinFun驗證信通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' > <h3>親愛的" + acc.Account + "會員:</h3></br><h3>您在JoinFun的帳號已建立,請點擊下方連結以完成帳號啟用!</h3></br><a href='http://localhost:54129/Register/Approved?email_ID=" + mem.email_ID + "'>信箱驗證請連結</a></br>");
+            mes.SendEmail(mailList, "JoinFun驗證信通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' > <h3>親愛的" + acc.Account + "會員:</h3></br><h3>您在JoinFun的帳號已建立,請點擊下方連結以完成帳號啟用!</h3></br><a href='http://twhome217.asuscomm.com/Register/Approved?email_ID=" + mem.email_ID + "'>信箱驗證請連結</a></br>");
 
 
             return RedirectToAction("CheckEmail", "Register", new { account = account });
@@ -223,7 +223,7 @@ namespace JoinFun.Controllers
 
                     MessageCenter mes = new MessageCenter();
                     List<string> mailList = new List<string>() { db.Member.Where(m => m.memId == db.Acc_Pass.Where(b => b.Account == account).FirstOrDefault().memId).FirstOrDefault().Email };
-                    mes.SendEmail(mailList, "JoinFun權益通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' style='width:25 %'><h2>親愛的會員:</h2></br><h2>請點擊下面連結來重置您的密碼!</h2></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + getEmailID + "'><h2>重置密碼請點擊</h2></a></br>");
+                    mes.SendEmail(mailList, "JoinFun權益通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' style='width:25 %'><h2>親愛的會員:</h2></br><h2>請點擊下面連結來重置您的密碼!</h2></br><a href='http://twhome217.asuscomm.com/Register/RemakePwd?email_ID=" + getEmailID + "'><h2>重置密碼請點擊</h2></a></br>");
 
                     ViewBag.ForgetPwd = "信件已發送";
                     return View();

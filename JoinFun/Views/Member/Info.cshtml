@@ -369,7 +369,7 @@
         function CheckFriendShip() {
             $.ajax({
                 type: "Get",
-                url: "http://localhost:54129/api/MemAPI?memID=" + $('#FriendID').val()+"&FriendID=@session",
+                url: "http://twhome217.asuscomm.com/api/MemAPI?memID=" + $('#FriendID').val()+"&FriendID=@session",
                 success: function (d) {
                     if (d.length == 0) {
                         $('#FriendBtn').html('<i class="fas fa-user-plus "></i>　加好友');
@@ -385,7 +385,7 @@
             if ($('#FriendBtn').text().includes('加好友')) {
                 $.ajax({
                     type: "Post",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+                    url: "http://twhome217.asuscomm.com/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
                     success: function () {
                         CheckFriendShip();
                     }
@@ -393,7 +393,7 @@
             } else if ($('#FriendBtn').text().includes('取消申請')) {
                 $.ajax({
                     type: "Delete",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
+                    url: "http://twhome217.asuscomm.com/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
                     success: function () {
                         CheckFriendShip();
                     }
@@ -402,7 +402,7 @@
                 if (confirm("您確定要刪除嗎？")) {
                     $.ajax({
                         type: "Delete",
-                        url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
+                        url: "http://twhome217.asuscomm.com/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
                         success: function () {
                             CheckFriendShip();
                         }
@@ -419,7 +419,7 @@
         {
             $.ajax({
                 type: "Post",
-                url: "http://localhost:54129/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
+                url: "http://twhome217.asuscomm.com/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
                 success: function () {
                     console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
                     $('#FollowBtn').html('<i class="fol fo-delete"></i>　取消追蹤');
@@ -433,7 +433,7 @@
         {
             $.ajax({
                 type: "Delete",
-                url: "http://localhost:54129/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
+                url: "http://twhome217.asuscomm.com/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
                 success: function () {
                     console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
                    $('#FollowBtn').html('<i class="fol fo-yes"></i>　追蹤他');
