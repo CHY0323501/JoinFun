@@ -12,10 +12,6 @@ namespace JoinFun.Models
     using System;
     using System.Collections.Generic;
     
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataType(typeof(Metavw_Member_Join))]
-
     public partial class vw_Member_Join
     {
         public string actId { get; set; }

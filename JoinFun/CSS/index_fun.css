@@ -331,7 +331,20 @@ a:hover, a:focus {
     font-family:Cooper;
     display:inline-block;
 }
+@media (max-width:580px), scan {
+    .nodata {
+        margin-top: 90px;
+        font-size: 2rem;
+        color: #743333;
+    }
+}
 
+@media (max-width:580px), scan {
+    .oops {
+        width:100%;
+
+    }
+}
 .view-first img {
     -webkit-transition: all 0.2s linear;
     -moz-transition: all 0.2s linear;

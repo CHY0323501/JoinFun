@@ -179,8 +179,7 @@
                 //修改參團審核
                 $.ajax({
                     type: "Put",
-                    url: "http://twhome217.asuscomm.com/api/ActCheckAPI?memid="  +$('#f' + btnid).attr('value') + "&actID="+  $('#actID').attr('value') 
-,
+                    url: "http://10.10.3.105/api/ActCheckAPI?memid="  +$('#f' + btnid).attr('value') + "&actID="+  $('#actID').attr('value'),
                     success: function () {
                         console.log("成功");
                         //移除未審資料
@@ -201,7 +200,7 @@
                 //取消參團通知刪除此資料列
                 $.ajax({
                     type: "Delete",
-                    url: "http://twhome217.asuscomm.com/api/ActCheckAPI?memid="  +$('#f' + btnid).attr('value') + "&actID="+  $('#actID').attr('value')+"&Cancel=false" ,
+                    url: "http://10.10.3.105/api/ActCheckAPI?memid="  +$('#f' + btnid).attr('value') + "&actID="+  $('#actID').attr('value')+"&Cancel=false" ,
                     success: function () {
                         console.log("成功");
                         //移除未審資料
@@ -226,7 +225,7 @@
                     //刪除好友
                     $.ajax({
                         type: "Delete",
-                        url: "http://twhome217.asuscomm.com/api/ActCheckAPI?memid="+ $('#d' +btnID).attr('value')+"&actID="+  $('#actID').attr('value')+"&Cancel=true" ,
+                        url: "http://10.10.3.105/api/ActCheckAPI?memid="+ $('#d' +btnID).attr('value')+"&actID="+  $('#actID').attr('value')+"&Cancel=true" ,
                         success: function () {
                             console.log( $('#d' +btnID).attr('value')+"&actID="+  $('#actID').attr('value'))
                               //移除未審資料

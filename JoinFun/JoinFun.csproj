@@ -1,4 +1,4 @@
-ï»¿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -52,6 +52,9 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WebSockets, Version=0.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WebSockets.0.2.3.1\lib\net45\Microsoft.WebSockets.dll</HintPath>
+    </Reference>
     <Reference Include="System.Linq.Expressions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Expressions.4.3.0\lib\net463\System.Linq.Expressions.dll</HintPath>
       <Private>True</Private>
@@ -241,6 +244,7 @@
     <Content Include="JS\FriendManage.js" />
     <Content Include="JS\jquery.validate.plus.js" />
     <Content Include="JS\MemberEdit.js" />
+    <Content Include="JS\stars.js" />
     <Content Include="Models\JoinfunNEW.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>JoinfunNEW.edmx</DependentUpon>
@@ -254,19 +258,19 @@
     <Content Include="Photos\Activities\P000000002A000000013.jpg" />
     <Content Include="Photos\Activities\P000000003A000000013.jpg" />
     <Content Include="Photos\Activities\P000000004A000000014.jpg" />
-    <Content Include="Photos\Activities\æ•é ­å±±.jpg" />
+    <Content Include="Photos\Activities\ªEÀY¤s.jpg" />
     <Content Include="Photos\banner\bg.png" />
     <Content Include="Photos\banner\christmas.png" />
     <Content Include="Photos\banner\Join Fun %281%29.png" />
     <Content Include="Photos\banner\Join Fun.png" />
     <Content Include="Photos\banner\Just Do It.png" />
     <Content Include="Photos\blank letter.jpg" />
-    <Content Include="Photos\ClassIMG\ä¼‘é–’.jpg" />
-    <Content Include="Photos\ClassIMG\ä¼‘é–’.png" />
-    <Content Include="Photos\ClassIMG\å•†å‹™.jpg" />
-    <Content Include="Photos\ClassIMG\å•†å‹™.png" />
-    <Content Include="Photos\ClassIMG\æ´»å‹•.jpg" />
-    <Content Include="Photos\ClassIMG\æ´»å‹•.png" />
+    <Content Include="Photos\ClassIMG\¥ğ¶¢.jpg" />
+    <Content Include="Photos\ClassIMG\¥ğ¶¢.png" />
+    <Content Include="Photos\ClassIMG\°Ó°È.jpg" />
+    <Content Include="Photos\ClassIMG\°Ó°È.png" />
+    <Content Include="Photos\ClassIMG\¬¡°Ê.jpg" />
+    <Content Include="Photos\ClassIMG\¬¡°Ê.png" />
     <Content Include="Photos\desk-1081708_1280.jpg" />
     <Content Include="Photos\detail\bg1.jpg" />
     <Content Include="Photos\detail\makecake1.jpg" />
@@ -301,7 +305,7 @@
     <Content Include="Photos\male.png" />
     <Content Include="Photos\memphis-colorful.png" />
     <Content Include="Photos\no_results_found.png" />
-    <Content Include="Photos\Posts\ç¶­ä¿®.png" />
+    <Content Include="Photos\Posts\ºû­×.png" />
     <Content Include="Photos\sorry.gif" />
     <Content Include="Photos\gplaypattern.png" />
     <Content Include="Photos\img.png" />
@@ -321,7 +325,7 @@
     <Content Include="Photos\w-2.png" />
     <Content Include="Photos\w1.png" />
     <Content Include="Photos\w2.png" />
-    <Content Include="Photos\ç®¡ç†å“¡èƒŒæ™¯.jpg" />
+    <Content Include="Photos\ºŞ²z­û­I´º.jpg" />
     <Content Include="Scripts\ActivityScripts.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -800,7 +804,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -810,6 +813,8 @@
     <Compile Include="Controllers\ActCheckAPIController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\ChatListController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
     <Compile Include="Controllers\getCommentController.cs" />
     <Compile Include="Controllers\getDistrictController.cs" />
@@ -843,6 +848,9 @@
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Budget_Restriction.cs">
+      <DependentUpon>JoinfunNEW.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatRoom.cs">
       <DependentUpon>JoinfunNEW.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Chat_Records.cs">
@@ -979,7 +987,6 @@
     <Compile Include="Controllers\InfoController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\Adm\Login.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
@@ -1055,17 +1062,19 @@
     <Content Include="Views\Adm\SortByAct.cshtml" />
     <Content Include="Views\Adm\SortByReport.cshtml" />
     <Content Include="Views\Adm\key.cshtml" />
+    <Content Include="Views\ChatList\ChatHistory.cshtml" />
+    <Content Include="Views\ChatList\Chat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
+    </Content>
+    <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Photos\card\" />
+    <Folder Include="Views\Chat\" />
     <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
@@ -1109,7 +1118,7 @@
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>æ­¤å°ˆæ¡ˆåƒè€ƒé€™éƒ¨é›»è…¦ä¸Šæ‰€ç¼ºå°‘çš„ NuGet å¥—ä»¶ã€‚è«‹å•Ÿç”¨ NuGet å¥—ä»¶é‚„åŸï¼Œä»¥ä¸‹è¼‰è©²å¥—ä»¶ã€‚å¦‚éœ€è©³ç´°è³‡è¨Šï¼Œè«‹åƒé–± http://go.microsoft.com/fwlink/?LinkID=322105ã€‚ç¼ºå°‘çš„æª”æ¡ˆæ˜¯ {0}ã€‚</ErrorText>
+      <ErrorText>¦¹±M®×°Ñ¦Ò³o³¡¹q¸£¤W©Ò¯Ê¤Öªº NuGet ®M¥ó¡C½Ğ±Ò¥Î NuGet ®M¥óÁÙ­ì¡A¥H¤U¸ü¸Ó®M¥ó¡C¦p»İ¸Ô²Ó¸ê°T¡A½Ğ°Ñ¾\ http://go.microsoft.com/fwlink/?LinkID=322105¡C¯Ê¤ÖªºÀÉ®×¬O {0}¡C</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>

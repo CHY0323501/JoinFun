@@ -169,7 +169,7 @@
 <div class="content-side col-md-10 col-sm-10">
     <h3 class="  font-weight-bold ml-2" style="font-size:30px">會員註冊</h3>
     <div class="signInPage" style="display: block">
-        <div class="l-signInPage__progressBar  " style="display: block">
+        <div class="l-signInPage__progressBar  " style="display: block" id="Bar">
             <div class="row justify-content-center">
                
                 <ul class="c-progressBar ">
@@ -484,7 +484,7 @@
             $('#memDistrict').empty();
             $.ajax({
                 type: "Get",
-                url: "http://twhome217.asuscomm.com/api/getDistrict?countyNo=" + $('#memCounty').val(),
+                url: "http://10.10.3.105/api/getDistrict?countyNo=" + $('#memCounty').val(),
                 success: function (d) {
                     console.log(d);
                     d.forEach(function (currentValue, index, array) {
@@ -535,7 +535,8 @@
             if ($('#account').val() != '') {
                 $.ajax({
                     type: "Get",
-                    url: "http://twhome217.asuscomm.com/api/AccountAPI",
+                    url: "http://10.10.3.105/api/AccountAPI",
+
                     success: function (data) {
                         //console.log(data[0]);
                         var str = $('#account').val();
@@ -591,27 +592,33 @@
         });
 
 
-        //$(document).ready(function () {
-        //    $(window).resize(function () {
-        //        wdth = $(window).width();
-        //       if(wdth<1030)
-        //    });
-        //});
+        $(document).ready(function () {
+            $(window).resize(function () {
+                wdth = $(window).width();
+                if (wdth < 1000){
+                    $('#Bar').hide();
+                }
+                else if(wdth >1000)
+               $('#Bar').show();
+            });
+        });
 
 
      
 
-        $("#submit").click(function () {
-            var check = $("input[name='Checkbox']:checked");
-            if (check) {
-                
-                $('#checkboxModal').modal("show");
-                return false;//不要提交表單
-            } else {
-                return true;//提交表單
 
-            }
-        })
+
+        $("#submit").click(function(){
+			var check=$("input[name='Checkbox[]']:checked").length;//判斷有多少個方框被勾選
+			if(check==0){
+                //alert("您尚未勾選任何項目");
+                $('#checkboxModal').modal("show");
+				return false;//不要提交表單
+			}else{
+				
+				return true;//提交表單
+			}
+		})
     </script>
 
 

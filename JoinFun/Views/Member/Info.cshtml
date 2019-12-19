@@ -86,7 +86,7 @@
                         <div class="row  mt-md-4 ">
                             <div class="col-md-1">
                             </div>
-                            <div class="col-md-8 text-center ml-md-3">
+                            <div class="col-md-9 text-center ml-md-3">
                                 @*查看自己資訊時可編輯、查看其他會員資訊時可加入好友或黑名單*@
                                 @{ if (session == i.memId)
                                     {
@@ -97,14 +97,14 @@
                                         <div class="row">
                                             <div class="col-md">
                                                 <button id="FollowBtn" class="btn btn-outline-info mb-1" style="width:inherit">
-                                                    @if (Model.vw_FollowUp.Where(m=>m.FoMemId==session&&m.memId==i.memId).Count()==0)
+                                                    @if (Model.vw_FollowUp.Where(m => m.FoMemId == session && m.memId == i.memId).Count() == 0)
                                                     {
-                                                        <i class="fol fo-yes"></i>@:　追蹤他
+                                                        <i class="fas fa-heart"></i>@:　追蹤他
                                                     }
                                                     else
                                                     {
 
-                                                        <i class="fol fo-delete"></i>@:　取消追蹤
+                                                        <i class="fas fa-heart-broken"></i>@:　取消追蹤
                                                     }
 
                                                 </button>
@@ -115,7 +115,7 @@
                                                     {
                                                         <i class="fas fa-user-plus "></i>@:　加好友
                                                     }
-                                                    else if (Model.Friendship.Where(m=>m.friendMemId==session).FirstOrDefault().Approved == false)
+                                                    else if (Model.Friendship.Where(m => m.friendMemId == session).FirstOrDefault().Approved == false)
                                                     {
                                                         <i class="fas fa-user-times"></i>@:　取消申請
                                                     }
@@ -129,9 +129,11 @@
                                                 <a href="@Url.Action("Block","Member",new { BlockedMemID = i.memId, memID = session })" class="btn btn-outline-info mb-1" style="width:inherit;" onclick="return confirm('確定要封鎖該會員嗎？')"><i class='fas fa-ban'></i>　封鎖他</a>
                                             </div>
                                             <div class="col-md">
+                                                <a href="@Url.Action("Report","Activity",new { id=i.memId,reporterID=session})" class="btn btn-outline-info mb-1" style="width:inherit;"><i class="fas fa-comment-dots"></i>　私訊他</a>
+                                            </div>
+                                            <div class="col-md">
                                                 <a href="@Url.Action("Report","Activity",new { id=i.memId,reporterID=session})" class="btn btn-outline-danger mb-1" style="width:inherit;"><i class="fas fa-exclamation-triangle"></i>　檢舉他</a>
                                             </div>
-
                                         </div>
                                     }
                                 }
@@ -369,7 +371,7 @@
         function CheckFriendShip() {
             $.ajax({
                 type: "Get",
-                url: "http://twhome217.asuscomm.com/api/MemAPI?memID=" + $('#FriendID').val()+"&FriendID=@session",
+                url: "http://10.10.3.105/api/MemAPI?memID=" + $('#FriendID').val()+"&FriendID=@session",
                 success: function (d) {
                     if (d.length == 0) {
                         $('#FriendBtn').html('<i class="fas fa-user-plus "></i>　加好友');
@@ -385,7 +387,7 @@
             if ($('#FriendBtn').text().includes('加好友')) {
                 $.ajax({
                     type: "Post",
-                    url: "http://twhome217.asuscomm.com/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
+                    url: "http://10.10.3.105/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val(),
                     success: function () {
                         CheckFriendShip();
                     }
@@ -393,7 +395,7 @@
             } else if ($('#FriendBtn').text().includes('取消申請')) {
                 $.ajax({
                     type: "Delete",
-                    url: "http://twhome217.asuscomm.com/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
+                    url: "http://10.10.3.105/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=false",
                     success: function () {
                         CheckFriendShip();
                     }
@@ -402,7 +404,7 @@
                 if (confirm("您確定要刪除嗎？")) {
                     $.ajax({
                         type: "Delete",
-                        url: "http://twhome217.asuscomm.com/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
+                        url: "http://10.10.3.105/api/MemAPI?FriendID=" + $('#FriendID').val() + "&memID=" + $('#memID').val() + "&Cancel=true",
                         success: function () {
                             CheckFriendShip();
                         }
@@ -419,10 +421,10 @@
         {
             $.ajax({
                 type: "Post",
-                url: "http://twhome217.asuscomm.com/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
+                url: "http://10.10.3.105/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
                 success: function () {
                     console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
-                    $('#FollowBtn').html('<i class="fol fo-delete"></i>　取消追蹤');
+                    $('#FollowBtn').html('<i class="fas fa-heart-broken"></i>　取消追蹤');
                 },
                 error: function () {
                     console.log("失敗");
@@ -433,10 +435,10 @@
         {
             $.ajax({
                 type: "Delete",
-                url: "http://twhome217.asuscomm.com/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
+                url: "http://10.10.3.105/api/MemberWebAPI?memid=" + $('#memID').val() + "&FoMemID=" + $('#FollowID').val(),
                 success: function () {
                     console.log($('#FollowID').val() + "&memid=" + $('#memID').val());
-                   $('#FollowBtn').html('<i class="fol fo-yes"></i>　追蹤他');
+                   $('#FollowBtn').html('<i class="fas fa-heart"></i>　追蹤他');
                 },
                 error: function () {
                     console.log("失敗");

@@ -1,32 +1,10 @@
 ﻿@model JoinFun.Models.Member_Remarks
 @section memberRemarks{
     <link href="~/CSS/Remark.css" rel="stylesheet" />
-
-}
-@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <style>
-        .remarkStar {
-            float: left;
-        }
+       .star i {font-size:50px;}
 
-        .score {
-            float: left;
-            position: relative;
-            width: 100px;
-            margin-top: 5px;
-            margin-left: 10px;
-        }
-
-        .span {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        .scoreDisplay {
-            display: block;
-        }
     </style>
 }
 
@@ -58,54 +36,40 @@
                             </div>
 
                             @*填寫資料欄*@
-                        <div class="col col-12 col-md-8 b-top">
+                            <div class="col col-12 col-md-8 b-top">
 
-                            @*選擇會員*@
-                            <div class="form-group">
-                                <label class="text-success">請選擇會員</label>
-                                <div class="">
-                                    @Html.DropDownListFor(model => model.ToMemId, ViewBag.MemList as SelectList, htmlAttributes: new { @class = "form-control" })
+                                @*選擇會員*@
+                                <div class="form-group">
+                                    <label class="text-success">請選擇會員</label>
+                                    <div class="">
+                                        @Html.DropDownListFor(model => model.ToMemId, ViewBag.MemList as SelectList, htmlAttributes: new { @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            @*選擇星等*@
-                            <div class="form-group">
-                                <label class="text-success">評價</label>
-                                <div id="remarkStar" name="remarkStar">
+                                @*選擇星等*@
+                                <div class="form-group">
+                                    <label class="text-success">評價</label>
+                                    <div class="star" id="star">
+                                        <input id="starvalue" type="hidden" name="remarkStar"  value=""/>
+                                      
 
-                                    @*放置星星容器*@
-                                    @*<div class="star">
-                                        <img src="~/Photos/star2.png" alt="" width="50" />
-                                        <img src="~/Photos/star2.png" alt="" width="50" />
-                                        <img src="~/Photos/star2.png" alt="" width="50" />
-                                        <img src="~/Photos/star2.png" alt="" width="50" />
-                                        <img src="~/Photos/star2.png" alt="" width="50" />
-                                    </div>*@
-                                    @*放星等名稱*@
-                                    @*<div class="score">
-                                        <span>1</span>
-                                        <span>2</span>
-                                        <span>3</span>
-                                        <span>4</span>
-                                        <span>5</span>
-                                    </div>*@
+                                    </div>
                                 </div>
-                            </div>
-                            @*填寫內容*@
-                            <div class="form-group">
-                                <label class="text-success ">評價內容</label>
+                                @*填寫內容*@
+                                <div class="form-group">
+                                    <label class="text-success ">評價內容</label>
 
-                                <div class="">
-                                    @Html.TextArea("remarkContent", "", new { @class = "form-control", style = "resize:none" })
+                                    <div class="">
+                                        @Html.TextArea("remarkContent", "", new { @class = "form-control", style = "resize:none" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="">
-                                    @*<button>取消</button>*@
-                                    <button type="submit" class="btn btn-info">新增評論</button>
+                                <div class="form-group">
+                                    <div class="">
+                                        @*<button>取消</button>*@
+                                        <button type="submit" class="btn btn-info">新增評論</button>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
+                            </div>
                         </div>
                     </div>
 
@@ -119,43 +83,19 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-@*@section scripts{
+
+<script src="~/JS/stars.js"></script>
+@section scripts{
     <script>
-        var img = $(".star img");
-        var span = $(".score span");
-        var i, j, k;
-        k = -1;
-        img.mouseenter(function () {
-            span.remoreClass("scoreDisplay");
-            img.attr("src", ".Photos/star2.png");
 
-            i = img.index(this);
-            for (j = 0; j <= i; j) {
-                img.eq(j).attr("src", ".Photos/star (1).png");
+        $('#star').stars({
+            value:1,
+            stars: 5,
+            click: function (index) {
+                console.log(index);
+                $('#starvalue').val(index);
             }
-
-            span.eq(i).addClass("scoreDisplay");
-        }).mouseleave(function () {
-            span.remoreClass("scoreDisplay");
-            img.attr("src", ".Photos/star2.png")
-            for (j = 0; j <= k; j) {
-                img.eq(j).attr("src", ".Photos/star (1).png");
-            }
-
-            if (k = -1) {
-                span.removeClass("scoreDisplay");
-            }
-
-            else {
-                span.eq(k).addClass("scoreDisplay");
-
-            }
-        });
-
-        $("img").click(function () {
-            k = img.index(this);
-
         });
 
     </script>
-}*@
+}

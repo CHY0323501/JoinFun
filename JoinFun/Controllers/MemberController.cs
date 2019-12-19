@@ -117,8 +117,19 @@ namespace JoinFun.Controllers
                                      where m.memId == memID
                                      select m.memNick).FirstOrDefault();
                 //取得平均星等
-                ViewBag.avgStar = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).Count()+ db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Count();
-
+                var host_star = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).FirstOrDefault();
+                var Part_star = db.vw_Host_Remarks.Where(m => m.ToMemId == memID).FirstOrDefault();
+                if (host_star != null && Part_star != null) {
+                    var h = db.vw_Host_Remarks.Where(m => m.ToMemId == memID);
+                    var p = db.vw_Participant_Remarks.Where(m => m.ToMemId == memID);
+                    ViewBag.avgStar = Math.Round(((double)(h.Sum(m => m.remarkStar) + p.Sum(m => m.remarkStar))/(h.Count()+p.Count())), 0);
+                }
+                else if (host_star == null)
+                    ViewBag.avgStar = Math.Round(db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
+                else if (Part_star == null)
+                    ViewBag.avgStar = Math.Round(db.vw_Host_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
+                else
+                    ViewBag.avgStar = 0;
 
                 return View(MRemark);
             }
@@ -145,9 +156,9 @@ namespace JoinFun.Controllers
         }
         [HttpPost]
         public ActionResult RemarkCreate(string ToMemId,string actid,string remarkContent, short remarkStar, string FromMemId)
-        {            
-            
-            //呼叫Sql函數GetActId()取得新增的活動ID
+        {
+
+            //呼叫Sql函數GetRemarkId()取得新增的評價ID
 
             string getremarkSerial = db.Database.SqlQuery<string>("Select [dbo].[GetRemarkId]()").FirstOrDefault();
             Member_Remarks aaa = new Member_Remarks();
@@ -255,7 +266,7 @@ namespace JoinFun.Controllers
             }
         }
         //好友管理
-
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult FriendManagement(string memID)
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
@@ -289,6 +300,8 @@ namespace JoinFun.Controllers
 
             return RedirectToAction("Info", "Member", new { memID = BlockedMemID });
         }
+
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //黑名單清單
         public ActionResult BlockManage(string memID)
         {
@@ -299,8 +312,8 @@ namespace JoinFun.Controllers
             }
             else
             {
-                try
-                {
+                //try
+                //{
                     if (Session["memid"].ToString() == memID)
                     {
                         BlockMemberVM BlockList = new BlockMemberVM()
@@ -311,18 +324,18 @@ namespace JoinFun.Controllers
                         return View(BlockList);
                     }
                     //未登入時無法編輯並轉至首頁
-                    return RedirectToAction("Index", "Activity");
-                }
-                catch
-                {
-                    return RedirectToAction("Index", "Activity");
-                }
+                    return RedirectToAction("Info", "Member", new { memID = Session["memid"] });
+                //}
+                //catch
+                //{
+                //    return RedirectToAction("Index", "Activity");
+                //}
             }
         }
         //解除黑名單
         public ActionResult CancelBlock(string BlockedMemID, string memID)
         {
-            if (Session["memid"].ToString().Any()) {
+            //if (Session["memid"].ToString().Any()) {
                 var Block1 = db.Blacklist.Where(m => m.memId == memID && m.blockedMemId == BlockedMemID).FirstOrDefault();
                 var Block2 = db.Blacklist.Where(m => m.memId == BlockedMemID && m.blockedMemId == memID).FirstOrDefault();
                 if (Block1 != null)
@@ -332,8 +345,8 @@ namespace JoinFun.Controllers
 
                 db.SaveChanges();
                 return RedirectToAction("BlockManage", "Member", new { memID = memID });
-            }
-            return RedirectToAction("Index", "Activity");
+            //}
+            //return RedirectToAction("Index", "Activity");
         }
         [LoginRule(isVisiter = true, Front = true)]
         //會員搜尋
@@ -349,7 +362,7 @@ namespace JoinFun.Controllers
         }
         [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //我的收藏
-        public ActionResult Bookmark(string memID="M000000002") {
+        public ActionResult Bookmark(string memID) {
             List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
             return View(Bookmark);
         }
