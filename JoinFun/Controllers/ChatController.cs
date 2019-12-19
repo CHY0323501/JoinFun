@@ -81,7 +81,7 @@ namespace JoinFun.Controllers
                             //新增聊天房
                             ChatRoom room = new ChatRoom()
                             {
-                                LastChatTime = now
+                                CreateTime = now
                             };
                             db.ChatRoom.Add(room);
                             db.SaveChanges();

@@ -62,7 +62,7 @@
             }
     </style>
 }
-<input id="roomID" type="hidden" value="" />
+<input id="roomID" type="hidden" value="@ViewBag.roomID" />
 <div class="container w-75 mt-2">
     <div class="row">
         <div class="col-10">
@@ -120,6 +120,7 @@
             $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
 
             $(window).resize(function () {
+                //返回文字隱藏
                 wdth = $(window).width();
                 if (wdth < 1160){
                     $('#back').hide();

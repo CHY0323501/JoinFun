@@ -55,13 +55,30 @@ namespace JoinFun.Controllers
                                  from c in groupjoin.DefaultIfEmpty()
                                  where c.chatSerial == null
                                  select a).ToList();
+                
+                //將之前已取用房號但仍未有聊天記錄的房間重新釋放
+                foreach (var i in EmptyRoom)
+                {
+                    db.ChatRoom.Find(i.ChatRoom1).RoomUsed = false;
+                    db.SaveChanges();
+                }
+
                 bool getRoom = false;
 
                 while (getRoom==false) {
                     if (EmptyRoom.Count() > 0)
                     {
-                        roomID = (int)EmptyRoom.FirstOrDefault().ChatRoom1;
+                        //取得尚未取用的房號，(RoomUsed為false)
+                        roomID=EmptyRoom.Where(m => m.RoomUsed == false).FirstOrDefault().ChatRoom1;
+                        //儲存房號
+                        ViewBag.roomID = roomID;
+                        //若房號已被取用，修改RoomUsed欄位
+                        db.ChatRoom.Find(roomID).RoomUsed = true;
+                        db.SaveChanges();
+
+                        //離開迴圈
                         getRoom = true;
+                        
                     }
                     else
                     {
@@ -69,7 +86,8 @@ namespace JoinFun.Controllers
                         DateTime now = DateTime.Now;
                         ChatRoom R = new ChatRoom()
                         {
-                            LastChatTime = now
+                            CreateTime = now,
+                            RoomUsed = false
                         };
                         db.ChatRoom.Add(R);
                         db.SaveChanges();
@@ -83,13 +101,15 @@ namespace JoinFun.Controllers
                 //已讀所有未讀訊息
                 string UpdateString = "Update Chat_Records set ReadYet=1 where chatroom=@chatroom";
                 db.Database.ExecuteSqlCommand(UpdateString, new SqlParameter("@chatroom", roomID));
-
+                //取得所有歷史記錄
                 ViewBag.chat = db.Chat_Records.Where(m => m.ChatRoom == roomID).OrderByDescending(m => m.Time).ToList().OrderBy(m => m.Time);
-
+                //儲存房號
+                ViewBag.roomID = roomID;
             }
 
-            //取得所有歷史記錄
-
+            
+            
+            //取得對方暱稱
             ViewBag.Nick = db.Member.Find(fromMemID).memNick;
 
             return View();
