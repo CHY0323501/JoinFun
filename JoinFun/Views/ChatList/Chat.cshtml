@@ -1,9 +1,9 @@
 ﻿@*@model IEnumerable<JoinFun.Models.Chat_Records>*@
-@using JoinFun.Models;
+
 @{
     ViewBag.Title = ViewBag.Nick;
-    JoinFunEntities db = new JoinFunEntities();
-    var chat = (IEnumerable<Chat_Records>)ViewBag.chat;
+
+
 }
 @section CSS{
     <style>
@@ -62,7 +62,7 @@
             }
     </style>
 }
-<input id="roomID" type="hidden" value="@ViewBag.roomID" />
+
 <div class="container w-75 mt-2">
     <div class="row">
         <div class="col-10">
@@ -72,48 +72,15 @@
             <a href="@Url.Action("ChatHistory","ChatList",new { memID=Session["memid"].ToString()})" class="btn btn-outline-secondary mt-1 pt-2"><i class="fas fa-chevron-left " style="letter-spacing:2px;"><span style="font-family:Consolas;font-size:1.2rem" id="back">　Back</span></i></a>
         </div>
     </div>
-    
-    <div class="overflow-auto border borderStyle mt-3" style="max-height:55vh;min-height:40vh;border-radius:10px" id="messageArea">
-        @if (ViewBag.chat != null)
-        {
-            foreach (var item in chat)
-            {
-                <div class="card mb-2 border-0 mx-auto">
-                    @if (item.FromMemId == Request.QueryString["fromMemID"])
-                    {
-                        <div class="card-body">
-                            <div class="text-info font-weight-bold rounded-circle" style="font-size:1.5rem;width:50px;height:50px;background-color:#c4e1e1;line-height:50px;padding-left:0.75rem">@item.Member.memNick.Substring(0, 1)</div>
-                            <p class="m-1 ml-5">
-                                <span class="text-white p-2 pt-0 bubble2">@Html.DisplayFor(modelItem => item.chatContent)</span>
-                                <span class="ml-2 text-secondary timestyle">@item.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)</span>
-                            </p>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="card-body text-right">
-                            <span class="timestyle mr-2 text-secondary">@item.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)</span>
-                            <span class="bubble text-white p-2 text-left">@Html.DisplayFor(modelItem => item.chatContent)</span>
-                        </div>
-                    }
-                </div>
-            }
-        }
-    </div>
-    <div class="row mt-2">
-        <div class="col-12 ">
-            <div class="input-group justify-content-md-end  justify-content-center ">
-                <input type="text" class="form-control" placeholder="輸入訊息" aria-label="輸入訊息" aria-describedby="basic-addon2" style="min-width:80%">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">送出</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @*載入PartialView(_chat)*@
+    @Html.Action("_chat", "ChatList", new { fromMemID = Request.QueryString["fromMemID"] })
+
+
 </div>
 
 
 @section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script>
         $(document).ready(function () {
             //將聊天室窗拉到最下方
@@ -122,14 +89,60 @@
             $(window).resize(function () {
                 //返回文字隱藏
                 wdth = $(window).width();
-                if (wdth < 1160){
+                if (wdth < 1160) {
                     $('#back').hide();
                 }
-                else if(wdth >1160)
+                else if (wdth > 1160)
                     $('#back').show();
 
                 $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
             });
+
+            //頁面載入完成後連線聊天室
+            let url = 'ws://localhost:54129/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
+            let ws = new WebSocket(url);
+            console.log(ws);
+
+            ws.onopen = function () {
+                //ws.send("已進入聊天室");
+                console.log("連線中");
+            }
+
+            ws.onerror = function () {
+                alert("無法連接聊天室");
+            }
+            ws.onmessage = function (event) {
+                console.log(JSON.parse(event.data));
+                var e = JSON.parse(event.data);
+            }
+
+            //監聽dom元素改變
+            let observer = new MutationObserver(scrollTop);
+            let options = {
+                attributes: true,
+                characterData: true,
+                childList: true,
+                subtree: true,
+                attributeOldValue: true,
+                characterDataOldValue: true
+            };
+
+            observer.observe(document.documentElement, options);
+
+            //DOM改變時將對話框下拉到最底
+            function scrollTop() {
+                $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
+            }
+
+            //送出訊息
+            $('#sendMessage').click(function () {
+                var m = $('#messageContent');
+                //判斷是否為空字串
+                if (m.val().trim() != '') {
+                    ws.send(m.val());
+                    m.val('');
+                }
+            });
         })
-    </script>    
+    </script>
 }

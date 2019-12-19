@@ -12,7 +12,7 @@ namespace JoinFun.Controllers
 {
     public class LoginController : Controller
     {
-        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
+        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun;MultipleActiveResultSets=True;user id=joinfunadmin;password=joinfun123456;persist security info=True;MultipleActiveResultSets=True;App=EntityFramework;");
         JoinFunEntities db = new JoinFunEntities();
         // GET: Login
         //假想首頁

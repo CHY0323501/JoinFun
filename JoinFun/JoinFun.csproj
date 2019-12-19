@@ -815,6 +815,8 @@
     <Content Include="Scripts\jquery-validation-1.19.1\test\rules.js" />
     <Content Include="Scripts\jquery-validation-1.19.1\test\test.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1091,6 +1093,7 @@
     <Content Include="Views\Adm\key.cshtml" />
     <Content Include="Views\ChatList\ChatHistory.cshtml" />
     <Content Include="Views\ChatList\Chat.cshtml" />
+    <Content Include="Views\ChatList\_chat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
