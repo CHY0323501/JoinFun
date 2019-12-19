@@ -128,8 +128,8 @@ namespace JoinFun.Controllers
             db.Administrator.Add(accAdm);
             db.SaveChanges();
 
-
-            return RedirectToAction("Index");
+            return Content("<script>alert('新增管理員註冊成功');window.location='/Adm/Index';</script>");
+            //return RedirectToAction("Index");
 
         }
 

@@ -309,8 +309,20 @@ footer {
     
 }
 
-/*@media screen and (max-width:1030px) {
-    .l-signInPage__progressBar {
+@media screen and (max-width:1200px) {
+    /*.l-signInPage__progressBar {
         display: none;
+    }*/
+    #Bar {
+        display: none!important;
     }
-}*/
+}
+
+.animated(name, duration){
+-webkit-animation name duration
+-moz-animation name duration
+-o-animation name duration
+animation name duration
+}
+
+	
