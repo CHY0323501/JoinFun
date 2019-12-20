@@ -172,10 +172,11 @@
                 }
 
                 $('#messageArea').append(message);
-
+                $('#messageContent').focus();
                 //瀏覽器推播通知
-                if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+                if (Notification.permission === 'default' || Notification.permission === 'undefined' || Notification.permission === 'denied') {
                     //再次請求同意
+                    console.log("測試");
                     Notification.requestPermission();
                 } else if (Notification.permission === 'granted') {
                     //發送新訊息通知
