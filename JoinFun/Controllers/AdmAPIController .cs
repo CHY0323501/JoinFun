@@ -8,7 +8,7 @@ using JoinFun.Models;
 
 namespace JoinFun.Controllers
 {
-    public class AccountAPIController : ApiController
+    public class AdmAPIController : ApiController
     {
         JoinFunEntities db = new JoinFunEntities();
 
@@ -17,11 +17,11 @@ namespace JoinFun.Controllers
         // POST: api/AccountAPI
         public IHttpActionResult Get()
         {
-            //var acc= db.Acc_Pass.ToList();
+           
             List<string> acc = new List<string>();
-            foreach (var i in db.Acc_Pass)
+            foreach (var i in db.Administrator)
             {
-                acc.Add(i.Account);
+                acc.Add(i.admAcc);
             }
 
             return Ok(acc);

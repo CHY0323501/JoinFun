@@ -97,7 +97,7 @@ namespace JoinFun.Controllers
             return View();
         }
         //帳號啟用
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Approved(string email_ID)
         {
             var approved = db.Member.Where(m => m.email_ID == email_ID).FirstOrDefault();
@@ -181,7 +181,7 @@ namespace JoinFun.Controllers
 
                 db.SaveChanges();
 
-                    return Content("<script>alert('修改成功');window.location='/Register/Index';</script>");
+                    return Content("<script>alert('修改成功');window.location='/Activity/Index';</script>");
                     //return RedirectToAction("Index", "Activity");
 
 
@@ -224,7 +224,8 @@ namespace JoinFun.Controllers
 
                     MessageCenter mes = new MessageCenter();
                     List<string> mailList = new List<string>() { db.Member.Where(m => m.memId == db.Acc_Pass.Where(b => b.Account == account).FirstOrDefault().memId).FirstOrDefault().Email };
-                    mes.SendEmail(mailList, "JoinFun權益通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' style='width:25 %'><h2>親愛的會員:</h2></br><h2>請點擊下面連結來重置您的密碼!</h2></br><a href='http://10.10.3.105/Register/RemakePwd?email_ID=" + getEmailID + "'><h2>重置密碼請點擊</h2></a></br>");
+
+                    mes.SendEmail(mailList, "JoinFun重置密碼通知", "<img src='https://i.ibb.co/dcBqtJk/img.png' style='width:25 %'><h2>親愛的會員:</h2></br><h2>請點擊下面連結來重置您的密碼!</h2></br><a href='http://localhost:54129/Register/RemakePwd?email_ID=" + getEmailID + "'><h2>重置密碼請點擊</h2></a></br>");
 
                     ViewBag.ForgetPwd = "信件已發送";
                     return View();
@@ -248,6 +249,7 @@ namespace JoinFun.Controllers
 
         }
         //重置密碼
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult RemakePwd(string email_ID)
         {
             ViewBag.emailid = email_ID;

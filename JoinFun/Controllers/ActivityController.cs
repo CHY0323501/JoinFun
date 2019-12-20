@@ -159,6 +159,7 @@ namespace JoinFun.Controllers
             }
             else
             {
+
                 string memID = Session["memid"].ToString();
                 ViewBag.memID = memID;
                 //ViewBag.actClassId = actClassId;
@@ -190,8 +191,6 @@ namespace JoinFun.Controllers
 
                 return View(ACT);
             }
-
-
         }
         [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //已參加會員
@@ -240,8 +239,8 @@ namespace JoinFun.Controllers
                 message.keepNotice = true;
                 db.Notification.Add(message);
                 db.SaveChanges();
-            }           
-            
+            }
+
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
@@ -338,10 +337,12 @@ namespace JoinFun.Controllers
         [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Create()
         {
-            //if (Session["memid"] == null)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+            if (Session["memid"] == null)
+            {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
             //ViewBag.Drop = GetDropList();
             GetSelectList();
             return View();
@@ -430,6 +431,8 @@ namespace JoinFun.Controllers
         {
             if (Session["memId"] == null)
             {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
@@ -471,6 +474,8 @@ namespace JoinFun.Controllers
         {
             if (Session["memId"] == null)
             {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
@@ -483,6 +488,8 @@ namespace JoinFun.Controllers
         {
             if (Session["memId"] == null)
             {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             if (db.Member.Any(m => m.memId == id))
@@ -539,6 +546,8 @@ namespace JoinFun.Controllers
         {
             if (Session["memId"] == null)
             {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             var message = db.Notification.Where(m => m.ToMemId == memID).OrderByDescending(m => m.NotiSerial).ToList();
@@ -586,10 +595,13 @@ namespace JoinFun.Controllers
         {
             if (serial != null && Session["memid"] != null)
             {
-                var message = db.Notification.Find(serial);
-                message.readYet = true;
-                db.SaveChanges();
-                return View(message);
+                if (Session["memid"].ToString() != "")
+                {
+                    var message = db.Notification.Find(serial);
+                    message.readYet = true;
+                    db.SaveChanges();
+                    return View(message);
+                }
             }
             return RedirectToAction("Messages");
         }
