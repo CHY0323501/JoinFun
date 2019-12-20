@@ -45,10 +45,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col col-md-4 text-center  align-self-center">
+                    <div class="col col-md-3 text-center  align-self-center">
                         <img src="~/Photos/@(i.Sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
                     </div>
-                    <div class="col col-md-8 align-self-center text-center animated fadeInDown">
+                    <div class="col col-md-9 align-self-center text-center animated fadeInDown">
                         <div class="row mb-2">
                             <div class="col-md-4 text-success adj_fontsizemid font-weight-bold">
                                 @Html.DisplayNameFor(model => i.memId)
@@ -129,12 +129,12 @@
                                                 <a href="@Url.Action("Block","Member",new { BlockedMemID = i.memId, memID = session })" class="btn btn-outline-info mb-1" style="width:inherit;" onclick="return confirm('確定要封鎖該會員嗎？')"><i class='fas fa-ban'></i>　封鎖他</a>
                                             </div>
                                             <div class="col-md">
-                                                <a href="@Url.Action("Report","Activity",new { id=i.memId,reporterID=session})" class="btn btn-outline-info mb-1" style="width:inherit;"><i class="fas fa-comment-dots"></i>　私訊他</a>
+                                                <a href="@Url.Action("Chat","ChatList",new { fromMemID=i.memId})" class="btn btn-outline-info mb-1" style="width:inherit;"><i class="fas fa-comment-dots"></i>　私訊他</a>
                                             </div>
                                             <div class="col-md">
                                                 <a href="@Url.Action("Report","Activity",new { id=i.memId,reporterID=session})" class="btn btn-outline-danger mb-1" style="width:inherit;"><i class="fas fa-exclamation-triangle"></i>　檢舉他</a>
                                             </div>
-                                        </div>
+</div>
                                     }
                                 }
                             </div>

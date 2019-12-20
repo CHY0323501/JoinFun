@@ -364,8 +364,11 @@ namespace JoinFun.Controllers
         [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //我的收藏
         public ActionResult Bookmark(string memID) {
-            List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
-            return View(Bookmark);
+            if (memID == Session["memid"].ToString()) {
+                List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
+                return View(Bookmark);
+            }
+            return RedirectToAction("Info", "Member", new { memID = Session["memid"] });
         }
 
         [LoginRule(hasEmptyStr =true,Front =true,isVisiter =false)]

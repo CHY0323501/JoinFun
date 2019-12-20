@@ -1,67 +1,99 @@
 ﻿@model IEnumerable<JoinFun.Models.Chat_Records>
 @using JoinFun.Models
 
+@section CSS{
+    <style>
+        .list:hover {
+            box-shadow: 0 0 15px rgba(128, 128, 128, 0.49);
+        }
+        /*rgba(255, 216, 0, 0.50)*/
+    </style>
+}
+
 @{
     ViewBag.Title = "聊天室";
     JoinFunEntities db = new JoinFunEntities();
-    string sex;
+    string sex, PrivateMessage;
     var ReadYetList = ViewBag.ReadYetCount;
     int count = 0;
 }
 
-<h2 class="text-center font-weight-bold">聊天室</h2>
+<h2 class="text-center font-weight-bold text-warning mb-2">聊天室</h2>
 <div class="container">
-    <div class="row ">
-        @foreach (var i in Model.OrderByDescending(m => m.Time))
-        {
-            <div class="col-8 mb-3 mx-auto">
-                <div class="card border-0 " style="background-color:#c4e1e1">
-                    <div class="card-body border-left border-primary" style="border-left:8px solid #17a2b8!important">
-                        <div class="row">
-                            <div class="col-3 text-center">
-                                @if (i.FromMemId == Session["memid"].ToString())
-                                {
-                                    sex = db.Member.Find(i.ToMemId).Sex;
-                                }
-                                else
-                                {
-                                    sex = i.Member.Sex;
-                                }
-                                <img src="~/Photos/@(sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
-                            </div>
-                            <div class="col-9 ">
-                                <div class="font-weight-bold text-info h3">
+
+    @if (Model.Any())
+    {
+        <div class="row ">
+            @foreach (var i in Model.OrderByDescending(m => m.Time))
+            {
+
+            <div class="col-8 mb-3 mx-auto list px-0">
+                @if (i.FromMemId == Session["memid"].ToString())
+                {
+                    PrivateMessage = i.ToMemId;
+                }
+                else
+                {
+                    PrivateMessage = i.FromMemId;
+                }
+
+                <a href="@Url.Action("Chat", "ChatList", new { fromMemID = PrivateMessage })" class="text-decoration-none">
+                    <div class="card border-0 " style="background-color:#c4e1e1">
+                        <div class="card-body border-left border-primary" style="border-left:8px solid #17a2b8!important">
+                            <div class="row">
+                                <div class="col-3 text-center">
                                     @if (i.FromMemId == Session["memid"].ToString())
                                     {
-                                        @db.Member.Find(i.ToMemId).memNick
+                                        sex = db.Member.Find(i.ToMemId).Sex;
                                     }
                                     else
                                     {
-                                        @Html.DisplayFor(m => i.Member.memNick)
+                                        sex = i.Member.Sex;
                                     }
+                                    <img src="~/Photos/@(sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
                                 </div>
-                                <div class="row  mt-4">
-                                    <div class="col-8 text-truncate">
-                                        @if (i.ReadYet==false)
+                                <div class="col-9 ">
+                                    <div class="font-weight-bold text-info h3">
+                                        @if (i.FromMemId == Session["memid"].ToString())
                                         {
-    
-                                        <span class="font-weight-bolder">@i.chatContent <span class="badge badge-danger rounded-circle" style="font-family:Consolas;font-size:1.1rem">@ReadYetList[count]</span></span>
+                                            @db.Member.Find(i.ToMemId).memNick
                                         }
                                         else
                                         {
-                                            @i.chatContent
+                                            @Html.DisplayFor(m => i.Member.memNick)
                                         }
                                     </div>
-                                    <div class="col-4 text-center text-secondary font-weight-bold" style="font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif">
-                                        @i.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
+                                    <div class="row  mt-4">
+                                        <div class="col-8 text-truncate text-dark">
+                                            @if (i.ReadYet == false)
+                                            {
+
+                                                <span class="font-weight-bolder">@i.chatContent <span class="badge badge-danger rounded-circle" style="font-family:Consolas;font-size:1.1rem">@ReadYetList[count]</span></span>
+                                            }
+                                            else
+                                            {
+                                                @i.chatContent
+                                            }
+                                        </div>
+                                        <div class="col-4 text-center text-secondary font-weight-bold" style="font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif">
+                                            @i.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
+
             count++;
-        }
-    </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h2 class="mt-3 text-center text-success">目前尚無聊天記錄</h2>
+    }
+
+
 </div>

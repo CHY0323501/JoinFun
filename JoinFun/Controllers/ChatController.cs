@@ -75,6 +75,7 @@ namespace JoinFun.Controllers
                 //將訊息轉為json，儲存發送者、內容、時間
                 Messageobj obj = new Messageobj {
                     fromMemID=this._fromMemID,
+                    fromMemNick=db.Member.Find(this._fromMemID).memNick.Substring(0,1),
                     message=message,
                     time= now.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
                 };
@@ -87,6 +88,7 @@ namespace JoinFun.Controllers
     }
     public class Messageobj{
         public string fromMemID { get; set; }
+        public string fromMemNick { get; set; }
         public string message { get; set; }
         public string time { get; set; }
     }

@@ -11,43 +11,37 @@ namespace JoinFun.Controllers
     public class ChatListController : Controller
     {
         JoinFunEntities db = new JoinFunEntities();
-        [LoginRule(isVisiter = true, Front = true)]
-        public ActionResult ChatHistory(string memID="M000000002")
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        public ActionResult ChatHistory()
         {
             ////把memid參數拿掉，換成session
+            string session = Session["memid"].ToString();
+
+            //取得該會員所有的房號
+            var getRoom = db.Chat_Records.Where(m => m.ToMemId == session || m.FromMemId == session).GroupBy(m => m.ChatRoom).Select(x=>x.Key).ToList();
 
 
-            Session["memid"] = "M000000002";
             //找出每位會員的最新一筆聊天記錄
             var chatList = (from a in db.Chat_Records
                             where a.Time == (from r in db.Chat_Records
                                              where a.ChatRoom == r.ChatRoom
                                              select r.Time).Max()
-                                             && a.ToMemId == memID ||a.FromMemId==memID
+                                             && getRoom.Contains(a.ChatRoom)
+                                             
                             select a).ToList();
-            
             //取得每位會員訊息未讀數
             List<int> ReadYetCount = new List<int>();
-            foreach (var c in chatList.OrderByDescending(m=>m.Time))
+            foreach (var c in chatList.OrderByDescending(m => m.Time))
             {
-                int count = db.Chat_Records.Where(m => m.ChatRoom == c.ChatRoom&&m.ReadYet==false).Count();
+                int count = db.Chat_Records.Where(m => m.ChatRoom == c.ChatRoom && m.ReadYet == false).Count();
                 ReadYetCount.Add(count);
             }
             ViewBag.ReadYetCount = ReadYetCount;
 
             return View(chatList);
         }
-        [LoginRule(isVisiter = true, Front = true)]
-        public ActionResult Chat(string fromMemID= "M000000001") {
-            Session["memid"] = "M000000002";
-            //取得對方暱稱
-            ViewBag.Nick = db.Member.Find(fromMemID).memNick;
-
-            return View();
-        }
-
-        public PartialViewResult _chat(string fromMemID = "M000000001") {
-            Session["memid"] = "M000000002";
+        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        public ActionResult Chat(string fromMemID) {
             string session = Session["memid"].ToString();
             //找出聊天室房號
             var findRecord = db.Chat_Records.Where(m => (m.ToMemId == session && m.FromMemId == fromMemID) || m.FromMemId == session && m.ToMemId == fromMemID).FirstOrDefault();
@@ -119,8 +113,11 @@ namespace JoinFun.Controllers
                 TempData["roomID"] = roomID;
             }
 
+            //取得對方暱稱
+            ViewBag.Nick = db.Member.Find(fromMemID).memNick;
 
-            return PartialView();
+            return View();
         }
+        
     }
 }
