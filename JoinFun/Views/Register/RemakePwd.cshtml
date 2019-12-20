@@ -73,9 +73,9 @@
 
 @*<div style="min-height:100vh">
     *@
-    @*<div class="row justify-content-center ml-1 ">
-        *@
-        <div class=" RemakePwd-box">
+    @*<div class="row justify-content-center ml-1 ">*@
+        
+        <div class=" RemakePwd-box col-md-12">
             @using (Html.BeginForm())
             {
             @Html.AntiForgeryToken()
@@ -122,7 +122,7 @@
 
 
 
-                <input type="submit" value="Save" class="btn btn-success col-md-8 offset-2 " />
+                <input type="submit" value="儲存" class="btn btn-success col-md-8 offset-2 " />
             </div>
 
 
@@ -131,7 +131,7 @@
             }
 
         </div>
-        @*
-    </div>*@
+        
+    @*</div>*@
     @*
 </div>*@

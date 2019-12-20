@@ -12,6 +12,7 @@ namespace JoinFun.Controllers
 {
     public class LoginController : Controller
     {
+
         SqlConnection Conn = new SqlConnection("data source=MCSDD108212;Initial Catalog=JoinFun;persist security info=True;MultipleActiveResultSets=True;user id=joinfunadmin;password=joinfun123456;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
         // GET: Login

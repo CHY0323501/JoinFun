@@ -531,6 +531,7 @@
 
         });
 
+        //帳號是否重複
         $('#account').blur(function () {
             if ($('#account').val() != '') {
                 $.ajax({
@@ -591,23 +592,23 @@
 
         });
 
-
-        $(document).ready(function () {
-            $(window).resize(function () {
-                wdth = $(window).width();
-                if (wdth < 1000){
-                    $('#Bar').hide();
-                }
-                else if(wdth >1000)
-               $('#Bar').show();
-            });
-        });
+        //螢幕大小
+        //$(document).ready(function () {
+        //    $(window).resize(function () {
+        //        wdth = $(window).width();
+        //        if (wdth < 1000){
+        //            $('#Bar').hide();
+        //        }
+        //        else if(wdth >1000)
+        //       $('#Bar').show();
+        //    });
+        //});
 
 
      
 
 
-
+        //Checkbox服務條款必填
         $("#submit").click(function(){
 			var check=$("input[name='Checkbox[]']:checked").length;//判斷有多少個方框被勾選
 			if(check==0){

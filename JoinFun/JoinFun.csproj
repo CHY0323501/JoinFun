@@ -790,6 +790,8 @@
     <Content Include="Scripts\jquery-validation-1.19.1\test\rules.js" />
     <Content Include="Scripts\jquery-validation-1.19.1\test\test.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -809,6 +811,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdmAPIController .cs" />
     <Compile Include="Controllers\AccountAPIController.cs" />
     <Compile Include="Controllers\ActCheckAPIController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />

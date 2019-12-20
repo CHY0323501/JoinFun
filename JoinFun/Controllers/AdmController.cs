@@ -20,6 +20,7 @@ namespace JoinFun.Controllers
     [LoginRule(Front = false)]
     public class AdmController : Controller
     {
+
         SqlConnection Conn = new SqlConnection("data source=MCSDD108212;initial catalog=JoinFun;persist security info=True;user id=joinfunadmin;password=joinfun123456;MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
 
@@ -128,8 +129,8 @@ namespace JoinFun.Controllers
             db.Administrator.Add(accAdm);
             db.SaveChanges();
 
-
-            return RedirectToAction("Index");
+            return Content("<script>alert('新增管理員註冊成功');window.location='/Adm/Index';</script>");
+            //return RedirectToAction("Index");
 
         }
 
