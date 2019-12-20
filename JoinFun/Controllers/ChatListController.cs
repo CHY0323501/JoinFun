@@ -25,7 +25,8 @@ namespace JoinFun.Controllers
                                              select r.Time).Max()
                                              && a.ToMemId == memID ||a.FromMemId==memID
                             select a).ToList();
-
+            
+            //取得每位會員訊息未讀數
             List<int> ReadYetCount = new List<int>();
             foreach (var c in chatList.OrderByDescending(m=>m.Time))
             {
@@ -33,10 +34,19 @@ namespace JoinFun.Controllers
                 ReadYetCount.Add(count);
             }
             ViewBag.ReadYetCount = ReadYetCount;
+
             return View(chatList);
         }
         [LoginRule(isVisiter = true, Front = true)]
-        public ActionResult Chat(string fromMemID= "M000000005") {
+        public ActionResult Chat(string fromMemID= "M000000001") {
+            Session["memid"] = "M000000002";
+            //取得對方暱稱
+            ViewBag.Nick = db.Member.Find(fromMemID).memNick;
+
+            return View();
+        }
+
+        public PartialViewResult _chat(string fromMemID = "M000000001") {
             Session["memid"] = "M000000002";
             string session = Session["memid"].ToString();
             //找出聊天室房號
@@ -55,7 +65,7 @@ namespace JoinFun.Controllers
                                  from c in groupjoin.DefaultIfEmpty()
                                  where c.chatSerial == null
                                  select a).ToList();
-                
+
                 //將之前已取用房號但仍未有聊天記錄的房間重新釋放
                 foreach (var i in EmptyRoom)
                 {
@@ -65,20 +75,21 @@ namespace JoinFun.Controllers
 
                 bool getRoom = false;
 
-                while (getRoom==false) {
+                while (getRoom == false)
+                {
                     if (EmptyRoom.Count() > 0)
                     {
                         //取得尚未取用的房號，(RoomUsed為false)
-                        roomID=EmptyRoom.Where(m => m.RoomUsed == false).FirstOrDefault().ChatRoom1;
+                        roomID = EmptyRoom.Where(m => m.RoomUsed == false).FirstOrDefault().ChatRoom1;
                         //儲存房號
-                        ViewBag.roomID = roomID;
+                        TempData["roomID"] = roomID;
                         //若房號已被取用，修改RoomUsed欄位
                         db.ChatRoom.Find(roomID).RoomUsed = true;
                         db.SaveChanges();
 
                         //離開迴圈
                         getRoom = true;
-                        
+
                     }
                     else
                     {
@@ -94,7 +105,8 @@ namespace JoinFun.Controllers
                     }
                 }
             }
-            else {
+            else
+            {
                 //取得原房號
                 roomID = (int)(findRecord.ChatRoom);
 
@@ -104,15 +116,11 @@ namespace JoinFun.Controllers
                 //取得所有歷史記錄
                 ViewBag.chat = db.Chat_Records.Where(m => m.ChatRoom == roomID).OrderByDescending(m => m.Time).ToList().OrderBy(m => m.Time);
                 //儲存房號
-                ViewBag.roomID = roomID;
+                TempData["roomID"] = roomID;
             }
 
-            
-            
-            //取得對方暱稱
-            ViewBag.Nick = db.Member.Find(fromMemID).memNick;
 
-            return View();
+            return PartialView();
         }
     }
 }

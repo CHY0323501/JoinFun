@@ -170,7 +170,7 @@
                 //確認交友邀請
                 $.ajax({
                     type: "Put",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
+                    url: "http://10.10.3.105/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" + $('#f' + btnid).attr('value') + "&newnick=null&checkfd=true",
                     success: function () {
                         console.log("成功");
                         //移除未審資料
@@ -191,7 +191,7 @@
                 //取消交友邀請
                 $.ajax({
                     type: "Delete",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" +$('#f' + btnid).attr('value') + "&Cancel=false",
+                    url: "http://10.10.3.105/api/MemAPI?FriendID=" + $('#memID').val() + "&memid=" +$('#f' + btnid).attr('value') + "&Cancel=false",
                     success: function () {
                         console.log("成功");
                         //移除未審資料
@@ -211,7 +211,7 @@
                 //修改暱稱
                 $.ajax({
                     type: "Put",
-                    url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#d' + btnid).attr('value') + "&memid=" + $('#memID2').val() + "&newnick=" + $('#newNick' + btnid).val() + "&checkfd=false",
+                    url: "http://10.10.3.105/api/MemAPI?FriendID=" + $('#d' + btnid).attr('value') + "&memid=" + $('#memID2').val() + "&newnick=" + $('#newNick' + btnid).val() + "&checkfd=false",
                     success: function () {
                         console.log("成功");
                         alert("暱稱修改成功，點擊確定後將重整頁面，即可看到修改後暱稱");
@@ -272,7 +272,7 @@
                     //刪除好友
                     $.ajax({
                         type: "Delete",
-                        url: "http://localhost:54129/api/MemAPI?FriendID=" + $('#d' + NowID).attr('value') + "&memID="+ $('#memID2').val() +"&Cancel=true",
+                        url: "http://10.10.3.105/api/MemAPI?FriendID=" + $('#d' + NowID).attr('value') + "&memID="+ $('#memID2').val() +"&Cancel=true",
                         success: function () {
                             console.log("fdid="+$('#d' + NowID).attr('value')+",memid="+$('#memID2').val())
                             alert("刪除成功");

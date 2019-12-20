@@ -20,7 +20,8 @@ namespace JoinFun.Controllers
     [LoginRule(Front = false)]
     public class AdmController : Controller
     {
-        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
+
+        SqlConnection Conn = new SqlConnection("data source=MCSDD108212;initial catalog=JoinFun;persist security info=True;user id=joinfunadmin;password=joinfun123456;MultipleActiveResultSets=True;App=EntityFramework&quot;");
         JoinFunEntities db = new JoinFunEntities();
 
         int pagesize = 10;
