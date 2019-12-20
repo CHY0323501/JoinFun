@@ -88,6 +88,7 @@ namespace JoinFun.Controllers
         }
 
         //註冊完提醒確認密碼
+        [LoginRule(isVisiter = true, Front = true)]
         public ActionResult CheckEmail(string account)
         {
             var acc = db.Acc_Pass.Where(m => m.Account == account).FirstOrDefault();
