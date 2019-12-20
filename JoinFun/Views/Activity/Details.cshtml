@@ -139,7 +139,7 @@
                                 else
                                 {
                                     <input id="join" type="button" value="歡迎登入參加" class="btn btn-warning btn-block  " disabled="disabled" />
-                                }                               
+                                }
                             }
                             else
                             {
@@ -191,7 +191,7 @@
                                 <span id="messageTime">(@item.messageTime.ToString("yyyy/MM/dd HH:mm:ss"))</span>
                                 @if (Session["memid"] != null)
                                 {
-                                    if (Session["memid"].ToString() != item.memId&&Session["memid"].ToString() != "")
+                                    if (Session["memid"].ToString() != item.memId && Session["memid"].ToString() != "")
                                     {
                                         <a class="ml-auto fa fas fa-file-signature text-danger" href="@Url.Action("Report", "Activity", new { id = item.mboardSerial, reporterID = Session["memid"].ToString() })"></a>
                                     }
@@ -569,38 +569,29 @@
 
 @section scripts{
     <script>
-
         $('#commentBtn').click(function () {
             var upload = $('#comments').val().replace(/\n/g, '<br/>');
             if ($('#receiverID').val() == null)
                 $('#receiverID').val("");
             var time = $.format.toBrowserTimeZone((new Date()));
-        $.ajax({
-            url: "@Url.Action("AddComment", "Activity")",
-            method: "post",
-            traditional: true,
-            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val(), receiver: $('#receiverID').val() },
-            success: function () {
-                alert("留言新增成功");
-                //$.ajax({
-                //    type: "Get",
-                //    url: "http://title:54130/api/getComment?id=" + data.mid,
-                //    success: function (d) {
-                //        $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
-                //           + $('#nick').val() + '</label>' + '<span>' + '  (' + d[0] + ')' + '</span><div class="mt-2 ml-3 onFocus">' + d[1] + '</div></div>');
-                //    },
-                //});
-                $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
-                    + $('#nick').val() + '</label>' + '<span>' + '  (' + time + ')' + '</span><div class="mt-2 ml-3 onFocus">' + upload + '</div></div>');
-                $('#comments').val("");
-                $('.highlighter span').text("");
-            },
-            error: function () {
-                alert('請先登入後留言');
-                $('#comments').val("");
-            }
+            $.ajax({
+                url: "@Url.Action("AddComment", "Activity")",
+                method: "post",
+                traditional: true,
+                data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val(), receiver: $('#receiverID').val() },
+                success: function () {
+                    alert("留言新增成功");
+                    $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
+                        + $('#nick').val() + '</label>' + '<span>' + '  (' + time + ')' + '</span><div class="mt-2 ml-3 onFocus">' + upload + '</div></div>');
+                    $('#comments').val("");
+                    $('.highlighter span').text("");
+                },
+                error: function () {
+                    alert('請先登入後留言');
+                    $('#comments').val("");
+                }
+            });
         });
-    });
 
     $('#commentBoard label').click(function () {
         var timer;

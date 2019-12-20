@@ -96,7 +96,7 @@ namespace JoinFun.Controllers
         }
         [LoginRule(isVisiter = true, Front = true)]
         //會員評價
-        public ActionResult Remarks(string memID)
+        public ActionResult Remarks(string memID="M000000064")
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null )
@@ -125,9 +125,9 @@ namespace JoinFun.Controllers
                     var p = db.vw_Participant_Remarks.Where(m => m.ToMemId == memID);
                     ViewBag.avgStar = Math.Round(((double)(h.Sum(m => m.remarkStar) + p.Sum(m => m.remarkStar))/(h.Count()+p.Count())), 0);
                 }
-                else if (host_star == null)
+                else if (Part_star != null)
                     ViewBag.avgStar = Math.Round(db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
-                else if (Part_star == null)
+                else if (host_star != null)
                     ViewBag.avgStar = Math.Round(db.vw_Host_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
                 else
                     ViewBag.avgStar = 0;
