@@ -105,7 +105,7 @@
 
                             @if (Session["memid"] != null)
                             {
-                                if (Session["memid"].ToString() == "")
+                                if (Session["memid"].ToString() != "")
                                 {
                                     if (item.hostId == ViewBag.memID)
                                     {
@@ -139,9 +139,7 @@
                                 else
                                 {
                                     <input id="join" type="button" value="歡迎登入參加" class="btn btn-warning btn-block  " disabled="disabled" />
-                                }
-                                <p id="hash">@item.hashTag</p>
-
+                                }                               
                             }
                             else
                             {
