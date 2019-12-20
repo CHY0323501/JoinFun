@@ -41,7 +41,8 @@ namespace JoinFun.Controllers
             return View(chatList);
         }
         [LoginRule(Front = true, isVisiter = false)]
-        public ActionResult Chat(string fromMemID) {
+        public ActionResult Chat(string fromMemID)
+        {
             string session = Session["memid"].ToString();
             //找出聊天室房號
             var findRecord = db.Chat_Records.Where(m => (m.ToMemId == session && m.FromMemId == fromMemID) || m.FromMemId == session && m.ToMemId == fromMemID).FirstOrDefault();
@@ -61,43 +62,53 @@ namespace JoinFun.Controllers
                                  select a).ToList();
 
                 //將之前已取用房號但仍未有聊天記錄的房間重新釋放
-                foreach (var i in EmptyRoom)
+
+
+                //foreach (var i in EmptyRoom)
+                //{
+                //    db.ChatRoom.Find(i.ChatRoom1).RoomUsed = false;
+                //    db.SaveChanges();
+                //}
+
+                //bool getRoom = false;
+
+                //while (getRoom == false)
+                //{
+                if (EmptyRoom.Count() > 0)
                 {
-                    db.ChatRoom.Find(i.ChatRoom1).RoomUsed = false;
+                    //取得尚未取用的房號，(RoomUsed為false)
+                    var emp = EmptyRoom.Take(1).FirstOrDefault();
+                    emp.RoomUsed = false;
+                    //roomID = EmptyRoom.Where(m => m.RoomUsed == false).FirstOrDefault().ChatRoom1;
+                    roomID = emp.ChatRoom1;
+                    //儲存房號
+                    TempData["roomID"] = roomID;
+                    //若房號已被取用，修改RoomUsed欄位
+                    db.ChatRoom.Find(roomID).RoomUsed = true;
+                    db.ChatRoom.Find(roomID).CreateTime = DateTime.Now;
+
+
+
+
+                    db.SaveChanges();
+
+                    //離開迴圈
+                    //getRoom = true;
+
+                }
+                else
+                {
+                    //新建房間
+                    DateTime now = DateTime.Now;
+                    ChatRoom R = new ChatRoom()
+                    {
+                        CreateTime = now,
+                        RoomUsed = false
+                    };
+                    db.ChatRoom.Add(R);
                     db.SaveChanges();
                 }
-
-                bool getRoom = false;
-
-                while (getRoom == false)
-                {
-                    if (EmptyRoom.Count() > 0)
-                    {
-                        //取得尚未取用的房號，(RoomUsed為false)
-                        roomID = EmptyRoom.Where(m => m.RoomUsed == false).FirstOrDefault().ChatRoom1;
-                        //儲存房號
-                        TempData["roomID"] = roomID;
-                        //若房號已被取用，修改RoomUsed欄位
-                        db.ChatRoom.Find(roomID).RoomUsed = true;
-                        db.SaveChanges();
-
-                        //離開迴圈
-                        getRoom = true;
-
-                    }
-                    else
-                    {
-                        //新建房間
-                        DateTime now = DateTime.Now;
-                        ChatRoom R = new ChatRoom()
-                        {
-                            CreateTime = now,
-                            RoomUsed = false
-                        };
-                        db.ChatRoom.Add(R);
-                        db.SaveChanges();
-                    }
-                }
+                //}
             }
             else
             {
@@ -118,6 +129,6 @@ namespace JoinFun.Controllers
 
             return View();
         }
-        
+
     }
 }
