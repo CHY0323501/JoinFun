@@ -182,7 +182,6 @@
                 <span class="subtitle">留言板</span>
 
                 <div id="act_content2" class="w-100 ">
-                    @*<h1>留言板區</h1>*@
                     <div id="commentBoard">
                         @foreach (var item in Model.MBoard)
                         {
@@ -192,7 +191,7 @@
                                 <span id="messageTime">(@item.messageTime.ToString("yyyy/MM/dd HH:mm:ss"))</span>
                                 @if (Session["memid"] != null)
                                 {
-                                    if (Session["memid"].ToString() != item.memId)
+                                    if (Session["memid"].ToString() != item.memId&&Session["memid"].ToString() != "")
                                     {
                                         <a class="ml-auto fa fas fa-file-signature text-danger" href="@Url.Action("Report", "Activity", new { id = item.mboardSerial, reporterID = Session["memid"].ToString() })"></a>
                                     }
@@ -598,6 +597,7 @@
             },
             error: function () {
                 alert('請先登入後留言');
+                $('#comments').val("");
             }
         });
     });
