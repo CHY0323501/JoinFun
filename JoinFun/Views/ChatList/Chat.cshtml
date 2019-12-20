@@ -121,6 +121,16 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script>
         $(document).ready(function () {
+            //請求推播通知
+            if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+                Notification.requestPermission(function (permission) {
+                    // 使用者同意授權後推播通知
+                    if (permission === 'granted') {
+                        var notification = new Notification('Hi there!', notifyConfig); // 建立通知
+                    }
+                });
+            }
+
             //將聊天室窗拉到最下方
             $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
 
@@ -162,6 +172,20 @@
                 }
 
                 $('#messageArea').append(message);
+
+                //瀏覽器推播通知
+                if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+                    //再次請求同意
+                    Notification.requestPermission();
+                } else if (Notification.permission === 'granted') {
+                    //發送新訊息通知
+                    
+                    var notification = new Notification('JoinFun新訊息', {
+                        body: e.fromMemNick+'說：'+e.message,
+                        icon: '/favicon.ico',
+                        //tag: 'newArrival' // 設定標籤
+                    });
+                }
             }
 
             //監聽dom元素改變
@@ -189,6 +213,12 @@
                 if (m.val().trim() != '') {
                     ws.send(m.val());
                     m.val('');
+                }
+            });
+            //輸入訊息後可直接按enter送出
+            $('#messageContent').keypress(function (e) {
+                if (e.which == 13) {
+                    $('#sendMessage').focus().click();
                 }
             });
         })
