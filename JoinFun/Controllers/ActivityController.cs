@@ -334,18 +334,23 @@ namespace JoinFun.Controllers
 
 
 
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        //[LoginRule(Front = true, isVisiter = false)]
         public ActionResult Create()
         {
             if (Session["memid"] == null)
-            {
-                if (Session["memid"].ToString() == "")
-                    return RedirectToAction("Index");
+            {                
                 return RedirectToAction("Index");
             }
-            //ViewBag.Drop = GetDropList();
-            GetSelectList();
-            return View();
+            else if (Session["memid"].ToString() == "")
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //ViewBag.Drop = GetDropList();
+                GetSelectList();
+                return View();
+            }              
         }
 
         [HttpPost]
@@ -426,33 +431,38 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index");
         }
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        //[LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Edit(string actId)
         {
             if (Session["memId"] == null)
-            {
-                if (Session["memid"].ToString() == "")
-                    return RedirectToAction("Index");
+            {                
                 return RedirectToAction("Index");
             }
-            Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
-            if (act == null)
+            else if (Session["memid"].ToString() == "")
             {
-                return HttpNotFound();
-            }
-            GetSelectList(actId);
-            if (act.acceptDrop == true)
-            {
-                ViewBag.Drop = "是";
+                return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.Drop = "否";
-            }
+                Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
+                if (act == null)
+                {
+                    return HttpNotFound();
+                }
+                GetSelectList(actId);
+                if (act.acceptDrop == true)
+                {
+                    ViewBag.Drop = "是";
+                }
+                else
+                {
+                    ViewBag.Drop = "否";
+                }
 
-            ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
+                ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
-            return View(act);
+                return View(act);
+            }              
         }
 
         [HttpPost]
@@ -541,7 +551,7 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        //[LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Messages(string memID)
         {
             if (Session["memId"] == null)
