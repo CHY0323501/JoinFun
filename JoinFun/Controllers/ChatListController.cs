@@ -11,7 +11,7 @@ namespace JoinFun.Controllers
     public class ChatListController : Controller
     {
         JoinFunEntities db = new JoinFunEntities();
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        [LoginRule( Front = true, isVisiter = false)]
         public ActionResult ChatHistory()
         {
             ////把memid參數拿掉，換成session
@@ -40,7 +40,7 @@ namespace JoinFun.Controllers
 
             return View(chatList);
         }
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        [LoginRule(Front = true, isVisiter = false)]
         public ActionResult Chat(string fromMemID) {
             string session = Session["memid"].ToString();
             //找出聊天室房號
