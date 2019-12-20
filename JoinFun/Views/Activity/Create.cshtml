@@ -238,6 +238,10 @@
     <script type="text/javascript" language="javascript" src="~/Scripts/bootstrap-datetimepicker.js"></script>
     <script src="~/Scripts/ActivityScripts.js"></script>
     <script>
+        $('.input').keypress(function (e) {
+            if (e.which == 13)
+                $('#createAct').click();
+        });
         $('#createAct').click(function () {
             if ($('#actRoad').val() == "") {
                 $('#actRoad').addClass("is-invalid");

@@ -137,7 +137,7 @@
             });
 
             //頁面載入完成後連線聊天室
-            let url = 'ws://localhost:54129/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
+            let url = 'ws://10.10.3.105/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
             let ws = new WebSocket(url);
             console.log(ws);
 
