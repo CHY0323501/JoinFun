@@ -93,11 +93,11 @@
                                                     @try
                                                     {
                                                         var session = Session["memid"].ToString();
-                                                        if (session == i.hostId && Model.Activity_Details.Where(m => m.actId == i.actId).Count() != Model.Member_Remarks.Where(m => m.actId == i.actId).Count())
+                                                        if (session == i.hostId && Model.Activity_Details.Where(m => m.actId == i.actId&&m.appvStatus==true).Count() != Model.Member_Remarks.Where(m => m.actId == i.actId).Count())
                                                         {
                                                             <a href="@Url.Action("RemarkCreate", "Member", new { actID = i.actId, FromMemID = session })" class="text-decoration-none btn btn-info">新增會員評價</a>
                                                         }
-                                                        else if (session == i.hostId && Model.Activity_Details.Where(m => m.actId == i.actId).Count() == Model.Member_Remarks.Where(m => m.actId == i.actId).Count())
+                                                        else if (session == i.hostId && Model.Activity_Details.Where(m => m.actId == i.actId&&m.appvStatus==true).Count() == Model.Member_Remarks.Where(m => m.actId == i.actId).Count())
                                                         {
                                                             <a class="text-decoration-none btn btn-info text-white">已無尚未評價的會員</a>
                                                         }
@@ -183,11 +183,11 @@
                                                     @try
                                                     {
                                                         var session = Session["memid"].ToString();
-                                                        if (session == i.memId&&(Model.Activity_Details.Where(m => m.actId == i.actId).Count())!=Model.Member_Remarks.Where(m=>m.actId==i.actId).Count())
+                                                        if (session == i.memId&&(Model.Activity_Details.Where(m => m.actId == i.actId&&m.appvStatus==true).Count())!=Model.Member_Remarks.Where(m=>m.actId==i.actId).Count())
                                                         {
                                                             <a href="@Url.Action("RemarkCreate", "Member", new { actID = i.actId, FromMemID = session })" class="text-decoration-none btn btn-info">新增會員評價</a>
                                                         }
-                                                        else if(session == i.memId&&(Model.Activity_Details.Where(m => m.actId == i.actId).Count())==Model.Member_Remarks.Where(m=>m.actId==i.actId).Count())
+                                                        else if(session == i.memId&&(Model.Activity_Details.Where(m => m.actId == i.actId&&m.appvStatus==true).Count())==Model.Member_Remarks.Where(m=>m.actId==i.actId).Count())
                                                         {
                                                             <a class="text-decoration-none btn btn-info text-white">已無尚未評價的會員</a>
                                                         }
