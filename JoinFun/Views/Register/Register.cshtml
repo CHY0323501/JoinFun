@@ -551,7 +551,7 @@
 
         //帳號是否重複
         $('#Account').blur(function () {
-            if ($('#Account').val() != '') {
+            if ($('#Account').val() != "") {
                 $.ajax({
                     type: "Get",
                     url: "http://10.10.3.105/api/AccountAPI",
@@ -572,19 +572,19 @@
                                 console.log(i);
                             }
                         }
-                       
+                        if ($('#Account').val() != "") {
                             if (i == data.length) {
                                 console.log("驗證成功");
 
                                 $('#prompt').text("此帳號可使用").css("color", "#459645");
                             }
-                      
+                        }
                     }
-                    
+
                 });
             }
             else {
-                $('#prompt').hide();
+                $('#prompt').text("");
             }
 
         });
