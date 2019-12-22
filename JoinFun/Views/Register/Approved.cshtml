@@ -29,7 +29,7 @@
         <a class="close-reveal-modal">×</a>
     </div>*@
 
-<div class="content-side col-md-10 col-sm-10">
+<div class="content-side2 col-md-10 col-sm-10">
     <h3 class="  font-weight-bold ml-2" style="font-size:30px">會員註冊</h3>
     <div class="signInPage" style="display: block">
         <div class="l-signInPage__progressBar " style="display: block" id="Bar">
@@ -71,84 +71,85 @@
             </div>
 
         </div>*@
-        <div class="l-promptBlock" style="border-radius:10px">
+        <div class="l-promptBlock2" style="border-radius:10px">
             <div class="row justify-content-center ">
 
                 <div class="col-md-12 offset-md-4 ">
-                    <h1 class="text-success mt-5">帳號驗證成功</h1>
+                    <img src="https://img.icons8.com/dusk/64/000000/ok.png">
+                    <h4 class="text-success mt-5">帳號驗證成功,</h4>
                     <div class="mt-5 ">
-                        @Html.ActionLink("返回會員登入", "Login", "Login",new { c=1}, new { @class = "btn btn-warning  ml-1" })
+                        @Html.ActionLink("返回會員登入", "Login", "Login", new { c = 1 }, new { @class = "btn btn-warning  ml-1" })
                     </div>
                 </div>
 
             </div>
 
         </div>
-
-      
-        
-            @*<div class="row">
-                <div class="modalbox success col-sm-8 col-md-6 col-lg-5 center animate">
-                    <div class="icon">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </div>
-                    
-                    <h1>帳號驗證成功!</h1>
-                    <p>
-                        We've sent a confirmation to your e-mail
-                        <br>for verification.
-                    </p>
-                    @Html.ActionLink("返回會員登入", "Login", "Login", new { @class = "redo btn" })
-                    <button type="button" class="redo btn">Ok</button>
-                    <span class="change">-- Click to see opposite state --</span>
+    
+        @*<div class="row">
+            <div class="modalbox success col-sm-8 col-md-6 col-lg-5 center animate">
+                <div class="icon">
+                    <span class="glyphicon glyphicon-ok"></span>
                 </div>
-                
-            </div>*@
-           
-       
-        
+
+                <h1>帳號驗證成功!</h1>
+                <p>
+                    We've sent a confirmation to your e-mail
+                    <br>for verification.
+                </p>
+                @Html.ActionLink("返回會員登入", "Login", "Login", new { @class = "redo btn" })
+                <button type="button" class="redo btn">Ok</button>
+                <span class="change">-- Click to see opposite state --</span>
+            </div>
+
+        </div>*@
+
+
+
     </div>
-</div>
+        </div>
 
 
 
-@section scripts{
+        @section scripts{
 
-    <script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
+            <script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 
-    @*<script>
-            $(document).ready(function () {
-                swal({
-                    title: "認證成功！",
-                    text: "點擊登入頁使用其功能",
-                    type: "success",
-                    confirmButtonText: "關閉",
+            @*<script>
+                $(document).ready(function () {
+                    swal({
+                        title: "認證成功！",
+                        text: "點擊登入頁使用其功能",
+                        type: "success",
+                        confirmButtonText: "關閉",
+                    })
+
+                    $('button').click(function () {
+                    window.location.href = "http://10.10.3.105/Login/Login?c=1";
+
                 })
 
-                $('button').click(function () {
-                window.location.href = "http://10.10.3.105/Login/Login?c=1";
-
-            })
-
-            });
+                });
 
 
 
 
-        </script>*@
-    <script>
-          $(document).ready(function () {
-            $(window).resize(function () {
-                wdth = $(window).width();
-                if (wdth < 1000){
-                    $('#Bar').hide();
-                }
-                else if(wdth >1000)
-               $('#Bar').show();
-            });
-        });
+            </script>*@
+            @*<script>
+                $(document).ready(function () {
+                    $(window).resize(function () {
+                        wdth = $(window).width();
+                        if (wdth < 1000) {
+                            $('#Bar').hide();
+                        }
+                        else if (wdth > 1000)
+                            $('#Bar').show();
+                    });
+                });
 
-    </script>
-}
+
+
+            </script>*@
+        }
 
