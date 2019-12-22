@@ -283,7 +283,7 @@
 
                                     @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Account, htmlAttributes: new { @class = "control-label col-md-12 " })
 
-                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = " form-control-small ", id = "account", name = "account", placeholder = "英文字母最多10個" } })
+                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Account, new { htmlAttributes = new { @class = " form-control-small ", id = "Account", name = "account", placeholder = "英文字母最多10個" } })
 
 
                                     @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Account, "", new { @style = "color:#f36868" })
@@ -550,15 +550,15 @@
         });
 
         //帳號是否重複
-        $('#account').blur(function () {
-            if ($('#account').val() != '') {
+        $('#Account').blur(function () {
+            if ($('#Account').val() != '') {
                 $.ajax({
                     type: "Get",
                     url: "http://10.10.3.105/api/AccountAPI",
 
                     success: function (data) {
                         //console.log(data[0]);
-                        var str = $('#account').val();
+                        var str = $('#Account').val();
                         var i = 0;
                         while (i < data.length) {
                             var n = str.search(data[i]);
