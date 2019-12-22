@@ -226,10 +226,12 @@ namespace JoinFun.Models
 
 
         [Required(ErrorMessage = "暱稱為必填欄位")]
-        [StringLength(15,ErrorMessage = "暱稱長度不可超過15字")]
+        [StringLength(15, ErrorMessage = "暱稱長度不可超過15字")]
         [DisplayName("暱稱")]
+        //不允許只輸入空格
+        [RegularExpression(".*\\S+.*", ErrorMessage = "請輸入暱稱")]
         public string memNick { get; set; }
-
+        
         [DisplayName("電子信箱")]
         [Required(ErrorMessage ="信箱為必填欄位")]
         [StringLength(50, ErrorMessage = "信箱不可超過50字")]

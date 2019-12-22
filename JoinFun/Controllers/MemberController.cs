@@ -91,6 +91,7 @@ namespace JoinFun.Controllers
                 mem.Dietary_Preference = Dietary_Preference;
                 db.SaveChanges();
             }
+            Session["nick"] = memNick;
             //編輯完畢時回到個人資訊頁
             return RedirectToAction("Info", new { memID = Session["memid"] });
         }
