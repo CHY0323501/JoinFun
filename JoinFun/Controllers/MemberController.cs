@@ -430,7 +430,7 @@ namespace JoinFun.Controllers
         public void GetMemList(string actID, string FromMemID)
         {
             var host = db.vw_Activities.Where(m => m.actId == actID).ToList();
-            var members = db.Activity_Details.Where(m => m.actId == actID).ToList();
+            var members = db.Activity_Details.Where(m => m.actId == actID&&m.appvStatus==true).ToList();
             var remarked = db.Member_Remarks.Where(m => m.FromMemId == FromMemID && m.actId == actID).ToList();
             //var member = db.Member.ToList();
             List<SelectListItem> list = new List<SelectListItem>();

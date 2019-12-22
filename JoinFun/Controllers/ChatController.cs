@@ -51,6 +51,21 @@ namespace JoinFun.Controllers
                 }
                 else
                     _chatRooms[_roomID] = new WebSocketCollection() { this };
+
+
+                //用於確認連線狀態廣播的json
+                Onlineobj obj = new Onlineobj()
+                {
+                    MemID = _toMemID
+                };
+
+                //確認聊天對象是否在線上
+                if (_chatRooms[_roomID].Count > 1)
+                    obj.isOnline = true;
+                else
+                    obj.isOnline = false;
+                //將連線狀態廣播該房間
+                _chatRooms[_roomID].Broadcast(JsonConvert.SerializeObject(obj, Formatting.Indented));
             }
 
 
@@ -58,6 +73,12 @@ namespace JoinFun.Controllers
             public override void OnMessage(string message)
             {
                 DateTime now = DateTime.Now;
+                
+                bool UserOnline = false;
+                //確認對方是否也在聊天室中，若為連線狀態時，該則訊息ReadYet欄位為true
+                if (_chatRooms[_roomID].Count > 1)
+                    UserOnline = true;
+
                 //將對話記錄存入資料庫
                 Chat_Records chat = new Chat_Records()
                 {
@@ -66,13 +87,13 @@ namespace JoinFun.Controllers
                     ToMemId = _toMemID,
                     chatContent = message,
                     Time = now,
-                    ReadYet = false,
+                    ReadYet = UserOnline,
                     ChatRoom = _roomID
                 };
                 db.Chat_Records.Add(chat);
                 db.SaveChanges();
 
-                //將訊息轉為json，儲存發送者、內容、時間
+                //將訊息轉為json，儲存發送者訊息、內容、時間
                 Messageobj obj = new Messageobj {
                     fromMemID=this._fromMemID,
                     fromMemNick=db.Member.Find(this._fromMemID).memNick.Substring(0,1),
@@ -83,7 +104,7 @@ namespace JoinFun.Controllers
                 //推送對話給聊天對象及自己
                 _chatRooms[_roomID].Broadcast(JsonConvert.SerializeObject(obj, Formatting.Indented));
             }
-
+            
         }
     }
     public class Messageobj{
@@ -91,5 +112,10 @@ namespace JoinFun.Controllers
         public string fromMemNick { get; set; }
         public string message { get; set; }
         public string time { get; set; }
+    }
+    public class Onlineobj
+    {
+        public string MemID { get; set; }
+        public bool isOnline { get; set; }
     }
 }

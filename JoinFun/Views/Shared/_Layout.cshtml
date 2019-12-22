@@ -301,22 +301,23 @@
     @RenderSection("scripts", required: false)
     @*@RenderSection("indexscript", required: false)*@
     @RenderSection("indexjs", required: false)
-    <script>
+<script>
+
+    $(document).ready(function () {
         //取得未讀訊息數量
-        $(document).ready(function () {
-                $.ajax({
-                    url: "@Url.Action("GetMStatus","Activity")",
-                    method: "post",
-                    traditional: true,
-                    data: { id: $('#mid').val() },
-                    success: function (count) {
-                        if (count == 0)
-                            $('.number').text("");
-                        else
-                            $('.number').text(count);
-                    }
-              });
+        $.ajax({
+            url: "@Url.Action("GetMStatus","Activity")",
+            method: "post",
+            traditional: true,
+            data: { id: $('#mid').val() },
+            success: function (count) {
+                if (count == 0)
+                    $('.number').text("");
+                else
+                    $('.number').text(count);
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>

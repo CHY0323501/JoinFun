@@ -6,7 +6,17 @@
         .list:hover {
             box-shadow: 0 0 15px rgba(128, 128, 128, 0.49);
         }
-        /*rgba(255, 216, 0, 0.50)*/
+
+        @@media (min-width: 1000px) {
+            .showimg {
+                display:initial!important;
+            }
+        }
+        @@media (min-width: 580px) {
+            .showitem {
+                display:initial!important;
+            }
+        }
     </style>
 }
 
@@ -16,6 +26,7 @@
     string sex, PrivateMessage;
     var ReadYetList = ViewBag.ReadYetCount;
     int count = 0;
+    float animate_delay = 0f;
 }
 
 <h2 class="text-center font-weight-bold text-warning mb-2">聊天室</h2>
@@ -27,7 +38,7 @@
             @foreach (var i in Model.OrderByDescending(m => m.Time))
             {
 
-            <div class="col-8 mb-3 mx-auto list px-0">
+            <div class="col-8 mb-3 mx-auto list px-0 animated fadeInUp" style="animation-delay:@(animate_delay)s">
                 @if (i.FromMemId == Session["memid"].ToString())
                 {
                     PrivateMessage = i.ToMemId;
@@ -41,7 +52,7 @@
                     <div class="card border-0 " style="background-color:#c4e1e1">
                         <div class="card-body border-left border-primary" style="border-left:8px solid #17a2b8!important">
                             <div class="row">
-                                <div class="col-3 text-center">
+                                <div class="col-md-3 text-center d-none showimg">
                                     @if (i.FromMemId == Session["memid"].ToString())
                                     {
                                         sex = db.Member.Find(i.ToMemId).Sex;
@@ -52,7 +63,7 @@
                                     }
                                     <img src="~/Photos/@(sex == "M" ? "male.png" : "female.png")" class="img-fluid w-50 " />
                                 </div>
-                                <div class="col-9 ">
+                                <div class="col-12 col-md-9">
                                     <div class="font-weight-bold text-info h3">
                                         @if (i.FromMemId == Session["memid"].ToString())
                                         {
@@ -64,8 +75,9 @@
                                         }
                                     </div>
                                     <div class="row  mt-4">
-                                        <div class="col-8 text-truncate text-dark">
-                                            @if (i.ReadYet == false)
+                                        <div class="col-6 col-sm-8 text-truncate text-dark">
+
+                                            @if (i.ReadYet == false&&i.FromMemId!=Session["memid"].ToString())
                                             {
 
                                                 <span class="font-weight-bolder">@i.chatContent <span class="badge badge-danger rounded-circle" style="font-family:Consolas;font-size:1.1rem">@ReadYetList[count]</span></span>
@@ -75,7 +87,7 @@
                                                 @i.chatContent
                                             }
                                         </div>
-                                        <div class="col-4 text-center text-secondary font-weight-bold" style="font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif">
+                                        <div class="col-6 col-sm-4 text-center text-secondary font-weight-bold " style="font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif">
                                             @i.Time.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
                                         </div>
                                     </div>
@@ -87,6 +99,7 @@
             </div>
 
             count++;
+            animate_delay+=0.15f;
             }
         </div>
     }

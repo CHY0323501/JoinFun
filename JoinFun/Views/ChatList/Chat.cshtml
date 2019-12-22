@@ -60,25 +60,43 @@
                 border-radius: 0 0 32px 0;
                 color: rgba(128, 128, 128, 0.81);
             }
+
+        @@media (min-width: 580px) {
+            .changewidth {
+                min-width: 80%;
+            }
+        }
+        .online {
+            background-color:greenyellow;
+            width:15px!important;
+            height:15px!important;
+            border-radius:50%;
+        }
+        .offline {
+            background-color:rgba(128, 128, 128, 0.77);
+            width:15px!important;
+            height:15px!important;
+            border-radius:50%;
+        }
     </style>
 }
 <input id="roomID" type="hidden" value=@((Int32)TempData["roomID"]) />
 <div class="container w-75 mt-2">
     <div class="row">
         <div class="col-10">
-            <a href="@Url.Action("Info","Member",new { memID=Request.QueryString["fromMemID"]})" class="text-decoration-none text-warning"><h2 class="font-weight-bold p-2 borderStyle" style="letter-spacing:5px;">@ViewBag.Nick</h2></a>
+            <a href="@Url.Action("Info","Member",new { memID=Request.QueryString["fromMemID"]})" class="text-decoration-none text-warning"><h2 class="font-weight-bold p-2 borderStyle" style="letter-spacing:5px;"><div title="" id="State"></div> @ViewBag.Nick </h2></a>
         </div>
         <div class="col-2">
-            <a href="@Url.Action("ChatHistory","ChatList",new { memID=Session["memid"].ToString()})" class="btn btn-outline-secondary mt-1 pt-2"><i class="fas fa-chevron-left " style="letter-spacing:2px;"><span style="font-family:Consolas;font-size:1.2rem" id="back">　Back</span></i></a>
+            <a href="@Url.Action("ChatHistory", "ChatList", new { memID = Session["memid"].ToString() })" class="btn btn-outline-secondary mt-1 pt-2" id="leave"><i class="fas fa-chevron-left " style="letter-spacing:2px;"><span style="font-family:Consolas;font-size:1.2rem" id="back">　Back</span></i></a>
         </div>
     </div>
-    <div class="overflow-auto border borderStyle mt-3" style="max-height:55vh;min-height:40vh;border-radius:10px" id="messageArea">
+    <div class="overflow-auto border borderStyle mt-3" style="max-height:55vh;min-height:55vh;border-radius:10px" id="messageArea">
         @if (ViewBag.chat != null)
-        {
+                    {
 
-            foreach (var item in chat)
-            {
-                <div class="card mb-2 border-0 mx-auto">
+                        foreach (var item in chat)
+                        {
+                <div class="card mb-2 border-0 mx-auto "style="overflow-x:hidden">
                     @if (item.FromMemId == Request.QueryString["fromMemID"])
                     {
                         <div class="card-body">
@@ -105,7 +123,7 @@
     <div class="row mt-2">
         <div class="col-12 ">
             <div class="input-group justify-content-md-end  justify-content-center ">
-                <input id="messageContent" type="text" class="form-control" placeholder="輸入訊息" aria-label="輸入訊息" aria-describedby="basic-addon2" style="min-width:80%">
+                <input id="messageContent" type="text" class="form-control changewidth" placeholder="輸入訊息" aria-label="輸入訊息" aria-describedby="basic-addon2" >
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="sendMessage">送出</button>
                 </div>
@@ -121,70 +139,85 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script>
         $(document).ready(function () {
-            //請求推播通知
-            if (Notification.permission === 'default' || Notification.permission === 'undefined') {
-                Notification.requestPermission(function (permission) {
-                    // 使用者同意授權後推播通知
-                    if (permission === 'granted') {
-                        var notification = new Notification('Hi there!', notifyConfig); // 建立通知
-                    }
-                });
-            }
+                    //請求推播通知
+                    //if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+                    //    Notification.requestPermission(function (permission) {
+                    //        // 使用者同意授權後推播通知
+                    //        if (permission === 'granted') {
+                    //            var notification = new Notification('Hi there!', notifyConfig); // 建立通知
+                    //        }
+                    //    });
+                    //}
 
             //將聊天室窗拉到最下方
             $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
 
             $(window).resize(function () {
-                //返回文字隱藏
-                wdth = $(window).width();
-                if (wdth < 1160) {
+                        //返回文字隱藏
+                        wdth = $(window).width();
+                        if (wdth < 1160) {
                     $('#back').hide();
-                }
-                else if (wdth > 1160)
+                        }
+                        else if (wdth > 1160)
                     $('#back').show();
 
                 $('#messageArea').scrollTop($('#messageArea').get(0).scrollHeight);
-            });
-
-            //頁面載入完成後連線聊天室
-            let url = 'ws://10.10.3.105/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
-            let ws = new WebSocket(url);
-            console.log(ws);
-
-            ws.onopen = function () {
-                //ws.send("已進入聊天室");
-                console.log("連線中");
-            }
-
-            ws.onerror = function () {
-                alert("無法連接聊天室");
-            }
-            ws.onmessage = function (event) {
-                console.log(JSON.parse(event.data));
-                var e = JSON.parse(event.data);
-                var message = "";
-                
-
-                if (e.fromMemID == "@Session["memid"].ToString()") {
-                    message = `<div class="card mb-2 border-0 mx-auto"><div class="card-body text-right"><span class="timestyle mr-2 text-secondary">${e.time}</span><span class="bubble text-white p-2 text-left">${e.message}</span></div></div>`;
-                } else {
-                    message = `<div class="card mb-2 border-0 mx-auto"><div class="card-body"><div class="text-info font-weight-bold rounded-circle" style="font-size:1.5rem;width:50px;height:50px;background-color:#c4e1e1;line-height:50px;padding-left:0.75rem">${e.fromMemNick}</div><p class="m-1 ml-5"><span class="text-white p-2 pt-0 bubble2">${e.message}</span><span class="ml-2 text-secondary timestyle">${e.time}</span></p></div></div>`;
-                }
-
-                $('#messageArea').append(message);
-
-                //瀏覽器推播通知
-                if (Notification.permission === 'default' || Notification.permission === 'undefined') {
-                    //再次請求同意
-                    Notification.requestPermission();
-                } else if (Notification.permission === 'granted') {
-                    //發送新訊息通知
-                    
-                    var notification = new Notification('JoinFun新訊息', {
-                        body: e.fromMemNick+'說：'+e.message,
-                        icon: '/favicon.ico',
-                        //tag: 'newArrival' // 設定標籤
                     });
+
+                    //頁面載入完成後連線聊天室
+                    let url = 'ws://10.10.3.105/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
+                    let ws = new WebSocket(url);
+                    console.log(ws);
+
+                    ws.onopen = function () {
+                        //ws.send("已進入聊天室");
+                        console.log("連線中");
+                    }
+
+                    ws.onerror = function () {
+                        alert("無法連接聊天室");
+                    }
+                    ws.onmessage = function (event) {
+                        console.log(JSON.parse(event.data));
+                        var e = JSON.parse(event.data);
+                        var message = "";
+
+
+             //取得json欄位長度為2時，表示取得是否在線資訊
+                if (Object.keys(e).length != 2) {
+                    if (e.fromMemID == "@Session["memid"].ToString()") {
+                        message = `<div class="card mb-2 border-0 mx-auto"><div class="card-body text-right"><span class="timestyle mr-2 text-secondary">${e.time}</span><span class="bubble text-white p-2 text-left">${e.message}</span></div></div>`;
+                    } else {
+                        message = `<div class="card mb-2 border-0 mx-auto"><div class="card-body"><div class="text-info font-weight-bold rounded-circle" style="font-size:1.5rem;width:50px;height:50px;background-color:#c4e1e1;line-height:50px;padding-left:0.75rem">${e.fromMemNick}</div><p class="m-1 ml-5"><span class="text-white p-2 pt-0 bubble2">${e.message}</span><span class="ml-2 text-secondary timestyle">${e.time}</span></p></div></div>`;
+                    }
+
+                    $('#messageArea').append(message);
+                    $('#messageContent').focus();
+                    //瀏覽器推播通知
+                    //if (Notification.permission === 'default' || Notification.permission === 'undefined' || Notification.permission === 'denied') {
+                    //    //再次請求同意
+                    //    console.log("測試");
+                    //    Notification.requestPermission();
+                    //} else if (Notification.permission === 'granted') {
+                    //    //發送新訊息通知
+
+                    //    var notification = new Notification('JoinFun新訊息', {
+                    //        body: e.fromMemNick + '說：' + e.message,
+                    //        icon: '/favicon.ico',
+                    //        //tag: 'newArrival' // 設定標籤
+                    //    });
+                    //}
+                } else {
+                    if (e.isOnline) {
+                        //新增在線中圖示
+                        $('#State').removeClass().addClass('online d-inline-block');
+                        $('#State').attr('title',"在線中");
+                    }
+                    else {
+                        //新增離線圖示
+                        $('#State').removeClass().addClass('offline d-inline-block');
+                       $('#State').attr('title',"離線");
+                    }
                 }
             }
 
@@ -221,6 +254,7 @@
                     $('#sendMessage').focus().click();
                 }
             });
+            
         })
     </script>
 }
