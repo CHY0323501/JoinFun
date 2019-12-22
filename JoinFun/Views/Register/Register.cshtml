@@ -551,7 +551,7 @@
 
         //帳號是否重複
         $('#Account').blur(function () {
-            if ($('#Account').val() != "") {
+            if ($('#Account').val().length != 0) {
                 $.ajax({
                     type: "Get",
                     url: "http://10.10.3.105/api/AccountAPI",
