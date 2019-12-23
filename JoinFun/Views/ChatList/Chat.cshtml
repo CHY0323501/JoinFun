@@ -9,8 +9,8 @@
     <style>
         body {
             overflow: hidden !important;
-            
         }
+
         .timestyle {
             font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
         }
@@ -66,17 +66,19 @@
                 min-width: 80%;
             }
         }
+
         .online {
-            background-color:greenyellow;
-            width:15px!important;
-            height:15px!important;
-            border-radius:50%;
+            background-color: greenyellow;
+            width: 15px !important;
+            height: 15px !important;
+            border-radius: 50%;
         }
+
         .offline {
-            background-color:rgba(128, 128, 128, 0.77);
-            width:15px!important;
-            height:15px!important;
-            border-radius:50%;
+            background-color: rgba(128, 128, 128, 0.77);
+            width: 15px !important;
+            height: 15px !important;
+            border-radius: 50%;
         }
     </style>
 }
@@ -92,11 +94,11 @@
     </div>
     <div class="overflow-auto border borderStyle mt-3" style="max-height:55vh;min-height:55vh;border-radius:10px" id="messageArea">
         @if (ViewBag.chat != null)
-                    {
+        {
 
-                        foreach (var item in chat)
-                        {
-                <div class="card mb-2 border-0 mx-auto "style="overflow-x:hidden">
+            foreach (var item in chat)
+            {
+                <div class="card mb-2 border-0 mx-auto " style="overflow-x:hidden">
                     @if (item.FromMemId == Request.QueryString["fromMemID"])
                     {
                         <div class="card-body">
@@ -123,7 +125,7 @@
     <div class="row mt-2">
         <div class="col-12 ">
             <div class="input-group justify-content-md-end  justify-content-center ">
-                <input id="messageContent" type="text" class="form-control changewidth" placeholder="輸入訊息" aria-label="輸入訊息" aria-describedby="basic-addon2" >
+                <input id="messageContent" type="text" class="form-control changewidth" placeholder="輸入訊息" aria-label="輸入訊息" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="sendMessage">送出</button>
                 </div>
@@ -165,7 +167,8 @@
                     });
 
                     //頁面載入完成後連線聊天室
-                    let url = 'ws://10.10.3.105/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
+                    //let url = 'ws://10.10.3.105/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
+                    let url = 'ws://localhost:54129/api/Chat?fromMemID=@Session["memid"].ToString()&toMemID=@Request.QueryString["fromMemID"]&roomID=' + $('#roomID').val();
                     let ws = new WebSocket(url);
                     console.log(ws);
 
@@ -254,7 +257,7 @@
                     $('#sendMessage').focus().click();
                 }
             });
-            
+
         })
     </script>
 }

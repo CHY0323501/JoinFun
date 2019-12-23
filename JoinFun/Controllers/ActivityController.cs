@@ -374,7 +374,7 @@ namespace JoinFun.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase firstPic)
+        public ActionResult Create(Join_Fun_Activities act, HttpPostedFileBase[] picture)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -392,12 +392,12 @@ namespace JoinFun.Controllers
                     string fileName = "";
                     //存入第一張主題照片(預設)
                     Photos_of_Activities front = new Photos_of_Activities();
-                    if (firstPic != null)
+                    if (picture[0] != null)
                     {
                         front.PhotoSerial = db.Database.SqlQuery<string>("Select dbo.GetPhotoId()").FirstOrDefault();
                         front.actId = actId;
                         fileName = front.PhotoSerial + actId + ".jpg";
-                        firstPic.SaveAs(Server.MapPath("~/Photos/Activities/" + fileName));
+                        picture[0].SaveAs(Server.MapPath("~/Photos/Activities/" + fileName));
                         front.actPics = "~/Photos/Activities/" + fileName;
                         db.Photos_of_Activities.Add(front);
                         db.SaveChanges();
@@ -422,12 +422,11 @@ namespace JoinFun.Controllers
                         db.SaveChanges();
                     }
                     //存入上傳的活動內容照片
-                    IList<HttpPostedFileBase> photograph = Request.Files.GetMultiple("photograph");
-                    if (photograph != null)
+                    if (picture[1]!=null)
                     {
-                        foreach (var item in photograph)
+                        for(int i=1; i<picture.Length;i++)
                         {
-                            HttpPostedFileBase file = item;
+                            HttpPostedFileBase file = picture[i];
                             Photos_of_Activities photo = new Photos_of_Activities();
                             //if (file != null)
                             //{
