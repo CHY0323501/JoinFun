@@ -143,25 +143,31 @@
                                     }
 
 
-                                                                @*if (Model.bookmarklist.Count() == 0)
-                                            {
-                                                <input id="remark" type="button" value="收藏揪團" class="btn btn-danger btn-block " />
-                                            }
-                                            else
-                                            {
-                                                <input id="remark" type="button" value="取消收藏" class="btn btn-danger btn-block " />
+                                                            @*if (Model.bookmarklist.Count() == 0)
+                                        {
+                                            <input id="remark" type="button" value="收藏揪團" class="btn btn-danger btn-block " />
+                                        }
+                                        else
+                                        {
+                                            <input id="remark" type="button" value="取消收藏" class="btn btn-danger btn-block " />
 
 
-                                            }*@
+                                        }*@
 
-
-                                            }
 
                                 }
                                 else
                                 {
                                     <input id="join" type="button" value="歡迎登入參加" class="btn btn-warning btn-block  " disabled="disabled" />
                                 }
+
+                            }
+                            else
+                            {
+                                <input id="join" type="button" value="歡迎登入參加" class="btn btn-warning btn-block  " disabled="disabled" />
+                            }
+
+
                             <p id="hash">@item.hashTag</p>
 
                         </div>
