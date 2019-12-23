@@ -132,9 +132,24 @@
                                         <input id="join" type="button" value="報名成功" class="btn btn-warning btn-block     " disabled="disabled" />
                                     }
 
+                                    @*if (Model.bookmarklist.Count() == 0)
+                                    {
+                                        <input id="remark" type="button" value="收藏揪團" class="btn btn-danger btn-block " />
+                                    }
+                                    else
+                                    {
+                                        <input id="remark" type="button" value="取消收藏" class="btn btn-danger btn-block " />
 
-                                    <a href="@Url.Action("Report","Activity",new { id=@item.actId,reporterID=@Session["memid"]})" class="btn btn-outline-danger mt-5 ml-5"><i class="fas fa-exclamation-triangle "></i>　檢舉活動</a>
+
+                                    }*@
+                                        <div class="row d-sm-flex justify-content-sm-center d-block">
+                                            <div class="col-8 ">
+                                                <a href="@Url.Action("Report","Activity",new { id=@item.actId,reporterID=@Session["memid"]})" class="btn btn-outline-danger mt-4 ml-2 report "><i class="fas fa-exclamation-triangle "></i>檢舉活動</a>
+                                            </div>
+                                        </div>
                                 }
+
+
                             }
                             else
                             {
@@ -426,6 +441,26 @@
             })
         }
 
+
+        function CheckMemRemark() {
+            $.ajax({
+                url:"@Url.Action("Getremark", "Activity")",
+                method: "get",
+                dataType:"json",
+                traditional:true,
+                data: { MemID: $("#mem").val(), actId: $('#JoinId').val()} ,
+                success: function (data) {
+                    console.log(data);
+                    if (!data) {
+                        $('#remark').val("收藏揪團");
+                    } else 
+                    {
+                        $('#remark').val("取消收藏");
+                    } 
+                }
+            })
+        }
+
        //參加API
 
         $("#join").click(function () {
@@ -471,6 +506,38 @@
             }
         });
 
+
+
+
+        $("#remark").click(function () {
+            if ($(this).val() == "收藏揪團") {
+
+                $.ajax({
+                    url: "@Url.Action("addremark","Activity")",
+                    method: "post",
+                    traditional: true,
+                    data: { MemID: $("#mem").val(), actId: $('#JoinId').val() },
+                    success: function () {
+                        CheckMemRemark();
+                        alert("收藏成功");
+                    }
+                });
+
+            } else {
+
+                $.ajax({
+                    url: "@Url.Action("delremark","Activity")",
+                    method: "delete",
+                    traditional: true,
+                    data: { MemID: $("#mem").val(), actId: $('#JoinId').val() },
+                    success: function () {
+                        CheckMemRemark();
+                        alert("已成功取消");
+                    }
+                });
+              
+            }
+        });
 
         //if ($("#ismem").text() != "1") {
 
