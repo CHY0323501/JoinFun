@@ -162,7 +162,7 @@
             {
                 if (item.actPics != null)
                 {
-                    <img src="@Url.Action("GetPhoto", "Activity", new { actPics = item.actPics})" class="img-fluid bg-secondary col col-md-3 mr-1 mb-1" style="width:150px;height:auto" />
+                    <img src="@Url.Content(item.actPics)" class="img-fluid bg-transparent w-50" style="width:150px;height:auto" />
                 }
             }
             @*<input id="contentPic" type="file" name="picture" class="form-control" style="display:none" />*@
