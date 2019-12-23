@@ -8,7 +8,7 @@
     <link href="~/CSS/Register .css" rel="stylesheet" />
 
     <link href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">
-
+   
 }
 @*<div class="container mt-5 ">
 
@@ -74,10 +74,19 @@
         <div class="l-promptBlock2" style="border-radius:10px">
             <div class="row justify-content-center ">
 
-                <div class="col-md-12 offset-md-4 ">
-                    <img src="https://img.icons8.com/dusk/64/000000/ok.png">
-                    <h4 class="text-success mt-5">帳號驗證成功,</h4>
-                    <div class="mt-5 ">
+                <div class="col-md-12 ">
+                    @*<img src="https://img.icons8.com/dusk/64/000000/ok.png">*@
+                    <div @*class="col-12 align-self-center"*@>
+                        <div class="swal-icon swal-icon--success ">
+                            <span class="swal-icon--success__line swal-icon--success__line--long"></span>
+                            <span class="swal-icon--success__line swal-icon--success__line--tip"></span>
+
+                            <div class="swal-icon--success__ring"></div>
+                            <div class="swal-icon--success__hide-corners"></div>
+                        </div>
+                    </div>
+                    <h4 class="text-success mt-5 text-center">帳號驗證成功</h4>
+                    <div class="mt-5 text-center">
                         @Html.ActionLink("返回會員登入", "Login", "Login", new { c = 1 }, new { @class = "btn btn-warning  ml-1" })
                     </div>
                 </div>
