@@ -21,7 +21,7 @@
     <div class="carousel col col-12 pl-0">
         @Html.LabelFor(model => model.Photos_of_Activities.FirstOrDefault().actPics, "活動照片", htmlAttributes: new { @class = "control-label col-md-2 pl-0" })
         <div class="carousel-inner">
-            <div class="bg-white w-75">
+            <div class="bg-transparent w-75">
 
                 @if (Model.Photos_of_Activities.FirstOrDefault() != null)
                 {
@@ -157,12 +157,12 @@
 
     <div class="row col col-md-12">
         @*<label class="font-weight-bold col col-md-12 pl-0">選擇照片(上限3張)</label>*@
-        <div id="uploadPics" class="border-dark col col-md-12 pl-0">
-            @foreach (var item in photo)
+        <div id="uploadPics" class="border-dark col col-md-12 col-xs-12 pl-0">
+            @foreach(var item in photo.Skip(1))
             {
-                if (item.actPics != null)
+                if (photo != null)
                 {
-                    <img src="@Url.Action("GetPhoto", "Activity", new { actPics = item.actPics})" class="img-fluid bg-secondary col col-md-3 mr-1 mb-1" style="width:150px;height:auto" />
+                    <img src="@Url.Content(item.actPics)" class="img-fluid bg-transparent w-50 mb-1" style="width:150px;height:auto" />
                 }
             }
             @*<input id="contentPic" type="file" name="picture" class="form-control" style="display:none" />*@
