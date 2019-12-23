@@ -551,7 +551,8 @@
 
         //帳號是否重複
         $('#Account').blur(function () {
-            if ($('#Account').val().length != 0) {
+            if ($('#Account').val().replace(/(^s*)|(s*$)/g, "").length!=0) {
+                
                 $.ajax({
                     type: "Get",
                     url: "http://10.10.3.105/api/AccountAPI",
@@ -584,6 +585,7 @@
                 });
             }
             else {
+                console.log("empty");
                 $('#prompt').hide();
                 $('#prompt').text("");
             }
