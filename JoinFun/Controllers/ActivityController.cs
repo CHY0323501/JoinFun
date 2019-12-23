@@ -134,7 +134,7 @@ namespace JoinFun.Controllers
                     MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
 
                    
-                    bookmarklist = db.Bookmark_Details.Where(m=>m.actId==actId && m.memId == memID).ToList(),
+                    //bookmarklist = db.Bookmark_Details.Where(m=>m.actId==actId && m.memId == memID).ToList(),
 
 
                     //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
