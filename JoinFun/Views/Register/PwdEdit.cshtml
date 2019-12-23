@@ -336,7 +336,8 @@
                     }
                 });
             }
-
+            if (checkPwd() == false)
+                return false;
         });
 
 
@@ -350,7 +351,7 @@
                 $('#errMessage').show();
                 if (!$('#errMessage').length)
                     $('<div id="errMessage" style="color:#ff9cb3">新密碼和確認密碼不一致</div >').insertAfter("#PasswordConfirm");
-
+                return false;
             }
             else {
                 $('#errMessage').hide();

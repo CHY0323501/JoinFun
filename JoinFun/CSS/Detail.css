@@ -182,5 +182,9 @@ margin-top:15px;
         position:absolute;
        
     }
+}
 
+.report{
+    width:7.5rem;
+    font-size:0.6rem;
 }

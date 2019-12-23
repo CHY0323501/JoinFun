@@ -16,6 +16,7 @@ namespace JoinFun.ViewModel
         public List<Message_Board> MBoard { get; set; }
         public List<Activity_Details> ActDetails { get; set; }
         public List<Photos_of_Activities> PhotoList { get; set; }
+        public List<Bookmark_Details> bookmarklist { get; set; }
     }
 
     public class Finalchoose
