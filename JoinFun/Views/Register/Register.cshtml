@@ -334,7 +334,7 @@
 
                                 </div>
 
-                                <div class="form-group col-md-12 offset-2">
+                                <div class="form-group col-md-12 offset-2" >
                                     @Html.LabelFor(model => model.memCounty, htmlAttributes: new { @class = "control-label col-md-12" })
                                     @Html.ValidationMessageFor(model => model.memCounty, "", new { @style = "color:#f36868" })
                                     <select id="memCounty" name="memCounty" class="form-control-small">
@@ -550,42 +550,42 @@
         });
 
         //帳號是否重複
-        $('#Account').blur(function () {
-            if ($('#Account').val().replace(/(^s*)|(s*$)/g, "").length!=0) {
-                
+        $('#Account').keyup(function () {
+            if ($.trim($('#Account').val()).length!=0) {
+            //if ($('#Account').val() != "") {
                 $.ajax({
                     type: "Get",
-                    url: "http://10.10.3.105/api/AccountAPI",
-
+                    //url: "http://10.10.3.105/api/AccountAPI",
+                    url: "http://localhost:54129/api/AccountAPI",
                     success: function (data) {
-                        //console.log(data[0]);
+                        console.log(data[0]);
                         var str = $('#Account').val();
                         var i = 0;
                         while (i < data.length) {
                             var n = str.search(data[i]);
                             if (n != -1) {
                                 console.log("帳號重複");
-                                $('#prompt').text("帳號重複").css("color", "#f36868");
+                                $('#prompt').text("帳號重複").css({"color": "#f36868","display":"initial"});
                                 break;
                             } else {
                                 i++;
                                 //document.getElementById("demo").innerHTML = n;
-                                console.log(i);
+                                //console.log(i);
                             }
                         }
-                       
-                            if (i == data.length) {
-                                console.log("驗證成功");
 
-                                $('#prompt').text("此帳號可使用").css("color", "#459645");
-                            }
-                        
+                        if (i == data.length) {
+                            console.log("驗證成功");
+
+                            $('#prompt').text("此帳號可使用").css({"color": "#459645","display":"initial"});
+                        }
+
                     }
 
                 });
             }
             else {
-                console.log("empty");
+
                 $('#prompt').hide();
                 $('#prompt').text("");
             }
@@ -643,6 +643,26 @@
                 return true;//提交表單
             }
         })
+
+
+
+
+        //未填帳號警告
+        $('form').submit(function () {
+
+            if ($('#Account').val() == "") {
+                $('#Account~div').text('請輸入帳號!').css("color", "#f36868");
+                return false;
+            }
+            else {
+                $('#Account').keyup(function () {
+                    if ($('#Account').val() != "") {
+                        $('#Account~div').text("");
+                    }
+                });
+            }
+
+        });
     </script>
 
 

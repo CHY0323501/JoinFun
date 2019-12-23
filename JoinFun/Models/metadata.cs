@@ -15,8 +15,9 @@ namespace JoinFun.Models
     public class MetaAcc_Pass
     {
         [DisplayName("會員帳號")]
-        [Required(ErrorMessage = "請輸入會員帳號")]
+        //[Required(ErrorMessage = "請輸入會員帳號")]
         [StringLength(10, ErrorMessage = "最多輸入10字")]
+        [RegularExpression(".*\\S+.*", ErrorMessage = "請輸入會員帳號")]
         public string Account { get; set; }
         [DisplayName("會員密碼")]
         [Required(ErrorMessage = "請輸入會員密碼")]
