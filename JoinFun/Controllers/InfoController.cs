@@ -51,6 +51,37 @@ namespace JoinFun.Views.Info
 
             return PartialView(pagedlist);
         }
-        
+
+
+        //聯絡我們意見回饋
+        public ActionResult Comment(string memid)
+        {
+          
+               var aaa = db.Comment.Where(m => m.memId == memid).FirstOrDefault();
+
+
+             
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Comment(string memid,string commentTitle,string Comment)
+        {
+            string getcommentId = db.Database.SqlQuery<string>("Select [dbo].[GetCommentId]()").FirstOrDefault();
+
+
+            Comment com = new Comment();
+
+            com.commentId = getcommentId;
+            com.memId= memid;
+            com.commentTitle = commentTitle;
+            com.Comment1 = Comment;
+            com.receivedTime = DateTime.Now;
+            db.Comment.Add(com);
+            db.SaveChanges();
+
+            return View();
+        }
+
     }
 }

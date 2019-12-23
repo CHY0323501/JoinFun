@@ -1067,10 +1067,9 @@
     <Content Include="Views\Adm\key.cshtml" />
     <Content Include="Views\ChatList\ChatHistory.cshtml" />
     <Content Include="Views\ChatList\Chat.cshtml" />
-
     <Content Include="Views\web.config" />
-
     <Content Include="Web.config" />
+    <Content Include="Views\Info\Comment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
