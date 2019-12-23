@@ -20,23 +20,7 @@ namespace JoinFun.Controllers
         Activity_Details m = new Activity_Details();
 
 
-        // GET: Activity (原)
-        //public ActionResult Index(string hostId, string actId, string actClassId = "cls001")
-        //{
-        //    if (actClassId == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ViewBag.actClassName = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().actClassName;
-        //    ViewBag.actClassId = actClassId;
-        //    ViewBag.actId = actId;
-        //    ActClass classList = new ActClass()
-        //    {
-        //        vwActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId && m.keepAct == true).ToList(),
-        //        ClassList = db.Activity_Class.ToList()
-        //    };
-        //    return View(classList);
-        //}
+       
         [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Index()
         {
@@ -136,8 +120,36 @@ namespace JoinFun.Controllers
             }
 
             //string memID = Session["memid"].ToString();
-            if (Session["memid"].ToString() != null)
+
+            if (Session["memid"] == null)
             {
+                ViewBag.actId = actId;
+                ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
+                ActClass ACT = new ActClass()
+                {
+                    vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
+                    ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
+                    //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
+                    members = db.Member.ToList(),
+                    MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
+
+                   
+                    bookmarklist = db.Bookmark_Details.Where(m=>m.actId==actId && m.memId == memID).ToList(),
+
+
+                    //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
+                    ActDetails = db.Activity_Details.Where(m => m.actId == actId).ToList()
+
+                };
+
+                ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
+                ViewBag.allpic = db.Photos_of_Activities.ToList();
+                //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
+                return View(ACT);
+            }
+            else
+            {
+
                 string memID = Session["memid"].ToString();
                 ViewBag.memID = memID;
                 //ViewBag.actClassId = actClassId;
@@ -158,8 +170,7 @@ namespace JoinFun.Controllers
                     MemberList = db.Member.Where(m => m.memId == memID).ToList(),
                     members = db.Member.ToList(),
                     MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
-                    ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList(),
-                    bookmarklist = db.Bookmark_Details.Where(m=>m.actId==actId && m.memId == memID).ToList(),
+                    ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
 
                 };
 
@@ -170,28 +181,6 @@ namespace JoinFun.Controllers
 
                 return View(ACT);
             }
-            else
-            {
-                ViewBag.actId = actId;
-                ViewBag.joinTime = db.Activity_Details.Where(m => m.actId == actId && m.appvStatus == true).Count();
-                ActClass ACT = new ActClass()
-                {
-                    vwActivityList = db.vw_Activities.Where(m => m.actId == actId).ToList(),
-                    ActivityList = db.Join_Fun_Activities.Where(m => m.actId == actId).ToList(),
-                    //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
-                    members = db.Member.ToList(),
-                    MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
-                    //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
-                    ActDetails = db.Activity_Details.Where(m => m.actId == actId).ToList()
-                };
-
-                ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
-                ViewBag.allpic = db.Photos_of_Activities.ToList();
-                //ViewBag.defaultPic = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().Photos;
-                return View(ACT);
-            }
-
-
         }
         [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //已參加會員
@@ -254,19 +243,23 @@ namespace JoinFun.Controllers
             db.SaveChanges();
 
             //發通知給收到訊息的會員
-            string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
+            var sendTime = DateTime.Now;
+            if (receiver != "")
+            {
+                string talker = db.Member.Where(m => m.memId == memID).FirstOrDefault().memNick;
 
-            Notification message = new Notification();
-            message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
-            message.InstanceId = serial;
-            message.ToMemId = receiver;
-            message.NotiTitle = "留言板訊息";
-            message.NotifContent = talker + "說：\n\n" + comment;
-            message.timeReceived = DateTime.Now;
-            message.readYet = false;
-            message.keepNotice = true;
-            db.Notification.Add(message);
-            db.SaveChanges();
+                Notification message = new Notification();
+                message.NotiSerial = db.Database.SqlQuery<string>("Select dbo.GetNoteId()").FirstOrDefault();
+                message.InstanceId = serial;
+                message.ToMemId = receiver;
+                message.NotiTitle = "留言板訊息";
+                message.NotifContent = talker + "說：\n\n" + comment;
+                message.timeReceived = sendTime;
+                message.readYet = false;
+                message.keepNotice = true;
+                db.Notification.Add(message);
+                db.SaveChanges();
+            }
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
@@ -361,16 +354,23 @@ namespace JoinFun.Controllers
 
 
 
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        //[LoginRule(Front = true, isVisiter = false)]
         public ActionResult Create()
         {
-            //if (Session["memid"] == null)
-            //{
-            //    return RedirectToAction("Index");
-            //}
-            //ViewBag.Drop = GetDropList();
-            GetSelectList();
-            return View();
+            if (Session["memid"] == null)
+            {                
+                return RedirectToAction("Index");
+            }
+            else if (Session["memid"].ToString() == "")
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                //ViewBag.Drop = GetDropList();
+                GetSelectList();
+                return View();
+            }              
         }
 
         [HttpPost]
@@ -451,31 +451,38 @@ namespace JoinFun.Controllers
             }
             return RedirectToAction("Index");
         }
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        //[LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Edit(string actId)
         {
             if (Session["memId"] == null)
+            {                
+                return RedirectToAction("Index");
+            }
+            else if (Session["memid"].ToString() == "")
             {
                 return RedirectToAction("Index");
             }
-            Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
-            if (act == null)
-            {
-                return HttpNotFound();
-            }
-            GetSelectList(actId);
-            if (act.acceptDrop == true)
-            {
-                ViewBag.Drop = "是";
-            }
             else
             {
-                ViewBag.Drop = "否";
-            }
+                Join_Fun_Activities act = db.Join_Fun_Activities.Find(actId);
+                if (act == null)
+                {
+                    return HttpNotFound();
+                }
+                GetSelectList(actId);
+                if (act.acceptDrop == true)
+                {
+                    ViewBag.Drop = "是";
+                }
+                else
+                {
+                    ViewBag.Drop = "否";
+                }
 
-            ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
+                ViewBag.photo = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
 
-            return View(act);
+                return View(act);
+            }              
         }
 
         [HttpPost]
@@ -497,6 +504,8 @@ namespace JoinFun.Controllers
         {
             if (Session["memId"] == null)
             {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             var act = db.Join_Fun_Activities.Where(m => m.actId == actId).FirstOrDefault();
@@ -509,6 +518,8 @@ namespace JoinFun.Controllers
         {
             if (Session["memId"] == null)
             {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             if (db.Member.Any(m => m.memId == id))
@@ -560,11 +571,13 @@ namespace JoinFun.Controllers
             return RedirectToAction("Index");
         }
 
-        [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
+        //[LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         public ActionResult Messages(string memID)
         {
             if (Session["memId"] == null)
             {
+                if (Session["memid"].ToString() == "")
+                    return RedirectToAction("Index");
                 return RedirectToAction("Index");
             }
             var message = db.Notification.Where(m => m.ToMemId == memID).OrderByDescending(m => m.NotiSerial).ToList();
@@ -612,10 +625,13 @@ namespace JoinFun.Controllers
         {
             if (serial != null && Session["memid"] != null)
             {
-                var message = db.Notification.Find(serial);
-                message.readYet = true;
-                db.SaveChanges();
-                return View(message);
+                if (Session["memid"].ToString() != "")
+                {
+                    var message = db.Notification.Find(serial);
+                    message.readYet = true;
+                    db.SaveChanges();
+                    return View(message);
+                }
             }
             return RedirectToAction("Messages");
         }

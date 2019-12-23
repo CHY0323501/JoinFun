@@ -21,7 +21,8 @@ namespace JoinFun.Controllers
     {
         
         JoinFunEntities db = new JoinFunEntities();
-        SqlConnection Conn = new SqlConnection("data source = MCSDD108212; initial catalog = JoinFun; integrated security = True; MultipleActiveResultSets=True;App=EntityFramework&quot;");
+
+        SqlConnection Conn = new SqlConnection("data Source=MCSDD108212;Initial Catalog=JoinFun;MultipleActiveResultSets=True;persist security info=True;user id=joinfunadmin;password=joinfun123456;App=EntityFramework&quot;");
         SqlCommand cmd = new SqlCommand();
         Common comm = new Common();
         [LoginRule(isVisiter = true, Front = true)]
@@ -90,12 +91,13 @@ namespace JoinFun.Controllers
                 mem.Dietary_Preference = Dietary_Preference;
                 db.SaveChanges();
             }
+            Session["nick"] = memNick;
             //編輯完畢時回到個人資訊頁
             return RedirectToAction("Info", new { memID = Session["memid"] });
         }
         [LoginRule(isVisiter = true, Front = true)]
         //會員評價
-        public ActionResult Remarks(string memID)
+        public ActionResult Remarks(string memID="M000000064")
         {
             var member = db.Member.Where(m => m.memId == memID).FirstOrDefault();
             if (memID == null || member == null )
@@ -124,9 +126,9 @@ namespace JoinFun.Controllers
                     var p = db.vw_Participant_Remarks.Where(m => m.ToMemId == memID);
                     ViewBag.avgStar = Math.Round(((double)(h.Sum(m => m.remarkStar) + p.Sum(m => m.remarkStar))/(h.Count()+p.Count())), 0);
                 }
-                else if (host_star == null)
+                else if (Part_star != null)
                     ViewBag.avgStar = Math.Round(db.vw_Participant_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
-                else if (Part_star == null)
+                else if (host_star != null)
                     ViewBag.avgStar = Math.Round(db.vw_Host_Remarks.Where(m => m.ToMemId == memID).Average(m => m.remarkStar), 0);
                 else
                     ViewBag.avgStar = 0;
@@ -363,8 +365,11 @@ namespace JoinFun.Controllers
         [LoginRule(hasEmptyStr = true, Front = true, isVisiter = false)]
         //我的收藏
         public ActionResult Bookmark(string memID) {
-            List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
-            return View(Bookmark);
+            if (memID == Session["memid"].ToString()) {
+                List<Bookmark_Details> Bookmark = db.Bookmark_Details.Where(m => m.memId == memID).ToList();
+                return View(Bookmark);
+            }
+            return RedirectToAction("Info", "Member", new { memID = Session["memid"] });
         }
 
         [LoginRule(hasEmptyStr =true,Front =true,isVisiter =false)]
@@ -426,7 +431,7 @@ namespace JoinFun.Controllers
         public void GetMemList(string actID, string FromMemID)
         {
             var host = db.vw_Activities.Where(m => m.actId == actID).ToList();
-            var members = db.Activity_Details.Where(m => m.actId == actID).ToList();
+            var members = db.Activity_Details.Where(m => m.actId == actID&&m.appvStatus==true).ToList();
             var remarked = db.Member_Remarks.Where(m => m.FromMemId == FromMemID && m.actId == actID).ToList();
             //var member = db.Member.ToList();
             List<SelectListItem> list = new List<SelectListItem>();

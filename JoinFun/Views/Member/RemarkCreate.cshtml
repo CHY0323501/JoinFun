@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label class="text-success">評價</label>
                                     <div class="star" id="star">
-                                        <input id="starvalue" type="hidden" name="remarkStar"  value=""/>
+                                        <input id="starvalue" type="hidden" name="remarkStar"  value=1 />
                                       
 
                                     </div>
@@ -93,7 +93,7 @@
             stars: 5,
             click: function (index) {
                 console.log(index);
-                $('#starvalue').val(index);
+                $('#starvalue').val(index-1);
             }
         });
 

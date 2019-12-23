@@ -93,7 +93,8 @@
             <PropertyRef Name="ChatRoom" />
           </Key>
           <Property Name="ChatRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LastChatTime" Type="datetime" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="RoomUsed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -3161,7 +3162,8 @@
             <PropertyRef Name="ChatRoom1" />
           </Key>
           <Property Name="ChatRoom1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LastChatTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RoomUsed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Chat_Records" Relationship="JoinFunModel.FK__Chat_Reco__ChatR__7FD5EEA5" FromRole="ChatRoom" ToRole="Chat_Records" />
         </EntityType>
         <Association Name="FK__Chat_Reco__ChatR__7FD5EEA5">
@@ -3806,7 +3808,8 @@
           <EntitySetMapping Name="ChatRoom">
             <EntityTypeMapping TypeName="JoinFunModel.ChatRoom">
               <MappingFragment StoreEntitySet="ChatRoom">
-                <ScalarProperty Name="LastChatTime" ColumnName="LastChatTime" />
+                <ScalarProperty Name="RoomUsed" ColumnName="RoomUsed" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="ChatRoom1" ColumnName="ChatRoom" />
               </MappingFragment>
             </EntityTypeMapping>

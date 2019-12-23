@@ -9,6 +9,9 @@ using System.Web.Mvc;
 
 namespace JoinFun.Models
 {
+    [MetadataType(typeof(MetaAcc_Pass))]
+    public partial class Acc_Pass {
+    }
     public class MetaAcc_Pass
     {
         [DisplayName("會員帳號")]
@@ -30,7 +33,10 @@ namespace JoinFun.Models
         [JsonIgnore()]
         public virtual Member Member { get; set; }
     }
-    public  class MetaActivity_Class
+    [MetadataType(typeof(MetaActivity_Class))]
+    public partial class Activity_Class { }
+
+    public class MetaActivity_Class
     {
         [DisplayName("類別編號")]
         [Required(ErrorMessage = "請輸入活動類別編號")]
@@ -47,7 +53,10 @@ namespace JoinFun.Models
         [Required(ErrorMessage = "請選擇活動類別照片")]
         public string Photos { get; set; }
     }
-    public  class MetaActivity_Details
+    [MetadataType(typeof(MetaActivity_Details))]
+    public partial class Activity_Details { }
+
+    public class MetaActivity_Details
     {
         [DisplayName("會員編號")]
         [Required(ErrorMessage = "請輸入會員編號")]
@@ -66,7 +75,10 @@ namespace JoinFun.Models
         public virtual Member Member { get; set; }
 
     }
-    public  class MetaAdministrator
+    [MetadataType(typeof(MetaAdministrator))]
+    public partial class Administrator { }
+
+    public class MetaAdministrator
     {
         [DisplayName("管理員編號")]
         [Required(ErrorMessage = "請輸入管理員編號")]
@@ -89,7 +101,10 @@ namespace JoinFun.Models
         [System.ComponentModel.DataAnnotations.Compare("admPass")]
         public string admPasswordConfirm { get; set; }
     }
-    public  class MetaAge_Restriction
+    [MetadataType(typeof(MetaAge_Restriction))]
+    public partial class Age_Restriction { }
+
+    public class MetaAge_Restriction
     {
         [DisplayName("年齡限制編號")]
         [Required(ErrorMessage = "請輸入年齡限制編號")]
@@ -99,7 +114,10 @@ namespace JoinFun.Models
         [StringLength(8, ErrorMessage = "最多輸入8字")]
         public string age { get; set; }
     }
-    public  class MetaBlacklist
+    [MetadataType(typeof(MetaBlacklist))]
+    public partial class Blacklist { }
+
+    public class MetaBlacklist
     {
         [DisplayName("會員編號")]
         [Required(ErrorMessage = "請輸入會員編號")]
@@ -111,6 +129,8 @@ namespace JoinFun.Models
         public virtual Member Member { get; set; }
 
     }
+    [MetadataType(typeof(MetaBudget_Restriction))]
+    public partial class Budget_Restriction { }
 
     public class MetaBudget_Restriction
     {
@@ -122,18 +142,24 @@ namespace JoinFun.Models
         public decimal Budget { get; set; }
 
     }
+    [MetadataType(typeof(MetaCounty))]
+    public partial class County { }
 
     public class MetaCounty
     {
         [DisplayName("縣/市")]
         public string CountyName { get; set; }
     }
+    [MetadataType(typeof(MetaDistrict))]
+    public partial class District { }
 
     public class MetaDistrict
     {
         [DisplayName("鄉/鎮/市/區")]
         public string DistrictName { get; set; }
     }
+    [MetadataType(typeof(MetaJoin_Fun_Activities))]
+    public partial class Join_Fun_Activities { }
 
     public class MetaJoin_Fun_Activities
     {
@@ -189,8 +215,8 @@ namespace JoinFun.Models
         public virtual ICollection<Activity_Details> Activity_Details { get; set; }
 
     }
-
-
+    [MetadataType(typeof(MetaMember))]
+    public partial class Member { }
     public class MetaMember
     {
         [Key]
@@ -200,10 +226,12 @@ namespace JoinFun.Models
 
 
         [Required(ErrorMessage = "暱稱為必填欄位")]
-        [StringLength(15,ErrorMessage = "暱稱長度不可超過15字")]
+        [StringLength(15, ErrorMessage = "暱稱長度不可超過15字")]
         [DisplayName("暱稱")]
+        //不允許只輸入空格
+        [RegularExpression(".*\\S+.*", ErrorMessage = "請輸入暱稱")]
         public string memNick { get; set; }
-
+        
         [DisplayName("電子信箱")]
         [Required(ErrorMessage ="信箱為必填欄位")]
         [StringLength(50, ErrorMessage = "信箱不可超過50字")]
@@ -260,12 +288,16 @@ namespace JoinFun.Models
         [JsonIgnore()]
         public virtual ICollection<Activity_Details> Activity_Details { get; set; }
     }
+    [MetadataType(typeof(MetaPayment_Restriction))]
+    public partial class Payment_Restriction { }
 
     public class MetaPayment_Restriction
     {
         [DisplayName("付款方式")]
         public string payment { get; set; }
     }
+    [MetadataType(typeof(MetaPeople_Restriction))]
+    public partial class People_Restriction { }
 
     public class MetaPeople_Restriction
     {
@@ -276,6 +308,8 @@ namespace JoinFun.Models
         public int PeoRestriction { get; set; }
 
     }
+    [MetadataType(typeof(MetaPhotos_of_Activities))]
+    public partial class Photos_of_Activities { }
 
     public class MetaPhotos_of_Activities
     {
@@ -295,6 +329,8 @@ namespace JoinFun.Models
         public string actPics { get; set; }
 
     }
+    [MetadataType(typeof(Metavw_Activities))]
+    public partial class vw_Activities { }
 
     public class Metavw_Activities
     {
@@ -345,6 +381,8 @@ namespace JoinFun.Models
         [DisplayName("活動類別")]
         public string actClassName { get; set; }
     }
+    [MetadataType(typeof(MetaBookmark_Details))]
+    public partial class Bookmark_Details { }
 
     public class MetaBookmark_Details
     {
@@ -363,6 +401,8 @@ namespace JoinFun.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public System.DateTime BookMarkTime { get; set; }
     }
+    [MetadataType(typeof(MetaChat_Records))]
+    public partial class Chat_Records { }
 
     public class MetaChat_Records
     {
@@ -395,7 +435,9 @@ namespace JoinFun.Models
 
 
     }
-   
+    [MetadataType(typeof(MetaComment))]
+    public partial class Comment { }
+
     public class MetaComment
     {
         [DisplayName("意見編號")]
@@ -434,7 +476,9 @@ namespace JoinFun.Models
 
 
     }
-       
+    [MetadataType(typeof(MetaFans))]
+    public partial class Fans { }
+
     public class MetaFans
     {
         [DisplayName("粉絲會員編號")]
@@ -447,6 +491,8 @@ namespace JoinFun.Models
 
 
     }
+    [MetadataType(typeof(MetaFollowUp))]
+    public partial class FollowUp { }
 
     public class MetaFollowUp
     {
@@ -462,6 +508,8 @@ namespace JoinFun.Models
 
     }
 
+    [MetadataType(typeof(MetaFriendship))]
+    public partial class Friendship { }
 
     public class MetaFriendship
     {
@@ -480,8 +528,10 @@ namespace JoinFun.Models
         public virtual Member Member { get; set; }
 
     }
+    [MetadataType(typeof(MetaGender_Restriction))]
+    public partial class Gender_Restriction { }
 
-    public  class MetaGender_Restriction
+    public class MetaGender_Restriction
     {
 
 
@@ -493,9 +543,11 @@ namespace JoinFun.Models
         [StringLength(10, ErrorMessage = "性別最多10個字")]
         public string gender { get; set; }
 
-       }
+    }
 
-     
+    [MetadataType(typeof(MetaMember_Remarks))]
+    public partial class Member_Remarks { }
+
     public class MetaMember_Remarks
     {
         [DisplayName("評價編號")]
@@ -519,6 +571,8 @@ namespace JoinFun.Models
 
 
     }
+    [MetadataType(typeof(MetaMessage_Board))]
+    public partial class Message_Board { }
 
     public class MetaMessage_Board
     {
@@ -541,6 +595,8 @@ namespace JoinFun.Models
 
 
     }
+    [MetadataType(typeof(MetaNotification))]
+    public partial class Notification { }
 
     public class MetaNotification
     {
@@ -563,8 +619,10 @@ namespace JoinFun.Models
         public bool keepNotice { get; set; }
 
     }
+    [MetadataType(typeof(MetaPost))]
+    public partial class Post { }
 
-    public  class MetaPost
+    public class MetaPost
     {
         [DisplayName("公告編號")]
         [Required(ErrorMessage = "請輸入公告編號")]
@@ -600,8 +658,10 @@ namespace JoinFun.Models
     }
 
 
+    [MetadataType(typeof(MetaPunishment))]
+    public partial class Punishment { }
 
-    public  class MetaPunishment
+    public class MetaPunishment
     {
 
         [DisplayName("處置編號")]
@@ -615,9 +675,10 @@ namespace JoinFun.Models
 
     }
 
+    [MetadataType(typeof(MetaSocial_Net_ID))]
+    public partial class Social_Net_ID { }
 
-
-    public  class MetaSocial_Net_ID
+    public class MetaSocial_Net_ID
     {
         [DisplayName("社群帳號編號")]
         [Required(ErrorMessage = "請輸入社群帳號編號")]
@@ -635,8 +696,10 @@ namespace JoinFun.Models
 
     }
 
+    [MetadataType(typeof(MetaType_of_Violate))]
+    public partial class Type_of_Violate { }
 
-    public  class MetaType_of_Violate
+    public class MetaType_of_Violate
     {
         [DisplayName("類別編號")]
         [Required(ErrorMessage = "請輸入類別編號")]
@@ -648,7 +711,8 @@ namespace JoinFun.Models
         public string vioClass { get; set; }
  
     }
-
+    [MetadataType(typeof(MetaViolation))]
+    public partial class Violation { }
     public class MetaViolation
     {
 
@@ -702,7 +766,10 @@ namespace JoinFun.Models
         public Nullable<System.DateTime> vioProcessTime { get; set; }
 
     }
-    public  class Metavw_FansNew
+    [MetadataType(typeof(Metavw_FansNew))]
+    public partial class vw_FansNew { }
+
+    public class Metavw_FansNew
     {
         [DisplayName("粉絲")]
         public string fanMemId { get; set; }
@@ -713,6 +780,9 @@ namespace JoinFun.Models
         [DisplayName("粉絲性別")]
         public string Sex { get; set; }
     }
+    [MetadataType(typeof(Metavw_FollowUp))]
+    public partial class vw_FollowUp { }
+
     public class Metavw_FollowUp
     {
         [DisplayName("追蹤者")]
@@ -724,6 +794,9 @@ namespace JoinFun.Models
         [DisplayName("追蹤者性別")]
         public string Sex { get; set; }
     }
+    [MetadataType(typeof(Metavw_FriendShip))]
+    public partial class vw_FriendShip { }
+
     public class Metavw_FriendShip
     {
         [DisplayName("好友會員編號")]
@@ -739,6 +812,9 @@ namespace JoinFun.Models
         [DisplayName("好友性別")]
         public string Sex { get; set; }
     }
+    [MetadataType(typeof(Metavw_Member_Remarks))]
+    public partial class vw_Member_Remarks { }
+
     public class Metavw_Member_Remarks
     {
         [DisplayName("評價編號")]
@@ -769,6 +845,9 @@ namespace JoinFun.Models
         public string DistrictName { get; set; }
         public string hostId { get; set; }
     }
+    [MetadataType(typeof(Metavw_Participant_Remarks))]
+    public partial class vw_Participant_Remarks { }
+
     public class Metavw_Participant_Remarks
     {
         [DisplayName("評價編號")]
@@ -799,6 +878,9 @@ namespace JoinFun.Models
         public string DistrictName { get; set; }
         public string hostId { get; set; }
     }
+    [MetadataType(typeof(Metavw_Host_Remarks))]
+    public partial class vw_Host_Remarks { }
+
     public class Metavw_Host_Remarks
     {
         [DisplayName("評價編號")]
@@ -829,7 +911,10 @@ namespace JoinFun.Models
         public string DistrictName { get; set; }
         public string hostId { get; set; }
     }
-    public  class Metavw_Member_Join
+    [MetadataType(typeof(Metavw_Member_Join))]
+    public partial class vw_Member_Join { }
+
+    public class Metavw_Member_Join
     {
         [DisplayName("活動編號")]
         public string actId { get; set; }

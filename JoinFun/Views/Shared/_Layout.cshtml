@@ -158,9 +158,25 @@
         #joinfunbrand {
             font-size: 1.5rem !important;
         }
-
+        .form-control2 {
+        
+  display: block;
+  width: 50%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+        
     </style>
-
+    
 
 </head>
 <body>
@@ -174,12 +190,12 @@
             </button>
             @*navbar*@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                <ul class="navbar-nav mr-1 ml-auto mt-2 mt-lg-0 ">
+                <ul class="navbar-nav  ml-auto mt-2 mt-lg-0 ">
                     <li class="nav-item ">
-                        <div class="form-group  mb-0">
-                            <form action="@Url.Action("Search","Member")" method="get" class="form-inline">
-                                <input id="memsearch" name="search" type="text" placeholder="搜尋會員編號或暱稱" class="form-control ml-auto" />
-                                <button type="submit" id="postSearch" class="btn btn-info mr-auto material-icons" style="color:white!important">search</button>
+                        <div class="form-group  mb-0 pl-5 text-right">
+                            <form action="@Url.Action("Search","Member")" method="get" class="form-inline ">
+                                <input id="memsearch" name="search" type="text" placeholder="搜尋會員" class="form-control2 ml-auto" />
+                                <button type="submit" id="postSearch" class="btn btn-info  material-icons" style="color:white!important;">search</button>
                             </form>
                         </div>
                     </li>
@@ -220,15 +236,20 @@
                         if (Session["memid"].ToString() != "")
                         {
                             <li class="nav-item text-center ml-2">
-                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Info", "Member", new { memID = Session["memid"] })"><i class="fas fa-user"></i> @Session["nick"]</a>
+                                <a  class="nav-link hvr-underline-from-center" href="@Url.Action("Info", "Member", new { memID = Session["memid"].ToString() })"><i class="fas fa-user"></i><span id="Nick"> @Session["nick"]</span></a>
                             </li>
+
                             <li class="nav-item text-center ml-2">
-                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create", "Activity")"><i class="fas fa-plus"></i> 我要揪團</a>
+                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("ChatHistory", "ChatList")"><i class="fas fa-comment-dots"></i> 聊聊</a>
+                            </li>
+
+                            <li class="nav-item text-center ml-2">
+                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Create", "Activity")"><i class="fas fa-plus"></i> 揪團</a>
                             </li>
 
                             <li class="nav-item text-center">
                                 <input id="mid" type="hidden" value="@Session["memid"].ToString()" />
-                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages", "Activity", new { memID = Session["memid"] })"><i class="fas fa-bell"></i> 通知中心<span class="badge badge-light number"></span></a>
+                                <a class="nav-link hvr-underline-from-center" href="@Url.Action("Messages", "Activity", new { memID = Session["memid"] })"><i class="fas fa-bell"></i> 通知<span class="badge badge-light number"></span></a>
                             </li>
 
 
@@ -240,7 +261,7 @@
 
                                     @*<a class="dropdown-item" href="@Url.Action("Info","Member",new { memID=Session["memid"] })"><i class="far fa-id-card"></i>　我的資訊</a>*@
                                     <a class="dropdown-item" href="@Url.Action("MyActivities", "Member", new { memID = Session["memid"] })"><i class="fas fa-glass-cheers"></i>　我的揪團</a>
-                                    @*<a class="dropdown-item" href="@Url.Action("Bookmark", "Member", new { memID = Session["memid"] })"><i class="far fa-heart"></i>　我的收藏</a>*@
+                                    <a class="dropdown-item" href="@Url.Action("Bookmark", "Member", new { memID = Session["memid"] })"><i class="fas fa-heart"></i>　我的收藏</a>
                                     <a class="dropdown-item" href="@Url.Action("FriendManagement", "Member", new { memID = Session["memid"] })"><i class="fas fa-user-friends"></i>　好友管理</a>
                                     <a class="dropdown-item " href="@Url.Action("BlockManage", "Member", new { memID = Session["memid"] })"><i class="fas fa-user-lock"></i>　封鎖管理</a>
                                     <a class="dropdown-item" href="@Url.Action("PwdEdit", "Register", new { memId = Session["memid"] })"><i class="fas fa-key"></i>　修改密碼</a>
@@ -258,7 +279,7 @@
 
             </div>
     </nav>
-    <div class="container body-content pt-5 " style="min-height: calc(100vh - 132px)">
+    <div class="container body-content pt-5 " style="min-height: calc(100vh - 132px)" >
         @RenderBody()
 
     </div>
@@ -280,22 +301,23 @@
     @RenderSection("scripts", required: false)
     @*@RenderSection("indexscript", required: false)*@
     @RenderSection("indexjs", required: false)
-    <script>
+<script>
+
+    $(document).ready(function () {
         //取得未讀訊息數量
-        $(document).ready(function () {
-                $.ajax({
-                    url: "@Url.Action("GetMStatus","Activity")",
-                    method: "post",
-                    traditional: true,
-                    data: { id: $('#mid').val() },
-                    success: function (count) {
-                        if (count == 0)
-                            $('.number').text("");
-                        else
-                            $('.number').text(count);
-                    }
-              });
+        $.ajax({
+            url: "@Url.Action("GetMStatus","Activity")",
+            method: "post",
+            traditional: true,
+            data: { id: $('#mid').val() },
+            success: function (count) {
+                if (count == 0)
+                    $('.number').text("");
+                else
+                    $('.number').text(count);
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>

@@ -103,59 +103,67 @@
                     <div class="row justify-content-center">
                         <div class="col-6 ">
 
-                            @if (Session["memid"].ToString() != "")
-
+                            @if (Session["memid"] != null)
                             {
-
-                                if (item.hostId == ViewBag.memID)
+                                if (Session["memid"].ToString() != "")
                                 {
-                                    @Html.ActionLink("編輯活動", "Edit", new { actId = item.actId }, new { @class = "btn btn-warning btn-block " })
+                                    if (item.hostId == ViewBag.memID)
+                                    {
+                                        @Html.ActionLink("編輯活動", "Edit", new { actId = item.actId }, new { @class = "btn btn-warning btn-block " })
 
-                                }
-                                else
-                                {
-                                    if (Model.ActDetails.Count() == 0)
-                                    {
-                                        <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block    " />
-                                    }
-
-                                    else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == false)
-                                    {
-                                        <input id="join" type="button" value="取消審核" class="btn btn-warning btn-block    " />
-                                    }
-                                    else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == true)
-                                    {
-                                        <input id="join" type="button" value="退出揪團" class="btn btn-warning btn-block    " />
-                                    }
-                                    else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == false)
-                                    {
-                                        <input id="join" type="button" value="報名成功" class="btn btn-warning btn-block     " disabled="disabled" />
-                                    }
-
-                                    @*if (Model.bookmarklist.Count() == 0)
-                                    {
-                                        <input id="remark" type="button" value="收藏揪團" class="btn btn-danger btn-block " />
                                     }
                                     else
                                     {
-                                        <input id="remark" type="button" value="取消收藏" class="btn btn-danger btn-block " />
+                                        if (Model.ActDetails.Count() == 0)
+                                        {
+                                            <input id="join" type="button" value="立即參加" class="btn btn-warning btn-block    " />
+                                        }
+
+                                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == false)
+                                        {
+                                            <input id="join" type="button" value="取消審核" class="btn btn-warning btn-block    " />
+                                        }
+                                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == true)
+                                        {
+                                            <input id="join" type="button" value="退出揪團" class="btn btn-warning btn-block    " />
+                                        }
+                                        else if (Model.ActDetails.Count() > 0 && Model.ActDetails.FirstOrDefault().appvStatus == true && Model.vwActivityList.FirstOrDefault().acceptDrop == false)
+                                        {
+                                            <input id="join" type="button" value="報名成功" class="btn btn-warning btn-block     " disabled="disabled" />
+                                        }
 
 
-                                    }*@
+                                        @*<a href="@Url.Action("Report","Activity",new { id=@item.actId,reporterID=@Session["memid"]})" class="btn btn-outline-danger mt-5 ml-5"><i class="fas fa-exclamation-triangle "></i>　檢舉活動</a>*@
+
                                         <div class="row d-sm-flex justify-content-sm-center d-block">
                                             <div class="col-8 ">
                                                 <a href="@Url.Action("Report","Activity",new { id=@item.actId,reporterID=@Session["memid"]})" class="btn btn-outline-danger mt-4 ml-2 report "><i class="fas fa-exclamation-triangle "></i>檢舉活動</a>
                                             </div>
                                         </div>
+                                    }
+
+
+                                                                @*if (Model.bookmarklist.Count() == 0)
+                                            {
+                                                <input id="remark" type="button" value="收藏揪團" class="btn btn-danger btn-block " />
+                                            }
+                                            else
+                                            {
+                                                <input id="remark" type="button" value="取消收藏" class="btn btn-danger btn-block " />
+
+
+                                            }*@
+
+
+                                            }
+
                                 }
-
-
-                            }
-                            else
-                            {
-                                <input id="join" type="button" value="歡迎登入參加" class="btn btn-warning btn-block  " disabled="disabled" />
-                            }
+                                else
+                                {
+                                    <input id="join" type="button" value="歡迎登入參加" class="btn btn-warning btn-block  " disabled="disabled" />
+                                }
                             <p id="hash">@item.hashTag</p>
+
                         </div>
 
 
@@ -179,7 +187,7 @@
                     @foreach (var item in Model.vwActivityList)
                     {
                         <input id="age" type="hidden" value="@item.serial" />
-                        <div id="text" class="text-center mt-4">@Html.Raw(@item.actDescription.ToString().Replace("\n","<br>"))</div>
+                        <div id="text" class="text-center mt-4">@Html.Raw(@item.actDescription.ToString().Replace("\n", "<br>"))</div>
 
                     }
                 </div>
@@ -191,17 +199,16 @@
                 <span class="subtitle">留言板</span>
 
                 <div id="act_content2" class="w-100 ">
-                    @*<h1>留言板區</h1>*@
                     <div id="commentBoard">
                         @foreach (var item in Model.MBoard)
                         {
                             <div class="mb-4" id="user">
                                 <a href="@Url.Action("info", "Member", new { memID = item.memId })" class="fa fas fa-user"></a>
                                 <label id="@item.memId">@Model.members.Where(m => m.memId == item.memId).FirstOrDefault().memNick</label>
-                                <span id="messageTime">(@item.messageTime)</span>
+                                <span id="messageTime">(@item.messageTime.ToString("yyyy/MM/dd HH:mm:ss"))</span>
                                 @if (Session["memid"] != null)
                                 {
-                                    if (Session["memid"].ToString() != item.memId)
+                                    if (Session["memid"].ToString() != item.memId && Session["memid"].ToString() != "")
                                     {
                                         <a class="ml-auto fa fas fa-file-signature text-danger" href="@Url.Action("Report", "Activity", new { id = item.mboardSerial, reporterID = Session["memid"].ToString() })"></a>
                                     }
@@ -334,24 +341,26 @@
 
     //判斷當前會員性別
 
-    if (Session["memid"].ToString() != "")
+    if (Session["memid"] != null)
     {
+        if (Model.MemberList.FirstOrDefault() != null)
+        {
+            @*<p id="gendercompare">@Model.members.Where(m => m.memId == Session["memid"]).FirstOrDefault().Sex</p>*@
 
-        @*<p id="gendercompare">@Model.members.Where(m => m.memId == Session["memid"]).FirstOrDefault().Sex</p>*@
+            <p id="gendercompare " class="d-none">@Model.MemberList.FirstOrDefault().Sex</p>
 
-        <p id="gendercompare " class="d-none">@Model.MemberList.FirstOrDefault().Sex</p>
+            //判斷年齡
 
-        //判斷年齡
-
-        var memage = (DateTime.Now.Year - Model.MemberList.FirstOrDefault().Birthday.Year);
+            var memage = (DateTime.Now.Year - Model.MemberList.FirstOrDefault().Birthday.Year);
 
 
-        @*<p id="agecompare">@memage</p>*@
-        <input id="agecompare" type="hidden" value="@memage" />
-
+            @*<p id="agecompare">@memage</p>*@
+            <input id="agecompare" type="hidden" value="@memage" />
+        }
     }
 }
 
+<script src="~/Scripts/dateFormat.js"></script>
 
 @section work{
     <script>
@@ -629,34 +638,29 @@
 
 @section scripts{
     <script>
-
         $('#commentBtn').click(function () {
-        var upload = $('#comments').val().replace(/\n/g,'<br/>');
-        $.ajax({
-            url: "@Url.Action("AddComment", "Activity")",
-            method: "post",
-            traditional: true,
-            data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val(), receiver: $('#receiverID').val() },
-            success: function () {
-                alert("留言新增成功");
-                //$.ajax({
-                //    type: "Get",
-                //    url: "http://localhost:54130/api/getComment?id=" + data.mid,
-                //    success: function (d) {
-                //        $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
-                //           + $('#nick').val() + '</label>' + '<span>' + '  (' + d[0] + ')' + '</span><div class="mt-2 ml-3 onFocus">' + d[1] + '</div></div>');
-                //    },
-                //});
-                $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
-                    + $('#nick').val() + '</label>' + '<span>' + '  (' + $('#messageTime').text() + ')' + '</span><div class="mt-2 ml-3 onFocus">' + upload + '</div></div>');
-                $('#comments').val("");
-                $('.highlighter span').text("");
-            },
-            error: function () {
-                alert('請先登入後留言');
-            }
+            var upload = $('#comments').val().replace(/\n/g, '<br/>');
+            if ($('#receiverID').val() == null)
+                $('#receiverID').val("");
+            var time = $.format.toBrowserTimeZone((new Date()));
+            $.ajax({
+                url: "@Url.Action("AddComment", "Activity")",
+                method: "post",
+                traditional: true,
+                data: { id: $('#actID').val(), memID: $('#member').val(), comment: $('#comments').val(), receiver: $('#receiverID').val() },
+                success: function () {
+                    alert("留言新增成功");
+                    $('#commentBoard').append('<div class="mb-4"><a href="@@Url.Action("info","Member", new { memID = item.memId})" class="fa fas fa-user"></a><label>'
+                        + $('#nick').val() + '</label>' + '<span>' + '  (' + time + ')' + '</span><div class="mt-2 ml-3 onFocus">' + upload + '</div></div>');
+                    $('#comments').val("");
+                    $('.highlighter span').text("");
+                },
+                error: function () {
+                    alert('請先登入後留言');
+                    $('#comments').val("");
+                }
+            });
         });
-    });
 
     $('#commentBoard label').click(function () {
         var timer;
