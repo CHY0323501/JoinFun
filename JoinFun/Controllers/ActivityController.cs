@@ -20,23 +20,7 @@ namespace JoinFun.Controllers
         Activity_Details m = new Activity_Details();
 
 
-        // GET: Activity (原)
-        //public ActionResult Index(string hostId, string actId, string actClassId = "cls001")
-        //{
-        //    if (actClassId == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ViewBag.actClassName = db.Activity_Class.Where(m => m.actClassId == actClassId).FirstOrDefault().actClassName;
-        //    ViewBag.actClassId = actClassId;
-        //    ViewBag.actId = actId;
-        //    ActClass classList = new ActClass()
-        //    {
-        //        vwActivityList = db.vw_Activities.Where(m => m.actClassId == actClassId && m.keepAct == true).ToList(),
-        //        ClassList = db.Activity_Class.ToList()
-        //    };
-        //    return View(classList);
-        //}
+       
         [LoginRule(isVisiter = true, Front = true)]
         public ActionResult Index()
         {
@@ -148,8 +132,14 @@ namespace JoinFun.Controllers
                     //MemberList = db.Member.Where(m => m.memId == memID).ToList(),
                     members = db.Member.ToList(),
                     MBoard = db.Message_Board.Where(m => m.actId == actId && m.keepMboard == true).ToList(),
+
+                   
+                    //bookmarklist = db.Bookmark_Details.Where(m=>m.actId==actId && m.memId == memID).ToList(),
+
+
                     //ActDetails = db.Activity_Details.Where(m => m.actId == actId && m.memId == memID).ToList()
                     ActDetails = db.Activity_Details.Where(m => m.actId == actId).ToList()
+
                 };
 
                 ViewBag.Picture = db.Photos_of_Activities.Where(m => m.actId == actId).ToList();
@@ -205,6 +195,36 @@ namespace JoinFun.Controllers
             return View(memjoin);
 
 
+        }
+        public ActionResult Getremark(string actId, string MemID)
+        {
+            if (db.Bookmark_Details.Any(m => m.actId == actId && m.memId == MemID))
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult addremark(string actId ,string MemID)
+        {
+            Bookmark_Details remark = new Bookmark_Details();
+            remark.actId = actId;
+            remark.memId = MemID;
+            remark.BookMarkTime = DateTime.Now;
+            db.Bookmark_Details.Add(remark);
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult delremark(string actId, string MemID)
+        {
+            var del = db.Bookmark_Details.Where(m => m.actId == actId && m.memId == MemID).FirstOrDefault();
+            db.Bookmark_Details.Remove(del);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         //留言action
