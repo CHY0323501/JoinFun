@@ -226,6 +226,7 @@
 
             //監聽dom元素改變
             let observer = new MutationObserver(scrollTop);
+            var messageArea = document.querySelector('#messageArea');
             let options = {
                 attributes: true,
                 characterData: true,
@@ -235,7 +236,7 @@
                 characterDataOldValue: true
             };
 
-            observer.observe(document.documentElement, options);
+            observer.observe(messageArea, options);
 
             //DOM改變時將對話框下拉到最底
             function scrollTop() {
@@ -259,5 +260,49 @@
             });
 
         })
+    </script>
+
+    <script type="text/javascript">
+        (function ($) {
+            $.fn.snow = function (options) {
+                var $flake = $('<div id="snowbox" />').css({ 'position': 'absolute', 'z-index': '9999', 'top': '40px' }).html('&#10052;'),
+                    documentHeight = $(document).height(),
+                    documentWidth = $(document).width(),
+                    defaults = {
+                        minSize: 10,
+                        maxSize: 20,
+                        newOn: 1000,
+                        flakeColor: "#AFDAEF" /* 此处可以定义雪花颜色，若要白色可以改为#FFFFFF */
+                    },
+                    options = $.extend({}, defaults, options);
+                var interval = setInterval(function () {
+                    var startPositionLeft = Math.random() * documentWidth - 100,
+                        startOpacity = 0.1 + Math.random(),
+                        sizeFlake = options.minSize + Math.random() * options.maxSize,
+                        endPositionTop = documentHeight - 200,
+                        endPositionLeft = startPositionLeft - 500 + Math.random() * 500,
+                        durationFall = documentHeight * 10 + Math.random() * 5000;
+                    $flake.clone().appendTo('body').css({
+                        left: startPositionLeft,
+                        opacity: startOpacity,
+                        'font-size': sizeFlake,
+                        color: options.flakeColor
+                    }).animate({
+                        top: endPositionTop,
+                        left: endPositionLeft,
+                        opacity: 0.2
+                    }, durationFall, 'linear', function () {
+                        $(this).remove()
+                    });
+                }, options.newOn);
+            };
+        })(jQuery);
+        $(function () {
+            $.fn.snow({
+                minSize: 5, 
+maxSize: 50,
+newOn: 500 // 定义密集程度，数字越小越密集 
+            });
+        });
     </script>
 }
