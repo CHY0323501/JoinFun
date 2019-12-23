@@ -132,41 +132,65 @@
             }
 
         });
-
+        url: "http://10.10.3.105/api/AdmAPI",
 
         //帳號是否重複
-        $('#admAcc').blur(function () {
-            if ($('#admAcc').val() != '') {
+        $('#Account').keyup(function () {
+            if ($.trim($('#Account').val()).length!=0) {
+            //if ($('#Account').val() != "") {
                 $.ajax({
                     type: "Get",
-                    url: "http://10.10.3.105/api/AdmAPI",
+                    //url: "http://10.10.3.105/api/AdmAPI",
+                    url: "http://localhost:54129/api/AdmAPI",
                     success: function (data) {
-                        //console.log(data[0]);
-                        var str = $('#admAcc').val();
+                        console.log(data[0]);
+                        var str = $('#Account').val();
                         var i = 0;
                         while (i < data.length) {
                             var n = str.search(data[i]);
                             if (n != -1) {
                                 console.log("帳號重複");
-                                $('#prompt').text("帳號重複").css("color", "#f36868");
+                                $('#prompt').text("帳號重複").css({"color": "#f36868","display":"initial"});
                                 break;
                             } else {
                                 i++;
                                 //document.getElementById("demo").innerHTML = n;
-                                console.log(i);
+                                //console.log(i);
                             }
                         }
 
                         if (i == data.length) {
                             console.log("驗證成功");
-                            $('#prompt').text("此帳號可使用").css("color", "#459645");
+
+                            $('#prompt').text("此帳號可使用").css({"color": "#459645","display":"initial"});
                         }
+
                     }
 
                 });
             }
             else {
+
+                $('#prompt').hide();
                 $('#prompt').text("");
+            }
+
+        });
+
+
+         //未填帳號警告
+        $('form').submit(function () {
+
+            if ($('#admAcc').val() == "") {
+                $('#admAcc~div').text('請輸入帳號!').css("color", "#f36868");
+                return false;
+            }
+            else {
+                $('#admAcc').keyup(function () {
+                    if ($('#admAcc').val() != "") {
+                        $('#admAcc~div').text("");
+                    }
+                });
             }
 
         });
