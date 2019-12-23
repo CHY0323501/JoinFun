@@ -85,8 +85,9 @@ namespace JoinFun.Models
         [Required(ErrorMessage = "請輸入管理員編號")]
         public string admId { get; set; }
         [DisplayName("管理員帳號")]
-        [Required(ErrorMessage = "請輸入管理員帳號")]
+        //[Required(ErrorMessage = "請輸入管理員帳號")]
         [StringLength(10, ErrorMessage = "最多輸入10字")]
+        [RegularExpression(".*\\S+.*", ErrorMessage = "請輸入會員帳號")]
         public string admAcc { get; set; }
         [DisplayName("管理員密碼")]
         [Required(ErrorMessage = "請輸入管理員密碼")]
