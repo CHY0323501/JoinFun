@@ -1,0 +1,63 @@
+﻿@model JoinFun.Models.Comment
+
+@{
+    ViewBag.Title = "Comment";
+
+}
+@section Register{
+
+    <link href="~/CSS/Remark.css" rel="stylesheet" />
+}
+
+<h2>聯絡我們</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+       
+
+            <h4>意見回饋</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.commentTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.commentTitle, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Comment1, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.Comment1, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <textarea id="Comment1" name="Comment1" style="resize:none" class="form-control" rows="20" cols="100"> </textarea>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="儲存" class="btn btn-default" />
+                </div>
+            </div>
+       
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

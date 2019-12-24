@@ -297,7 +297,7 @@
 
                                     @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().Password, htmlAttributes: new { @class = "control-label col-md-12" })
 
-                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control-small", type = "password", id = "Password" } })
+                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().Password, new { htmlAttributes = new { @class = "form-control-small", type = "password", id = "Password", placeholder = "數字、英文字母最少8個" } })
 
 
                                     @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().Password, "", new { @style = "color:#f36868" })
@@ -308,7 +308,7 @@
 
                                     @Html.LabelFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, htmlAttributes: new { @class = "control-label col-md-12" })
 
-                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control-small", type = "password", id = "PasswordConfirm" } })
+                                    @Html.EditorFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, new { htmlAttributes = new { @class = "form-control-small", type = "password", id = "PasswordConfirm" , placeholder = "請重新輸入會員密碼"} })
 
 
                                     @Html.ValidationMessageFor(model => model.Acc_Pass.FirstOrDefault().PasswordConfirm, "", new { @style = "color:#f36868" })
@@ -318,7 +318,8 @@
 
                                 <div class="form-group col-md-12 offset-2">
                                     @Html.LabelFor(model => model.memNick, htmlAttributes: new { @class = "control-label col-md-12" })
-                                    @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control-small", id = "memNick" } })
+                                    @Html.EditorFor(model => model.memNick, new { htmlAttributes = new { @class = "form-control-small", id = "memNick", placeholder = "中文、英文字最多15個" +
+                                   "" } })
                                     @Html.ValidationMessageFor(model => model.memNick, "", new { @style = "color:#f36868" })
                                     <div> </div>
                                 </div>
@@ -327,7 +328,7 @@
                                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
 
 
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control-small", id = "Email" } })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control-small", id = "Email" , placeholder = "ex:xxxx@xxx.xxx"} })
                                     @Html.ValidationMessageFor(model => model.Email, "", new { @style = "color:#f36868" })
 
                                     <div></div>

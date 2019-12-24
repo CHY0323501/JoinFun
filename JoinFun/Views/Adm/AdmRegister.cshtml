@@ -132,11 +132,11 @@
             }
 
         });
-        url: "http://10.10.3.105/api/AdmAPI",
+        
 
         //帳號是否重複
-        $('#Account').keyup(function () {
-            if ($.trim($('#Account').val()).length!=0) {
+        $('#admAcc').keyup(function () {
+            if ($.trim($('#admAcc').val()).length!=0) {
             //if ($('#Account').val() != "") {
                 $.ajax({
                     type: "Get",
@@ -144,7 +144,7 @@
                     url: "http://localhost:54129/api/AdmAPI",
                     success: function (data) {
                         console.log(data[0]);
-                        var str = $('#Account').val();
+                        var str = $('#admAcc').val();
                         var i = 0;
                         while (i < data.length) {
                             var n = str.search(data[i]);
@@ -162,7 +162,7 @@
                         if (i == data.length) {
                             console.log("驗證成功");
 
-                            $('#prompt').text("此帳號可使用").css({"color": "#459645","display":"initial"});
+                            $('#prompt').text("此帳號可使用").css({"color": "#a6efa6","display":"initial"});
                         }
 
                     }

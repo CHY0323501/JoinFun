@@ -818,6 +818,7 @@
     <Compile Include="Controllers\AdmController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\ChatListController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\getClassDescriptionController.cs" />
     <Compile Include="Controllers\getCommentController.cs" />
     <Compile Include="Controllers\getDistrictController.cs" />
@@ -1067,10 +1068,9 @@
     <Content Include="Views\Adm\key.cshtml" />
     <Content Include="Views\ChatList\ChatHistory.cshtml" />
     <Content Include="Views\ChatList\Chat.cshtml" />
-
     <Content Include="Views\web.config" />
-
     <Content Include="Web.config" />
+    <Content Include="Views\Comment\Comment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

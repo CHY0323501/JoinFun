@@ -51,6 +51,10 @@ namespace JoinFun.Views.Info
 
             return PartialView(pagedlist);
         }
+
+
         
+        
+
     }
 }
