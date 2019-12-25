@@ -143,7 +143,7 @@
                                     }
 
 
-                                                            @*if (Model.bookmarklist.Count() == 0)
+                                    @*if (Model.bookmarklist.Count() == 0)
                                         {
                                             <input id="remark" type="button" value="收藏揪團" class="btn btn-danger btn-block " />
                                         }
@@ -468,10 +468,10 @@
                     console.log(data);
                     if (!data) {
                         $('#remark').val("收藏揪團");
-                    } else 
+                    } else
                     {
                         $('#remark').val("取消收藏");
-                    } 
+                    }
                 }
             })
         }
@@ -550,7 +550,7 @@
                         alert("已成功取消");
                     }
                 });
-              
+
             }
         });
 
@@ -642,7 +642,7 @@
     </script>
 }
 
-@section scripts{
+@section scripts{  
     <script>
         $('#commentBtn').click(function () {
             var upload = $('#comments').val().replace(/\n/g, '<br/>');
@@ -670,7 +670,7 @@
 
     //$('#commentBoard label').click(function () {
         var timer;
-        $('#commentBoard label').on("mousedown", function () {
+        $('#commentBoard label').on("mousedown touchstart", function () {
             if ($('#member').val() != $(this).attr("id")) {
                 console.log($(this).attr("id"));
                 $('#receiverID').val($(this).attr("id"));
@@ -681,7 +681,7 @@
                     //$('.highlighter span').text(target);
                 }, 800);
             }
-        }).on("mouseup", function () {
+        }).on("mouseup touchend", function () {
                 clearTimeout(timer);
         });
     //});

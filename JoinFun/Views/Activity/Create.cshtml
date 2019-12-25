@@ -80,7 +80,7 @@
                     <small class="text-danger ml-3"></small>
                     @Html.TextBoxFor(model => model.actDeadline, new { @class = "form-control", @type = "text", id = "datepicker2" })
                     @*@Html.ValidationMessageFor(model => model.actDeadline, "", new { @class = "text-danger" })*@
-                    <small class="text-secondary">備註:報名截止時間不可少於活動開始前6個小時</small>
+                    <small class="text-secondary">備註:報名截止時間與活動時間需間隔3小時以上</small>
                 </label>
 
                 <label class="col col-md-4 col-xs-12 pl-0 form-group pmd-textfield pmd-textfield-floating-label">
@@ -199,7 +199,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        請確認填寫的資料是否正確！揪團建立後可編輯項目為【揪團主題】、【揪團內容】、【付款方式】、【預算上限】
+                        請確認填寫的資料是否正確！揪團建立後可編輯項目為【性別限制】、【人數上限】、【預算上限】、【付款方式】、【活動敘述】、【Hash Tag】
                         ，如需刪除揪團，請聯繫管理員並告知原因！
                     </div>
                     <div class="modal-footer">
