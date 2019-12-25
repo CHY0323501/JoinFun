@@ -100,7 +100,7 @@ namespace JoinFun.Controllers
                     message=message,
                     time= now.ToString("MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture)
                 };
-
+               
                 //推送對話給聊天對象及自己
                 _chatRooms[_roomID].Broadcast(JsonConvert.SerializeObject(obj, Formatting.Indented));
             }

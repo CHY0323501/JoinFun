@@ -221,7 +221,7 @@ namespace JoinFun.Controllers
                 if (acc.Account == account && db.Member.Where(m => m.memId == db.Acc_Pass.Where(c => c.Account == account).FirstOrDefault().memId).FirstOrDefault().Email == email)
                 {
 
-                    string getEmailID = db.Member.Where(M=>M.memId== db.Acc_Pass.Where(a => a.Account == account).FirstOrDefault().memId).FirstOrDefault().email_ID;
+                    string getEmailID = db.Member.Where(M => M.memId == db.Acc_Pass.Where(a => a.Account == account).FirstOrDefault().memId).FirstOrDefault().email_ID;
 
                     MessageCenter mes = new MessageCenter();
                     List<string> mailList = new List<string>() { db.Member.Where(m => m.memId == db.Acc_Pass.Where(b => b.Account == account).FirstOrDefault().memId).FirstOrDefault().Email };
@@ -231,6 +231,10 @@ namespace JoinFun.Controllers
                     ViewBag.ForgetPwd = "信件已發送";
                     return View();
 
+                }
+                else {
+                    ViewBag.ForgetPwdErr = "您輸入的帳號或信箱錯誤";
+                    return View();
                 }
 
 

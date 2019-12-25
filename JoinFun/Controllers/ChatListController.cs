@@ -95,7 +95,6 @@ namespace JoinFun.Controllers
             {
                 //取得原房號
                 roomID = (int)(findRecord.ChatRoom);
-
                 //已讀所有對方寄送過來的未讀訊息
                 string UpdateString = "Update Chat_Records set ReadYet=1 where chatroom=@chatroom and ToMemId=@ToMemId";
                 db.Database.ExecuteSqlCommand(UpdateString, new SqlParameter("@chatroom", roomID),new SqlParameter("@ToMemId", session));
