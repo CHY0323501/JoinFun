@@ -668,7 +668,7 @@
             });
         });
 
-    $('#commentBoard label').click(function () {
+    //$('#commentBoard label').click(function () {
         var timer;
         $('#commentBoard label').on("mousedown", function () {
             if ($('#member').val() != $(this).attr("id")) {
@@ -684,7 +684,7 @@
         }).on("mouseup", function () {
                 clearTimeout(timer);
         });
-    });
+    //});
 
 
     $('#comments').keyup(function () {
