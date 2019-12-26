@@ -900,7 +900,7 @@ namespace JoinFun.Controllers
         public ActionResult Feedback(string Page)
         {
             var feedback = db.Comment.ToList();
-            ViewBag.ID = Page;
+            ViewBag.Page = Page;
             return View(feedback);
         }
 

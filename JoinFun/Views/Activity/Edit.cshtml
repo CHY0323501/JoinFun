@@ -193,7 +193,7 @@
 }
 
 <div>
-    @Html.ActionLink("返回活動頁面", "Index")
+    @Html.ActionLink("返回活動頁面", "Details", new { actId = Model.actId})
 </div>
 @section topCSS{
     <link href="~/Content/MyStyle.css" rel="stylesheet" />
